@@ -18,7 +18,7 @@
             "name": "github-ci-debug",
             "displayName": "Github CI configure preset",
             "description": "Sets Make generator, build and install directory",
-            "generator": "Make",
+            "generator": "Unix Makefiles",
             "binaryDir": "${sourceDir}/build/${presetName}",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
