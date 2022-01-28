@@ -13,8 +13,8 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - name: configure
-      run: cmake --preset debug .
+      run: cmake --preset github-ci-debug
     - name: make
-      run: cmake --build --preset debug
+      run: cmake --build --preset github-ci-debug
     - name: test
       run: ctest -V
