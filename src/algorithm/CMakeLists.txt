@@ -1,0 +1,32 @@
+add_library(AlgorithmObject OBJECT)
+add_library(LaptimerCore::AlgorithmObject ALIAS AlgorithmObject)
+
+target_sources(AlgorithmObject
+PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/TrackDetection.cpp
+
+PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/ITrackDetection.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/TrackDetection.hpp
+)
+
+target_link_libraries(AlgorithmObject 
+PUBLIC
+    LaptimerCore::Common
+)
+
+target_include_directories(AlgorithmObject
+    PUBLIC
+        $<INSTALL_INTERFACE:include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+add_library(Algorithm STATIC)
+add_library(LaptimerCore::Algorithm ALIAS Algorithm)
+
+target_link_libraries(Algorithm
+PRIVATE
+    LaptimerCore::AlgorithmObject
+)
