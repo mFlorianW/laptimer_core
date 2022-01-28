@@ -1,0 +1,45 @@
+== Architecture
+
+=== Design Principles
+
+* Public API of a software component shall be implemented as interface, so other components that use this interface doesn't depend on a concrete implementation.
+Simple data classes doesn't need to be implemented as interfaces because these classes are very simple.
+This kind of classes shall only be used to exchange data between component and layers, they shall not contain any logic or behavior.
+
+
+=== Component Overview
+The component diagram shows all components of the LaptimerCore.
+The LaptimerCore is divided into three main layers. 
+Ever layer have different responsibilities and requirements.
+The middle layer of the system is the "CoreLayer".
+This layer contains all platform independent software components and is divided into the components  "Algorithm", "SessionManagement", TrackManagement, "Positioning" and Workflow.
+The lowest layer the "DataLayer" is responsible for storing the persistent data and realize the hardware specific access to the hardware e.g. GPS module.
+The top layer the "PresentationLayer" of the LaptimerCore contains the GUI implementation for the middle. 
+The implementation of this layer depends on the used system.
+So is not part of the architecture  documentation because the LaptimerCore is designed to make it easy as possible to change the GUI.
+This is also applicable to the "DataLayer".
+
+.Component overview
+image::component_overview.png[]
+
+Algorithm::
+The `Algorithm` component contains all algorithm to calculate things like the lap time based on GNSS and track data, to detect a specific track based on the GNSS data, calculate the fastest possible lap out of different laps and other algorithms.
+
+SessionManagement::
+This component contains all relevant classes for the session management, e.g. save, filter and load. 
+Value classes for the session data exchange between components and layers are also part of this component.
+Additionally the component provides the required interfaces for the "DataLayer" also.
+
+Positioning::
+That component define the platform independent interfaces for accessing the GNSS and sensors data like a velocity sensor.
+
+TrackManagement::
+The Track component contains the interfaces for the "DataLayer" and provides value classes to exchange the track information between the components and layers.
+
+Workflow::
+Implements the business logic based on the data provided by the other components. 
+This are workflows like the `IActiveSessionWorkflow` to control the current running session.
+
+Common::
+Contains cross cutting functionality like the logging mechanisms that can be used by all components. This module contains also data classes that are used by other components to exchange
+data between them.
