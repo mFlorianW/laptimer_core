@@ -17,4 +17,4 @@ jobs:
     - name: make
       run: cmake --build --preset github-ci-debug
     - name: test
-      run: ctest -V
+      run: ctest --preset github-test -V 

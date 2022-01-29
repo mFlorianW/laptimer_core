@@ -52,5 +52,15 @@
             "name": "release",
             "configurePreset": "release"
         }
+    ],
+    "testPresets": [
+        {
+            "name": "test",
+            "configurePreset": "debug"
+        },
+        {
+            "name": "github-test",
+            "configurePreset": "github-ci-debug"
+        }
     ]
 }
