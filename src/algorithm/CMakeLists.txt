@@ -10,6 +10,7 @@ PRIVATE
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/ITrackDetection.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/TrackDetection.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/ILaptimer.hpp
 )
 
 target_link_libraries(AlgorithmObject 
