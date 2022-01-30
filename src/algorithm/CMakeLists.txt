@@ -4,6 +4,8 @@ add_library(LaptimerCore::AlgorithmObject ALIAS AlgorithmObject)
 target_sources(AlgorithmObject
 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/TrackDetection.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/DistanceCalculator.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/DistanceCalculator.hpp
 
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/ITrackDetection.hpp
