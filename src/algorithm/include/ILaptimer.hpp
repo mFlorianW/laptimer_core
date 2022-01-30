@@ -14,6 +14,11 @@ class ILaptimer
 {
 public:
     /**
+     * Alias for a callback when the lap is started.
+     */
+    using LapStartedCallback = std::function<void()>;
+
+    /**
      * Alias for a callback when the lap is finished.
      */
     using LapFinishedCallback = std::function<void(const Common::Laptime &laptime)>;
@@ -57,6 +62,12 @@ public:
      * @return Common::Timestamp Gives the last laptime.
      */
     virtual Common::Laptime getLastLaptime() const = 0;
+
+    /**
+     * Adds a new lap started listener to the laptimer.
+     * @param listener The new lap started listener.
+     */
+    virtual void addLapStartedListener(const LapStartedCallback &listener) = 0;
 
     /**
      * Adds a new lap finished listener to the laptimer.
