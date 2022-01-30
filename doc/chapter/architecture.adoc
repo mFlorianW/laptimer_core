@@ -1,11 +1,57 @@
 == Architecture
 
-=== Design Principles
+=== Design and Implementation Principles
 
-* Public API of a software component shall be implemented as interface, so other components that use this interface doesn't depend on a concrete implementation.
-Simple data classes doesn't need to be implemented as interfaces because these classes are very simple.
+Public API::
+The public API of a software component shall be implemented as interface, so other components that use this interface doesn't depend on a concrete implementation.
+Except simple data classes doesn't need to be implemented as interfaces because these classes are mostly very simple.
 This kind of classes shall only be used to exchange data between component and layers, they shall not contain any logic or behavior.
 
+Dependency Injection::
+The Dependency Injection principle shall be applied for dependencies if an object of another component is used and it's not a simple data class.
+As example class A depends on class b. But class A is part of component A and class B is part of component B. 
+Then the Dependency Injection Principle shall be applied. Look at the following examples. 
+The first example shows the good case and the second one the bad case.
+
+.Good Example for DI:
+[source,cpp]
+----
+class A 
+{
+public:
+    A(B b)  
+        :mb(b)
+    {   
+    }
+
+private
+    B mB;
+};
+
+class B
+{
+};
+---- 
+
+.Bad Example:
+[source,cpp]
+----
+class A 
+{
+public:
+    A()
+        :mb(new B{})
+    {   
+    }
+private:
+    B mB;
+};
+
+class B
+{
+};
+----
+This DI principle doesn't need to be applied when classes of the same component have a dependency.
 
 === Component Overview
 The component diagram shows all components of the LaptimerCore.
