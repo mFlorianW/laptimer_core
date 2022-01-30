@@ -74,7 +74,7 @@ public:
      * The listener is called when a laptime is finshed.
      * @param listener The new lap finished listener.
      */
-    virtual void addFinishedLapListener(const LapFinishedCallback &listener) = 0;
+    virtual void addLapFinishedListener(const LapFinishedCallback &listener) = 0;
 
     /**
      * Adds a new section finished listener to the laptimer.
