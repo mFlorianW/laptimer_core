@@ -30,6 +30,6 @@ add_library(Algorithm STATIC)
 add_library(LaptimerCore::Algorithm ALIAS Algorithm)
 
 target_link_libraries(Algorithm
-PRIVATE
+PUBLIC
     LaptimerCore::AlgorithmObject
 )

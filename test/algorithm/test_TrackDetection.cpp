@@ -9,14 +9,13 @@ TEST_CASE("Return true when position is on the track.")
 {
     auto trackDetection = TrackDetection{500};
     // clang-format off
-    auto oscherslebenTrack = TrackData
+    auto oscherslebenTrack = TrackData{};
+    auto finishLine =  PositionData
     {
-        .finishLine =  PositionData
-        {
-            .latitude = 52.02718520,
-            .longitude = 11.27989104,
-        },
+        .latitude = 52.02718520,
+        .longitude = 11.27989104,
     };
+    oscherslebenTrack.setFinishline(finishLine);
 
     auto positionTest = PositionData
     {
@@ -32,14 +31,13 @@ TEST_CASE("Return false when position is not on the track.")
 {
     auto trackDetection = TrackDetection{500};
     // clang-format off
-    auto oscherslebenTrack = TrackData
+    auto oscherslebenTrack = TrackData{};
+    auto finishLine =  PositionData
     {
-        .finishLine =  PositionData
-        {
-            .latitude = 52.02718520,
-            .longitude = 11.27989104,
-        },
+        .latitude = 52.02718520,
+        .longitude = 11.27989104,
     };
+    oscherslebenTrack.setFinishline(finishLine);
 
     auto invalidPositionData = PositionData
     {
