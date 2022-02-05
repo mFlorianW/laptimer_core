@@ -14,3 +14,4 @@ else(ENABLE_CATCH2_FETCH)
 endif(ENABLE_CATCH2_FETCH)
 
 add_subdirectory(algorithm)
+add_subdirectory(common)

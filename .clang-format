@@ -16,5 +16,8 @@ Cpp11BracedListStyle: 'true'
 Language: Cpp
 PointerAlignment: Right
 AccessModifierOffset: '-4'
+BreakConstructorInitializers: BeforeComma
+ConstructorInitializerIndentWidth: '4'
+AlwaysBreakTemplateDeclarations: 'true'
 
 ...
