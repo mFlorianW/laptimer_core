@@ -2,11 +2,14 @@
 #define __TRACKDATA__H__
 
 #include "PositionData.hpp"
+#include "SharedDataPointer.hpp"
 #include <string>
 #include <vector>
 
 namespace LaptimerCore::Common
 {
+
+class SharedTrackData;
 
 /**
  * The track data class contains the data of a real racetrack.
@@ -14,6 +17,16 @@ namespace LaptimerCore::Common
 class TrackData final
 {
 public:
+    /**
+     * Creates an instance of TrackData
+     */
+    TrackData();
+
+    /**
+     * Default destructor.
+     */
+    ~TrackData();
+
     /**
      * Gives the track name.
      * @return const std::string& The track name.
@@ -78,10 +91,7 @@ public:
     void setSections(const std::vector<PositionData> &sections);
 
 private:
-    std::string mTrackName;
-    PositionData mFinishline;
-    PositionData mStartline;
-    std::vector<PositionData> mSections;
+    SharedDataPointer<SharedTrackData> mData;
 };
 
 } // namespace LaptimerCore::Common
