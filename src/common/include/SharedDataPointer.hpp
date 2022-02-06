@@ -124,7 +124,7 @@ public:
      * @param other The object to move from.
      */
     SharedDataPointer(SharedDataPointer &&other)
-        : mData{std::move(other.d)}
+        : mData{std::move(other.mData)}
     {
         other.mData = nullptr;
     }
@@ -136,8 +136,8 @@ public:
      */
     SharedDataPointer<T> &operator=(SharedDataPointer<T> &&other)
     {
-        mData = std::move(other.mData);
-        other.mData = nullptr;
+        SharedDataPointer moved(std::move(other));
+        std::swap(moved.mData, mData);
         return *this;
     }
 
