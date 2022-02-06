@@ -28,6 +28,12 @@ public:
     ~TrackData();
 
     /**
+     * Copy constructor for TrackData
+     * @param ohter
+     */
+    TrackData(const TrackData &ohter);
+
+    /**
      * Gives the track name.
      * @return const std::string& The track name.
      */

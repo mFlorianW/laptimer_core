@@ -19,6 +19,11 @@ TrackData::TrackData()
 
 TrackData::~TrackData() = default;
 
+TrackData::TrackData(const TrackData &ohter)
+    : mData(ohter.mData)
+{
+}
+
 const std::string &TrackData::getTrackName() const
 {
     return mData->mTrackName;
