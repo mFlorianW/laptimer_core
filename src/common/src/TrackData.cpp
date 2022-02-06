@@ -38,8 +38,8 @@ TrackData::TrackData(TrackData &&other)
 
 TrackData &TrackData::operator=(TrackData &&other)
 {
-    mData = std::move(other.mData);
-    other.mData = nullptr;
+    TrackData moved{std::move(other)};
+    std::swap(mData, moved.mData);
     return *this;
 }
 
