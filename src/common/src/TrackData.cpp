@@ -24,6 +24,25 @@ TrackData::TrackData(const TrackData &ohter)
 {
 }
 
+TrackData &TrackData::operator=(const TrackData &other)
+{
+    mData = other.mData;
+    return *this;
+}
+
+TrackData::TrackData(TrackData &&other)
+    : mData{std::move(other.mData)}
+{
+    other.mData = nullptr;
+}
+
+TrackData &TrackData::operator=(TrackData &&other)
+{
+    mData = std::move(other.mData);
+    other.mData = nullptr;
+    return *this;
+}
+
 const std::string &TrackData::getTrackName() const
 {
     return mData->mTrackName;

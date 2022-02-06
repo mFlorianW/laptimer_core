@@ -29,9 +29,29 @@ public:
 
     /**
      * Copy constructor for TrackData
-     * @param ohter
+     * @param ohter The object to copy from.
      */
     TrackData(const TrackData &ohter);
+
+    /**
+     * The copy assignment operator for TrackData.
+     * @param other The object to copy from.
+     * @return TrackData& A reference to the copied track.
+     */
+    TrackData &operator=(const TrackData &other);
+
+    /**
+     * Move constructor for TrackData
+     * @param other The object to move from.
+     */
+    TrackData(TrackData &&other);
+
+    /**
+     * The move assignment operator for the TrackData.
+     * @param other The object to move from.
+     * @return TrackData& A reference to the moved track data.
+     */
+    TrackData &operator=(TrackData &&other);
 
     /**
      * Gives the track name.
