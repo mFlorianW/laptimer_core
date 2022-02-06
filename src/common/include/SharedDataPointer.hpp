@@ -120,6 +120,28 @@ public:
     }
 
     /**
+     * Move constructor for the SharedDataPointer
+     * @param other The object to move from.
+     */
+    SharedDataPointer(SharedDataPointer &&other)
+        : mData{std::move(other.d)}
+    {
+        other.mData = nullptr;
+    }
+
+    /**
+     * Move assignament operator for the SharedDataPointer
+     * @param other  The object to move from.
+     * @return SharedDataPointer& The moved intialized object.
+     */
+    SharedDataPointer<T> &operator=(SharedDataPointer<T> &&other)
+    {
+        mData = std::move(other.mData);
+        other.mData = nullptr;
+        return *this;
+    }
+
+    /**
      * Gives the reference count of the shared data.
      * If not data is set then the reference count will be 0.
      * @return std::uint8_t The reference count of the shared data.
