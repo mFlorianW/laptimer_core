@@ -11,7 +11,8 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
                 "ENABLE_TEST": "ON",
-                "ENABLE_CATCH2_FETCH": "ON"
+                "ENABLE_CATCH2_FETCH": "ON",
+                "ENABLE_KDBINDINGS_FETCH": "ON"
             }
         },
         {
@@ -24,7 +25,8 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
                 "ENABLE_TEST": "ON",
-                "ENABLE_CATCH2_FETCH": "ON"
+                "ENABLE_CATCH2_FETCH": "ON",
+                "ENABLE_KDBINDINGS_FETCH": "ON"
             }
         },
         {

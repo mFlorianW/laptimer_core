@@ -1,4 +1,3 @@
-include(FetchContent)
 include(CTest)
 if(ENABLE_CATCH2_FETCH)
     FetchContent_Declare(
