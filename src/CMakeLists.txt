@@ -12,3 +12,4 @@ endif()
 
 add_subdirectory(algorithm)
 add_subdirectory(common)
+add_subdirectory(positioning)
