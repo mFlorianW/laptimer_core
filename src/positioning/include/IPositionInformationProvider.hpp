@@ -29,7 +29,7 @@ public:
      * This signal is emitted when new position information are available.
      * @return Signal<> The signal object to get notified when new position informations are available.
      */
-    Signal<> positionInformationReceived();
+    KDBindings::Signal<> positionInformationReceived();
 
 protected:
     /**

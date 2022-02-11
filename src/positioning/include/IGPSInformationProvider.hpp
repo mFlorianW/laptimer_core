@@ -24,7 +24,7 @@ public:
      * This signal is emitted when the number of statellites changes.
      * @return Signal<> The signal object to get notified when the number of statellite changes.
      */
-    Signal<> numberOfSatellitesChanged();
+    KDBindings::Signal<> numberOfSatellitesChanged();
 
 protected:
     /**
