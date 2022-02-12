@@ -10,7 +10,7 @@ idf_component_register(
 SRCS
     "${SRC_FILES_ALGORITHM}"
 INCLUDE_DIRS
-    "${CMAKE_CURRENT_SOURCE}/../src/alogrithm/include"
-    "${CMAKE_CURRENT_SOURCE}/../src/common/include"
-    "${CMAKE_CURRENT_SOURCE}/../src/positioning/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src/alogrithm/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src/common/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src/positioning/include"
 )
