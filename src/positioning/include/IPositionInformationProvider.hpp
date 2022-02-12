@@ -20,10 +20,10 @@ public:
     virtual ~IPositionInformationProvider() = default;
 
     /**
-     * Gives a reference list to the latest received positions informations.
-     * @return const vector<PositionData>&
+     * Gives the last received position.
+     * @return The last received position
      */
-    virtual const vector<PositionData> &getPositionData() const = 0;
+    virtual PositionData getPositionData() const = 0;
 
     /**
      * This signal is emitted when new position information are available.
