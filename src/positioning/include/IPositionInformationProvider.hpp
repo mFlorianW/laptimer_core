@@ -23,7 +23,7 @@ public:
      * Gives the last received position.
      * @return The last received position
      */
-    virtual PositionData getPositionData() const = 0;
+    virtual Common::PositionData getPositionData() const = 0;
 
     /**
      * This signal is emitted when new position information are available.
