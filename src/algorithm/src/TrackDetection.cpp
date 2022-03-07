@@ -7,7 +7,8 @@ using namespace LaptimerCore::Common;
 namespace LaptimerCore::Algorithm
 {
 
-TrackDetection::TrackDetection(std::uint16_t detectRadiusInMeter) : mDetectionRadius(detectRadiusInMeter)
+TrackDetection::TrackDetection(std::uint16_t detectRadiusInMeter)
+    : mDetectionRadius(detectRadiusInMeter)
 {
 }
 
