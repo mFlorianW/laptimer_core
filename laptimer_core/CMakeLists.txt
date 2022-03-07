@@ -1,14 +1,9 @@
-file(GLOB SRC_FILES_ALGORITHM
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/algorithm/src/*.cpp
-)
-
-file(GLOB SRC_FILES_COMMON
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/common/src/*.cpp
-)
-
 idf_component_register(
-SRCS
-    "${SRC_FILES_ALGORITHM}"
+COMPONET_NAME
+    "LaptimerCore"
+SRC_DIRS
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/common/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/algorithm/src
 INCLUDE_DIRS
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/algorithm/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/common/include"
