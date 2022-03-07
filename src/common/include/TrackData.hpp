@@ -116,6 +116,20 @@ public:
      */
     void setSections(const std::vector<PositionData> &sections);
 
+    /**
+     * Equal operator
+     * @return true The two objects are the same.
+     * @return false The two objects are not the same.
+     */
+    friend bool operator==(const TrackData &lhs, const TrackData &rhs);
+
+    /**
+     * Not Equal operator
+     * @return true The two objects are not the same.
+     * @return false The two objects are the same.
+     */
+    friend bool operator!=(const TrackData &lhs, const TrackData &rhs);
+
 private:
     SharedDataPointer<SharedTrackData> mData;
 };

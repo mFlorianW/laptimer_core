@@ -14,3 +14,5 @@ endif(ENABLE_CATCH2_FETCH)
 
 add_subdirectory(algorithm)
 add_subdirectory(common)
+add_subdirectory(dummy)
+add_subdirectory(workflow)

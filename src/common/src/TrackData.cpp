@@ -93,4 +93,14 @@ void TrackData::setSections(const std::vector<PositionData> &sections)
     mData->mSections = sections;
 }
 
+bool operator==(const TrackData &lhs, const TrackData &rhs)
+{
+    return lhs.mData == rhs.mData;
+}
+
+bool operator!=(const TrackData &lhs, const TrackData &rhs)
+{
+    return lhs.mData != rhs.mData;
+}
+
 } // namespace LaptimerCore::Common

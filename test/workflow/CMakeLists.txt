@@ -1,0 +1,6 @@
+include(Catch)
+
+add_executable(test_TrackDetectionWorkflow test_TrackDetectionWorkflow.cpp)
+target_link_libraries(test_TrackDetectionWorkflow PRIVATE Catch2::Catch2 LaptimerCore::Workflow LaptimerCore::TestDummy)
+
+catch_discover_tests(test_TrackDetectionWorkflow)
