@@ -1,6 +1,4 @@
 idf_component_register(
-COMPONET_NAME
-    "LaptimerCore"
 SRC_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/common/src
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/algorithm/src
