@@ -2,8 +2,10 @@ idf_component_register(
 SRC_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/common/src
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/algorithm/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/workflow/src
 INCLUDE_DIRS
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/algorithm/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/common/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/positioning/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src/workflow/include"
 )
