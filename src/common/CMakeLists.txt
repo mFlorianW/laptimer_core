@@ -3,15 +3,17 @@ add_library(LaptimerCore::CommonObject ALIAS CommonObject)
 
 target_sources(CommonObject
 PRIVATE
-   ${CMAKE_CURRENT_SOURCE_DIR}/src/TrackData.cpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/src/PositionData.cpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/src/Timestamp.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/TrackData.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PositionData.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Timestamp.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/LapData.cpp
 PUBLIC
-   ${CMAKE_CURRENT_SOURCE_DIR}/include/TrackData.hpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/include/PositionData.hpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/include/SharedDataPointer.hpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/include/Timestamp.hpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/include/Laptime.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/TrackData.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/PositionData.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/SharedDataPointer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Timestamp.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/Laptime.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/LapData.hpp
 )
 
 target_include_directories(CommonObject
