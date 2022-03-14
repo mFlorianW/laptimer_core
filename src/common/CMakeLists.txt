@@ -7,6 +7,7 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/PositionData.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Timestamp.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/LapData.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/SessionData.cpp
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/TrackData.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/PositionData.hpp
@@ -14,6 +15,7 @@ PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Timestamp.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Laptime.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/LapData.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/SessionData.hpp
 )
 
 target_include_directories(CommonObject
