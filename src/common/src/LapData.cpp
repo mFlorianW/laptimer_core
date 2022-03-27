@@ -1,4 +1,5 @@
 #include "LapData.hpp"
+#include <ArduinoJson.hpp>
 
 namespace LaptimerCore::Common
 {
@@ -53,6 +54,7 @@ void LapData::setLaptime(const Timestamp &laptime)
 
 std::size_t LapData::getSectorTimeCount() const noexcept
 {
+
     return mData->mSectorTimes.size();
 }
 
@@ -79,6 +81,32 @@ void LapData::addSectorTime(const Timestamp &sectorTime)
 void LapData::addSectorTimes(const std::vector<Timestamp> sectorTimes)
 {
     mData->mSectorTimes = sectorTimes;
+}
+
+ArduinoJson::DynamicJsonDocument LapData::asJson() const noexcept
+{
+    constexpr std::size_t staticBuffer = 98;
+    const std::size_t jsonBufferSize = staticBuffer + JSON_OBJECT_SIZE(2) + JSON_ARRAY_SIZE(getSectorTimeCount()) +
+                                       getSectorTimeCount() * JSON_OBJECT_SIZE(1);
+    ArduinoJson::DynamicJsonDocument jsonDoc(jsonBufferSize);
+    jsonDoc["laptime"] = getLaptime().asString();
+
+    if (getSectorTimeCount() > 0)
+    {
+        ArduinoJson::JsonArray jsonSectorTimes = jsonDoc.createNestedArray("sectors");
+        for (std::size_t i = 0; i < getSectorTimeCount(); ++i)
+        {
+            const std::string key = "sector" + std::to_string(i);
+            const auto sectorTime = getSectorTime(i);
+            auto sectorObject = jsonSectorTimes.createNestedObject();
+            if (sectorTime)
+            {
+                sectorObject[key] = sectorTime.value().asString();
+            }
+        }
+    }
+
+    return jsonDoc;
 }
 
 } // namespace LaptimerCore::Common

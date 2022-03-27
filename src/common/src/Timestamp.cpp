@@ -1,4 +1,6 @@
 #include "Timestamp.hpp"
+#include <iomanip>
+#include <sstream>
 
 namespace LaptimerCore::Common
 {
@@ -79,6 +81,20 @@ std::uint16_t Timestamp::getFractionalOfSecond() const
 void Timestamp::setFractionalOfSecond(std::uint16_t fractionalOfSecond)
 {
     mData->fractionalOfSecond = fractionalOfSecond;
+}
+
+std::string Timestamp::asString() const noexcept
+{
+    std::ostringstream timeAsString;
+
+    // clang-format off
+    timeAsString << std::setw(2) << std::setfill('0') << std::to_string(getHour()) << ":"
+                 << std::setw(2) << std::setfill('0') << std::to_string(getMinute()) << ":"
+                 << std::setw(2) << std::setfill('0') << std::to_string(getSecond()) << "."
+                 << std::setw(3) << std::setfill('0') << std::to_string(getFractionalOfSecond());
+    // clang-format on
+
+    return timeAsString.str();
 }
 
 } // namespace LaptimerCore::Common

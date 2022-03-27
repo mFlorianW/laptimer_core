@@ -3,6 +3,7 @@
 
 #include "SharedDataPointer.hpp"
 #include <cstdint>
+#include <string>
 
 namespace LaptimerCore::Common
 {
@@ -93,6 +94,13 @@ public:
      * @param fractionalOfSecond The new fractional of second.
      */
     void setFractionalOfSecond(std::uint16_t fractionalOfSecond);
+
+    /**
+     * Converts the time compontes of the timestamp to a string.
+     * The string will have the format of: 00:01:35.123
+     * @return The time component to the timestamp as string.
+     */
+    std::string asString() const noexcept;
 
 private:
     SharedDataPointer<SharedTimestamp> mData;

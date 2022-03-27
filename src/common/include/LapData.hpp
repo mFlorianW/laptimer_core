@@ -3,6 +3,7 @@
 
 #include "SharedDataPointer.hpp"
 #include "Timestamp.hpp"
+#include <ArduinoJson.hpp>
 #include <optional>
 #include <vector>
 
@@ -98,6 +99,12 @@ public:
      * @param sectorTimes The list of sector times.
      */
     void addSectorTimes(const std::vector<Timestamp> sectorTimes);
+
+    /**
+     * Creates
+     * @return
+     */
+    ArduinoJson::DynamicJsonDocument asJson() const noexcept;
 
 private:
     SharedDataPointer<SharedLap> mData;
