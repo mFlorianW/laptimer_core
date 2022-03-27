@@ -60,4 +60,14 @@ void PositionData::setLongitude(float longitude)
 {
     mData->longitude = longitude;
 }
+
+ArduinoJson::DynamicJsonDocument PositionData::asJson() const noexcept
+{
+    auto jsonObject = ArduinoJson::StaticJsonDocument<96>{};
+
+    jsonObject["latitude"] = std::to_string(getLatitude());
+    jsonObject["longitude"] = std::to_string(getLongitude());
+
+    return jsonObject;
+}
 } // namespace LaptimerCore::Common

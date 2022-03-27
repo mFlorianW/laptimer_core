@@ -2,6 +2,7 @@
 #define __POSITIONDATA__H__
 
 #include "SharedDataPointer.hpp"
+#include <ArduinoJson.hpp>
 
 namespace LaptimerCore::Common
 {
@@ -68,6 +69,12 @@ public:
      * @param longitude The new longitude value.
      */
     void setLongitude(float longitude);
+
+    /**
+     * Converts the PositionData object into a JSON object.
+     * @return The JSON object representation of the PositionData.
+     */
+    ArduinoJson::DynamicJsonDocument asJson() const noexcept;
 
 private:
     SharedDataPointer<SharedPositionData> mData;
