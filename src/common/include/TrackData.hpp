@@ -3,6 +3,7 @@
 
 #include "PositionData.hpp"
 #include "SharedDataPointer.hpp"
+#include <ArduinoJson.hpp>
 #include <string>
 #include <vector>
 
@@ -129,6 +130,12 @@ public:
      * @return false The two objects are the same.
      */
     friend bool operator!=(const TrackData &lhs, const TrackData &rhs);
+
+    /**
+     * Converts the TrackData object into a JSON object.
+     * @return The JSON object representation of the TrackData.
+     */
+    ArduinoJson::DynamicJsonDocument asJson() const noexcept;
 
 private:
     SharedDataPointer<SharedTrackData> mData;

@@ -93,6 +93,26 @@ void TrackData::setSections(const std::vector<PositionData> &sections)
     mData->mSections = sections;
 }
 
+ArduinoJson::DynamicJsonDocument TrackData::asJson() const noexcept
+{
+    auto jsonObject = ArduinoJson::DynamicJsonDocument{1024};
+
+    jsonObject["name"] = getTrackName();
+    jsonObject["startline"] = getStartline().asJson();
+    jsonObject["finishline"] = getFinishline().asJson();
+
+    if (getNumberOfSections() > 0)
+    {
+        auto sectorList = jsonObject.createNestedArray("sectors");
+        for (std::size_t i = 0; i < getNumberOfSections(); ++i)
+        {
+            sectorList.add(getSection(i).asJson());
+        }
+    }
+
+    return jsonObject;
+}
+
 bool operator==(const TrackData &lhs, const TrackData &rhs)
 {
     return lhs.mData == rhs.mData;

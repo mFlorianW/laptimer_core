@@ -12,6 +12,7 @@ class Tracks
 public:
     static void init();
 
+    static Common::TrackData TrackWithoutSector;
     static Common::TrackData OscherslebenTrack;
 };
 
