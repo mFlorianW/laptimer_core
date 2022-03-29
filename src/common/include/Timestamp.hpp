@@ -102,6 +102,27 @@ public:
      */
     std::string asString() const noexcept;
 
+    /**
+     * Makes the addition between two timestamps and returs the result.
+     * @param rhs The right hand side operator of the addition.
+     * @return
+     */
+    Timestamp operator+(const Timestamp &rhs) const noexcept;
+
+    /**
+     * Equal operator
+     * @return true The two objects are the same.
+     * @return false The two objects are not the same.
+     */
+    friend bool operator==(const Timestamp &lhs, const Timestamp &rhs);
+
+    /**
+     * Not Equal operator
+     * @return true The two objects are not the same.
+     * @return false The two objects are the same.
+     */
+    friend bool operator!=(const Timestamp &lhs, const Timestamp &rhs);
+
 private:
     SharedDataPointer<SharedTimestamp> mData;
 };

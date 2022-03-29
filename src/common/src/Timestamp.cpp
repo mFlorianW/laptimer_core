@@ -11,6 +11,16 @@ public:
     std::uint8_t minute;
     std::uint8_t second;
     std::uint16_t fractionalOfSecond;
+
+    friend bool operator==(const SharedTimestamp &lhs, const SharedTimestamp &rhs)
+    {
+        // clang-format off
+        return ((lhs.hour) == (rhs.hour) &&
+                (lhs.minute) == (rhs.minute) &&
+                (lhs.second) == (rhs.second) &&
+                (lhs.fractionalOfSecond) == (rhs.fractionalOfSecond));
+        // clang-format on
+    }
 };
 
 Timestamp::Timestamp()
@@ -95,6 +105,26 @@ std::string Timestamp::asString() const noexcept
     // clang-format on
 
     return timeAsString.str();
+}
+Timestamp Timestamp::operator+(const Timestamp &rhs) const noexcept
+{
+    Timestamp ts;
+    ts.setHour(getHour() + rhs.getHour());
+    ts.setMinute(getMinute() + rhs.getMinute());
+    ts.setSecond(getSecond() + rhs.getSecond());
+    ts.setFractionalOfSecond(getFractionalOfSecond() + rhs.getFractionalOfSecond());
+
+    return ts;
+}
+
+bool operator==(const Timestamp &lhs, const Timestamp &rhs)
+{
+    return lhs.mData == rhs.mData || *(lhs.mData) == *(rhs.mData);
+}
+
+bool operator!=(const Timestamp &lhs, const Timestamp &rhs)
+{
+    return !(lhs == rhs);
 }
 
 } // namespace LaptimerCore::Common
