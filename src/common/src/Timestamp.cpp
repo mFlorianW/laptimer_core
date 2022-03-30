@@ -108,11 +108,41 @@ std::string Timestamp::asString() const noexcept
 }
 Timestamp Timestamp::operator+(const Timestamp &rhs) const noexcept
 {
+    auto tempFractionalSecond = getFractionalOfSecond() + rhs.getFractionalOfSecond();
+    std::uint8_t overflowSecond = 0;
+    if (tempFractionalSecond >= 1000)
+    {
+        overflowSecond = 1;
+        tempFractionalSecond -= 1000;
+    }
+
+    auto tempSecond = overflowSecond + getSecond() + rhs.getSecond();
+    std::uint8_t overflowMinute = 0;
+    if (tempSecond >= 60)
+    {
+        overflowMinute = 1;
+        tempSecond -= 60;
+    }
+
+    auto tempMinute = overflowMinute + getMinute() + rhs.getMinute();
+    std::uint8_t overflowHour = 0;
+    if (tempMinute >= 60)
+    {
+        overflowHour = 1;
+        tempMinute -= 60;
+    }
+
+    auto tempHour = overflowHour + getHour() + rhs.getHour();
+    if (tempHour >= 24)
+    {
+        tempHour -= 24;
+    }
+
     Timestamp ts;
-    ts.setHour(getHour() + rhs.getHour());
-    ts.setMinute(getMinute() + rhs.getMinute());
-    ts.setSecond(getSecond() + rhs.getSecond());
-    ts.setFractionalOfSecond(getFractionalOfSecond() + rhs.getFractionalOfSecond());
+    ts.setHour(tempHour);
+    ts.setMinute(tempMinute);
+    ts.setSecond(tempSecond);
+    ts.setFractionalOfSecond(tempFractionalSecond);
 
     return ts;
 }

@@ -57,3 +57,99 @@ TEST_CASE("It shall be possible to calucalte the sum of two timestamps.")
 
     REQUIRE(result == expectedResult);
 }
+
+TEST_CASE("The plus operator of timestamp shall handle hour overflow when passing midnight.")
+{
+    Timestamp ts1;
+    ts1.setHour(22);
+    ts1.setMinute(0);
+    ts1.setSecond(0);
+    ts1.setFractionalOfSecond(0);
+    Timestamp ts2;
+    ts2.setHour(3);
+    ts2.setMinute(0);
+    ts2.setSecond(0);
+    ts2.setFractionalOfSecond(0);
+
+    Timestamp expectedResult;
+    expectedResult.setHour(1);
+    expectedResult.setMinute(0);
+    expectedResult.setSecond(0);
+    expectedResult.setFractionalOfSecond(0);
+
+    auto result = ts1 + ts2;
+
+    REQUIRE(result == expectedResult);
+}
+
+TEST_CASE("The plus operator of timestamp shall handle minute overflow when passing 60 minutes.")
+{
+    Timestamp ts1;
+    ts1.setHour(0);
+    ts1.setMinute(58);
+    ts1.setSecond(0);
+    ts1.setFractionalOfSecond(0);
+    Timestamp ts2;
+    ts2.setHour(0);
+    ts2.setMinute(12);
+    ts2.setSecond(0);
+    ts2.setFractionalOfSecond(0);
+
+    Timestamp expectedResult;
+    expectedResult.setHour(1);
+    expectedResult.setMinute(10);
+    expectedResult.setSecond(0);
+    expectedResult.setFractionalOfSecond(0);
+
+    auto result = ts1 + ts2;
+
+    REQUIRE(result == expectedResult);
+}
+
+TEST_CASE("The plus operator of timestamp shall handle second overflow when passing 60 seconds.")
+{
+    Timestamp ts1;
+    ts1.setHour(0);
+    ts1.setMinute(0);
+    ts1.setSecond(42);
+    ts1.setFractionalOfSecond(0);
+    Timestamp ts2;
+    ts2.setHour(0);
+    ts2.setMinute(0);
+    ts2.setSecond(32);
+    ts2.setFractionalOfSecond(0);
+
+    Timestamp expectedResult;
+    expectedResult.setHour(0);
+    expectedResult.setMinute(1);
+    expectedResult.setSecond(14);
+    expectedResult.setFractionalOfSecond(0);
+
+    auto result = ts1 + ts2;
+
+    REQUIRE(result == expectedResult);
+}
+
+TEST_CASE("The plus operator of timestamp shall handle millisecond overflow when passing 1000 ms.")
+{
+    Timestamp ts1;
+    ts1.setHour(0);
+    ts1.setMinute(0);
+    ts1.setSecond(0);
+    ts1.setFractionalOfSecond(300);
+    Timestamp ts2;
+    ts2.setHour(0);
+    ts2.setMinute(0);
+    ts2.setSecond(0);
+    ts2.setFractionalOfSecond(800);
+
+    Timestamp expectedResult;
+    expectedResult.setHour(0);
+    expectedResult.setMinute(0);
+    expectedResult.setSecond(1);
+    expectedResult.setFractionalOfSecond(100);
+
+    auto result = ts1 + ts2;
+
+    REQUIRE(result == expectedResult);
+}
