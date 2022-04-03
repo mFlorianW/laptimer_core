@@ -15,8 +15,12 @@ target_link_libraries(test_PositionData PRIVATE Catch2::Catch2 LaptimerCore::Com
 add_executable(test_TrackData test_TrackData.cpp)
 target_link_libraries(test_TrackData PRIVATE Catch2::Catch2 LaptimerCore::Common LaptimerCore::TestDummy)
 
+add_executable(test_Date test_Date.cpp)
+target_link_libraries(test_Date PRIVATE Catch2::Catch2 LaptimerCore::Common)
+
 catch_discover_tests(test_SharedDataPointer)
 catch_discover_tests(test_LapData)
 catch_discover_tests(test_Timestamp)
 catch_discover_tests(test_PositionData)
 catch_discover_tests(test_TrackData)
+catch_discover_tests(test_Date)
