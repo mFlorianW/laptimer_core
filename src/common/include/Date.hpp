@@ -7,8 +7,8 @@
 namespace LaptimerCore::Common
 {
 
-class SharedDateData;
-class Date
+class SharedDate;
+class Date final
 {
 public:
     /**
@@ -20,6 +20,32 @@ public:
      * Default destructor
      */
     ~Date();
+
+    /**
+     * Copy constructor for Date
+     * @param ohter The object to copy from.
+     */
+    Date(const Date &ohter);
+
+    /**
+     * The copy assignment operator for Date.
+     * @param other The object to copy from.
+     * @return TrackData& A reference to the copied track.
+     */
+    Date &operator=(const Date &other);
+
+    /**
+     * Move constructor for Date
+     * @param other The object to move from.
+     */
+    Date(Date &&other);
+
+    /**
+     * The move assignment operator for the Date.
+     * @param other The object to move from.
+     * @return TrackData& A reference to the moved date.
+     */
+    Date &operator=(Date &&other);
 
     /**
      * Gives the year.
@@ -64,7 +90,7 @@ public:
     std::string asString() const noexcept;
 
 private:
-    SharedDataPointer<SharedDateData> mData;
+    SharedDataPointer<SharedDate> mData;
 };
 
 } // namespace LaptimerCore::Common

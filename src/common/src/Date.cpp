@@ -5,7 +5,7 @@
 namespace LaptimerCore::Common
 {
 
-class SharedDateData : public SharedData
+class SharedDate : public SharedData
 {
 public:
     std::uint16_t mYear{0};
@@ -14,11 +14,35 @@ public:
 };
 
 Date::Date()
-    : mData{new SharedDateData{}}
+    : mData{new SharedDate}
 {
 }
 
 Date::~Date() = default;
+
+Date::Date(const Date &other)
+    : mData{other.mData}
+{
+}
+
+Date &Date::operator=(const Date &other)
+{
+    mData = other.mData;
+    return *this;
+}
+
+Date::Date(Date &&other)
+    : mData{std::move(other.mData)}
+{
+    other.mData = nullptr;
+}
+
+Date &Date::operator=(Date &&other)
+{
+    Date moved{std::move(other)};
+    std::swap(mData, moved.mData);
+    return *this;
+}
 
 uint16_t Date::getYear() const noexcept
 {
