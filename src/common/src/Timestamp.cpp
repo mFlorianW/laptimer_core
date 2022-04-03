@@ -147,6 +147,39 @@ Timestamp Timestamp::operator+(const Timestamp &rhs) const noexcept
     return ts;
 }
 
+Timestamp Timestamp::operator-(const Timestamp &rhs) const noexcept
+{
+    Timestamp result;
+    auto tempHour = getHour() - rhs.getHour();
+    if (tempHour < 0)
+    {
+        tempHour = 24 + tempHour;
+    }
+
+    auto tempMinute = getMinute() - rhs.getMinute();
+    if (tempMinute < 0)
+    {
+        tempMinute = 60 + tempMinute;
+    }
+
+    auto tempSecond = getSecond() - rhs.getSecond();
+    if (tempSecond < 0)
+    {
+        tempSecond = 60 + tempSecond;
+    }
+    auto tempFractionalOfSecond = getFractionalOfSecond() - rhs.getFractionalOfSecond();
+    if (tempFractionalOfSecond < 0)
+    {
+        tempFractionalOfSecond = 1000 + tempFractionalOfSecond;
+    }
+
+    result.setHour(tempHour);
+    result.setMinute(tempMinute);
+    result.setSecond(tempSecond);
+    result.setFractionalOfSecond(tempFractionalOfSecond);
+    return result;
+}
+
 bool operator==(const Timestamp &lhs, const Timestamp &rhs)
 {
     return lhs.mData == rhs.mData || *(lhs.mData) == *(rhs.mData);

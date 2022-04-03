@@ -104,10 +104,19 @@ public:
 
     /**
      * Makes the addition between two timestamps and returs the result.
+     * @note The time will wrap when passing midnight.
      * @param rhs The right hand side operator of the addition.
-     * @return
+     * @return A new Timestamp with the result of the plus operation.
      */
     Timestamp operator+(const Timestamp &rhs) const noexcept;
+
+    /**
+     * Make the subtraction of the given timestamp.
+     * @note The time will wrap when passing midnight.
+     * @param rhs The right hand side operator of the subtraction.
+     * @return A new Timestamp with the result of the minus operation.
+     */
+    Timestamp operator-(const Timestamp &rhs) const noexcept;
 
     /**
      * Equal operator
