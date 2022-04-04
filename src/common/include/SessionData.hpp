@@ -1,6 +1,7 @@
 #ifndef SESSIONDATA_HPP
 #define SESSIONDATA_HPP
 
+#include "Date.hpp"
 #include "LapData.hpp"
 #include "SharedDataPointer.hpp"
 #include "TrackData.hpp"
@@ -13,9 +14,14 @@ class SessionData final
 {
 public:
     /**
+     * Alias for the JSON document.
+     */
+    using JsonDocument = ArduinoJson::StaticJsonDocument<8196>;
+
+    /**
      * Creates SessionData instance
      */
-    SessionData(const TrackData &track, const Timestamp &sessionDate);
+    SessionData(const TrackData &track, const Date &sessionDate, const Timestamp &sessionTime);
 
     /**
      * Default destructor
@@ -50,9 +56,15 @@ public:
 
     /**
      * Gives the date of the session.
+     * @return  The date of the session.
+     */
+    Date getSessionDate() const noexcept;
+
+    /**
+     * Gives the time of the session.
      * @return The date of the session.
      */
-    Timestamp getSessionDate() const noexcept;
+    Timestamp getSessionTime() const noexcept;
 
     /**
      * Gives the track of the session.
@@ -84,6 +96,26 @@ public:
      * @param lapData The lap that shall be added.
      */
     void addLap(const LapData &lap);
+
+    /**
+     * Converts the session to JSON.
+     * @return A string with JSON representation of the session.
+     */
+    JsonDocument asJson() const noexcept;
+
+    /**
+     * Equal operator
+     * @return true The two objects are the same.
+     * @return false The two objects are not the same.
+     */
+    friend bool operator==(const SessionData &lhs, const SessionData &rhs);
+
+    /**
+     * Not Equal operator
+     * @return true The two objects are not the same.
+     * @return false The two objects are the same.
+     */
+    friend bool operator!=(const SessionData &lhs, const SessionData &rhs);
 
 private:
     SharedDataPointer<SharedSessionData> mData;

@@ -93,9 +93,9 @@ void TrackData::setSections(const std::vector<PositionData> &sections)
     mData->mSections = sections;
 }
 
-ArduinoJson::DynamicJsonDocument TrackData::asJson() const noexcept
+TrackData::JsonDocument TrackData::asJson() const noexcept
 {
-    auto jsonObject = ArduinoJson::DynamicJsonDocument{1024};
+    auto jsonObject = JsonDocument{};
 
     jsonObject["name"] = getTrackName();
     jsonObject["startline"] = getStartline().asJson();

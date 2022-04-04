@@ -19,6 +19,11 @@ class TrackData final
 {
 public:
     /**
+     * Alias for the generated JSON document.
+     */
+    using JsonDocument = ArduinoJson::StaticJsonDocument<1024>;
+
+    /**
      * Creates an instance of TrackData
      */
     TrackData();
@@ -135,7 +140,7 @@ public:
      * Converts the TrackData object into a JSON object.
      * @return The JSON object representation of the TrackData.
      */
-    ArduinoJson::DynamicJsonDocument asJson() const noexcept;
+    JsonDocument asJson() const noexcept;
 
 private:
     SharedDataPointer<SharedTrackData> mData;

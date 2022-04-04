@@ -14,7 +14,6 @@ PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/PositionData.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SharedDataPointer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Timestamp.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/Laptime.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/LapData.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SessionData.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Date.hpp

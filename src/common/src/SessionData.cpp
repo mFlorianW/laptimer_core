@@ -1,4 +1,5 @@
 #include "SessionData.hpp"
+#include <ArduinoJson.h>
 
 namespace LaptimerCore::Common
 {
@@ -6,15 +7,17 @@ namespace LaptimerCore::Common
 class SharedSessionData : public SharedData
 {
 public:
-    Timestamp mSessionDate;
+    Date mSessionDate;
+    Timestamp mSessionTime;
     TrackData mSessionTrack;
     std::vector<LapData> mLaps;
 };
 
-SessionData::SessionData(const TrackData &track, const Timestamp &sessionDate)
-    : mData(new SharedSessionData{})
+SessionData::SessionData(const TrackData &track, const Date &sessionDate, const Timestamp &sessionTime)
+    : mData{new SharedSessionData}
 {
     mData->mSessionTrack = track;
+    mData->mSessionTime = sessionTime;
     mData->mSessionDate = sessionDate;
 }
 
@@ -31,6 +34,11 @@ SessionData &SessionData::operator=(const SessionData &other)
     return *this;
 }
 
+Date SessionData::getSessionDate() const noexcept
+{
+    return mData->mSessionDate;
+}
+
 SessionData::SessionData(SessionData &&other)
     : mData{std::move(other.mData)}
 {
@@ -43,9 +51,9 @@ SessionData &SessionData::operator=(SessionData &&other)
     return *this;
 }
 
-Timestamp SessionData::getSessionDate() const noexcept
+Timestamp SessionData::getSessionTime() const noexcept
 {
-    return mData->mSessionDate;
+    return mData->mSessionTime;
 }
 
 const TrackData &SessionData::getTrack() const noexcept
@@ -76,6 +84,35 @@ const std::vector<LapData> &SessionData::getLaps() const noexcept
 void SessionData::addLap(const LapData &lap)
 {
     mData->mLaps.push_back(lap);
+}
+
+SessionData::JsonDocument SessionData::asJson() const noexcept
+{
+    auto jsonSession = JsonDocument{};
+
+    jsonSession["date"] = getSessionDate().asString();
+    jsonSession["time"] = getSessionTime().asString();
+    jsonSession["track"] = getTrack().asJson();
+    if (getNumberOfLaps() > 0)
+    {
+        auto lapArray = jsonSession.createNestedArray("laps");
+        for (const auto &lap : std::as_const(getLaps()))
+        {
+            lapArray.add(lap.asJson());
+        }
+    }
+
+    return jsonSession;
+}
+
+bool operator==(const SessionData &lhs, const SessionData &rhs)
+{
+    return lhs.mData == rhs.mData;
+}
+
+bool operator!=(const SessionData &lhs, const SessionData &rhs)
+{
+    return lhs.mData != rhs.mData;
 }
 
 } // namespace LaptimerCore::Common

@@ -19,6 +19,11 @@ class LapData final
 {
 public:
     /**
+     * Alias for the JsonDocument
+     */
+    using JsonDocument = ArduinoJson::StaticJsonDocument<1024>;
+
+    /**
      * Creates an empty lap
      */
     LapData();
@@ -58,7 +63,7 @@ public:
      * Gives the overall laptime.
      * @return The overall laptime.
      */
-    const Timestamp &getLaptime() const noexcept;
+    Timestamp getLaptime() const noexcept;
 
     /**
      * Sets the overall laptime.
@@ -101,10 +106,10 @@ public:
     void addSectorTimes(const std::vector<Timestamp> sectorTimes);
 
     /**
-     * Creates
-     * @return
+     * Creates document with the data of the lap.
+     * @return The LapData as JSON.
      */
-    ArduinoJson::DynamicJsonDocument asJson() const noexcept;
+    JsonDocument asJson() const noexcept;
 
 private:
     SharedDataPointer<SharedLap> mData;

@@ -6,9 +6,11 @@ PRIVATE
    ${CMAKE_CURRENT_SOURCE_DIR}/PositionInformationProvider.cpp
    ${CMAKE_CURRENT_SOURCE_DIR}/Tracks.cpp
    ${CMAKE_CURRENT_SOURCE_DIR}/Positions.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/Sessions.cpp
 PUBLIC
    ${CMAKE_CURRENT_SOURCE_DIR}/PositionInformationProvider.hpp
    ${CMAKE_CURRENT_SOURCE_DIR}/Positions.hpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/Sessions.hpp
 )
 
 target_include_directories(TestDummy
@@ -22,4 +24,5 @@ PUBLIC
     LaptimerCore::CommonObject
     LaptimerCore::Positioning
     LaptimerCore::AlgorithmObject
+    LaptimerCore::Session
 )
