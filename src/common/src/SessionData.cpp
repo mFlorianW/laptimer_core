@@ -86,25 +86,6 @@ void SessionData::addLap(const LapData &lap)
     mData->mLaps.push_back(lap);
 }
 
-SessionData::JsonDocument SessionData::asJson() const noexcept
-{
-    auto jsonSession = JsonDocument{};
-
-    jsonSession["date"] = getSessionDate().asString();
-    jsonSession["time"] = getSessionTime().asString();
-    jsonSession["track"] = getTrack().asJson();
-    if (getNumberOfLaps() > 0)
-    {
-        auto lapArray = jsonSession.createNestedArray("laps");
-        for (const auto &lap : std::as_const(getLaps()))
-        {
-            lapArray.add(lap.asJson());
-        }
-    }
-
-    return jsonSession;
-}
-
 bool operator==(const SessionData &lhs, const SessionData &rhs)
 {
     return lhs.mData == rhs.mData;

@@ -105,12 +105,6 @@ public:
      */
     void addSectorTimes(const std::vector<Timestamp> sectorTimes);
 
-    /**
-     * Creates document with the data of the lap.
-     * @return The LapData as JSON.
-     */
-    JsonDocument asJson() const noexcept;
-
 private:
     SharedDataPointer<SharedLap> mData;
 };

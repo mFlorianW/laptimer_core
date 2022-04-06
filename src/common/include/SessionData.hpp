@@ -98,12 +98,6 @@ public:
     void addLap(const LapData &lap);
 
     /**
-     * Converts the session to JSON.
-     * @return A string with JSON representation of the session.
-     */
-    JsonDocument asJson() const noexcept;
-
-    /**
      * Equal operator
      * @return true The two objects are the same.
      * @return false The two objects are not the same.

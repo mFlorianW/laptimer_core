@@ -84,20 +84,4 @@ void LapData::addSectorTimes(const std::vector<Timestamp> sectorTimes)
     mData->mSectorTimes = sectorTimes;
 }
 
-LapData::JsonDocument LapData::asJson() const noexcept
-{
-    auto jsonDoc = JsonDocument{};
-
-    if (getSectorTimeCount() > 0)
-    {
-        ArduinoJson::JsonArray jsonSectorTimes = jsonDoc.createNestedArray("sectors");
-        for (std::size_t i = 0; i < getSectorTimeCount(); ++i)
-        {
-            jsonSectorTimes.add(getSectorTime(i).value().asString());
-        }
-    }
-
-    return jsonDoc;
-}
-
 } // namespace LaptimerCore::Common

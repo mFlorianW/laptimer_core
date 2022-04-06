@@ -70,12 +70,6 @@ public:
      */
     void setLongitude(float longitude);
 
-    /**
-     * Converts the PositionData object into a JSON object.
-     * @return The JSON object representation of the PositionData.
-     */
-    ArduinoJson::DynamicJsonDocument asJson() const noexcept;
-
 private:
     SharedDataPointer<SharedPositionData> mData;
 };

@@ -136,12 +136,6 @@ public:
      */
     friend bool operator!=(const TrackData &lhs, const TrackData &rhs);
 
-    /**
-     * Converts the TrackData object into a JSON object.
-     * @return The JSON object representation of the TrackData.
-     */
-    JsonDocument asJson() const noexcept;
-
 private:
     SharedDataPointer<SharedTrackData> mData;
 };
