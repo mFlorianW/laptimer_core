@@ -11,11 +11,35 @@ public:
     std::uint16_t mYear{0};
     std::uint8_t mMonth{0};
     std::uint8_t mDay{0};
+
+    friend bool operator==(const SharedDate &lhs, const SharedDate &rhs)
+    {
+        // clang-format off
+        return ((lhs.mYear == rhs.mYear) &&
+                (lhs.mMonth == rhs.mMonth) &&
+                (lhs.mDay == rhs.mDay));
+        // clang-format on
+    }
 };
 
 Date::Date()
     : mData{new SharedDate}
 {
+}
+
+Date::Date(const std::string &dateString)
+    : mData{new SharedDate}
+{
+    std::istringstream input(dateString);
+    std::array<std::string, 3> splittedStrings;
+    for (std::size_t i = 0; i < splittedStrings.size(); ++i)
+    {
+        getline(input, splittedStrings[i], '.');
+    }
+
+    mData->mDay = static_cast<std::uint8_t>(std::stoi(splittedStrings[0]));
+    mData->mMonth = static_cast<std::uint8_t>(std::stoi(splittedStrings[1]));
+    mData->mYear = static_cast<std::uint16_t>(std::stoi(splittedStrings[2]));
 }
 
 Date::~Date() = default;
@@ -85,6 +109,16 @@ std::string Date::asString() const noexcept
     // clang-format on
 
     return dateAsString.str();
+}
+
+bool operator==(const Date &lhs, const Date &rhs)
+{
+    return lhs.mData == rhs.mData || *(lhs.mData) == *(rhs.mData);
+}
+
+bool operator!=(const Date &lhs, const Date &rhs)
+{
+    return !(lhs == rhs);
 }
 
 } // namespace LaptimerCore::Common

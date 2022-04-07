@@ -17,6 +17,13 @@ public:
     Date();
 
     /**
+     * Creates a date by a string.
+     * The string must have the format dd.MM.YYYY
+     * @param dateString
+     */
+    Date(const std::string &dateString);
+
+    /**
      * Default destructor
      */
     ~Date();
@@ -88,6 +95,20 @@ public:
      * @return The date as string.
      */
     std::string asString() const noexcept;
+
+    /**
+     * Equal operator
+     * @return true The two objects are the same.
+     * @return false The two objects are not the same.
+     */
+    friend bool operator==(const Date &lhs, const Date &rhs);
+
+    /**
+     * Not Equal operator
+     * @return true The two objects are not the same.
+     * @return false The two objects are the same.
+     */
+    friend bool operator!=(const Date &lhs, const Date &rhs);
 
 private:
     SharedDataPointer<SharedDate> mData;

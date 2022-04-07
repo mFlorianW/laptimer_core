@@ -16,3 +16,14 @@ TEST_CASE("The Date shall be convertable to a string in format DD.MM.YYYY")
 
     REQUIRE(result == expectedResult);
 }
+
+TEST_CASE("The Date shall be creatable from string in the format of dd.MM.YYYY")
+{
+    Date expectedDate;
+    expectedDate.setDay(1);
+    expectedDate.setMonth(1);
+    expectedDate.setYear(1970);
+
+    auto date = Date{"01.01.1970"};
+    REQUIRE(date == expectedDate);
+}
