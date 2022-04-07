@@ -17,6 +17,13 @@ public:
     Timestamp();
 
     /**
+     * Create an instance of Timestamp by a string.
+     * The string must have the format of hh:mm:ss.nnn
+     * @param timestampString
+     */
+    Timestamp(const std::string &timestampString);
+
+    /**
      * Default destructor
      */
     ~Timestamp();

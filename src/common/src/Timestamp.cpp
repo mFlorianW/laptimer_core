@@ -28,6 +28,25 @@ Timestamp::Timestamp()
 {
 }
 
+Timestamp::Timestamp(const std::string &timestampString)
+    : mData{new SharedTimestamp{}}
+{
+    std::istringstream input(timestampString);
+    std::string hour;
+    std::getline(input, hour, ':');
+    std::string minute;
+    std::getline(input, minute, ':');
+    std::string second;
+    std::getline(input, second, '.');
+    std::string fractionalOfSecond;
+    std::getline(input, fractionalOfSecond);
+
+    mData->hour = static_cast<std::uint8_t>(std::stoi(hour));
+    mData->minute = static_cast<std::uint8_t>(std::stoi(minute));
+    mData->second = static_cast<std::uint8_t>(std::stoi(second));
+    mData->fractionalOfSecond = static_cast<std::uint16_t>(std::stoi(fractionalOfSecond));
+}
+
 Timestamp::~Timestamp() = default;
 
 Timestamp::Timestamp(const Timestamp &other)

@@ -273,3 +273,16 @@ TEST_CASE("The Timestamp shall handle fractional of second underflow in the minu
 
     REQUIRE(result == expectedResult);
 }
+
+TEST_CASE("The Timestamp shall be creatable from string in the format of hh:mm:ss.nnn")
+{
+    Timestamp expectedTs;
+    expectedTs.setHour(1);
+    expectedTs.setMinute(48);
+    expectedTs.setSecond(55);
+    expectedTs.setFractionalOfSecond(500);
+
+    auto ts = Timestamp{"01:48:55.500"};
+
+    REQUIRE(ts == expectedTs);
+}
