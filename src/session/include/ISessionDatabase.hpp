@@ -25,14 +25,14 @@ public:
      * default constructed session will be returned.
      * @return The last used session.
      */
-    virtual Common::SessionData getLastSession() const noexcept;
+    virtual Common::SessionData getLastSession() const noexcept = 0;
 
     /**
      * Gives the session by the index. If index doesn't exists a nullopt is returned.
      * @param index The index of the request session.
      * @return The session by the given index or a nullopt.
      */
-    virtual std::optional<Common::SessionData> getSessionByIndex(std::size_t index) const noexcept;
+    virtual std::optional<Common::SessionData> getSessionByIndex(std::size_t index) const noexcept = 0;
 
     /**
      * Gives the a session for the given timestamp.
@@ -46,7 +46,7 @@ public:
      * @param session The session that shall bestored.
      * @return True session successful stored otherwise false.
      */
-    virtual bool storeSession(const Common::SessionData session) = 0;
+    virtual bool storeSession(const Common::SessionData &session) = 0;
 
 protected:
     ISessionDatabase() = default;

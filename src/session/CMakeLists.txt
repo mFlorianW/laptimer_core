@@ -6,7 +6,8 @@ PRIVATE
    ${CMAKE_CURRENT_SOURCE_DIR}/src/SessionDatabase.cpp
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/ISessionDatabase.hpp
-#    ${CMAKE_CURRENT_SOURCE_DIR}/src/Session.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/ISessionDatabaseBackend.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/SessionDatabase.hpp
 )
 
 target_include_directories(Session
