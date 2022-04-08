@@ -105,6 +105,20 @@ public:
      */
     void addSectorTimes(const std::vector<Timestamp> sectorTimes);
 
+    /**
+     * Equal operator
+     * @return true The two objects are the same.
+     * @return false The two objects are not the same.
+     */
+    friend bool operator==(const LapData &lhs, const LapData &rhs);
+
+    /**
+     * Not Equal operator
+     * @return true The two objects are not the same.
+     * @return false The two objects are the same.
+     */
+    friend bool operator!=(const LapData &lhs, const LapData &rhs);
+
 private:
     SharedDataPointer<SharedLap> mData;
 };

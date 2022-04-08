@@ -10,6 +10,16 @@ public:
     PositionData mFinishline;
     PositionData mStartline;
     std::vector<PositionData> mSections;
+
+    friend bool operator==(const SharedTrackData &lhs, const SharedTrackData &rhs)
+    {
+        // clang-format off
+        return ((lhs.mTrackName) == (rhs.mTrackName) &&
+                (lhs.mFinishline) == (rhs.mFinishline) &&
+                (lhs.mStartline) == (rhs.mStartline) &&
+                (lhs.mSections) == (rhs.mSections));
+        // clang-format on
+    }
 };
 
 TrackData::TrackData()
@@ -95,12 +105,12 @@ void TrackData::setSections(const std::vector<PositionData> &sections)
 
 bool operator==(const TrackData &lhs, const TrackData &rhs)
 {
-    return lhs.mData == rhs.mData;
+    return lhs.mData == rhs.mData || *lhs.mData == *rhs.mData;
 }
 
 bool operator!=(const TrackData &lhs, const TrackData &rhs)
 {
-    return lhs.mData != rhs.mData;
+    return !(lhs != rhs);
 }
 
 } // namespace LaptimerCore::Common

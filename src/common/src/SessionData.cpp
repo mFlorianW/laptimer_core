@@ -11,6 +11,16 @@ public:
     Timestamp mSessionTime;
     TrackData mSessionTrack;
     std::vector<LapData> mLaps;
+
+    friend bool operator==(const SharedSessionData &lhs, const SharedSessionData &rhs)
+    {
+        // clang-format off
+        return ((lhs.mSessionDate) == (rhs.mSessionDate) &&
+                (lhs.mSessionTime) == (rhs.mSessionTime) &&
+                (lhs.mSessionTrack) == (rhs.mSessionTrack) &&
+                (lhs.mLaps) == (rhs.mLaps));
+        // clang-format on
+    }
 };
 
 SessionData::SessionData(const TrackData &track, const Date &sessionDate, const Timestamp &sessionTime)
@@ -88,12 +98,12 @@ void SessionData::addLap(const LapData &lap)
 
 bool operator==(const SessionData &lhs, const SessionData &rhs)
 {
-    return lhs.mData == rhs.mData;
+    return lhs.mData == rhs.mData || *lhs.mData == *rhs.mData;
 }
 
 bool operator!=(const SessionData &lhs, const SessionData &rhs)
 {
-    return lhs.mData != rhs.mData;
+    return !(lhs == rhs);
 }
 
 } // namespace LaptimerCore::Common

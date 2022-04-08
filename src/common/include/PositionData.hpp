@@ -70,6 +70,20 @@ public:
      */
     void setLongitude(float longitude);
 
+    /**
+     * Equal operator
+     * @return true The two objects are the same.
+     * @return false The two objects are not the same.
+     */
+    friend bool operator==(const PositionData &lhs, const PositionData &rhs);
+
+    /**
+     * Not Equal operator
+     * @return true The two objects are not the same.
+     * @return false The two objects are the same.
+     */
+    friend bool operator!=(const PositionData &lhs, const PositionData &rhs);
+
 private:
     SharedDataPointer<SharedPositionData> mData;
 };

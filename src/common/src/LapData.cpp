@@ -9,6 +9,14 @@ class SharedLap : public SharedData
 public:
     Timestamp mLaptime;
     std::vector<Timestamp> mSectorTimes;
+
+    friend bool operator==(const SharedLap &lhs, const SharedLap &rhs)
+    {
+        // clang-format off
+        return ((lhs.mLaptime) == (rhs.mLaptime) &&
+                (lhs.mSectorTimes) == (rhs.mSectorTimes));
+        // clang-format on
+    }
 };
 
 LapData::LapData()
@@ -82,6 +90,16 @@ void LapData::addSectorTime(const Timestamp &sectorTime)
 void LapData::addSectorTimes(const std::vector<Timestamp> sectorTimes)
 {
     mData->mSectorTimes = sectorTimes;
+}
+
+bool operator==(const LapData &lhs, const LapData &rhs)
+{
+    return lhs.mData == rhs.mData || *lhs.mData == *rhs.mData;
+}
+
+bool operator!=(const LapData &lhs, const LapData &rhs)
+{
+    return !(lhs == rhs);
 }
 
 } // namespace LaptimerCore::Common
