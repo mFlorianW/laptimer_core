@@ -12,6 +12,7 @@ class MemorySessionDatabaseBackend : public LaptimerCore::Session::ISessionDatab
 public:
     MemorySessionDatabaseBackend();
 
+    std::size_t getLastStoredIndex() const noexcept override;
     std::size_t getNumberOfStoredSessions() const noexcept override;
     bool storeSession(std::size_t index, const std::string &sessionData) override;
     std::string loadSessionByIndex(std::size_t index) override;

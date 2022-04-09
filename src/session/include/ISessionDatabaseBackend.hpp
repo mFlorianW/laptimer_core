@@ -12,6 +12,8 @@ class ISessionDatabaseBackend
 public:
     virtual ~ISessionDatabaseBackend() = default;
 
+    virtual std::size_t getLastStoredIndex() const noexcept = 0;
+
     virtual std::size_t getNumberOfStoredSessions() const noexcept = 0;
 
     virtual bool storeSession(std::size_t index, const std::string &sessionData) = 0;

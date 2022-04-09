@@ -7,6 +7,16 @@ MemorySessionDatabaseBackend::MemorySessionDatabaseBackend()
 {
 }
 
+std::size_t MemorySessionDatabaseBackend::getLastStoredIndex() const noexcept
+{
+    if (!mStoredSessions.empty())
+    {
+        return mStoredSessions.back().id;
+    }
+
+    return 0;
+}
+
 std::size_t MemorySessionDatabaseBackend::getNumberOfStoredSessions() const noexcept
 {
     return mStoredSessions.size();
