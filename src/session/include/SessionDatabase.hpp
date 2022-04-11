@@ -46,7 +46,6 @@ public:
 
 private:
     ISessionDatabaseBackend &mBackend;
-    std::vector<std::size_t> mIndicies;
 };
 
 } // namespace LaptimerCore::Session

@@ -5,7 +5,9 @@
 
 namespace LaptimerCore::Session
 {
-
+/**
+ * The SessionDatabase provides an index based access to the stored session data.
+ */
 class ISessionDatabase
 {
 public:

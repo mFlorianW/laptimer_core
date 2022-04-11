@@ -49,6 +49,7 @@ std::string MemorySessionDatabaseBackend::loadSessionByIndex(std::size_t index)
             return entry.data;
         }
     }
+
     return "";
 }
 
