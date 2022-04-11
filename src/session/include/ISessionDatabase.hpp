@@ -34,6 +34,13 @@ public:
      */
     virtual bool storeSession(const Common::SessionData &session) = 0;
 
+    /**
+     * Deletes the session under the given index.
+     * If the index is not present nothing happens.
+     * @param index The index which shall deleted.
+     */
+    virtual void deleteSession(std::size_t index) = 0;
+
 protected:
     ISessionDatabase() = default;
 };

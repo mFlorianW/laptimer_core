@@ -13,7 +13,7 @@ SessionDatabase::~SessionDatabase() = default;
 
 std::size_t SessionDatabase::getSessionCount()
 {
-    return 0;
+    return mIndicies.size();
 }
 
 std::optional<LaptimerCore::Common::SessionData> SessionDatabase::getSessionByIndex(std::size_t index) const noexcept
@@ -28,8 +28,23 @@ bool SessionDatabase::storeSession(const Common::SessionData &session)
     Common::JsonSerializer::serializeSessionData(session, jsonRootObject);
 
     auto index = mBackend.getLastStoredIndex() + 1;
+    auto result = mBackend.storeSession(index, jsonDoc.as<std::string>());
 
-    return mBackend.storeSession(index, jsonDoc.as<std::string>());
+    if (result)
+    {
+        mIndicies = mBackend.getIndexList();
+    }
+
+    return result;
+}
+
+void SessionDatabase::deleteSession(std::size_t index)
+{
+    auto result = mBackend.deleteSession(index);
+    if (result)
+    {
+        mIndicies = mBackend.getIndexList();
+    }
 }
 
 } // namespace LaptimerCore::Session

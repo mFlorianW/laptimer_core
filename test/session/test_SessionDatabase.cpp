@@ -20,6 +20,17 @@ TEST_CASE("The SessionDatabase shall serialize the SessionData to JSON and store
     REQUIRE(backend.loadSessionByIndex(1) == Sessions::TestSessionAsJson);
 }
 
+TEST_CASE("The SessionDatabase shall return the amout of the stored sessions")
+{
+    auto backend = MemorySessionDatabaseBackend{};
+    auto sessionDb = SessionDatabase{backend};
+
+    auto result = sessionDb.storeSession(Sessions::TestSession);
+
+    REQUIRE(result);
+    REQUIRE(sessionDb.getSessionCount() == 1);
+}
+
 TEST_CASE("The SessionDatabase shall store two Sessions with inrcrementing indices")
 {
     auto backend = MemorySessionDatabaseBackend{};
@@ -33,4 +44,17 @@ TEST_CASE("The SessionDatabase shall store two Sessions with inrcrementing indic
 
     REQUIRE(result2);
     REQUIRE(backend.loadSessionByIndex(2) == Sessions::TestSessionAsJson);
+}
+
+TEST_CASE("The SessionDatabase shall be able to delete a single session.")
+{
+    auto backend = MemorySessionDatabaseBackend{};
+    auto sessionDb = SessionDatabase{backend};
+
+    auto result = sessionDb.storeSession(Sessions::TestSession);
+    REQUIRE(sessionDb.getSessionCount() == 1);
+    REQUIRE(result);
+
+    sessionDb.deleteSession(1);
+    REQUIRE(sessionDb.getSessionCount() == 0);
 }

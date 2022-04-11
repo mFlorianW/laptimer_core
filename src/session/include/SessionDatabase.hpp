@@ -35,15 +35,18 @@ public:
     std::optional<Common::SessionData> getSessionByIndex(std::size_t index) const noexcept override;
 
     /**
-     * Stores the passed session.
-     * @param session The session that shall be stored.
-     * @return True Session succesful stored
-     * @return False Failed to store the session.
+     * @copydoc ISessionDatabase::storeSession(const Common::SessionData &session)
      */
     bool storeSession(const Common::SessionData &session) override;
 
+    /**
+     * @copydoc ISessionDatabase::deleteSession(std::size_t index)
+     */
+    void deleteSession(std::size_t index) override;
+
 private:
     ISessionDatabaseBackend &mBackend;
+    std::vector<std::size_t> mIndicies;
 };
 
 } // namespace LaptimerCore::Session
