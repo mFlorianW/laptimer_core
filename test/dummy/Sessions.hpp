@@ -10,6 +10,7 @@ class Sessions
 {
 public:
     static Common::SessionData TestSession;
+    static Common::SessionData TestSession2;
 
     // clang-format off
     static constexpr char TestSessionAsJson[] =

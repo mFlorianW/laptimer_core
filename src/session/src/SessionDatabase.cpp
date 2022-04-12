@@ -36,14 +36,32 @@ std::optional<LaptimerCore::Common::SessionData> SessionDatabase::getSessionByIn
 
 bool SessionDatabase::storeSession(const Common::SessionData &session)
 {
+    std::size_t storageIndex = 0;
     ArduinoJson::StaticJsonDocument<8192> jsonDoc;
     auto jsonRootObject = jsonDoc.to<ArduinoJson::JsonObject>();
-    Common::JsonSerializer::serializeSessionData(session, jsonRootObject);
+    if (!Common::JsonSerializer::serializeSessionData(session, jsonRootObject))
+    {
+        return false;
+    }
 
-    auto index = mBackend.getIndexList().empty() ? 0 : mBackend.getLastStoredIndex() + 1;
-    auto result = mBackend.storeSession(index, jsonDoc.as<std::string>());
+    if (!mBackend.getIndexList().empty())
+    {
+        for (std::size_t index = 0; index < mBackend.getNumberOfStoredSessions(); ++index)
+        {
+            const auto storedSession =
+                Common::JsonDeserializer::deserializeSessionData(mBackend.loadSessionByIndex(index));
+            if (storedSession && (storedSession->getSessionDate() == session.getSessionDate()) &&
+                (storedSession->getSessionTime() == session.getSessionTime()) &&
+                (storedSession->getTrack() == session.getTrack()))
+            {
+                return mBackend.storeSession(storageIndex, jsonDoc.as<std::string>());
+            }
+        }
+    }
 
-    return result;
+    storageIndex =
+        ((mBackend.getNumberOfStoredSessions() == 0) && (storageIndex == 0)) ? 0 : mBackend.getLastStoredIndex() + 1;
+    return mBackend.storeSession(storageIndex, jsonDoc.as<std::string>());
 }
 
 void SessionDatabase::deleteSession(std::size_t index)

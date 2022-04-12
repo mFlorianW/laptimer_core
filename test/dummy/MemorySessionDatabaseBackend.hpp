@@ -2,7 +2,7 @@
 #define MEMORYSESSIONDATABASE_HPP
 
 #include "ISessionDatabaseBackend.hpp"
-#include <vector>
+#include <map>
 
 namespace LaptimerCore::Test::Dummy
 {
@@ -20,13 +20,8 @@ public:
     bool deleteSession(std::size_t index) override;
 
 private:
-    struct Entry
-    {
-        std::size_t id;
-        std::string data;
-    };
-
-    std::vector<Entry> mStoredSessions;
+    std::map<std::size_t, std::string> mStoredSessions;
+    std::pair<std::map<std::size_t, std::string>::const_iterator, bool> mLastStoredSession;
 };
 
 } // namespace LaptimerCore::Test::Dummy

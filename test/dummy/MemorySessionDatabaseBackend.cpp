@@ -9,20 +9,20 @@ MemorySessionDatabaseBackend::MemorySessionDatabaseBackend()
 
 std::size_t MemorySessionDatabaseBackend::getLastStoredIndex() const noexcept
 {
-    if (!mStoredSessions.empty())
+    if (mLastStoredSession.first == mStoredSessions.cend())
     {
-        return mStoredSessions.back().id;
+        return 0;
     }
 
-    return 0;
+    return mLastStoredSession.first->first;
 }
 
 std::vector<std::size_t> MemorySessionDatabaseBackend::getIndexList() const noexcept
 {
     auto result = std::vector<std::size_t>{};
-    for (const auto &entry : mStoredSessions)
+    for (const auto &[key, rawSessioData] : mStoredSessions)
     {
-        result.push_back(entry.id);
+        result.push_back(key);
     }
 
     return result;
@@ -35,33 +35,20 @@ std::size_t MemorySessionDatabaseBackend::getNumberOfStoredSessions() const noex
 
 bool MemorySessionDatabaseBackend::storeSession(std::size_t index, const std::string &sessionData)
 {
-    auto entry = Entry{.id = index, .data = sessionData};
-    mStoredSessions.push_back(entry);
+    mLastStoredSession = mStoredSessions.insert({index, sessionData});
     return true;
 }
 
 std::string MemorySessionDatabaseBackend::loadSessionByIndex(std::size_t index)
 {
-    for (const auto &entry : mStoredSessions)
-    {
-        if (entry.id == index)
-        {
-            return entry.data;
-        }
-    }
-
-    return "";
+    return mStoredSessions[index];
 }
 
 bool MemorySessionDatabaseBackend::deleteSession(std::size_t index)
 {
-    for (auto iter = mStoredSessions.begin(); iter != mStoredSessions.end(); ++iter)
+    if (mStoredSessions.erase(index))
     {
-        if (iter->id == index)
-        {
-            mStoredSessions.erase(iter);
-            return true;
-        }
+        return true;
     }
 
     return false;

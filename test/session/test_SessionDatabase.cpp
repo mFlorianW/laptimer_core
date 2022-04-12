@@ -31,19 +31,18 @@ TEST_CASE("The SessionDatabase shall return the amout of the stored sessions")
     REQUIRE(sessionDb.getSessionCount() == 1);
 }
 
-TEST_CASE("The SessionDatabase shall store two Sessions with inrcrementing indices")
+TEST_CASE("The SessionDatabase shall store two different sessions")
 {
     auto backend = MemorySessionDatabaseBackend{};
     auto sessionDb = SessionDatabase{backend};
 
     auto result1 = sessionDb.storeSession(Sessions::TestSession);
-    auto result2 = sessionDb.storeSession(Sessions::TestSession);
+    auto result2 = sessionDb.storeSession(Sessions::TestSession2);
 
     REQUIRE(result1);
-    REQUIRE(backend.loadSessionByIndex(0) == Sessions::TestSessionAsJson);
-
     REQUIRE(result2);
-    REQUIRE(backend.loadSessionByIndex(1) == Sessions::TestSessionAsJson);
+    REQUIRE(backend.getNumberOfStoredSessions() == 2);
+    //    REQUIRE(sessionDb.getSessionCount() == 2);
 }
 
 TEST_CASE("The SessionDatabase shall be able to delete a single session.")
@@ -70,4 +69,17 @@ TEST_CASE("The SessionDatabase shall load the Session by the given valid index."
     REQUIRE(result);
     REQUIRE(session);
     REQUIRE(session.value() == Sessions::TestSession);
+}
+
+TEST_CASE("The SessionDatabase shall store an already stored session under the same index.")
+{
+    auto backend = MemorySessionDatabaseBackend{};
+    auto sessionDb = SessionDatabase{backend};
+
+    auto result1 = sessionDb.storeSession(Sessions::TestSession);
+    auto result2 = sessionDb.storeSession(Sessions::TestSession);
+
+    REQUIRE(result1);
+    REQUIRE(result2);
+    REQUIRE(sessionDb.getSessionCount() == 1);
 }
