@@ -1,5 +1,6 @@
 #include "LapData.hpp"
 #include <ArduinoJson.hpp>
+#include <utility>
 
 namespace LaptimerCore::Common
 {

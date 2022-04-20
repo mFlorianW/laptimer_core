@@ -1,4 +1,5 @@
 #include "JsonSerializer.hpp"
+#include <utility>
 
 namespace LaptimerCore::Common
 {

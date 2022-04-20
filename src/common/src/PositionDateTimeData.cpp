@@ -3,14 +3,14 @@
 namespace LaptimerCore::Common
 {
 
-class SharedPositionDataTimeData : public SharedData
+class SharedPositionTimeData : public SharedData
 {
 public:
     PositionData mPosition;
     Timestamp mTime;
     Date mDate;
 
-    friend bool operator==(const SharedPositionDataTimeData &lhs, const SharedPositionDataTimeData &rhs)
+    friend bool operator==(const SharedPositionTimeData &lhs, const SharedPositionTimeData &rhs)
     {
         // clang-format off
         return ((lhs.mPosition) == (rhs.mPosition) &&
@@ -21,11 +21,35 @@ public:
 };
 
 PositionDateTimeData::PositionDateTimeData()
-    : mData(new SharedPositionDataTimeData{})
+    : mData(new SharedPositionTimeData{})
 {
 }
 
 PositionDateTimeData::~PositionDateTimeData() = default;
+
+PositionDateTimeData::PositionDateTimeData(const PositionDateTimeData &other)
+    : mData(other.mData)
+{
+}
+
+PositionDateTimeData &PositionDateTimeData::operator=(const PositionDateTimeData &other)
+{
+    mData = other.mData;
+    return *this;
+}
+
+PositionDateTimeData::PositionDateTimeData(PositionDateTimeData &&other)
+    : mData{std::move(other.mData)}
+{
+    other.mData = nullptr;
+}
+
+PositionDateTimeData &PositionDateTimeData::operator=(PositionDateTimeData &&other)
+{
+    PositionDateTimeData moved{std::move(other)};
+    std::swap(moved.mData, mData);
+    return *this;
+}
 
 PositionData PositionDateTimeData::getPosition() const noexcept
 {

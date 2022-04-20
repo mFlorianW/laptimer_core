@@ -9,7 +9,7 @@
 namespace LaptimerCore::Common
 {
 
-class SharedPositionDataTimeData;
+class SharedPositionTimeData;
 class PositionDateTimeData final
 {
 public:
@@ -22,6 +22,32 @@ public:
      * Default destructor
      */
     ~PositionDateTimeData();
+
+    /**
+     * Copy constructor for PositionDateTimeData.
+     * @param other The object to copy from.
+     */
+    PositionDateTimeData(const PositionDateTimeData &other);
+
+    /**
+     * Copy assignment operator for PositionDateTimeData.
+     * @param other The object to copy from.
+     * @return PositionData& A reference to the copied instance.
+     */
+    PositionDateTimeData &operator=(const PositionDateTimeData &other);
+
+    /**
+     * The move constructor for PositionDateTimeData.
+     * @param other The object to move from.
+     */
+    PositionDateTimeData(PositionDateTimeData &&other);
+
+    /**
+     * The move assignment operator for PositionDateTimeData.
+     * @param other The object to move from.
+     * @return PositionData& A reference of the moved instance.
+     */
+    PositionDateTimeData &operator=(PositionDateTimeData &&other);
 
     /**
      * @return The current position
@@ -71,7 +97,7 @@ public:
     friend bool operator!=(const PositionDateTimeData &lhs, const PositionDateTimeData &rhs);
 
 private:
-    SharedDataPointer<SharedPositionDataTimeData> mData;
+    SharedDataPointer<SharedPositionTimeData> mData;
 };
 
 } // namespace LaptimerCore::Common
