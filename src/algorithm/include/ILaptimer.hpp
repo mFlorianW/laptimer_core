@@ -23,7 +23,7 @@ public:
      * The track information is needed to calculate the section and laptime.
      * @param track The new track that is used by the laptimer.
      */
-    virtual void setTrack(const Common::TrackData &track);
+    virtual void setTrack(const Common::TrackData &track) = 0;
 
     /**
      * Update the position in the laptimer.
@@ -61,6 +61,12 @@ public:
      * This property holds the current active sectiom time.
      */
     KDBindings::Property<Common::Timestamp> currentSectortime;
+
+protected:
+    /**
+     * Default constructor
+     */
+    ILaptimer() = default;
 };
 
 } // namespace LaptimerCore::Algorithm
