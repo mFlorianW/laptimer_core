@@ -13,9 +13,10 @@ PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/ILaptimer.hpp
 )
 
-target_link_libraries(AlgorithmObject 
+target_link_libraries(AlgorithmObject
 PUBLIC
     LaptimerCore::Common
+    KDAB::KDBindings
 )
 
 target_include_directories(AlgorithmObject
@@ -32,4 +33,5 @@ add_library(LaptimerCore::Algorithm ALIAS Algorithm)
 target_link_libraries(Algorithm
 PUBLIC
     LaptimerCore::AlgorithmObject
+
 )

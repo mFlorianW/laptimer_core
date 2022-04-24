@@ -1,11 +1,11 @@
 #ifndef __ILAPTIMER__H__
 #define __ILAPTIMER__H__
 
-#include <Laptime.hpp>
-#include <PositionData.hpp>
-#include <TimeStamp.hpp>
+#include <PositionDateTimeData.hpp>
+#include <Timestamp.hpp>
 #include <TrackData.hpp>
 #include <functional>
+#include <kdbindings/property.h>
 
 namespace LaptimerCore::Algorithm
 {
@@ -13,21 +13,6 @@ namespace LaptimerCore::Algorithm
 class ILaptimer
 {
 public:
-    /**
-     * Alias for a callback when the lap is started.
-     */
-    using LapStartedCallback = std::function<void()>;
-
-    /**
-     * Alias for a callback when the lap is finished.
-     */
-    using LapFinishedCallback = std::function<void(const Common::Laptime &laptime)>;
-
-    /**
-     * Alias for a callback when a section is finished.
-     */
-    using SectionFinishedCallback = std::function<void(const Common::Timestamp &timestamp)>;
-
     /**
      * Default desctructor.
      */
@@ -45,43 +30,37 @@ public:
      * The Position is used in the laptimer to calculate the section and laptime.
      * @param data The new position.
      */
-    virtual void updatePosition(const Common::PositionData &data) = 0;
-
-    /**
-     * @return Common::Timestamp Gives the last section time.
-     */
-    virtual Common::Timestamp getLastSectionTime() const = 0;
-
-    /**
-     * @param sectionIndex The section index where you want to retrieve the time of.
-     * @return Common::Timestamp Gives the section for the section given by the index.
-     */
-    virtual Common::Timestamp getSectionTime(std::uint8_t sectionIndex) const = 0;
+    virtual void updatePositionAndTime(const Common::PositionDateTimeData &data) = 0;
 
     /**
      * @return Common::Timestamp Gives the last laptime.
      */
-    virtual Common::Laptime getLastLaptime() const = 0;
+    virtual Common::Timestamp getLastLaptime() const = 0;
 
     /**
-     * Adds a new lap started listener to the laptimer.
-     * @param listener The new lap started listener.
+     * This signal is emitted when a lap is finished.
      */
-    virtual void addLapStartedListener(const LapStartedCallback &listener) = 0;
+    KDBindings::Signal<> lapFinished;
 
     /**
-     * Adds a new lap finished listener to the laptimer.
-     * The listener is called when a laptime is finshed.
-     * @param listener The new lap finished listener.
+     * @return Common::Timestamp Gives the last sector time.
      */
-    virtual void addLapFinishedListener(const LapFinishedCallback &listener) = 0;
+    virtual Common::Timestamp getLastSectorTime() const = 0;
 
     /**
-     * Adds a new section finished listener to the laptimer.
-     * The listener is called when a section is finished.
-     * @param listener The new section finished listener.
+     * This signal is emitted when a lap is finished.
      */
-    virtual void addSectionFinishedListener(const SectionFinishedCallback &listener);
+    KDBindings::Signal<> sectorFinished;
+
+    /**
+     * This property holds the current active laptime.
+     */
+    KDBindings::Property<Common::Timestamp> currentLaptime;
+
+    /**
+     * This property holds the current active sectiom time.
+     */
+    KDBindings::Property<Common::Timestamp> currentSectortime;
 };
 
 } // namespace LaptimerCore::Algorithm
