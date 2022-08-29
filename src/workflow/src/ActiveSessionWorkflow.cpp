@@ -21,6 +21,7 @@ void ActiveSessionWorkflow::startActiveSession() noexcept
 
 void ActiveSessionWorkflow::stopActiveSession() noexcept
 {
+    mSession = std::nullopt;
 }
 
 void ActiveSessionWorkflow::setTrack(const Common::TrackData &track) noexcept
