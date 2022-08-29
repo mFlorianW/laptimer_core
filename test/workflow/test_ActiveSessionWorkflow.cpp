@@ -48,6 +48,19 @@ TEST_CASE("The ActiveSessionWorkflow shall store a lap in the database when the 
     REQUIRE(sdb.getSessionCount() == 1);
 }
 
-TEST_CASE("The ActiveSessionWorkflow shall not do anything when stop is called")
+TEST_CASE("The ActiveSessionWorkflow shall not return a valid session when stop is called.")
 {
+    auto lp = Laptimer{};
+    auto dp = PositionDateTimeProvider{};
+    auto dbb = MemorySessionDatabaseBackend{};
+    auto sdb = SessionDatabase{dbb};
+    auto actSessWf = ActiveSessionWorkflow{dp, lp, sdb};
+
+    actSessWf.startActiveSession();
+
+    REQUIRE(actSessWf.getSession());
+
+    actSessWf.stopActiveSession();
+
+    REQUIRE(!actSessWf.getSession());
 }
