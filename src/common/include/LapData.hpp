@@ -28,6 +28,14 @@ public:
      */
     LapData();
 
+    LapData(Timestamp laptime);
+
+    /**
+     * Constructs LapData instance with
+     * @param sectorTimes The array of sector times.
+     */
+    LapData(const std::vector<Timestamp> &sectorTimes);
+
     /**
      * Default destructor
      */
@@ -78,7 +86,7 @@ public:
     std::size_t getSectorTimeCount() const noexcept;
 
     /**
-     * Gives a sector time for a specific setctor.
+     * Gives a sector time for a specific sector.
      * If the index is bigger than the lap sector count a nullopt is returned.
      * @param index The index of the sector.
      * @return The sector time for the index.

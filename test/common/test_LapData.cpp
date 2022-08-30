@@ -28,3 +28,24 @@ TEST_CASE("The LapData shall calculate the laptime by the sector times.")
     REQUIRE(lap.getLaptime().getSecond() == 50);
     REQUIRE(lap.getLaptime().getFractionalOfSecond() == 278);
 }
+
+TEST_CASE("Create LapData from vector of sector times")
+{
+    auto sectorTime = Timestamp{"00:00:45.112"};
+
+    auto lap = LapData{std::vector<Timestamp>{sectorTime}};
+
+    REQUIRE(lap.getLaptime() == Timestamp{"00:00:45.112"});
+    REQUIRE(lap.getSectorTimeCount() == 1);
+    REQUIRE(lap.getSectorTime(0).has_value() == true);
+    REQUIRE(lap.getSectorTime(0).value() == Timestamp{"00:00:45.112"});
+}
+
+TEST_CASE("Create LapData from a timestamp that is used as laptime for the case the track doesn't have any sectors")
+{
+    auto laptime = Timestamp{"00:00:45.112"};
+
+    auto lap = LapData{laptime};
+
+    REQUIRE(lap.getLaptime() == Timestamp{"00:00:45.112"});
+}
