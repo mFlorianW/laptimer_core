@@ -60,7 +60,7 @@ public:
     /**
      * This property holds the current active sectiom time.
      */
-    KDBindings::Property<Common::Timestamp> currentSectortime;
+    KDBindings::Property<Common::Timestamp> currentSectorTime;
 
 protected:
     /**
