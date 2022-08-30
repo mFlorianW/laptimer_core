@@ -25,6 +25,18 @@ LapData::LapData()
 {
 }
 
+LapData::LapData(Timestamp laptime)
+    : mData{new SharedLap}
+{
+    mData->mLaptime = laptime;
+}
+
+LapData::LapData(const std::vector<Timestamp> &sectorTimes)
+    : mData{new SharedLap}
+{
+    mData->mSectorTimes = sectorTimes;
+}
+
 LapData::~LapData() = default;
 
 LapData::LapData(const LapData &other)
@@ -53,6 +65,13 @@ LapData &LapData::operator=(LapData &&other)
 
 Timestamp LapData::getLaptime() const noexcept
 {
+    // The lap doesn't have any sector the laptime
+    // can't be calculated by the sector times.
+    if (mData->mSectorTimes.empty())
+    {
+        return mData->mLaptime;
+    }
+
     auto laptime = Timestamp{};
     for (const auto &sectorTime : std::as_const(getSectorTimes()))
     {
