@@ -2,10 +2,8 @@ name: LaptimerCore CI
 
 on:
   push:
-    branches: 
-    - main
-    - 'feature/**'
-    - 'bugfix/**'
+    branches:
+      - main
   pull_request:
     branches: [ main ]
 
@@ -13,11 +11,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: configure
-      run: cmake --preset github-ci-debug
-    - name: make
-      run: cmake --build --preset github-ci-debug
-    - name: test
-      run: ctest --preset github-test -V 
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: configure
+        run: cmake --preset github-ci-debug
+      - name: make
+        run: cmake --build --preset github-ci-debug
+      - name: test
+        run: ctest --preset github-test -V
