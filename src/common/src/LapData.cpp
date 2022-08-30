@@ -25,7 +25,7 @@ LapData::LapData()
 {
 }
 
-LapData::LapData(Timestamp laptime)
+LapData::LapData(const Timestamp &laptime)
     : mData{new SharedLap}
 {
     mData->mLaptime = laptime;
@@ -39,24 +39,17 @@ LapData::LapData(const std::vector<Timestamp> &sectorTimes)
 
 LapData::~LapData() = default;
 
-LapData::LapData(const LapData &other)
-    : mData(other.mData)
-{
-}
+LapData::LapData(const LapData &other) = default;
 
-LapData &LapData::operator=(const LapData &other)
-{
-    mData = other.mData;
-    return *this;
-}
+LapData &LapData::operator=(const LapData &other) = default;
 
-LapData::LapData(LapData &&other)
+LapData::LapData(LapData &&other) noexcept
     : mData{std::move(other.mData)}
 {
     other.mData = nullptr;
 }
 
-LapData &LapData::operator=(LapData &&other)
+LapData &LapData::operator=(LapData &&other) noexcept
 {
     LapData moved{std::move(other)};
     std::swap(mData, moved.mData);
@@ -83,11 +76,15 @@ Timestamp LapData::getLaptime() const noexcept
 
 std::size_t LapData::getSectorTimeCount() const noexcept
 {
-
     return mData->mSectorTimes.size();
 }
 
-const std::optional<Timestamp> LapData::getSectorTime(std::size_t index) const noexcept
+void LapData::setLaptime(const Timestamp &laptime)
+{
+    mData->mLaptime = laptime;
+}
+
+std::optional<Timestamp> LapData::getSectorTime(std::size_t index) const noexcept
 {
     if (index > mData->mSectorTimes.size())
     {
@@ -107,7 +104,7 @@ void LapData::addSectorTime(const Timestamp &sectorTime)
     mData->mSectorTimes.push_back(sectorTime);
 }
 
-void LapData::addSectorTimes(const std::vector<Timestamp> sectorTimes)
+void LapData::addSectorTimes(const std::vector<Timestamp> &sectorTimes)
 {
     mData->mSectorTimes = sectorTimes;
 }
