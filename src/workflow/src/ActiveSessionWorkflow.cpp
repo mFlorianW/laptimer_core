@@ -47,12 +47,12 @@ void ActiveSessionWorkflow::onLapFinished()
     auto lap = Common::LapData{mLaptimer.getLastLaptime()};
     mSession->addLap(lap);
     mDatabase.storeSession(mSession.value());
-    roundTime.set(lap.getLaptime());
+    lastLaptime.set(lap.getLaptime());
 }
 
 void ActiveSessionWorkflow::onSectorFinished()
 {
-    roundSectorTime.set(mLaptimer.getLastSectorTime());
+    lastSectorTime.set(mLaptimer.getLastSectorTime());
 }
 
 } // namespace LaptimerCore::Workflow

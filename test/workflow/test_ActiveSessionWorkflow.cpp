@@ -80,7 +80,7 @@ TEST_CASE("The ActiveSessionWorkflow shall update the round sector time property
     lp.lastSectorTime = Timestamp{"00:00:12.123"};
     lp.sectorFinished.emit();
 
-    REQUIRE(actSessWf.roundSectorTime.get() == expectedSectorTime);
+    REQUIRE(actSessWf.lastSectorTime.get() == expectedSectorTime);
 }
 
 TEST_CASE("The ActiveSessionWorkflow shall store the laptime when finished.")
@@ -114,5 +114,5 @@ TEST_CASE("The ActiveSessionWorkflow shall update the round laptime property whe
     lp.lastLapTime = Timestamp{"00:00:12.123"};
     lp.lapFinished.emit();
 
-    REQUIRE(actSessWf.roundTime.get() == expectedLaptime);
+    REQUIRE(actSessWf.lastLaptime.get() == expectedLaptime);
 }

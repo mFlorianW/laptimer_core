@@ -41,15 +41,25 @@ public:
     /**
      * This property holds the current laptime.
      */
-    KDBindings::Property<Common::Timestamp> roundTime;
+    KDBindings::Property<Common::Timestamp> currentLaptime;
+
+    /**
+     * This property holds the last laptime.
+     */
+    KDBindings::Property<Common::Timestamp> lastLaptime;
 
     /**
      * This property holds the current sector time.
      */
-    KDBindings::Property<Common::Timestamp> roundSectorTime;
+    KDBindings::Property<Common::Timestamp> currentSectorTime;
 
     /**
-     * This property holds the current lap count.
+     * This property holds the last sector time.
+     */
+    KDBindings::Property<Common::Timestamp> lastSectorTime;
+
+    /**
+     * This property holds the lap count of the current session.
      */
     KDBindings::Property<std::size_t> lapCount;
 
