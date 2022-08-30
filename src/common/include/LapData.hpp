@@ -32,13 +32,13 @@ public:
      * Creates an instance of lapdata
      * @param laptime The time which is used a laptime.
      */
-    LapData(Timestamp laptime);
+    explicit LapData(const Timestamp &laptime);
 
     /**
      * Constructs LapData instance with
      * @param sectorTimes The array of sector times.
      */
-    LapData(const std::vector<Timestamp> &sectorTimes);
+    explicit LapData(const std::vector<Timestamp> &sectorTimes);
 
     /**
      * Default destructor
@@ -62,20 +62,20 @@ public:
      * Move constructor for LapData
      * @param other The object to move from.
      */
-    LapData(LapData &&other);
+    LapData(LapData &&other) noexcept;
 
     /**
      * The move assignment operator for the LapData.
      * @param other The object to move from.
      * @return LapData& A reference to the moved track data.
      */
-    LapData &operator=(LapData &&other);
+    LapData &operator=(LapData &&other) noexcept;
 
     /**
      * Gives the overall laptime.
      * @return The overall laptime.
      */
-    Timestamp getLaptime() const noexcept;
+    [[nodiscard]] Timestamp getLaptime() const noexcept;
 
     /**
      * Sets the overall laptime.
@@ -87,7 +87,7 @@ public:
      * Gives the amount of sectors.
      * @return The number of sectors.
      */
-    std::size_t getSectorTimeCount() const noexcept;
+    [[nodiscard]] std::size_t getSectorTimeCount() const noexcept;
 
     /**
      * Gives a sector time for a specific sector.
@@ -95,13 +95,13 @@ public:
      * @param index The index of the sector.
      * @return The sector time for the index.
      */
-    const std::optional<Timestamp> getSectorTime(std::size_t index) const noexcept;
+    [[nodiscard]] std::optional<Timestamp> getSectorTime(std::size_t index) const noexcept;
 
     /**
      * Gives a list of all sector times.
      * @return A list with all sector times.
      */
-    const std::vector<Timestamp> &getSectorTimes() const noexcept;
+    [[nodiscard]] const std::vector<Timestamp> &getSectorTimes() const noexcept;
 
     /**
      * Adds a new sector time to the lap.
@@ -115,7 +115,7 @@ public:
      * The order of the list defines the ordering of the sectors.
      * @param sectorTimes The list of sector times.
      */
-    void addSectorTimes(const std::vector<Timestamp> sectorTimes);
+    void addSectorTimes(const std::vector<Timestamp> &sectorTimes);
 
     /**
      * Equal operator
