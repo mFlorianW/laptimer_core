@@ -43,6 +43,7 @@ public:
 
 private:
     void onLapFinished();
+    void onSectorFinished();
 
 private:
     Positioning::IPositionDateTimeProvider &mDateTimeProvider;

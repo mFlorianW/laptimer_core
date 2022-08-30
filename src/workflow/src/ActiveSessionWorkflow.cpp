@@ -10,11 +10,13 @@ ActiveSessionWorkflow::ActiveSessionWorkflow(Positioning::IPositionDateTimeProvi
     , mLaptimer{laptimer}
     , mDatabase{database}
 {
-    mLaptimer.lapFinished.connect(&ActiveSessionWorkflow::onLapFinished, this);
 }
 
 void ActiveSessionWorkflow::startActiveSession() noexcept
 {
+    mLaptimer.lapFinished.connect(&ActiveSessionWorkflow::onLapFinished, this);
+    mLaptimer.sectorFinished.connect(&ActiveSessionWorkflow::onSectorFinished, this);
+
     auto dateTime = mDateTimeProvider.positionTimeData.get();
     mSession = Common::SessionData{mTrack, dateTime.getDate(), dateTime.getTime()};
 }
@@ -42,9 +44,15 @@ void ActiveSessionWorkflow::onLapFinished()
         return;
     }
 
-    auto lap = Common::LapData{};
+    auto lap = Common::LapData{mLaptimer.getLastLaptime()};
     mSession->addLap(lap);
     mDatabase.storeSession(mSession.value());
+    roundTime.set(lap.getLaptime());
+}
+
+void ActiveSessionWorkflow::onSectorFinished()
+{
+    roundSectorTime.set(mLaptimer.getLastSectorTime());
 }
 
 } // namespace LaptimerCore::Workflow

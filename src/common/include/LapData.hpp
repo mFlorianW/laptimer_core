@@ -28,6 +28,10 @@ public:
      */
     LapData();
 
+    /**
+     * Creates an instance of lapdata
+     * @param laptime The time which is used a laptime.
+     */
     LapData(Timestamp laptime);
 
     /**
