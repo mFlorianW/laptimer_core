@@ -16,6 +16,8 @@ void ActiveSessionWorkflow::startActiveSession() noexcept
 {
     mLaptimer.lapFinished.connect(&ActiveSessionWorkflow::onLapFinished, this);
     mLaptimer.sectorFinished.connect(&ActiveSessionWorkflow::onSectorFinished, this);
+    mLaptimer.currentLaptime.valueChanged().connect(&ActiveSessionWorkflow::onCurrentLaptimeChanged, this);
+    mLaptimer.currentSectorTime.valueChanged().connect(&ActiveSessionWorkflow::onCurrentSectorTimeChanged, this);
 
     auto dateTime = mDateTimeProvider.positionTimeData.get();
     mSession = Common::SessionData{mTrack, dateTime.getDate(), dateTime.getTime()};
@@ -53,6 +55,16 @@ void ActiveSessionWorkflow::onLapFinished()
 void ActiveSessionWorkflow::onSectorFinished()
 {
     lastSectorTime.set(mLaptimer.getLastSectorTime());
+}
+
+void ActiveSessionWorkflow::onCurrentLaptimeChanged()
+{
+    currentLaptime.set(mLaptimer.currentLaptime.get());
+}
+
+void ActiveSessionWorkflow::onCurrentSectorTimeChanged()
+{
+    currentSectorTime.set(mLaptimer.currentSectorTime.get());
 }
 
 } // namespace LaptimerCore::Workflow

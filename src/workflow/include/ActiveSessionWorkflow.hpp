@@ -44,6 +44,8 @@ public:
 private:
     void onLapFinished();
     void onSectorFinished();
+    void onCurrentLaptimeChanged();
+    void onCurrentSectorTimeChanged();
 
 private:
     Positioning::IPositionDateTimeProvider &mDateTimeProvider;

@@ -116,3 +116,45 @@ TEST_CASE("The ActiveSessionWorkflow shall update the round laptime property whe
 
     REQUIRE(actSessWf.lastLaptime.get() == expectedLaptime);
 }
+
+TEST_CASE(
+    "The ActiveSessionWorkflow shall update the currentLaptime property when the laptimer update the current laptime.")
+{
+    auto lp = Laptimer{};
+    auto dp = PositionDateTimeProvider{};
+    auto dbb = MemorySessionDatabaseBackend{};
+    auto sdb = SessionDatabase{dbb};
+    auto actSessWf = ActiveSessionWorkflow{dp, lp, sdb};
+
+    actSessWf.startActiveSession();
+
+    lp.currentLaptime.set(Timestamp{"00:00:30.123"});
+    REQUIRE(actSessWf.currentLaptime.get() == Timestamp{"00:00:30.123"});
+
+    lp.currentLaptime.set(Timestamp{"00:00:45.123"});
+    REQUIRE(actSessWf.currentLaptime.get() == Timestamp{"00:00:45.123"});
+
+    lp.currentLaptime.set(Timestamp{"00:01:15.123"});
+    REQUIRE(actSessWf.currentLaptime.get() == Timestamp{"00:01:15.123"});
+}
+
+TEST_CASE("The ActiveSessionWorkflow shall update the currentSectorTime property when the laptimer update the current "
+          "sectorTime.")
+{
+    auto lp = Laptimer{};
+    auto dp = PositionDateTimeProvider{};
+    auto dbb = MemorySessionDatabaseBackend{};
+    auto sdb = SessionDatabase{dbb};
+    auto actSessWf = ActiveSessionWorkflow{dp, lp, sdb};
+
+    actSessWf.startActiveSession();
+
+    lp.currentSectorTime.set(Timestamp{"00:00:30.123"});
+    REQUIRE(actSessWf.currentSectorTime.get() == Timestamp{"00:00:30.123"});
+
+    lp.currentSectorTime.set(Timestamp{"00:00:45.123"});
+    REQUIRE(actSessWf.currentSectorTime.get() == Timestamp{"00:00:45.123"});
+
+    lp.currentSectorTime.set(Timestamp{"00:01:15.123"});
+    REQUIRE(actSessWf.currentSectorTime.get() == Timestamp{"00:01:15.123"});
+}
