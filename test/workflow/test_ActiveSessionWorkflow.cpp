@@ -97,7 +97,7 @@ TEST_CASE("The ActiveSessionWorkflow shall store the laptime when finished.")
     lp.lapFinished.emit();
 
     REQUIRE(actSessWf.getSession()->getLaps().size() == 1);
-    REQUIRE(actSessWf.getSession()->getLaps().at(0) == expectedLap);
+    REQUIRE(actSessWf.getSession()->getLap(0) == expectedLap);
 }
 
 TEST_CASE("The ActiveSessionWorkflow shall update the round laptime property when the laptimer notifes that the "
