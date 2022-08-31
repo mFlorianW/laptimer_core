@@ -52,10 +52,18 @@ if (ENABLE_LVGL_FETCH)
     FetchContent_MakeAvailable(LvglDrivers)
 
     include_directories(SYSTEM
-    "${lvgl_SOURCE_DIR}/src"
-    "${lvgl_SOURCE_DIR}"
-    "${lvgldrivers_SOURCE_DIR}/display"
-    "${lvgldrivers_SOURCE_DIR}/indev"
+        "${lvgl_SOURCE_DIR}"
+        "${lvgl_SOURCE_DIR}/src"
+        "${lvgl_SOURCE_DIR}/src/lv_core/"
+        "${lvgl_SOURCE_DIR}/src/lv_draw"
+        "${lvgl_SOURCE_DIR}/src/lv_font"
+        "${lvgl_SOURCE_DIR}/src/lv_gpu"
+        "${lvgl_SOURCE_DIR}/src/lv_hal"
+        "${lvgl_SOURCE_DIR}/src/lv_misc"
+        "${lvgl_SOURCE_DIR}/src/lv_themes"
+        "${lvgl_SOURCE_DIR}/src/lv_widgets"
+        "${lvgldrivers_SOURCE_DIR}/display"
+        "${lvgldrivers_SOURCE_DIR}/indev"
     )
 
     file(GLOB_RECURSE LVGL_SOURCES
