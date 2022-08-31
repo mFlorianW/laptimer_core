@@ -21,6 +21,7 @@ void ActiveSessionWorkflow::startActiveSession() noexcept
 
     auto dateTime = mDateTimeProvider.positionTimeData.get();
     mSession = Common::SessionData{mTrack, dateTime.getDate(), dateTime.getTime()};
+    lapCount.set(0);
 }
 
 void ActiveSessionWorkflow::stopActiveSession() noexcept
@@ -50,6 +51,9 @@ void ActiveSessionWorkflow::onLapFinished()
     mSession->addLap(mCurrentLap);
     mDatabase.storeSession(mSession.value());
     lastLaptime.set(mCurrentLap.getLaptime());
+    
+    const auto newLapCount = lapCount.get() + 1;
+    lapCount.set(newLapCount);
 }
 
 void ActiveSessionWorkflow::onSectorFinished()

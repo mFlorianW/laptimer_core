@@ -184,3 +184,24 @@ TEST_CASE("The ActiveSessionWorkflow shall store the sector times in a lap of a 
     REQUIRE(actSessWf.getSession()->getNumberOfLaps() == 1);
     REQUIRE(actSessWf.getSession()->getLap(0) == expectedLap);
 }
+
+TEST_CASE("The ActiveSessionWorkflow shall update the lap counter when a lap is finished.")
+{
+    auto lp = Laptimer{};
+    auto dp = PositionDateTimeProvider{};
+    auto dbb = MemorySessionDatabaseBackend{};
+    auto sdb = SessionDatabase{dbb};
+    auto actSessWf = ActiveSessionWorkflow{dp, lp, sdb};
+
+    actSessWf.startActiveSession();
+
+    REQUIRE(actSessWf.lapCount.get() == 0);
+
+    lp.lastLapTime = Timestamp{"00:23:32.123"};
+    lp.lapFinished.emit();
+
+    REQUIRE(actSessWf.lapCount.get() == 1);
+
+    lp.lapFinished.emit();
+    REQUIRE(actSessWf.lapCount.get() == 2);
+}

@@ -32,7 +32,7 @@ public:
     void stopActiveSession() noexcept override;
 
     /**
-     * @copydoc IActiveSessionWorkflow::setTraco()
+     * @copydoc IActiveSessionWorkflow::setTrack()
      */
     void setTrack(const Common::TrackData &track) noexcept override;
 
@@ -42,9 +42,24 @@ public:
     std::optional<Common::SessionData> getSession() const noexcept override;
 
 private:
+    /**
+     * This function is called when the lap timer emits the lapFinished.
+     */
     void onLapFinished();
+
+    /**
+     * This slot is called when the lap timer emit the sectorFinished.
+     */
     void onSectorFinished();
+
+    /**
+     * This slot is called when the lap timer property currentLaptime changes.
+     */
     void onCurrentLaptimeChanged();
+
+    /**
+     * This slot is caled when the lap timer property currentSector changes.
+     */
     void onCurrentSectorTimeChanged();
 
 private:
