@@ -53,6 +53,7 @@ private:
     Session::ISessionDatabase &mDatabase;
     std::optional<Common::SessionData> mSession;
     Common::TrackData mTrack;
+    Common::LapData mCurrentLap;
 };
 
 } // namespace LaptimerCore::Workflow

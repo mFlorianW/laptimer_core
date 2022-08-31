@@ -158,3 +158,29 @@ TEST_CASE("The ActiveSessionWorkflow shall update the currentSectorTime property
     lp.currentSectorTime.set(Timestamp{"00:01:15.123"});
     REQUIRE(actSessWf.currentSectorTime.get() == Timestamp{"00:01:15.123"});
 }
+
+TEST_CASE("The ActiveSessionWorkflow shall store the sector times in a lap of a session")
+{
+    auto lp = Laptimer{};
+    auto dp = PositionDateTimeProvider{};
+    auto dbb = MemorySessionDatabaseBackend{};
+    auto sdb = SessionDatabase{dbb};
+    auto actSessWf = ActiveSessionWorkflow{dp, lp, sdb};
+    auto expectedLap = LapData{{
+        Timestamp{"00:23:123.233"},
+        Timestamp{"00:23:123.233"},
+    }};
+
+    actSessWf.startActiveSession();
+
+    lp.lastSectorTime = Timestamp{"00:23:123.233"};
+    lp.sectorFinished.emit();
+
+    lp.lastSectorTime = Timestamp{"00:23:123.233"};
+    lp.sectorFinished.emit();
+    lp.lapFinished.emit();
+
+    REQUIRE(actSessWf.getSession());
+    REQUIRE(actSessWf.getSession()->getNumberOfLaps() == 1);
+    REQUIRE(actSessWf.getSession()->getLap(0) == expectedLap);
+}
