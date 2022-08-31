@@ -46,15 +46,16 @@ void ActiveSessionWorkflow::onLapFinished()
         return;
     }
 
-    auto lap = Common::LapData{mLaptimer.getLastLaptime()};
-    mSession->addLap(lap);
+    mSession->addLap(mCurrentLap);
     mDatabase.storeSession(mSession.value());
-    lastLaptime.set(lap.getLaptime());
+    lastLaptime.set(mCurrentLap.getLaptime());
 }
 
 void ActiveSessionWorkflow::onSectorFinished()
 {
-    lastSectorTime.set(mLaptimer.getLastSectorTime());
+    const auto sectorTime = mLaptimer.getLastSectorTime();
+    lastSectorTime.set(sectorTime);
+    mCurrentLap.addSectorTime(sectorTime);
 }
 
 void ActiveSessionWorkflow::onCurrentLaptimeChanged()
