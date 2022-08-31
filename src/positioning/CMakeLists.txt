@@ -4,7 +4,9 @@ add_library(LaptimerCore::Positioning ALIAS Positioning)
 target_sources(Positioning
     INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/include/IGPSInformationProvider.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/StaticGpsInformationProvider.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/IPositionInformationProvider.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/StaticPositionInformationProvider.hpp
 )
 
 target_include_directories(Positioning

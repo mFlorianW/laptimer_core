@@ -1,4 +1,7 @@
+#include "ScreenModel.hpp"
 #include <SDL2/SDL.h>
+#include <StaticGpsInformationProvider.hpp>
+#include <StaticPositionInformationProvider.hpp>
 #include <lvgl.h>
 #include <monitor.h>
 #include <mouse.h>
@@ -72,8 +75,10 @@ int main(int argc, char *argv[])
     /*Initialize the HAL (display, input devices, tick) for LVGL*/
     hal_init();
 
-    // lv_demo_widgets();
-    // lv_demo_printer();
+    auto gpsInfoProvider = LaptimerCore::Positioning::StaticGpsInformationProvider{};
+    auto posInfoProvider = LaptimerCore::Positioning::StaticPositionInformationProvider{};
+    auto screenModel = ScreenModel{gpsInfoProvider, posInfoProvider};
+    screenModel.activateMainScreen();
 
     while (true)
     {
