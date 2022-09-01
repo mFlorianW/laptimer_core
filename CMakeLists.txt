@@ -83,6 +83,7 @@ if (ENABLE_LVGL_FETCH)
 endif(ENABLE_LVGL_FETCH)
 
 add_subdirectory(src)
+add_subdirectory(testprograms)
 
 if(ENABLE_TEST)
     enable_testing()

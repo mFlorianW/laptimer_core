@@ -1,5 +1,5 @@
 #include "Screen.hpp"
-#include "ScreenModel.hpp"
+#include "../include/ScreenModel.hpp"
 #include <cstdio>
 #include <lv_obj.h>
 

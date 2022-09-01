@@ -1,5 +1,5 @@
 #include "NavigateUpCommand.hpp"
-#include "ScreenModel.hpp"
+#include "../../include/ScreenModel.hpp"
 
 NavigateUpCommand::NavigateUpCommand(INavigationHandler &handler)
     : mHandler(handler)
