@@ -1,3 +1,4 @@
+#include "Controls.hpp"
 #include "ScreenModel.hpp"
 #include <SDL2/SDL.h>
 #include <StaticGpsInformationProvider.hpp>
@@ -66,14 +67,17 @@ static void hal_init()
 
 int main(int argc, char *argv[])
 {
-    (void)argc; /*Unused*/
-    (void)argv; /*Unused*/
+    (void)argc;
+    (void)argv;
 
-    /*Initialize LVGL*/
+    // Initialize LVGL
     lv_init();
 
-    /*Initialize the HAL (display, input devices, tick) for LVGL*/
+    // Initialize the HAL (display, input devices, tick) for LVGL
     hal_init();
+
+    // Initialize the Controls to navigate the Shell
+    Controls ctl;
 
     auto gpsInfoProvider = LaptimerCore::Positioning::StaticGpsInformationProvider{};
     auto posInfoProvider = LaptimerCore::Positioning::StaticPositionInformationProvider{};

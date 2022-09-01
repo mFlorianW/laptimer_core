@@ -30,6 +30,10 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ScreenModel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ScreenModel.hpp
 
+    # Platform
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/platform/desktop/Controls.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/platform/desktop/Controls.hpp
+
     # Command
     ${CMAKE_CURRENT_SOURCE_DIR}/src/command/CloseCommand.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/command/CloseCommand.hpp
@@ -78,6 +82,7 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/view
     ${CMAKE_CURRENT_SOURCE_DIR}/src/view/dummy
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/platform/desktop
 )
 
 TARGET_LINK_LIBRARIES(laptimer

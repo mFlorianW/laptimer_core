@@ -7,16 +7,17 @@ Screen::Screen()
     : m_screen{lv_obj_create(nullptr, nullptr)}
     , mPopupCloseCommand{*this}
 {
-    mPopupView.setCloseCommand(&mPopupCloseCommand);
-
     // setup screen
     lv_style_init(&m_screen_style);
+    lv_obj_set_size(m_screen, 256, 64);
     lv_style_set_bg_color(&m_screen_style, LV_STATE_DEFAULT, LV_COLOR_BLACK);
     lv_obj_add_style(m_screen, LV_OBJ_PART_MAIN, &m_screen_style);
 
     // setup event handling
     lv_obj_set_event_cb(m_screen, Screen::handleLvglEvent);
     lv_obj_set_user_data(m_screen, this);
+
+    mPopupView.setCloseCommand(&mPopupCloseCommand);
 }
 
 Screen::~Screen()
