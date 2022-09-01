@@ -10,8 +10,8 @@ struct ScreenModelPrivate
     explicit ScreenModelPrivate(ScreenModel &screenModel,
                                 LaptimerCore::Positioning::IGpsInformationProvider &gpsInfoProvider,
                                 LaptimerCore::Positioning::IPositionInformationProvider &posInfoProvider)
-        : mMenuModel{screenModel}
-        , mMainScreen{gpsInfoProvider}
+        : mMainScreen{gpsInfoProvider}
+        , mMenuModel{screenModel}
         , mMainScreenModel{screenModel, posInfoProvider}
     {
     }

@@ -3,9 +3,23 @@ SRC_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/common/src
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/algorithm/src
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/workflow/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/ssd1322shell/src/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/ssd1322shell/src/command
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/ssd1322shell/src/view
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/ssd1322shell/src/view/dummy
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/ssd1322shell/src/viewmodel
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/session/src
+PRIV_INCLUDE_DIRS
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/ssd1322shell/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/ssd1322shell/src/command
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/ssd1322shell/src/view
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/ssd1322shell/src/view/dummy
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/ssd1322shell/src/viewmodel
 INCLUDE_DIRS
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/algorithm/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/common/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/positioning/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/workflow/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src/ssd1322shell/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src/session/include"
 )

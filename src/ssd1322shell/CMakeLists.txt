@@ -73,7 +73,9 @@ PUBLIC
 TARGET_INCLUDE_DIRECTORIES(ssd1322Sehll
 PUBLIC
     $<INSTALL_INTERFACE:include>
+    $<INSTALL_INTERFACE:include/platform/desktop>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/platform/desktop>
 PRIVATE
     ${LVGL_INCLUDES}
     ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -81,7 +83,7 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/view
     ${CMAKE_CURRENT_SOURCE_DIR}/src/view/dummy
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/platform/desktop
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/platform/desktop
 )
 
 TARGET_LINK_LIBRARIES(ssd1322Sehll
