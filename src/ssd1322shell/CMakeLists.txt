@@ -1,14 +1,12 @@
 add_definitions(-DLV_CONF_INCLUDE_SIMPLE=1 -DLV_LVGL_H_INCLUDE_SIMPLE)
 
-add_executable(laptimer)
+add_library(ssd1322Sehll STATIC)
+add_library(LaptimerCore::Ssd1322Shell ALIAS ssd1322Sehll)
 
-target_sources(laptimer
+target_sources(ssd1322Sehll
 PRIVATE
     # Root
     ${LVGL_SOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/laptimer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/lv_conf.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/lv_drv_conf.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/INavigationHandler.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/IOpenCloseHandler.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen.cpp
@@ -28,11 +26,6 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Screen.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Screen.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ScreenModel.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/ScreenModel.hpp
-
-    # Platform
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/platform/desktop/Controls.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/platform/desktop/Controls.hpp
 
     # Command
     ${CMAKE_CURRENT_SOURCE_DIR}/src/command/CloseCommand.cpp
@@ -72,9 +65,15 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/ActiveSessionModel.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/StatusBarModel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/StatusBarModel.hpp
+
+PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/ScreenModel.hpp
 )
 
-TARGET_INCLUDE_DIRECTORIES(laptimer
+TARGET_INCLUDE_DIRECTORIES(ssd1322Sehll
+PUBLIC
+    $<INSTALL_INTERFACE:include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 PRIVATE
     ${LVGL_INCLUDES}
     ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -85,8 +84,8 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/platform/desktop
 )
 
-TARGET_LINK_LIBRARIES(laptimer
-PRIVATE
+TARGET_LINK_LIBRARIES(ssd1322Sehll
+PUBLIC
     ${SDL2_LIBRARIES}
     LaptimerCore::Common
     LaptimerCore::Positioning

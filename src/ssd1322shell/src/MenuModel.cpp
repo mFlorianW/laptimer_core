@@ -1,5 +1,5 @@
 #include "MenuModel.hpp"
-#include "ScreenModel.hpp"
+#include "../include/ScreenModel.hpp"
 
 MenuModel::MenuModel(ScreenModel &screenModel)
     : NavigatableModel(mMenuEntryStack.size())

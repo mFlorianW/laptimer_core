@@ -1,9 +1,8 @@
 #include "Controls.hpp"
-#include "ScreenModel.hpp"
 #include <SDL2/SDL.h>
+#include <ScreenModel.hpp>
 #include <StaticGpsInformationProvider.hpp>
 #include <StaticPositionInformationProvider.hpp>
-#include <lvgl.h>
 #include <monitor.h>
 #include <mouse.h>
 #include <unistd.h>
