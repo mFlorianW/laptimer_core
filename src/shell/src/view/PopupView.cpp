@@ -5,7 +5,7 @@ PopupView::PopupView()
     : View()
 {
     // A PopupView shall use the whole screen
-    lv_obj_set_size(mScreenContent, lv_disp_get_hor_res(nullptr), lv_disp_get_ver_res(nullptr));
+    lv_obj_set_size(mScreenContent, 256, 64);
     lv_obj_set_pos(mScreenContent, 0, 0);
 
     // Setup the label style
