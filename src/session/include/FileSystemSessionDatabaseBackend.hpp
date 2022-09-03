@@ -1,0 +1,57 @@
+#ifndef LAPTIMERCORE_FILESYSTEMSESSIONDATABASEBACKEND_HPP
+#define LAPTIMERCORE_FILESYSTEMSESSIONDATABASEBACKEND_HPP
+
+#include "ISessionDatabaseBackend.hpp"
+
+namespace LaptimerCore::Session
+{
+
+/**
+ * SessionDatabase backend that uses a file system to store the session data.
+ * The doesn't database backend doesn't create the folder that it's uses for
+ * storing the data. It's in the responsibility of the user that the folder
+ * exists.
+ */
+class FileSystemSessionDatabaseBackend final : public ISessionDatabaseBackend
+{
+public:
+    FileSystemSessionDatabaseBackend(const std::string &databaseFolder);
+    ~FileSystemSessionDatabaseBackend() override = default;
+
+    /**
+     * @copydoc ISessionDatabaseBackend::getLastStoredIndex()
+     */
+    size_t getLastStoredIndex() const noexcept override;
+
+    /**
+     * @copydoc ISessionDatabaseBackend::getIndexList()
+     */
+    std::vector<std::size_t> getIndexList() const noexcept override;
+
+    /**
+     * @copydoc ISessionDatabaseBackend::
+     */
+    size_t getNumberOfStoredSessions() const noexcept override;
+
+    /**
+     * @copydoc ISessionDatabaseBackend::storeSession
+     */
+    bool storeSession(std::size_t index, const std::string &sessionData) override;
+
+    /**
+     * @copydoc ISessionDatabaseBackend::loadSessionByIndex
+     */
+    std::string loadSessionByIndex(std::size_t index) override;
+
+    /**
+     * @copydoc ISessionDatabaseBackend::deleteSession
+     */
+    bool deleteSession(std::size_t index) override;
+
+private:
+    std::string mDbDir;
+};
+
+} // namespace LaptimerCore::Session
+
+#endif // LAPTIMERCORE_FILESYSTEMSESSIONDATABASEBACKEND_HPP
