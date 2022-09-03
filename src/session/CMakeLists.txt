@@ -4,9 +4,11 @@ add_library(LaptimerCore::Session ALIAS Session)
 target_sources(Session
 PRIVATE
    ${CMAKE_CURRENT_SOURCE_DIR}/src/SessionDatabase.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/FileSystemSessionDatabaseBackend.cpp
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/ISessionDatabase.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/ISessionDatabaseBackend.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/FileSystemSessionDatabaseBackend.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SessionDatabase.hpp
 )
 
