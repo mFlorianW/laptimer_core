@@ -50,6 +50,7 @@ public:
 
 private:
     std::string mDbDir;
+    std::size_t mLastStoredIndex{0};
 };
 
 } // namespace LaptimerCore::Session

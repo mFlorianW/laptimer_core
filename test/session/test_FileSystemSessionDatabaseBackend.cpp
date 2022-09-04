@@ -74,3 +74,32 @@ TEST_CASE("The FileSystemSessionDatabaseBackend store shall fail when database f
 
     REQUIRE(!fsBackend.storeSession(1, Sessions::TestSessionAsJson));
 }
+
+TEST_CASE("The FileSystemSessionDatabaseBackend shall be able to load a session by it's index")
+{
+    auto dbFolder = getTestDatabseFolder();
+    auto fsBackend = FileSystemSessionDatabaseBackend{dbFolder};
+
+    // create Session
+    auto testSessionFile = std::ofstream{dbFolder + "/" + "session1.json"};
+    testSessionFile << Sessions::TestSessionAsJson;
+    testSessionFile.close();
+
+    auto loadedSession = fsBackend.loadSessionByIndex(1);
+
+    REQUIRE(loadedSession == Sessions::TestSessionAsJson);
+}
+
+TEST_CASE("The FileSystemSessionDatabaseBackend shall return the last stored index")
+{
+    auto dbFolder = getTestDatabseFolder();
+    auto fsBackend = FileSystemSessionDatabaseBackend{dbFolder};
+    auto expectedFilePath = std::filesystem::path{dbFolder + "/session1.json"};
+
+    REQUIRE(fsBackend.storeSession(1, Sessions::TestSessionAsJson));
+    REQUIRE(fsBackend.getLastStoredIndex() == 1);
+}
+
+TEST_CASE("The FileSystemSessionDatabaseBackend shall return the last stored index")
+{
+}

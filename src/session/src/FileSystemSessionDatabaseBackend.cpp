@@ -12,16 +12,19 @@ FileSystemSessionDatabaseBackend::FileSystemSessionDatabaseBackend(const std::st
 
 size_t FileSystemSessionDatabaseBackend::getLastStoredIndex() const noexcept
 {
-    return 0;
+    return mLastStoredIndex;
 }
+
 std::vector<std::size_t> FileSystemSessionDatabaseBackend::getIndexList() const noexcept
 {
     return std::vector<std::size_t>();
 }
+
 size_t FileSystemSessionDatabaseBackend::getNumberOfStoredSessions() const noexcept
 {
     return 0;
 }
+
 bool FileSystemSessionDatabaseBackend::storeSession(std::size_t index, const std::string &sessionData)
 {
     if (!std::filesystem::exists(mDbDir))
@@ -35,12 +38,20 @@ bool FileSystemSessionDatabaseBackend::storeSession(std::size_t index, const std
     sessionFile << sessionData;
     sessionFile.close();
 
+    mLastStoredIndex = index;
     return true;
 }
 
 std::string FileSystemSessionDatabaseBackend::loadSessionByIndex(std::size_t index)
 {
-    return std::string();
+    auto sessionPath = mDbDir + "/" + "session" + std::to_string(index) + ".json";
+    auto file = std::ifstream{};
+    auto strBuffer = std::stringstream{};
+
+    file.open(sessionPath);
+    strBuffer << file.rdbuf();
+
+    return strBuffer.str();
 }
 
 bool FileSystemSessionDatabaseBackend::deleteSession(std::size_t index)
