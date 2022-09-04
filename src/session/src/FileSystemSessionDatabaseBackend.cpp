@@ -17,7 +17,20 @@ size_t FileSystemSessionDatabaseBackend::getLastStoredIndex() const noexcept
 
 std::vector<std::size_t> FileSystemSessionDatabaseBackend::getIndexList() const noexcept
 {
-    return std::vector<std::size_t>();
+    auto result = std::vector<std::size_t>();
+    for (const auto &entry : std::filesystem::directory_iterator{mDbDir})
+    {
+        if (entry.is_regular_file() && (entry.path().filename().string().rfind("session", 0) == 0))
+        {
+            auto tempString = entry.path().filename().string().erase(0, std::string{"session"}.length());
+            auto fileEndingIter = tempString.find(".json");
+            tempString = tempString.erase(fileEndingIter, std::string{".json"}.length());
+            auto index = stoi(tempString);
+            result.insert(result.begin(), index);
+        }
+    }
+
+    return result;
 }
 
 size_t FileSystemSessionDatabaseBackend::getNumberOfStoredSessions() const noexcept
