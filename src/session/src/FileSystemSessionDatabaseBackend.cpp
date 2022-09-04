@@ -35,7 +35,15 @@ std::vector<std::size_t> FileSystemSessionDatabaseBackend::getIndexList() const 
 
 size_t FileSystemSessionDatabaseBackend::getNumberOfStoredSessions() const noexcept
 {
-    return 0;
+    std::size_t numberOfStoredSessions = 0;
+    for (const auto &entry : std::filesystem::directory_iterator{mDbDir})
+    {
+        if (entry.is_regular_file() && (entry.path().filename().string().rfind("session", 0) == 0))
+        {
+            ++numberOfStoredSessions;
+        }
+    }
+    return numberOfStoredSessions;
 }
 
 bool FileSystemSessionDatabaseBackend::storeSession(std::size_t index, const std::string &sessionData)

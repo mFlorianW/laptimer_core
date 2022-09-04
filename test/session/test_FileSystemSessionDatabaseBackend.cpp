@@ -117,3 +117,25 @@ TEST_CASE("The FileSystemSessionDatabaseBackend shall return a list of all store
 
     REQUIRE(fsBackend.getIndexList() == expectedIndexList);
 }
+
+TEST_CASE("The FileSystemSessionDatabaseBackend shall return the number of stored session")
+{
+    auto dbFolder = getTestDatabseFolder();
+    auto fsBackend = FileSystemSessionDatabaseBackend{dbFolder};
+    auto expectedIndexList = std::vector<std::size_t>{1, 5};
+
+    // create Session
+    auto testSessionFile = std::ofstream{dbFolder + "/" + "session1.json"};
+    testSessionFile << Sessions::TestSessionAsJson;
+    testSessionFile.close();
+
+    auto testSessionFile2 = std::ofstream{dbFolder + "/" + "session5.json"};
+    testSessionFile << Sessions::TestSessionAsJson;
+    testSessionFile.close();
+
+    auto testSessionFile3 = std::ofstream{dbFolder + "/" + "session10.json"};
+    testSessionFile << Sessions::TestSessionAsJson;
+    testSessionFile.close();
+
+    REQUIRE(fsBackend.getNumberOfStoredSessions() == 3);
+}
