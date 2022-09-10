@@ -15,6 +15,14 @@ public:
      * Creates an instance of PositionData.
      */
     PositionData();
+
+    /**
+     * Creates a PositionData instance with given latitude and longitude.
+     * @param latitude The latitude of the PositionData.
+     * @param longitude The longitude of the PositionData.
+     */
+    PositionData(float latitude, float longitude);
+
     /**
      * Default destructor.
      */

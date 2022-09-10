@@ -13,7 +13,6 @@ using namespace LaptimerCore::Test::Dummy;
 TEST_CASE("TrackDetectionWorkflow shall emit 'trackDetected' when successful detected a track.")
 {
     Tracks::init();
-    Positions::init();
     auto trackDetector = TrackDetection{500};
     auto posInfoProvider = PositionInformationProvider{};
     auto tdw = TrackDetectionWorkflow{trackDetector, posInfoProvider};
@@ -23,7 +22,7 @@ TEST_CASE("TrackDetectionWorkflow shall emit 'trackDetected' when successful det
     tdw.setTracks({Tracks::OscherslebenTrack});
     tdw.startDetection();
 
-    posInfoProvider.setPositionData(Positions::OscherslebenPosition);
+    posInfoProvider.setPositionData(Positions::OscherslebenPositionCamp);
 
     REQUIRE(trackDetectedEmitted == true);
 }
@@ -31,7 +30,6 @@ TEST_CASE("TrackDetectionWorkflow shall emit 'trackDetected' when successful det
 TEST_CASE("TrackDetectionWorkflow shall return the TrackData when successful detected a track.")
 {
     Tracks::init();
-    Positions::init();
     auto trackDetector = TrackDetection{500};
     auto posInfoProvider = PositionInformationProvider{};
     auto tdw = TrackDetectionWorkflow{trackDetector, posInfoProvider};
@@ -39,7 +37,7 @@ TEST_CASE("TrackDetectionWorkflow shall return the TrackData when successful det
     tdw.setTracks({Tracks::OscherslebenTrack});
     tdw.startDetection();
 
-    posInfoProvider.setPositionData(Positions::OscherslebenPosition);
+    posInfoProvider.setPositionData(Positions::OscherslebenPositionCamp);
 
     REQUIRE(tdw.getDetectedTrack() == Tracks::OscherslebenTrack);
 }
@@ -47,7 +45,6 @@ TEST_CASE("TrackDetectionWorkflow shall return the TrackData when successful det
 TEST_CASE("TrackDetectionWorkflow shall not emit 'trackDetected' when stopped.")
 {
     Tracks::init();
-    Positions::init();
     auto trackDetector = TrackDetection{500};
     auto posInfoProvider = PositionInformationProvider{};
     auto tdw = TrackDetectionWorkflow{trackDetector, posInfoProvider};
@@ -57,13 +54,13 @@ TEST_CASE("TrackDetectionWorkflow shall not emit 'trackDetected' when stopped.")
     tdw.setTracks({Tracks::OscherslebenTrack});
 
     tdw.startDetection();
-    posInfoProvider.setPositionData(Positions::OscherslebenPosition);
+    posInfoProvider.setPositionData(Positions::OscherslebenPositionCamp);
 
     REQUIRE(trackDetectedEmitted == true);
 
     trackDetectedEmitted = false;
     tdw.stopDetection();
-    posInfoProvider.setPositionData(Positions::OscherslebenPosition);
+    posInfoProvider.setPositionData(Positions::OscherslebenPositionCamp);
 
     REQUIRE(trackDetectedEmitted == false);
 }

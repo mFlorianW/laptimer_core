@@ -6,11 +6,12 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/TrackDetection.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/DistanceCalculator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/DistanceCalculator.hpp
-
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/SimpleLaptimer.cpp
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/ITrackDetection.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/TrackDetection.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/ILaptimer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/SimpleLaptimer.hpp
 )
 
 target_link_libraries(AlgorithmObject
@@ -33,5 +34,4 @@ add_library(LaptimerCore::Algorithm ALIAS Algorithm)
 target_link_libraries(Algorithm
 PUBLIC
     LaptimerCore::AlgorithmObject
-
 )

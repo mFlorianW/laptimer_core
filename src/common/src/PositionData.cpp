@@ -23,6 +23,13 @@ PositionData::PositionData()
 {
 }
 
+PositionData::PositionData(float latitude, float longitude)
+    : mData{new SharedPositionData{}}
+{
+    mData->latitude = latitude;
+    mData->longitude = longitude;
+}
+
 PositionData::~PositionData() = default;
 
 PositionData::PositionData(const PositionData &other)
