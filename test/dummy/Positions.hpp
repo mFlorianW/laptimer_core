@@ -9,9 +9,8 @@ namespace LaptimerCore::Test::Dummy
 class Positions
 {
 public:
-    static void init();
-
-    static Common::PositionData OscherslebenPosition;
+    static Common::PositionData OscherslebenPositionCamp;
+    static Common::PositionData OscherslebenPositionFinishLine;
 };
 
 } // namespace LaptimerCore::Test::Dummy

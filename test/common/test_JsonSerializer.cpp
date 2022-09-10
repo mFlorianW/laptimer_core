@@ -11,11 +11,10 @@ using namespace LaptimerCore::Test::Dummy;
 TEST_CASE("JSONSerializer shall serialize PositionData to JSON.")
 {
     constexpr char expectedJsonObject[] = "{\"latitude\":\"52.025833\",\"longitude\":\"11.279166\"}";
-    Positions::init();
     ArduinoJson::StaticJsonDocument<1024> jsonDoc;
     auto jsonRoot = jsonDoc.to<JsonObject>();
 
-    JsonSerializer::serializePositionData(Positions::OscherslebenPosition, jsonRoot);
+    JsonSerializer::serializePositionData(Positions::OscherslebenPositionCamp, jsonRoot);
     std::string result;
     ArduinoJson::serializeJson(jsonDoc, result);
 
@@ -38,7 +37,6 @@ TEST_CASE("JSONSerializer shall serialize the TrackData without sector to JSON")
     "}";
     // clang-format on
 
-    Positions::init();
     Tracks::init();
     ArduinoJson::StaticJsonDocument<1024> jsonDoc;
     auto jsonRoot = jsonDoc.to<JsonObject>();
@@ -75,7 +73,6 @@ TEST_CASE("JSONSerializer shall serialize the TrackData to JSON")
         "]"
     "}";
     // clang-format on
-    Positions::init();
     Tracks::init();
     ArduinoJson::StaticJsonDocument<1024> jsonDoc;
     auto jsonRoot = jsonDoc.to<JsonObject>();

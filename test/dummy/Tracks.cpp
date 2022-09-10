@@ -11,16 +11,14 @@ TrackData Tracks::OscherslebenTrack{};
 
 void Tracks::init()
 {
-    Positions::init();
-
     TrackWithoutSector.setTrackName("TrackWithoutSector");
-    TrackWithoutSector.setStartline(Positions::OscherslebenPosition);
-    TrackWithoutSector.setFinishline(Positions::OscherslebenPosition);
+    TrackWithoutSector.setStartline(Positions::OscherslebenPositionCamp);
+    TrackWithoutSector.setFinishline(Positions::OscherslebenPositionCamp);
 
     OscherslebenTrack.setTrackName("Oschersleben");
-    OscherslebenTrack.setStartline(Positions::OscherslebenPosition);
-    OscherslebenTrack.setFinishline(Positions::OscherslebenPosition);
-    OscherslebenTrack.setSections({Positions::OscherslebenPosition, Positions::OscherslebenPosition});
+    OscherslebenTrack.setStartline(Positions::OscherslebenPositionCamp);
+    OscherslebenTrack.setFinishline(Positions::OscherslebenPositionCamp);
+    OscherslebenTrack.setSections({Positions::OscherslebenPositionCamp, Positions::OscherslebenPositionCamp});
 }
 
 } // namespace LaptimerCore::Test::Dummy

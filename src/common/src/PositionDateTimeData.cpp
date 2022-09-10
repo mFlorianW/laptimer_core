@@ -25,6 +25,14 @@ PositionDateTimeData::PositionDateTimeData()
 {
 }
 
+PositionDateTimeData::PositionDateTimeData(const PositionData &posData, const Timestamp &time, const Date &date)
+    : mData{new SharedPositionTimeData{}}
+{
+    mData->mPosition = posData;
+    mData->mTime = time;
+    mData->mDate = date;
+}
+
 PositionDateTimeData::~PositionDateTimeData() = default;
 
 PositionDateTimeData::PositionDateTimeData(const PositionDateTimeData &other)

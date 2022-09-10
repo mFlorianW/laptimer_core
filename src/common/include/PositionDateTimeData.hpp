@@ -19,6 +19,14 @@ public:
     PositionDateTimeData();
 
     /**
+     * Creates an instance of the PositionDateTimeData.
+     * @param posData The position data for the instance.
+     * @param time The time data for the instance.
+     * @param date The date data for the instance.
+     */
+    PositionDateTimeData(const PositionData &posData, const Timestamp &time, const Date &date);
+
+    /**
      * Default destructor
      */
     ~PositionDateTimeData();
