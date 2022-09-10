@@ -47,11 +47,10 @@ void ActiveSessionWorkflow::onLapFinished()
         return;
     }
 
-    mCurrentLap.setLaptime(mLaptimer.getLastLaptime());
     mSession->addLap(mCurrentLap);
     mDatabase.storeSession(mSession.value());
     lastLaptime.set(mCurrentLap.getLaptime());
-    
+
     const auto newLapCount = lapCount.get() + 1;
     lapCount.set(newLapCount);
 }

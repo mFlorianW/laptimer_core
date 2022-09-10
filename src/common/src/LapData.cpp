@@ -8,15 +8,11 @@ namespace LaptimerCore::Common
 class SharedLap : public SharedData
 {
 public:
-    Timestamp mLaptime;
     std::vector<Timestamp> mSectorTimes;
 
     friend bool operator==(const SharedLap &lhs, const SharedLap &rhs)
     {
-        // clang-format off
-        return ((lhs.mLaptime) == (rhs.mLaptime) &&
-                (lhs.mSectorTimes) == (rhs.mSectorTimes));
-        // clang-format on
+        return (lhs.mSectorTimes) == (rhs.mSectorTimes);
     }
 };
 
@@ -28,7 +24,7 @@ LapData::LapData()
 LapData::LapData(const Timestamp &laptime)
     : mData{new SharedLap}
 {
-    mData->mLaptime = laptime;
+    mData->mSectorTimes.push_back(laptime);
 }
 
 LapData::LapData(const std::vector<Timestamp> &sectorTimes)
@@ -58,13 +54,6 @@ LapData &LapData::operator=(LapData &&other) noexcept
 
 Timestamp LapData::getLaptime() const noexcept
 {
-    // The lap doesn't have any sector the laptime
-    // can't be calculated by the sector times.
-    if (mData->mSectorTimes.empty())
-    {
-        return mData->mLaptime;
-    }
-
     auto laptime = Timestamp{};
     for (const auto &sectorTime : std::as_const(getSectorTimes()))
     {
@@ -77,11 +66,6 @@ Timestamp LapData::getLaptime() const noexcept
 std::size_t LapData::getSectorTimeCount() const noexcept
 {
     return mData->mSectorTimes.size();
-}
-
-void LapData::setLaptime(const Timestamp &laptime)
-{
-    mData->mLaptime = laptime;
 }
 
 std::optional<Timestamp> LapData::getSectorTime(std::size_t index) const noexcept

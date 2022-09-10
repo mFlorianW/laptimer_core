@@ -1,4 +1,5 @@
 #include "Laptimer.hpp"
+#include <numeric>
 
 namespace LaptimerCore::Test::Dummy
 {
@@ -16,12 +17,12 @@ void Laptimer::updatePositionAndTime(const Common::PositionDateTimeData &data)
 
 Common::Timestamp Laptimer::getLastLaptime() const
 {
-    return lastLapTime;
+    return std::accumulate(sectorTimes.cbegin(), sectorTimes.cend(), Common::Timestamp{});
 }
 
 Common::Timestamp Laptimer::getLastSectorTime() const
 {
-    return lastSectorTime;
+    return sectorTimes.back();
 }
 
 } // namespace LaptimerCore::Test::Dummy

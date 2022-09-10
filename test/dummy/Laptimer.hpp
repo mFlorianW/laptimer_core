@@ -19,8 +19,7 @@ public:
 
     Common::Timestamp getLastSectorTime() const override;
 
-    Common::Timestamp lastSectorTime;
-    Common::Timestamp lastLapTime;
+    std::vector<Common::Timestamp> sectorTimes;
 };
 
 } // namespace LaptimerCore::Test::Dummy

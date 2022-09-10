@@ -48,7 +48,7 @@ public:
     virtual Common::Timestamp getLastSectorTime() const = 0;
 
     /**
-     * This signal is emitted when a lap is finished.
+     * This signal is emitted when a sector is finished.
      */
     KDBindings::Signal<> sectorFinished;
 
