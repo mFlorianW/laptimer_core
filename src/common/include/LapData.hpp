@@ -73,15 +73,11 @@ public:
 
     /**
      * Gives the overall laptime.
+     * The laptime is the accmulation overall sector times and is only valid
+     * if all sector of the lap are added.
      * @return The overall laptime.
      */
     [[nodiscard]] Timestamp getLaptime() const noexcept;
-
-    /**
-     * Sets the overall laptime.
-     * @param laptime The new overall laptime.
-     */
-    void setLaptime(const Timestamp &laptime);
 
     /**
      * Gives the amount of sectors.

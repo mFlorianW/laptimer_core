@@ -77,7 +77,7 @@ TEST_CASE("The ActiveSessionWorkflow shall update the round sector time property
     auto expectedSectorTime = Timestamp{"00:00:12.123"};
 
     actSessWf.startActiveSession();
-    lp.lastSectorTime = Timestamp{"00:00:12.123"};
+    lp.sectorTimes.push_back(Timestamp{"00:00:12.123"});
     lp.sectorFinished.emit();
 
     REQUIRE(actSessWf.lastSectorTime.get() == expectedSectorTime);
@@ -93,7 +93,8 @@ TEST_CASE("The ActiveSessionWorkflow shall store the laptime when finished.")
     auto expectedLap = LapData{Timestamp{"00:23:13.123"}};
 
     actSessWf.startActiveSession();
-    lp.lastLapTime = Timestamp{"00:23:13.123"};
+    lp.sectorTimes.push_back(Timestamp{"00:23:13.123"});
+    lp.sectorFinished.emit();
     lp.lapFinished.emit();
 
     REQUIRE(actSessWf.getSession()->getLaps().size() == 1);
@@ -111,7 +112,8 @@ TEST_CASE("The ActiveSessionWorkflow shall update the round laptime property whe
     auto expectedLaptime = Timestamp{"00:00:12.123"};
 
     actSessWf.startActiveSession();
-    lp.lastLapTime = Timestamp{"00:00:12.123"};
+    lp.sectorTimes.push_back(Timestamp{"00:00:12.123"});
+    lp.sectorFinished.emit();
     lp.lapFinished.emit();
 
     REQUIRE(actSessWf.lastLaptime.get() == expectedLaptime);
@@ -173,10 +175,10 @@ TEST_CASE("The ActiveSessionWorkflow shall store the sector times in a lap of a 
 
     actSessWf.startActiveSession();
 
-    lp.lastSectorTime = Timestamp{"00:23:123.233"};
+    lp.sectorTimes.push_back(Timestamp{"00:23:123.233"});
     lp.sectorFinished.emit();
 
-    lp.lastSectorTime = Timestamp{"00:23:123.233"};
+    lp.sectorTimes.push_back(Timestamp{"00:23:123.233"});
     lp.sectorFinished.emit();
     lp.lapFinished.emit();
 
@@ -197,7 +199,7 @@ TEST_CASE("The ActiveSessionWorkflow shall update the lap counter when a lap is 
 
     REQUIRE(actSessWf.lapCount.get() == 0);
 
-    lp.lastLapTime = Timestamp{"00:23:32.123"};
+    lp.sectorTimes.push_back(Timestamp{"00:23:32.123"});
     lp.lapFinished.emit();
 
     REQUIRE(actSessWf.lapCount.get() == 1);
