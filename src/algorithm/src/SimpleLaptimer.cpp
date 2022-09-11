@@ -70,6 +70,7 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
         {
             mLastLapTime = currentLaptime.get();
             mLastSectorTime = currentSectorTime.get();
+            currentLaptime.set(Timestamp{"00:00:00.000"});
             currentSectorTime.set(Timestamp{"00:00:00.000"});
             sectorFinished.emit();
             lapFinished.emit();
