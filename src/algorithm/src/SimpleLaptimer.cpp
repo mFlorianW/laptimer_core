@@ -26,22 +26,25 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
         const auto startLine = mTrackData.getStartline();
         if (passedPoint(startLine))
         {
-            mLapState = LapState::WaitingForFinish;
+
+            mLapState =
+                (mTrackData.getNumberOfSections() > 0) ? LapState::IteratingTrackPoints : LapState::WaitingForFinish;
             mCurrentTrackPoint = 0;
             lapStarted.emit();
         }
     }
-    //    else if (mLapState == LapState::IteratingTrackPoints)
-    //    {
-    //        if (passedPoint(mTrackData.getSection(mCurrentTrackPoint)))
-    //        {
-    //            ++mCurrentTrackPoint;
-    //            if (mCurrentTrackPoint > mTrackData.getNumberOfSections())
-    //            {
-    //                mLapState = LapState::WaitingForFinish;
-    //            }
-    //        }
-    //    }
+    else if (mLapState == LapState::IteratingTrackPoints)
+    {
+        if (passedPoint(mTrackData.getSection(mCurrentTrackPoint)))
+        {
+            ++mCurrentTrackPoint;
+            if (mCurrentTrackPoint >= mTrackData.getNumberOfSections())
+            {
+                mLapState = LapState::WaitingForFinish;
+            }
+            sectorFinished.emit();
+        }
+    }
     else if (mLapState == LapState::WaitingForFinish)
     {
         const auto finishLine = mTrackData.getFinishline();

@@ -10,7 +10,9 @@ class Positions
 {
 public:
     static Common::PositionData OscherslebenPositionCamp;
-    static Common::PositionData OscherslebenPositionFinishLine;
+    static Common::PositionData OscherslebenPositionStartFinishLine;
+    static Common::PositionData OscherslebenPositionSector1Line;
+    static Common::PositionData OscherslebenPositionSector2Line;
 };
 
 } // namespace LaptimerCore::Test::Dummy
