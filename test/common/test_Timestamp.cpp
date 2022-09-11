@@ -28,22 +28,9 @@ TEST_CASE("It shall be possible to compare two timestamps for equal.")
 
 TEST_CASE("It shall be possible to calucalte the sum of two timestamps.")
 {
-    Timestamp ts1;
-    ts1.setHour(1);
-    ts1.setMinute(2);
-    ts1.setSecond(25);
-    ts1.setFractionalOfSecond(134);
-    Timestamp ts2;
-    ts2.setHour(3);
-    ts2.setMinute(0);
-    ts2.setSecond(25);
-    ts2.setFractionalOfSecond(144);
-
-    Timestamp expectedResult;
-    expectedResult.setHour(4);
-    expectedResult.setMinute(2);
-    expectedResult.setSecond(50);
-    expectedResult.setFractionalOfSecond(278);
+    Timestamp ts1{"01:02:25.134"};
+    Timestamp ts2{"03:00:25.144"};
+    Timestamp expectedResult{"04:02:50.278"};
 
     auto result = ts1 + ts2;
 
@@ -52,22 +39,9 @@ TEST_CASE("It shall be possible to calucalte the sum of two timestamps.")
 
 TEST_CASE("The plus operator of timestamp shall handle hour overflow when passing midnight.")
 {
-    Timestamp ts1;
-    ts1.setHour(22);
-    ts1.setMinute(0);
-    ts1.setSecond(0);
-    ts1.setFractionalOfSecond(0);
-    Timestamp ts2;
-    ts2.setHour(3);
-    ts2.setMinute(0);
-    ts2.setSecond(0);
-    ts2.setFractionalOfSecond(0);
-
-    Timestamp expectedResult;
-    expectedResult.setHour(1);
-    expectedResult.setMinute(0);
-    expectedResult.setSecond(0);
-    expectedResult.setFractionalOfSecond(0);
+    Timestamp ts1{"22:00:00.000"};
+    Timestamp ts2{"03:00:00.000"};
+    Timestamp expectedResult{"01:00:00.000"};
 
     auto result = ts1 + ts2;
 
@@ -76,22 +50,9 @@ TEST_CASE("The plus operator of timestamp shall handle hour overflow when passin
 
 TEST_CASE("The plus operator of timestamp shall handle minute overflow when passing 60 minutes.")
 {
-    Timestamp ts1;
-    ts1.setHour(0);
-    ts1.setMinute(58);
-    ts1.setSecond(0);
-    ts1.setFractionalOfSecond(0);
-    Timestamp ts2;
-    ts2.setHour(0);
-    ts2.setMinute(12);
-    ts2.setSecond(0);
-    ts2.setFractionalOfSecond(0);
-
-    Timestamp expectedResult;
-    expectedResult.setHour(1);
-    expectedResult.setMinute(10);
-    expectedResult.setSecond(0);
-    expectedResult.setFractionalOfSecond(0);
+    Timestamp ts1{"00:58:00.000"};
+    Timestamp ts2{"00:12:00.000"};
+    Timestamp expectedResult{"01:10:00.000"};
 
     auto result = ts1 + ts2;
 
@@ -100,22 +61,9 @@ TEST_CASE("The plus operator of timestamp shall handle minute overflow when pass
 
 TEST_CASE("The plus operator of timestamp shall handle second overflow when passing 60 seconds.")
 {
-    Timestamp ts1;
-    ts1.setHour(0);
-    ts1.setMinute(0);
-    ts1.setSecond(42);
-    ts1.setFractionalOfSecond(0);
-    Timestamp ts2;
-    ts2.setHour(0);
-    ts2.setMinute(0);
-    ts2.setSecond(32);
-    ts2.setFractionalOfSecond(0);
-
-    Timestamp expectedResult;
-    expectedResult.setHour(0);
-    expectedResult.setMinute(1);
-    expectedResult.setSecond(14);
-    expectedResult.setFractionalOfSecond(0);
+    Timestamp ts1{"00:00:42.000"};
+    Timestamp ts2{"00:00:32.000"};
+    Timestamp expectedResult{"00:01:14.000"};
 
     auto result = ts1 + ts2;
 
@@ -124,22 +72,10 @@ TEST_CASE("The plus operator of timestamp shall handle second overflow when pass
 
 TEST_CASE("The plus operator of timestamp shall handle millisecond overflow when passing 1000 ms.")
 {
-    Timestamp ts1;
-    ts1.setHour(0);
-    ts1.setMinute(0);
-    ts1.setSecond(0);
-    ts1.setFractionalOfSecond(300);
-    Timestamp ts2;
-    ts2.setHour(0);
-    ts2.setMinute(0);
-    ts2.setSecond(0);
-    ts2.setFractionalOfSecond(800);
+    Timestamp ts1{"00:00:00.300"};
+    Timestamp ts2{"00:00:00.800"};
 
-    Timestamp expectedResult;
-    expectedResult.setHour(0);
-    expectedResult.setMinute(0);
-    expectedResult.setSecond(1);
-    expectedResult.setFractionalOfSecond(100);
+    Timestamp expectedResult{"00:00:01.100"};
 
     auto result = ts1 + ts2;
 
