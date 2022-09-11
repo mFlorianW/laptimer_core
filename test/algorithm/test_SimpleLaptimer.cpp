@@ -207,3 +207,133 @@ TEST_CASE("The laptimer shall send all signals for a whole map.")
     REQUIRE(lapFinishedEmitted == true);
     REQUIRE(lapStartedEmitted == true);
 }
+
+TEST_CASE("The laptimer shall update the lap time after lap is started unit lap is finished with every "
+          "time update. Lap is without sector")
+{
+    SimpleLaptimer lapTimer;
+    std::uint32_t lapTimeUpdateCounter = 0;
+
+    auto track = TrackData{};
+    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
+    track.setFinishline(Positions::OscherslebenPositionStartFinishLine);
+
+    lapTimer.setTrack(track);
+    lapTimer.currentLaptime.valueChanged().connect(
+        [&lapTimeUpdateCounter](Timestamp newTimeStamp) { ++lapTimeUpdateCounter; });
+
+    // Positions to start the lap
+    auto gpsPoint1 = PositionDateTimeData{{52.029819, 11.2805431}, Timestamp{"15:05:10.234"}, {}};
+    auto gpsPoint2 = PositionDateTimeData{{52.0270730, 11.2804234}, Timestamp{"15:05:11.234"}, {}};
+    auto gpsPoint3 = PositionDateTimeData{{52.0270945, 11.2803176}, Timestamp{"15:05:12.234"}, {}};
+    auto gpsPoint4 = PositionDateTimeData{{52.0271438, 11.2800835}, Timestamp{"15:05:13.234"}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint1);
+    lapTimer.updatePositionAndTime(gpsPoint2);
+    lapTimer.updatePositionAndTime(gpsPoint3);
+    lapTimer.updatePositionAndTime(gpsPoint4);
+
+    REQUIRE(lapTimer.currentLaptime.get() == Timestamp{"00:00:00.000"});
+
+    // Positions to finish the lap
+    auto gpsPoint5 = PositionDateTimeData{{52.029819, 11.2805431}, Timestamp{"15:06:10.234"}, {}};
+    auto gpsPoint6 = PositionDateTimeData{{52.0270730, 11.2804234}, Timestamp{"15:06:11.234"}, {}};
+    auto gpsPoint7 = PositionDateTimeData{{52.0270945, 11.2803176}, Timestamp{"15:06:12.234"}, {}};
+    auto gpsPoint8 = PositionDateTimeData{{52.0271438, 11.2800835}, Timestamp{"15:06:13.234"}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint5);
+    lapTimer.updatePositionAndTime(gpsPoint6);
+    lapTimer.updatePositionAndTime(gpsPoint7);
+    lapTimer.updatePositionAndTime(gpsPoint8);
+
+    REQUIRE(lapTimeUpdateCounter == 4);
+    REQUIRE(lapTimer.currentLaptime.get() == Timestamp{"00:01:00.000"});
+}
+
+TEST_CASE("The laptimer shall give the last lap time when lap is started and finished. Lap is without sector.")
+{
+    SimpleLaptimer lapTimer;
+
+    auto track = TrackData{};
+    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
+    track.setFinishline(Positions::OscherslebenPositionStartFinishLine);
+
+    lapTimer.setTrack(track);
+
+    // Positions to start the lap
+    auto gpsPoint1 = PositionDateTimeData{{52.029819, 11.2805431}, Timestamp{"15:05:10.234"}, {}};
+    auto gpsPoint2 = PositionDateTimeData{{52.0270730, 11.2804234}, Timestamp{"15:05:11.234"}, {}};
+    auto gpsPoint3 = PositionDateTimeData{{52.0270945, 11.2803176}, Timestamp{"15:05:12.234"}, {}};
+    auto gpsPoint4 = PositionDateTimeData{{52.0271438, 11.2800835}, Timestamp{"15:05:13.234"}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint1);
+    lapTimer.updatePositionAndTime(gpsPoint2);
+    lapTimer.updatePositionAndTime(gpsPoint3);
+    lapTimer.updatePositionAndTime(gpsPoint4);
+
+    REQUIRE(lapTimer.currentLaptime.get() == Timestamp{"00:00:00.000"});
+
+    // Positions to finish the lap
+    auto gpsPoint5 = PositionDateTimeData{{52.029819, 11.2805431}, Timestamp{"15:06:10.234"}, {}};
+    auto gpsPoint6 = PositionDateTimeData{{52.0270730, 11.2804234}, Timestamp{"15:06:11.234"}, {}};
+    auto gpsPoint7 = PositionDateTimeData{{52.0270945, 11.2803176}, Timestamp{"15:06:12.234"}, {}};
+    auto gpsPoint8 = PositionDateTimeData{{52.0271438, 11.2800835}, Timestamp{"15:06:13.234"}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint5);
+    lapTimer.updatePositionAndTime(gpsPoint6);
+    lapTimer.updatePositionAndTime(gpsPoint7);
+    lapTimer.updatePositionAndTime(gpsPoint8);
+
+    REQUIRE(lapTimer.getLastLaptime() == Timestamp{"00:01:00.000"});
+}
+
+TEST_CASE("The laptimer shall give the last lap time when lap is started and finished. Lap is with sector.")
+{
+    SimpleLaptimer lapTimer;
+
+    auto track = TrackData{};
+    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
+    track.setSections({Positions::OscherslebenPositionSector1Line});
+    track.setFinishline(Positions::OscherslebenPositionStartFinishLine);
+
+    lapTimer.setTrack(track);
+
+    // Positions to start the lap
+    auto gpsPoint1 = PositionDateTimeData{{52.029819, 11.2805431}, Timestamp{"15:05:10.234"}, {}};
+    auto gpsPoint2 = PositionDateTimeData{{52.0270730, 11.2804234}, Timestamp{"15:05:11.234"}, {}};
+    auto gpsPoint3 = PositionDateTimeData{{52.0270945, 11.2803176}, Timestamp{"15:05:12.234"}, {}};
+    auto gpsPoint4 = PositionDateTimeData{{52.0271438, 11.2800835}, Timestamp{"15:05:13.234"}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint1);
+    lapTimer.updatePositionAndTime(gpsPoint2);
+    lapTimer.updatePositionAndTime(gpsPoint3);
+    lapTimer.updatePositionAndTime(gpsPoint4);
+
+    REQUIRE(lapTimer.currentLaptime.get() == Timestamp{"00:00:00.000"});
+
+    // Positions to finsh sector1
+    auto gpsPoint5 = PositionDateTimeData{{52.029819, 11.274203}, Timestamp{"15:06:10.234"}, {}};
+    auto gpsPoint6 = PositionDateTimeData{{52.029821, 11.274193}, Timestamp{"15:06:11.234"}, {}};
+    auto gpsPoint7 = PositionDateTimeData{{52.029821, 11.274169}, Timestamp{"15:06:12.234"}, {}};
+    auto gpsPoint8 = PositionDateTimeData{{52.029822, 11.274149}, Timestamp{"15:06:13.234"}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint5);
+    lapTimer.updatePositionAndTime(gpsPoint6);
+    lapTimer.updatePositionAndTime(gpsPoint7);
+    lapTimer.updatePositionAndTime(gpsPoint8);
+
+    REQUIRE(lapTimer.currentLaptime.get() == Timestamp{"00:01:00.000"});
+
+    // Positions to finish the lap
+    auto gpsPoint9 = PositionDateTimeData{{52.029819, 11.2805431}, Timestamp{"15:07:10.234"}, {}};
+    auto gpsPoint10 = PositionDateTimeData{{52.0270730, 11.2804234}, Timestamp{"15:07:11.234"}, {}};
+    auto gpsPoint11 = PositionDateTimeData{{52.0270945, 11.2803176}, Timestamp{"15:07:12.234"}, {}};
+    auto gpsPoint12 = PositionDateTimeData{{52.0271438, 11.2800835}, Timestamp{"15:07:13.234"}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint9);
+    lapTimer.updatePositionAndTime(gpsPoint10);
+    lapTimer.updatePositionAndTime(gpsPoint11);
+    lapTimer.updatePositionAndTime(gpsPoint12);
+
+    REQUIRE(lapTimer.getLastLaptime() == Timestamp{"00:02:00.000"});
+}

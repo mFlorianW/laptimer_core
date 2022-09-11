@@ -1,6 +1,8 @@
 #include "SimpleLaptimer.hpp"
 #include "DistanceCalculator.hpp"
 
+using namespace LaptimerCore::Common;
+
 namespace LaptimerCore::Algorithm
 {
 
@@ -21,15 +23,23 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
         return;
     }
 
+    // Update currentLaptime
+    if (mLapState != LapState::WaitingForFirstStart)
+    {
+        const auto lapTime = data.getTime() - mLapStartedTimeStamp;
+        currentLaptime.set(lapTime);
+    }
+
     if (mLapState == LapState::WaitingForFirstStart)
     {
         const auto startLine = mTrackData.getStartline();
         if (passedPoint(startLine))
         {
-
             mLapState =
                 (mTrackData.getNumberOfSections() > 0) ? LapState::IteratingTrackPoints : LapState::WaitingForFinish;
             mCurrentTrackPoint = 0;
+            currentLaptime.set(Timestamp{"00:00:00.000"});
+            mLapStartedTimeStamp = data.getTime();
             lapStarted.emit();
         }
     }
@@ -50,6 +60,7 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
         const auto finishLine = mTrackData.getFinishline();
         if (passedPoint(finishLine))
         {
+            mLastLapTime = currentLaptime.get();
             lapFinished.emit();
             lapStarted.emit();
         }
@@ -58,7 +69,7 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
 
 Common::Timestamp SimpleLaptimer::getLastLaptime() const
 {
-    return {};
+    return mLastLapTime;
 }
 
 Common::Timestamp SimpleLaptimer::getLastSectorTime() const
