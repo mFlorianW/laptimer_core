@@ -64,8 +64,10 @@ private:
     };
 
     LapState mLapState{WaitingForFirstStart};
-    Common::Timestamp mLapStartedTimeStamp;
+    Common::Timestamp mLapStartedTimestamp;
     Common::Timestamp mLastLapTime;
+    Common::Timestamp mSectorStartedTimestamp;
+    Common::Timestamp mLastSectorTime;
 };
 
 } // namespace LaptimerCore::Algorithm

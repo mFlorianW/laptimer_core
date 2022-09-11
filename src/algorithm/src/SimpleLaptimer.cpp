@@ -26,8 +26,11 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
     // Update currentLaptime
     if (mLapState != LapState::WaitingForFirstStart)
     {
-        const auto lapTime = data.getTime() - mLapStartedTimeStamp;
+        const auto lapTime = data.getTime() - mLapStartedTimestamp;
         currentLaptime.set(lapTime);
+
+        const auto sectorTime = data.getTime() - mSectorStartedTimestamp;
+        currentSectorTime.set(sectorTime);
     }
 
     if (mLapState == LapState::WaitingForFirstStart)
@@ -39,7 +42,9 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
                 (mTrackData.getNumberOfSections() > 0) ? LapState::IteratingTrackPoints : LapState::WaitingForFinish;
             mCurrentTrackPoint = 0;
             currentLaptime.set(Timestamp{"00:00:00.000"});
-            mLapStartedTimeStamp = data.getTime();
+            currentSectorTime.set(Timestamp{"00:00:00.000"});
+            mLapStartedTimestamp = data.getTime();
+            mSectorStartedTimestamp = data.getTime();
             lapStarted.emit();
         }
     }
@@ -52,6 +57,9 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
             {
                 mLapState = LapState::WaitingForFinish;
             }
+            mLastSectorTime = currentSectorTime.get();
+            mSectorStartedTimestamp = data.getTime();
+            currentSectorTime.set(Timestamp{"00:00:00.000"});
             sectorFinished.emit();
         }
     }
@@ -61,6 +69,9 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
         if (passedPoint(finishLine))
         {
             mLastLapTime = currentLaptime.get();
+            mLastSectorTime = currentSectorTime.get();
+            currentSectorTime.set(Timestamp{"00:00:00.000"});
+            sectorFinished.emit();
             lapFinished.emit();
             lapStarted.emit();
         }
@@ -74,7 +85,7 @@ Common::Timestamp SimpleLaptimer::getLastLaptime() const
 
 Common::Timestamp SimpleLaptimer::getLastSectorTime() const
 {
-    return {};
+    return mLastSectorTime;
 }
 
 bool SimpleLaptimer::passedPoint(const Common::PositionData &point) const
