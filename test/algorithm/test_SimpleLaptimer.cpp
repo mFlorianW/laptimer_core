@@ -7,13 +7,13 @@ using namespace LaptimerCore::Algorithm;
 using namespace LaptimerCore::Common;
 using namespace LaptimerCore::Test::Dummy;
 
-TEST_CASE("The laptimer shall emit lapStarted Signal when crossing the start line. Case1")
+TEST_CASE("The laptimer shall emit lapStarted Signal when crossing the start line for the first time. Case1")
 {
     SimpleLaptimer lapTimer;
     bool lapStartedEmitted = false;
 
     auto track = TrackData{};
-    track.setStartline(Positions::OscherslebenPositionFinishLine);
+    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
 
     lapTimer.setTrack(track);
     lapTimer.lapStarted.connect([&lapStartedEmitted](void) { lapStartedEmitted = true; });
@@ -32,13 +32,13 @@ TEST_CASE("The laptimer shall emit lapStarted Signal when crossing the start lin
     REQUIRE(lapStartedEmitted == true);
 }
 
-TEST_CASE("The laptimer shall call the lap started callback when crossing the start line. Case2")
+TEST_CASE("The laptimer shall call the lap started callback when crossing the start line for the first time. Case2")
 {
     SimpleLaptimer lapTimer;
     bool lapStartedEmitted = false;
 
     auto track = TrackData{};
-    track.setStartline(Positions::OscherslebenPositionFinishLine);
+    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
 
     lapTimer.setTrack(track);
     lapTimer.lapStarted.connect([&lapStartedEmitted](void) { lapStartedEmitted = true; });
@@ -63,8 +63,8 @@ TEST_CASE("The laptimer shall emit the lap finished signal and lap started signa
     bool lapFinishedEmitted = false;
 
     auto track = TrackData{};
-    track.setStartline(Positions::OscherslebenPositionFinishLine);
-    track.setFinishline(Positions::OscherslebenPositionFinishLine);
+    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
+    track.setFinishline(Positions::OscherslebenPositionStartFinishLine);
 
     lapTimer.setTrack(track);
     lapTimer.lapStarted.connect([&lapStartedEmitted](void) { lapStartedEmitted = true; });
@@ -91,6 +91,118 @@ TEST_CASE("The laptimer shall emit the lap finished signal and lap started signa
     lapTimer.updatePositionAndTime(gpsPoint6);
     lapTimer.updatePositionAndTime(gpsPoint7);
     lapTimer.updatePositionAndTime(gpsPoint8);
+
+    REQUIRE(lapFinishedEmitted == true);
+    REQUIRE(lapStartedEmitted == true);
+}
+
+TEST_CASE("The laptimer shall call the sector finished signal when a sector is finshed")
+{
+    SimpleLaptimer lapTimer;
+    bool lapStartedEmitted = false;
+    bool sectorFinishedEmitted = false;
+
+    auto track = TrackData{};
+    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
+    track.setSections({Positions::OscherslebenPositionSector1Line});
+
+    lapTimer.setTrack(track);
+    lapTimer.lapStarted.connect([&lapStartedEmitted](void) { lapStartedEmitted = true; });
+    lapTimer.sectorFinished.connect([&sectorFinishedEmitted](void) { sectorFinishedEmitted = true; });
+
+    // Positions to start the lap
+    auto gpsPoint1 = PositionDateTimeData{{52.029819, 11.2805431}, {}, {}};
+    auto gpsPoint2 = PositionDateTimeData{{52.0270730, 11.2804234}, {}, {}};
+    auto gpsPoint3 = PositionDateTimeData{{52.0270945, 11.2803176}, {}, {}};
+    auto gpsPoint4 = PositionDateTimeData{{52.0271438, 11.2800835}, {}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint1);
+    lapTimer.updatePositionAndTime(gpsPoint2);
+    lapTimer.updatePositionAndTime(gpsPoint3);
+    lapTimer.updatePositionAndTime(gpsPoint4);
+
+    REQUIRE(lapStartedEmitted == true);
+
+    // Positions to finsh a sector
+    auto gpsPoint5 = PositionDateTimeData{{52.029819, 11.274203}, {}, {}};
+    auto gpsPoint6 = PositionDateTimeData{{52.029821, 11.274193}, {}, {}};
+    auto gpsPoint7 = PositionDateTimeData{{52.029821, 11.274169}, {}, {}};
+    auto gpsPoint8 = PositionDateTimeData{{52.029822, 11.274149}, {}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint5);
+    lapTimer.updatePositionAndTime(gpsPoint6);
+    lapTimer.updatePositionAndTime(gpsPoint7);
+    lapTimer.updatePositionAndTime(gpsPoint8);
+
+    REQUIRE(sectorFinishedEmitted == true);
+}
+
+TEST_CASE("The laptimer shall send all signals for a whole map.")
+{
+    SimpleLaptimer lapTimer;
+    bool lapStartedEmitted = false;
+    bool sectorFinishedEmitted = false;
+    bool lapFinishedEmitted = false;
+
+    auto track = TrackData{};
+    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
+    track.setSections({Positions::OscherslebenPositionSector1Line, Positions::OscherslebenPositionSector2Line});
+    track.setFinishline(Positions::OscherslebenPositionStartFinishLine);
+
+    lapTimer.setTrack(track);
+    lapTimer.lapStarted.connect([&lapStartedEmitted](void) { lapStartedEmitted = true; });
+    lapTimer.sectorFinished.connect([&sectorFinishedEmitted](void) { sectorFinishedEmitted = true; });
+    lapTimer.lapFinished.connect([&lapFinishedEmitted](void) { lapFinishedEmitted = true; });
+
+    // Positions to start the lap
+    auto gpsPoint1 = PositionDateTimeData{{52.029819, 11.2805431}, {}, {}};
+    auto gpsPoint2 = PositionDateTimeData{{52.0270730, 11.2804234}, {}, {}};
+    auto gpsPoint3 = PositionDateTimeData{{52.0270945, 11.2803176}, {}, {}};
+    auto gpsPoint4 = PositionDateTimeData{{52.0271438, 11.2800835}, {}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint1);
+    lapTimer.updatePositionAndTime(gpsPoint2);
+    lapTimer.updatePositionAndTime(gpsPoint3);
+    lapTimer.updatePositionAndTime(gpsPoint4);
+
+    REQUIRE(lapStartedEmitted == true);
+
+    // Positions to finsh sector1
+    auto gpsPoint5 = PositionDateTimeData{{52.029819, 11.274203}, {}, {}};
+    auto gpsPoint6 = PositionDateTimeData{{52.029821, 11.274193}, {}, {}};
+    auto gpsPoint7 = PositionDateTimeData{{52.029821, 11.274169}, {}, {}};
+    auto gpsPoint8 = PositionDateTimeData{{52.029822, 11.274149}, {}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint5);
+    lapTimer.updatePositionAndTime(gpsPoint6);
+    lapTimer.updatePositionAndTime(gpsPoint7);
+    lapTimer.updatePositionAndTime(gpsPoint8);
+
+    REQUIRE(sectorFinishedEmitted == true);
+
+    // Positions to finsh sector2
+    sectorFinishedEmitted = false;
+    auto gpsPoint9 = PositionDateTimeData{{52.029970, 11.277183}, {}, {}};
+    auto gpsPoint10 = PositionDateTimeData{{52.029968, 11.277193}, {}, {}};
+    auto gpsPoint11 = PositionDateTimeData{{52.029967, 11.277212}, {}, {}};
+    auto gpsPoint12 = PositionDateTimeData{{52.029966, 11.277218}, {}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint9);
+    lapTimer.updatePositionAndTime(gpsPoint10);
+    lapTimer.updatePositionAndTime(gpsPoint11);
+    lapTimer.updatePositionAndTime(gpsPoint12);
+
+    // Positions to start the lap
+    lapStartedEmitted = false;
+    auto gpsPoint13 = PositionDateTimeData{{52.029819, 11.2805431}, {}, {}};
+    auto gpsPoint14 = PositionDateTimeData{{52.0270730, 11.2804234}, {}, {}};
+    auto gpsPoint15 = PositionDateTimeData{{52.0270945, 11.2803176}, {}, {}};
+    auto gpsPoint16 = PositionDateTimeData{{52.0271438, 11.2800835}, {}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint13);
+    lapTimer.updatePositionAndTime(gpsPoint14);
+    lapTimer.updatePositionAndTime(gpsPoint15);
+    lapTimer.updatePositionAndTime(gpsPoint16);
 
     REQUIRE(lapFinishedEmitted == true);
     REQUIRE(lapStartedEmitted == true);
