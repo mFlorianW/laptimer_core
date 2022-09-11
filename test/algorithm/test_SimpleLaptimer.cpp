@@ -337,3 +337,95 @@ TEST_CASE("The laptimer shall give the last lap time when lap is started and fin
 
     REQUIRE(lapTimer.getLastLaptime() == Timestamp{"00:02:00.000"});
 }
+
+TEST_CASE("The laptimer shall update the current sector time.")
+{
+    SimpleLaptimer lapTimer;
+    std::uint32_t currentSectorTimeUpdated = 0;
+
+    auto track = TrackData{};
+    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
+    track.setSections({Positions::OscherslebenPositionSector1Line, Positions::OscherslebenPositionSector2Line});
+    track.setFinishline(Positions::OscherslebenPositionStartFinishLine);
+
+    lapTimer.setTrack(track);
+    lapTimer.currentSectorTime.valueChanged().connect(
+        [&currentSectorTimeUpdated](Timestamp newTimestamp) { ++currentSectorTimeUpdated; });
+
+    // Positions to start the lap
+    auto gpsPoint1 = PositionDateTimeData{{52.029819, 11.2805431}, Timestamp{"15:05:10.234"}, {}};
+    auto gpsPoint2 = PositionDateTimeData{{52.0270730, 11.2804234}, Timestamp{"15:05:11.234"}, {}};
+    auto gpsPoint3 = PositionDateTimeData{{52.0270945, 11.2803176}, Timestamp{"15:05:12.234"}, {}};
+    auto gpsPoint4 = PositionDateTimeData{{52.0271438, 11.2800835}, Timestamp{"15:05:13.234"}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint1);
+    lapTimer.updatePositionAndTime(gpsPoint2);
+    lapTimer.updatePositionAndTime(gpsPoint3);
+    lapTimer.updatePositionAndTime(gpsPoint4);
+
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:00.000"});
+
+    // Positions to finsh sector1
+    auto gpsPoint5 = PositionDateTimeData{{52.029819, 11.274203}, Timestamp{"15:06:10.234"}, {}};
+    auto gpsPoint6 = PositionDateTimeData{{52.029821, 11.274193}, Timestamp{"15:06:11.234"}, {}};
+    auto gpsPoint7 = PositionDateTimeData{{52.029821, 11.274169}, Timestamp{"15:06:12.234"}, {}};
+    auto gpsPoint8 = PositionDateTimeData{{52.029822, 11.274149}, Timestamp{"15:06:13.234"}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint5);
+    REQUIRE(currentSectorTimeUpdated == 1);
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:57.000"});
+    lapTimer.updatePositionAndTime(gpsPoint6);
+    REQUIRE(currentSectorTimeUpdated == 2);
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:58.000"});
+
+    // Sector1 is finshed here
+    lapTimer.updatePositionAndTime(gpsPoint7);
+    REQUIRE(currentSectorTimeUpdated == 4);
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:00.000"});
+    REQUIRE(lapTimer.getLastSectorTime() == Timestamp{"00:00:59.000"});
+    lapTimer.updatePositionAndTime(gpsPoint8);
+    REQUIRE(currentSectorTimeUpdated == 5);
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:01.000"});
+
+    // Positions to finsh sector2
+    auto gpsPoint9 = PositionDateTimeData{{52.029970, 11.277183}, Timestamp{"15:07:10.234"}, {}};
+    auto gpsPoint10 = PositionDateTimeData{{52.029968, 11.277193}, Timestamp{"15:07:11.234"}, {}};
+    auto gpsPoint11 = PositionDateTimeData{{52.029967, 11.277212}, Timestamp{"15:07:12.234"}, {}};
+    auto gpsPoint12 = PositionDateTimeData{{52.029966, 11.277218}, Timestamp{"15:07:13.234"}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint9);
+    REQUIRE(currentSectorTimeUpdated == 6);
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:58.000"});
+    lapTimer.updatePositionAndTime(gpsPoint10);
+    REQUIRE(currentSectorTimeUpdated == 7);
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:59.000"});
+    lapTimer.updatePositionAndTime(gpsPoint11);
+    REQUIRE(currentSectorTimeUpdated == 8);
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:01:00.000"});
+    // Sector2 finished here
+    lapTimer.updatePositionAndTime(gpsPoint12);
+    REQUIRE(currentSectorTimeUpdated == 10);
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:00.000"});
+    REQUIRE(lapTimer.getLastSectorTime() == Timestamp{"00:01:01.000"});
+
+    // Positions to finish the lap
+    auto gpsPoint13 = PositionDateTimeData{{52.029819, 11.2805431}, Timestamp{"15:08:10.234"}, {}};
+    auto gpsPoint14 = PositionDateTimeData{{52.0270730, 11.2804234}, Timestamp{"15:08:11.234"}, {}};
+    auto gpsPoint15 = PositionDateTimeData{{52.0270945, 11.2803176}, Timestamp{"15:08:12.234"}, {}};
+    auto gpsPoint16 = PositionDateTimeData{{52.0271438, 11.2800835}, Timestamp{"15:08:13.234"}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint13);
+    REQUIRE(currentSectorTimeUpdated == 11);
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:57.000"});
+    lapTimer.updatePositionAndTime(gpsPoint14);
+    REQUIRE(currentSectorTimeUpdated == 12);
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:58.000"});
+    lapTimer.updatePositionAndTime(gpsPoint15);
+    REQUIRE(currentSectorTimeUpdated == 13);
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:59.000"});
+    lapTimer.updatePositionAndTime(gpsPoint16);
+
+    REQUIRE(currentSectorTimeUpdated == 15);
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:00.000"});
+    REQUIRE(lapTimer.getLastSectorTime() == Timestamp{"00:01:00.000"});
+}
