@@ -168,34 +168,22 @@ Timestamp Timestamp::operator+(const Timestamp &rhs) const noexcept
 
 Timestamp Timestamp::operator-(const Timestamp &rhs) const noexcept
 {
+    std::int32_t time1Msecs =
+        (getHour() * 3.6e6) + (getMinute() * 6.0e4) + (getSecond() * 1e3) + getFractionalOfSecond();
+    std::int32_t time2Msecs =
+        (rhs.getHour() * 3.6e6) + (rhs.getMinute() * 6e4) + (rhs.getSecond() * 1e3) + rhs.getFractionalOfSecond();
+    std::int32_t resultMsecs = time1Msecs - time2Msecs;
+
+    std::int32_t resultHour = static_cast<std::int32_t>(resultMsecs / 3.6e6) % 24;
+    std::int32_t resultMinute = static_cast<std::int32_t>(resultMsecs / 6e4) % 60;
+    std::int32_t resultSeconds = static_cast<std::int32_t>(resultMsecs / 1e3) % 60;
+    std::int32_t resultFractional = static_cast<std::int32_t>(resultMsecs) % 1000;
+
     Timestamp result;
-    auto tempHour = getHour() - rhs.getHour();
-    if (tempHour < 0)
-    {
-        tempHour = 24 + tempHour;
-    }
-
-    auto tempMinute = getMinute() - rhs.getMinute();
-    if (tempMinute < 0)
-    {
-        tempMinute = 60 + tempMinute;
-    }
-
-    auto tempSecond = getSecond() - rhs.getSecond();
-    if (tempSecond < 0)
-    {
-        tempSecond = 60 + tempSecond;
-    }
-    auto tempFractionalOfSecond = getFractionalOfSecond() - rhs.getFractionalOfSecond();
-    if (tempFractionalOfSecond < 0)
-    {
-        tempFractionalOfSecond = 1000 + tempFractionalOfSecond;
-    }
-
-    result.setHour(tempHour);
-    result.setMinute(tempMinute);
-    result.setSecond(tempSecond);
-    result.setFractionalOfSecond(tempFractionalOfSecond);
+    result.setHour(resultHour < 0 ? 24 + resultHour : resultHour);
+    result.setMinute(resultMinute);
+    result.setSecond(resultSeconds);
+    result.setFractionalOfSecond(resultFractional);
     return result;
 }
 
