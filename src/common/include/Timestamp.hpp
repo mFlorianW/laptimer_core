@@ -140,6 +140,9 @@ public:
     friend bool operator!=(const Timestamp &lhs, const Timestamp &rhs);
 
 private:
+    std::int32_t convertToMilliSeconds() const;
+
+private:
     SharedDataPointer<SharedTimestamp> mData;
 };
 

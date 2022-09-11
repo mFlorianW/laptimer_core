@@ -125,53 +125,31 @@ std::string Timestamp::asString() const noexcept
 
     return timeAsString.str();
 }
+
 Timestamp Timestamp::operator+(const Timestamp &rhs) const noexcept
 {
-    auto tempFractionalSecond = getFractionalOfSecond() + rhs.getFractionalOfSecond();
-    std::uint8_t overflowSecond = 0;
-    if (tempFractionalSecond >= 1000)
-    {
-        overflowSecond = 1;
-        tempFractionalSecond -= 1000;
-    }
+    std::int32_t time1Msecs = convertToMilliSeconds();
+    std::int32_t time2Msecs = rhs.convertToMilliSeconds();
+    std::int32_t resultMsecs = time1Msecs + time2Msecs;
 
-    auto tempSecond = overflowSecond + getSecond() + rhs.getSecond();
-    std::uint8_t overflowMinute = 0;
-    if (tempSecond >= 60)
-    {
-        overflowMinute = 1;
-        tempSecond -= 60;
-    }
-
-    auto tempMinute = overflowMinute + getMinute() + rhs.getMinute();
-    std::uint8_t overflowHour = 0;
-    if (tempMinute >= 60)
-    {
-        overflowHour = 1;
-        tempMinute -= 60;
-    }
-
-    auto tempHour = overflowHour + getHour() + rhs.getHour();
-    if (tempHour >= 24)
-    {
-        tempHour -= 24;
-    }
+    std::int32_t resultHour = static_cast<std::int32_t>(resultMsecs / 3.6e6) % 24;
+    std::int32_t resultMinute = static_cast<std::int32_t>(resultMsecs / 6e4) % 60;
+    std::int32_t resultSeconds = static_cast<std::int32_t>(resultMsecs / 1e3) % 60;
+    std::int32_t resultFractional = static_cast<std::int32_t>(resultMsecs) % 1000;
 
     Timestamp ts;
-    ts.setHour(tempHour);
-    ts.setMinute(tempMinute);
-    ts.setSecond(tempSecond);
-    ts.setFractionalOfSecond(tempFractionalSecond);
+    ts.setHour(resultHour);
+    ts.setMinute(resultMinute);
+    ts.setSecond(resultSeconds);
+    ts.setFractionalOfSecond(resultFractional);
 
     return ts;
 }
 
 Timestamp Timestamp::operator-(const Timestamp &rhs) const noexcept
 {
-    std::int32_t time1Msecs =
-        (getHour() * 3.6e6) + (getMinute() * 6.0e4) + (getSecond() * 1e3) + getFractionalOfSecond();
-    std::int32_t time2Msecs =
-        (rhs.getHour() * 3.6e6) + (rhs.getMinute() * 6e4) + (rhs.getSecond() * 1e3) + rhs.getFractionalOfSecond();
+    std::int32_t time1Msecs = convertToMilliSeconds();
+    std::int32_t time2Msecs = rhs.convertToMilliSeconds();
     std::int32_t resultMsecs = time1Msecs - time2Msecs;
 
     std::int32_t resultHour = static_cast<std::int32_t>(resultMsecs / 3.6e6) % 24;
@@ -185,6 +163,11 @@ Timestamp Timestamp::operator-(const Timestamp &rhs) const noexcept
     result.setSecond(resultSeconds);
     result.setFractionalOfSecond(resultFractional);
     return result;
+}
+
+int32_t Timestamp::convertToMilliSeconds() const
+{
+    return (getHour() * 3.6e6) + (getMinute() * 6.0e4) + (getSecond() * 1e3) + getFractionalOfSecond();
 }
 
 bool operator==(const Timestamp &lhs, const Timestamp &rhs)
