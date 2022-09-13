@@ -329,14 +329,11 @@ TEST_CASE("The laptimer shall give the last lap time when lap is started and fin
     auto gpsPoint9 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, Timestamp{"15:07:10.234"}, {}};
     auto gpsPoint10 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, Timestamp{"15:07:11.234"}, {}};
     auto gpsPoint11 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, Timestamp{"15:07:12.234"}, {}};
-    auto gpsPoint12 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, Timestamp{"15:07:13.234"}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint9);
     lapTimer.updatePositionAndTime(gpsPoint10);
     lapTimer.updatePositionAndTime(gpsPoint11);
-    lapTimer.updatePositionAndTime(gpsPoint12);
-
-    REQUIRE(lapTimer.getLastLaptime() == Timestamp{"00:02:00.000"});
+    REQUIRE(lapTimer.getLastLaptime() == Timestamp{"00:01:59.000"});
 }
 
 TEST_CASE("The laptimer shall update the current sector time.")
@@ -424,4 +421,81 @@ TEST_CASE("The laptimer shall update the current sector time.")
     REQUIRE(currentSectorTimeUpdated == 14);
     REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:00.000"});
     REQUIRE(lapTimer.getLastSectorTime() == Timestamp{"00:00:59.000"});
+}
+
+TEST_CASE("The laptimer shall emit the signals sector and lap started finished even for two laps.")
+{
+    SimpleLaptimer lapTimer;
+    bool lapStartedEmitted = false;
+    bool lapFinishedEmitted = false;
+    bool sectorFinishedEmitted = false;
+
+    auto track = TrackData{};
+    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
+    track.setFinishline(Positions::OscherslebenPositionStartFinishLine);
+    track.setSections({Positions::OscherslebenPositionSector1Line});
+
+    lapTimer.setTrack(track);
+    lapTimer.lapStarted.connect([&lapStartedEmitted](void) { lapStartedEmitted = true; });
+    lapTimer.lapFinished.connect([&lapFinishedEmitted](void) { lapFinishedEmitted = true; });
+    lapTimer.sectorFinished.connect([&sectorFinishedEmitted](void) { sectorFinishedEmitted = true; });
+
+    // Positions to start the lap
+    auto gpsPoint1 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, {}, {}};
+    auto gpsPoint2 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, {}, {}};
+    auto gpsPoint3 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, {}, {}};
+    auto gpsPoint4 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, {}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint1);
+    lapTimer.updatePositionAndTime(gpsPoint2);
+    lapTimer.updatePositionAndTime(gpsPoint3);
+    lapTimer.updatePositionAndTime(gpsPoint4);
+
+    REQUIRE(lapStartedEmitted == true);
+    lapStartedEmitted = false;
+
+    // Positions to finsh sector1
+    auto gpsPoint5 = PositionDateTimeData{Positions::OscherslebenSector1Point1, Timestamp{"15:06:10.234"}, {}};
+    auto gpsPoint6 = PositionDateTimeData{Positions::OscherslebenSector1Point2, Timestamp{"15:06:11.234"}, {}};
+    auto gpsPoint7 = PositionDateTimeData{Positions::OscherslebenSector1Point3, Timestamp{"15:06:12.234"}, {}};
+    auto gpsPoint8 = PositionDateTimeData{Positions::OscherslebenSector1Point4, Timestamp{"15:06:13.234"}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint5);
+    lapTimer.updatePositionAndTime(gpsPoint6);
+    lapTimer.updatePositionAndTime(gpsPoint7);
+    lapTimer.updatePositionAndTime(gpsPoint8);
+
+    REQUIRE(sectorFinishedEmitted == true);
+
+    // Position to finish the lap
+    auto gpsPoint9 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, {}, {}};
+    auto gpsPoint10 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, {}, {}};
+    auto gpsPoint11 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, {}, {}};
+    auto gpsPoint12 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, {}, {}};
+
+    lapTimer.updatePositionAndTime(gpsPoint9);
+    lapTimer.updatePositionAndTime(gpsPoint10);
+    lapTimer.updatePositionAndTime(gpsPoint11);
+    lapTimer.updatePositionAndTime(gpsPoint12);
+
+    REQUIRE(lapFinishedEmitted == true);
+    REQUIRE(lapStartedEmitted == true);
+
+    lapStartedEmitted = false;
+    lapFinishedEmitted = false;
+    sectorFinishedEmitted = false;
+
+    lapTimer.updatePositionAndTime(gpsPoint5);
+    lapTimer.updatePositionAndTime(gpsPoint6);
+    lapTimer.updatePositionAndTime(gpsPoint7);
+    lapTimer.updatePositionAndTime(gpsPoint8);
+    REQUIRE(sectorFinishedEmitted == true);
+
+    lapTimer.updatePositionAndTime(gpsPoint9);
+    lapTimer.updatePositionAndTime(gpsPoint10);
+    lapTimer.updatePositionAndTime(gpsPoint11);
+    lapTimer.updatePositionAndTime(gpsPoint12);
+
+    REQUIRE(lapFinishedEmitted == true);
+    REQUIRE(lapStartedEmitted == true);
 }
