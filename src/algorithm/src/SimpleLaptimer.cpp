@@ -72,6 +72,15 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
             mLastSectorTime = currentSectorTime.get();
             currentLaptime.set(Timestamp{"00:00:00.000"});
             currentSectorTime.set(Timestamp{"00:00:00.000"});
+
+            // TODO: Only works with with a circuit. Additional check is needed in the future when the finish line
+            // and start line is not the same.
+            if (mTrackData.getNumberOfSections() > 0)
+            {
+                mCurrentTrackPoint = 0;
+                mLapState = LapState::IteratingTrackPoints;
+            }
+
             sectorFinished.emit();
             lapFinished.emit();
             lapStarted.emit();
