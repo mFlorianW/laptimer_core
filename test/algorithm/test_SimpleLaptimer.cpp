@@ -246,9 +246,9 @@ TEST_CASE("The laptimer shall update the lap time after lap is started unit lap 
     lapTimer.updatePositionAndTime(gpsPoint7);
     lapTimer.updatePositionAndTime(gpsPoint8);
 
-    REQUIRE(lapTimeUpdateCounter == 6);
+    REQUIRE(lapTimeUpdateCounter == 4);
     REQUIRE(lapTimer.currentLaptime.get() == Timestamp{"00:00:00.000"});
-    REQUIRE(lapTimer.getLastLaptime() == Timestamp{"00:01:00.000"});
+    REQUIRE(lapTimer.getLastLaptime() == Timestamp{"00:00:59.000"});
 }
 
 TEST_CASE("The laptimer shall give the last lap time when lap is started and finished. Lap is without sector.")
@@ -285,7 +285,7 @@ TEST_CASE("The laptimer shall give the last lap time when lap is started and fin
     lapTimer.updatePositionAndTime(gpsPoint7);
     lapTimer.updatePositionAndTime(gpsPoint8);
 
-    REQUIRE(lapTimer.getLastLaptime() == Timestamp{"00:01:00.000"});
+    REQUIRE(lapTimer.getLastLaptime() == Timestamp{"00:00:59.000"});
 }
 
 TEST_CASE("The laptimer shall give the last lap time when lap is started and finished. Lap is with sector.")

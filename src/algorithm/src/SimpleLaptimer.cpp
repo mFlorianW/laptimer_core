@@ -80,6 +80,10 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
                 mCurrentTrackPoint = 0;
                 mLapState = LapState::IteratingTrackPoints;
             }
+            else
+            {
+                mCurrentPoints.clear();
+            }
 
             sectorFinished.emit();
             lapFinished.emit();
