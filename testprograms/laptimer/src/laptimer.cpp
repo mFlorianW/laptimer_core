@@ -1,8 +1,10 @@
 #include "Controls.hpp"
-#include "StaticPositionDateTimeProvider.hpp"
+#include <FileSystemSessionDatabaseBackend.hpp>
 #include <SDL2/SDL.h>
 #include <ScreenModel.hpp>
+#include <SessionDatabase.hpp>
 #include <StaticGpsInformationProvider.hpp>
+#include <StaticPositionDateTimeProvider.hpp>
 #include <StaticPositionInformationProvider.hpp>
 #include <monitor.h>
 #include <mouse.h>
@@ -82,7 +84,9 @@ int main(int argc, char *argv[])
     auto gpsInfoProvider = LaptimerCore::Positioning::StaticGpsInformationProvider{};
     auto posInfoProvider = LaptimerCore::Positioning::StaticPositionInformationProvider{};
     auto posDateTimeProvider = LaptimerCore::Positioning::StaticPositionDateTimeProvider{};
-    auto screenModel = ScreenModel{gpsInfoProvider, posInfoProvider, posDateTimeProvider};
+    auto sessionDatabaseBackend = LaptimerCore::Session::FileSystemSessionDatabaseBackend{""};
+    auto sessionDatabase = LaptimerCore::Session::SessionDatabase{sessionDatabaseBackend};
+    auto screenModel = ScreenModel{gpsInfoProvider, posInfoProvider, posDateTimeProvider, sessionDatabase};
     screenModel.activateMainScreen();
 
     while (true)
