@@ -3,22 +3,30 @@
 
 #include "ActiveSessionModel.hpp"
 #include "ActiveSessionView.hpp"
-#include "IGPSInformationProvider.hpp"
 #include "ShowMenuScreenCommand.hpp"
-#include "TrackDetection.hpp"
-#include "TrackDetectionWorkflow.hpp"
+#include <ActiveSessionWorkflow.hpp>
+#include <IPositionDateTimeProvider.hpp>
+#include <SimpleLaptimer.hpp>
+#include <TrackDetection.hpp>
+#include <TrackDetectionWorkflow.hpp>
 
 class ScreenModel;
 class MainScreenModel
 {
 public:
     MainScreenModel(ScreenModel &screenModel,
-                    LaptimerCore::Positioning::IPositionInformationProvider &gpsPositionProvider);
+                    LaptimerCore::Positioning::IPositionInformationProvider &gpsPositionProvider,
+                    LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider,
+                    LaptimerCore::Session::ISessionDatabase &sessionDatabase);
     View &getActiveView();
 
 private:
     // Backends
     LaptimerCore::Algorithm::TrackDetection mTrackDetector{500};
+    LaptimerCore::Algorithm::SimpleLaptimer mLapTimer;
+
+    // ActiveSessionBackend
+    LaptimerCore::Workflow::ActiveSessionWorkflow mActiveSessionWorkflow;
 
     // Models
     ScreenModel &mScreenModel;
