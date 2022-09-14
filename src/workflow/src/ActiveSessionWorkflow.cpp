@@ -53,6 +53,7 @@ void ActiveSessionWorkflow::onLapFinished()
 
     const auto newLapCount = lapCount.get() + 1;
     lapCount.set(newLapCount);
+    lapFinished.emit();
 }
 
 void ActiveSessionWorkflow::onSectorFinished()
@@ -60,6 +61,7 @@ void ActiveSessionWorkflow::onSectorFinished()
     const auto sectorTime = mLaptimer.getLastSectorTime();
     lastSectorTime.set(sectorTime);
     mCurrentLap.addSectorTime(sectorTime);
+    sectorFinshed.emit();
 }
 
 void ActiveSessionWorkflow::onCurrentLaptimeChanged()

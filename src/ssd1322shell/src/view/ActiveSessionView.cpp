@@ -23,7 +23,7 @@ ActiveSessionView::ActiveSessionView(ActiveSessionModel &model)
     mLaptimeLabel = lv_label_create(mLaptimeContainer, nullptr);
     lv_obj_add_style(mLaptimeLabel, LV_LABEL_PART_MAIN, &mLaptimeLabelStyle);
     lv_obj_set_size(mLaptimeLabel, 256, 28);
-    lv_label_set_text_fmt(mLaptimeLabel, "%01d:%01d.%01d", 1, 35, 123);
+    lv_label_set_text(mLaptimeLabel, "00:00.000");
 
     // Setup sector time view
     mSectorTimeContainer = lv_cont_create(mScreenContent, nullptr);
@@ -37,7 +37,7 @@ ActiveSessionView::ActiveSessionView(ActiveSessionModel &model)
     mSectorTimeLabel = lv_label_create(mSectorTimeContainer, nullptr);
     lv_obj_add_style(mSectorTimeLabel, LV_LABEL_PART_MAIN, &mSectorTimeLabelStyle);
     lv_obj_set_size(mSectorTimeLabel, 256, 28);
-    lv_label_set_text_fmt(mSectorTimeLabel, "%01d:%01d.%01d", 0, 12, 321);
+    lv_label_set_text(mSectorTimeLabel, "00:00.000");
 
     // Setup lap count view
     lv_style_init(&mSectorTimeLabelStyle);
@@ -47,12 +47,32 @@ ActiveSessionView::ActiveSessionView(ActiveSessionModel &model)
     lv_obj_add_style(mLapCountLabel, LV_LABEL_PART_MAIN, &mSectorTimeLabelStyle);
     lv_obj_set_size(mLapCountLabel, 50, 16);
     lv_obj_align(mLapCountLabel, mScreenContent, LV_ALIGN_IN_BOTTOM_RIGHT, -38, 0);
-    lv_label_set_text_fmt(mLapCountLabel, "Lap: %03d", 3);
+    lv_label_set_text_fmt(mLapCountLabel, "Lap: %03d", 0);
 
+    mPopupRequest.setMainText("Use track?");
     mPopupRequest.confirmed.connect(&ActiveSessionView::onTrackDetectionPopupClosed, this);
     mActiveSessionModel.detectedTrack.valueChanged().connect(&ActiveSessionView::onTrackDetected, this);
 
-    mPopupRequest.setMainText("Use track?");
+    mActiveSessionModel.currentLaptime.valueChanged().connect([=]() {
+        auto timeStamp = mActiveSessionModel.currentLaptime.get();
+        lv_label_set_text_fmt(mLaptimeLabel,
+                              "%01d:%01d.%01d",
+                              timeStamp.getMinute(),
+                              timeStamp.getSecond(),
+                              timeStamp.getFractionalOfSecond());
+    });
+
+    mActiveSessionModel.currentSectorTime.valueChanged().connect([=]() {
+        auto timeStamp = mActiveSessionModel.currentSectorTime.get();
+        lv_label_set_text_fmt(mSectorTimeLabel,
+                              "%01d:%01d.%01d",
+                              timeStamp.getMinute(),
+                              timeStamp.getSecond(),
+                              timeStamp.getFractionalOfSecond());
+    });
+
+    mActiveSessionModel.lapCount.valueChanged().connect(
+        [=]() { lv_label_set_text_fmt(mLapCountLabel, "Lap: %03d", mActiveSessionModel.lapCount.get()); });
 }
 
 ActiveSessionView::~ActiveSessionView()
@@ -72,12 +92,6 @@ void ActiveSessionView::onTrackDetected()
 
 void ActiveSessionView::onTrackDetectionPopupClosed(PopupReturnType returnType)
 {
-    if (returnType == PopupReturnType::Confirmed)
-    {
-        std::cout << "Track detection confirmed.\n";
-    }
-    else
-    {
-        std::cout << "Track detection cancel.\n";
-    }
+    auto confirmed = returnType == PopupReturnType::Confirmed;
+    mActiveSessionModel.confirmTrackDetection(confirmed);
 }
