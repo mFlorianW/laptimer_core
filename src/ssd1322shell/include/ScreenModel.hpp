@@ -1,6 +1,7 @@
 #ifndef __SCREENCONTROLLER__H__
 #define __SCREENCONTROLLER__H__
 
+#include "IPositionDateTimeProvider.hpp"
 #include <IGPSInformationProvider.hpp>
 #include <IPositionInformationProvider.hpp>
 #include <memory>
@@ -18,7 +19,8 @@ public:
      * @param posInfoProvider  The GPS position information provider service.
      */
     ScreenModel(LaptimerCore::Positioning::IGpsInformationProvider &gpsInfoProvider,
-                LaptimerCore::Positioning::IPositionInformationProvider &posInfoProvider);
+                LaptimerCore::Positioning::IPositionInformationProvider &posInfoProvider,
+                LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider);
 
     virtual ~ScreenModel();
 

@@ -7,6 +7,7 @@ target_sources(Positioning
         ${CMAKE_CURRENT_SOURCE_DIR}/include/StaticGpsInformationProvider.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/IPositionInformationProvider.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/include/StaticPositionInformationProvider.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/StaticPositionDateTimeProvider.hpp
 )
 
 target_include_directories(Positioning
