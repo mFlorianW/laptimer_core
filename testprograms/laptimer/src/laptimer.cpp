@@ -8,6 +8,7 @@
 #include <StaticPositionInformationProvider.hpp>
 #include <monitor.h>
 #include <mouse.h>
+#include <pwd.h>
 #include <unistd.h>
 
 [[noreturn]] static int tick_thread(void *data)
@@ -78,13 +79,16 @@ int main(int argc, char *argv[])
     // Initialize the HAL (display, input devices, tick) for LVGL
     hal_init();
 
+    // get home folder for the session database backend.
+    auto databaseFolder = std::string{getpwuid(getuid())->pw_dir} + "/.local/share/laptimer/sessions";
+
     // Initialize the Controls to navigate the Shell
     Controls ctl;
 
     auto gpsInfoProvider = LaptimerCore::Positioning::StaticGpsInformationProvider{};
     auto posInfoProvider = LaptimerCore::Positioning::StaticPositionInformationProvider{};
     auto posDateTimeProvider = LaptimerCore::Positioning::StaticPositionDateTimeProvider{};
-    auto sessionDatabaseBackend = LaptimerCore::Session::FileSystemSessionDatabaseBackend{""};
+    auto sessionDatabaseBackend = LaptimerCore::Session::FileSystemSessionDatabaseBackend{databaseFolder};
     auto sessionDatabase = LaptimerCore::Session::SessionDatabase{sessionDatabaseBackend};
     auto screenModel = ScreenModel{gpsInfoProvider, posInfoProvider, posDateTimeProvider, sessionDatabase};
     screenModel.activateMainScreen();
