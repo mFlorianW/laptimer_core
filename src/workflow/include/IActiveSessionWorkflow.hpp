@@ -39,6 +39,16 @@ public:
     virtual std::optional<Common::SessionData> getSession() const noexcept = 0;
 
     /**
+     * This signal is emitted when the ActiveWorkSessionFlow detects a finished lap.
+     */
+    KDBindings::Signal<> lapFinished;
+
+    /**
+     * This signal is emitted when the ActiveWorkSessionFlow detects a finished sector.
+     */
+    KDBindings::Signal<> sectorFinshed;
+
+    /**
      * This property holds the current laptime.
      */
     KDBindings::Property<Common::Timestamp> currentLaptime;
