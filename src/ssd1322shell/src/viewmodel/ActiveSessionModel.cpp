@@ -4,8 +4,10 @@
 
 using namespace LaptimerCore::Common;
 
-ActiveSessionModel::ActiveSessionModel(LaptimerCore::Workflow::ITrackDetectionWorkflow &trackDetector)
+ActiveSessionModel::ActiveSessionModel(LaptimerCore::Workflow::ITrackDetectionWorkflow &trackDetector,
+                                       LaptimerCore::Workflow::IActiveSessionWorkflow &activeWorkSessionFlow)
     : mTrackDetector{trackDetector}
+    , mActiveWorkSessionFlow{activeWorkSessionFlow}
 {
     TrackData zuhauseTrack;
     zuhauseTrack.setTrackName("Flo Zuhause");
