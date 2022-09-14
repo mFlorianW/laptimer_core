@@ -75,12 +75,15 @@ TEST_CASE("The ActiveSessionWorkflow shall update the round sector time property
     auto sdb = SessionDatabase{dbb};
     auto actSessWf = ActiveSessionWorkflow{dp, lp, sdb};
     auto expectedSectorTime = Timestamp{"00:00:12.123"};
+    bool sectorFinishedEmitted = false;
 
+    actSessWf.sectorFinshed.connect([&sectorFinishedEmitted]() { sectorFinishedEmitted = true; });
     actSessWf.startActiveSession();
     lp.sectorTimes.push_back(Timestamp{"00:00:12.123"});
     lp.sectorFinished.emit();
 
     REQUIRE(actSessWf.lastSectorTime.get() == expectedSectorTime);
+    REQUIRE(sectorFinishedEmitted == true);
 }
 
 TEST_CASE("The ActiveSessionWorkflow shall store the laptime when finished.")
@@ -91,14 +94,17 @@ TEST_CASE("The ActiveSessionWorkflow shall store the laptime when finished.")
     auto sdb = SessionDatabase{dbb};
     auto actSessWf = ActiveSessionWorkflow{dp, lp, sdb};
     auto expectedLap = LapData{Timestamp{"00:23:13.123"}};
+    bool lapFinishedEmitted = false;
 
     actSessWf.startActiveSession();
+    actSessWf.lapFinished.connect([&lapFinishedEmitted]() { lapFinishedEmitted = true; });
     lp.sectorTimes.push_back(Timestamp{"00:23:13.123"});
     lp.sectorFinished.emit();
     lp.lapFinished.emit();
 
     REQUIRE(actSessWf.getSession()->getLaps().size() == 1);
     REQUIRE(actSessWf.getSession()->getLap(0) == expectedLap);
+    REQUIRE(lapFinishedEmitted == true);
 }
 
 TEST_CASE("The ActiveSessionWorkflow shall update the round laptime property when the laptimer notifes that the "
