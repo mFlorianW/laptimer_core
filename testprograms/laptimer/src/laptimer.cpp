@@ -1,4 +1,5 @@
 #include "Controls.hpp"
+#include "StaticPositionDateTimeProvider.hpp"
 #include <SDL2/SDL.h>
 #include <ScreenModel.hpp>
 #include <StaticGpsInformationProvider.hpp>
@@ -80,7 +81,8 @@ int main(int argc, char *argv[])
 
     auto gpsInfoProvider = LaptimerCore::Positioning::StaticGpsInformationProvider{};
     auto posInfoProvider = LaptimerCore::Positioning::StaticPositionInformationProvider{};
-    auto screenModel = ScreenModel{gpsInfoProvider, posInfoProvider};
+    auto posDateTimeProvider = LaptimerCore::Positioning::StaticPositionDateTimeProvider{};
+    auto screenModel = ScreenModel{gpsInfoProvider, posInfoProvider, posDateTimeProvider};
     screenModel.activateMainScreen();
 
     while (true)
