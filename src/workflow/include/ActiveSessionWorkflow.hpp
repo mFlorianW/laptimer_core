@@ -69,6 +69,8 @@ private:
     std::optional<Common::SessionData> mSession;
     Common::TrackData mTrack;
     Common::LapData mCurrentLap;
+
+    KDBindings::ConnectionHandle mPositionDateTimeUpdateHandle;
 };
 
 } // namespace LaptimerCore::Workflow

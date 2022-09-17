@@ -20,6 +20,8 @@ public:
     Common::Timestamp getLastSectorTime() const override;
 
     std::vector<Common::Timestamp> sectorTimes;
+
+    Common::PositionDateTimeData lastPostionDateTime;
 };
 
 } // namespace LaptimerCore::Test::Dummy

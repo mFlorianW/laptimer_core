@@ -3,6 +3,7 @@
 #include "Laptimer.hpp"
 #include "MemorySessionDatabaseBackend.hpp"
 #include "PositionDateTimeProvider.hpp"
+#include "Positions.hpp"
 #include "SessionDatabase.hpp"
 #include <catch2/catch.hpp>
 
@@ -212,4 +213,34 @@ TEST_CASE("The ActiveSessionWorkflow shall update the lap counter when a lap is 
 
     lp.lapFinished.emit();
     REQUIRE(actSessWf.lapCount.get() == 2);
+}
+
+TEST_CASE("The ActiveSessionWorkflow shall forward all PositionTimeDate Updates to the laptimer when session is active")
+{
+    auto lp = Laptimer{};
+    auto dp = PositionDateTimeProvider{};
+    auto dbb = MemorySessionDatabaseBackend{};
+    auto sdb = SessionDatabase{dbb};
+    auto actSessWf = ActiveSessionWorkflow{dp, lp, sdb};
+
+    actSessWf.startActiveSession();
+    dp.positionTimeData.set(PositionDateTimeData{Positions::OscherslebenPositionStartFinishLine, {}, {}});
+
+    REQUIRE(lp.lastPostionDateTime == PositionDateTimeData{Positions::OscherslebenPositionStartFinishLine, {}, {}});
+}
+
+TEST_CASE("The ActiveSessionWorkflow shall not forward all PositionTimeDate updates to the laptimer when session is "
+          "stopped")
+{
+    auto lp = Laptimer{};
+    auto dp = PositionDateTimeProvider{};
+    auto dbb = MemorySessionDatabaseBackend{};
+    auto sdb = SessionDatabase{dbb};
+    auto actSessWf = ActiveSessionWorkflow{dp, lp, sdb};
+
+    actSessWf.startActiveSession();
+    actSessWf.stopActiveSession();
+    dp.positionTimeData.set(PositionDateTimeData{Positions::OscherslebenPositionStartFinishLine, {}, {}});
+
+    REQUIRE(lp.lastPostionDateTime == PositionDateTimeData{{}, {}, {}});
 }
