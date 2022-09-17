@@ -1,5 +1,7 @@
 #include "ActiveSessionWorkflow.hpp"
 
+using namespace LaptimerCore::Common;
+
 namespace LaptimerCore::Workflow
 {
 
@@ -19,6 +21,9 @@ void ActiveSessionWorkflow::startActiveSession() noexcept
     mLaptimer.currentLaptime.valueChanged().connect(&ActiveSessionWorkflow::onCurrentLaptimeChanged, this);
     mLaptimer.currentSectorTime.valueChanged().connect(&ActiveSessionWorkflow::onCurrentSectorTimeChanged, this);
 
+    mPositionDateTimeUpdateHandle = mDateTimeProvider.positionTimeData.valueChanged().connect(
+        [=]() { mLaptimer.updatePositionAndTime(mDateTimeProvider.positionTimeData.get()); });
+
     auto dateTime = mDateTimeProvider.positionTimeData.get();
     mSession = Common::SessionData{mTrack, dateTime.getDate(), dateTime.getTime()};
     lapCount.set(0);
@@ -26,6 +31,8 @@ void ActiveSessionWorkflow::startActiveSession() noexcept
 
 void ActiveSessionWorkflow::stopActiveSession() noexcept
 {
+    mDateTimeProvider.positionTimeData.valueChanged().disconnect(mPositionDateTimeUpdateHandle);
+
     mSession = std::nullopt;
 }
 

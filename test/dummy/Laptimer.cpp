@@ -13,6 +13,7 @@ void Laptimer::setTrack(const Common::TrackData &track)
 
 void Laptimer::updatePositionAndTime(const Common::PositionDateTimeData &data)
 {
+    lastPostionDateTime = data;
 }
 
 Common::Timestamp Laptimer::getLastLaptime() const
