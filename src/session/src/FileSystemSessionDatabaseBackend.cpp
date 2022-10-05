@@ -1,4 +1,5 @@
 #include "FileSystemSessionDatabaseBackend.hpp"
+#include <algorithm>
 #include <filesystem>
 #include <fstream>
 
@@ -30,6 +31,8 @@ std::vector<std::size_t> FileSystemSessionDatabaseBackend::getIndexList() const 
         }
     }
 
+    // Gurantee ascending order of the index list.
+    std::sort(result.begin(), result.end());
     return result;
 }
 
