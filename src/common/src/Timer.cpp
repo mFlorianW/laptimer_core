@@ -81,6 +81,7 @@ void Timer::handleTicks()
         std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - mStartTime).count();
     if (elapsedTime >= mInterval.count())
     {
+        mStartTime = std::chrono::steady_clock::now();
         timeout.emit();
     }
 }
