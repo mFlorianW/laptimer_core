@@ -72,7 +72,6 @@ void ConstantVelocityPositionDateTimeProvider::handleGPSPositionTick()
         if (newLength > length)
         {
             ++mTrackDataIt;
-            mCurrentPosition = *mTrackDataIt;
         }
     }
     else if (mTrackDataIt == mTrackData.begin())
