@@ -24,9 +24,10 @@ ApplicationWindow {
             }
 
             Action {
+                id: actionGpsSource
                 text: qsTr("Start GPS source")
-                icon.name: "media-playback-start"
-                onTriggered: g_MainWindowViewModel.startGpsSource()
+                onTriggered: !g_MainWindowViewModel.gpsSourceActive ? g_MainWindowViewModel.startGpsSource()
+                                                                    : g_MainWindowViewModel.stopGpsSource()
             }
 
             MenuSeparator {
@@ -84,8 +85,9 @@ ApplicationWindow {
             }
 
             ToolButton {
-                icon.name: "media-playback-start"
-                onClicked: g_MainWindowViewModel.startGpsSource()
+                id: toolButtonGpsSource
+                onClicked: !g_MainWindowViewModel.gpsSourceActive ? g_MainWindowViewModel.startGpsSource()
+                                                                  : g_MainWindowViewModel.stopGpsSource()
 
                 ToolTip{
                     text: qsTr("Start GPS source");
@@ -135,27 +137,27 @@ ApplicationWindow {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     color: "black"
-//                    radius: 0.03 * root.width
+                    //                    radius: 0.03 * root.width
                     RowLayout {
                         anchors.fill: parent
 
                         Text {
                             id: indexText
                             Layout.alignment: Qt.AlignHCenter
-//                            paintedWidth: parent.width / 10
+                            //                            paintedWidth: parent.width / 10
                             text: qsTr("Pos Number")
                             color: "white"
                         }
 
                         Text {
                             Layout.alignment: Qt.AlignHCenter
-//                            width: parent.width / 4.5
+                            //                            width: parent.width / 4.5
                             text: qsTr("Longitude")
                             color: "white"
                         }
                         Text {
                             Layout.alignment: Qt.AlignHCenter
-//                            width: parent.width / 4.5
+                            //                            width: parent.width / 4.5
                             text: qsTr("Latitude")
                             color: "white"
                         }
@@ -197,5 +199,35 @@ ApplicationWindow {
     Connections{
         target: g_MainWindowViewModel
         function onCurrentPositionChanged(){ currentPostion.center = g_MainWindowViewModel.currentPosition }
+    }
+
+    Item {
+        id: stateItem
+        states: [
+            State {
+                name: "GpsSourceActive"
+                when: g_MainWindowViewModel.gpsSourceActive === true
+                PropertyChanges {
+                    target: actionGpsSource
+                    icon.name: "media-playback-stop"
+                }
+                PropertyChanges {
+                    target: toolButtonGpsSource
+                    icon.name: "media-playback-stop"
+                }
+            },
+            State {
+                name: "GpsSourceInactive"
+                when: g_MainWindowViewModel.gpsSourceActive === false
+                PropertyChanges {
+                    target: actionGpsSource
+                    icon.name: "media-playback-start"
+                }
+                PropertyChanges {
+                    target: toolButtonGpsSource
+                    icon.name: "media-playback-start"
+                }
+            }
+        ]
     }
 }
