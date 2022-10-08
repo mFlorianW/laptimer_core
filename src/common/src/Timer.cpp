@@ -70,6 +70,11 @@ void Timer::setInterval(std::chrono::milliseconds interval)
     }
 }
 
+std::chrono::milliseconds Timer::getInterval()
+{
+    return mInterval;
+}
+
 bool Timer::isRunning()
 {
     return mRunning;

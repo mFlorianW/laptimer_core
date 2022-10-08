@@ -15,16 +15,12 @@ ConstantVelocityPositionDateTimeProvider::ConstantVelocityPositionDateTimeProvid
     mTickTimer.setInterval(std::chrono::milliseconds(100));
     mTickTimer.timeout.connect(&ConstantVelocityPositionDateTimeProvider::handleGPSPositionTick, this);
 
-    // convert positions to UTM for easier calculations
-    Point point;
-    for (const auto &posData : gpsPositions)
-    {
-        UTM::LLtoUTM(posData.getLatitude(), posData.getLongitude(), point.x, point.y, point.zone);
-        mTrackData.push_back(point);
-    }
+    convertTrackPoints(gpsPositions);
+}
 
-    mTrackDataIt = mTrackData.cbegin();
-    mCurrentPosition = *mTrackData.begin();
+void ConstantVelocityPositionDateTimeProvider::setGpsPositions(const std::vector<Common::PositionData> &gpsPositions)
+{
+    convertTrackPoints(gpsPositions);
 }
 
 ConstantVelocityPositionDateTimeProvider::~ConstantVelocityPositionDateTimeProvider() = default;
@@ -44,6 +40,25 @@ void ConstantVelocityPositionDateTimeProvider::stop()
     mTickTimer.stop();
 }
 
+void ConstantVelocityPositionDateTimeProvider::convertTrackPoints(const std::vector<Common::PositionData> &gpsPositions)
+{
+    if (gpsPositions.empty())
+    {
+        return;
+    }
+
+    // convert positions to UTM for easier calculations
+    Point point;
+    for (const auto &posData : gpsPositions)
+    {
+        UTM::LLtoUTM(posData.getLatitude(), posData.getLongitude(), point.x, point.y, point.zone);
+        mTrackData.push_back(point);
+    }
+
+    mTrackDataIt = mTrackData.cbegin();
+    mCurrentPosition = *mTrackData.begin();
+}
+
 void ConstantVelocityPositionDateTimeProvider::handleGPSPositionTick()
 {
     if ((mTrackDataIt != mTrackData.cend()) && (mTrackDataIt != mTrackData.begin()))
@@ -59,7 +74,8 @@ void ConstantVelocityPositionDateTimeProvider::handleGPSPositionTick()
         Point normalizedDirection{direction.x / length, direction.y / length};
 
         // Calculate distance we moved based on speed (meters per second) and elapsed time (seconds)
-        Point distanceTraveled{normalizedDirection.x * mSpeed, normalizedDirection.y * mSpeed};
+        auto time = static_cast<float>(mTickTimer.getInterval().count() / 1000.0f);
+        Point distanceTraveled{normalizedDirection.x * time * mSpeed, normalizedDirection.y * time * mSpeed};
 
         // Calculate our new position
         mCurrentPosition.x += distanceTraveled.x;
