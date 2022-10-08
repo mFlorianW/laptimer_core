@@ -3,7 +3,6 @@
 
 #include "IPositionDateTimeProvider.hpp"
 #include <Timer.hpp>
-#include <filesystem>
 
 namespace LaptimerCore::Positioning
 {
@@ -20,12 +19,18 @@ public:
      * Creates an instance of the FileBasedPositionDateTimeProvider.
      * @param gpsPositions The GPS position list that is used for the replay.
      */
-    ConstantVelocityPositionDateTimeProvider(const std::vector<Common::PositionData> &gpsPositions);
+    explicit ConstantVelocityPositionDateTimeProvider(const std::vector<Common::PositionData> &gpsPositions = {});
 
     /**
      * Empty default destructor
      */
     ~ConstantVelocityPositionDateTimeProvider() override;
+
+    /**
+     * Overwrites the GPS positions for playback.
+     * @param gpsPositions The GPS position list that is used for the replay.
+     */
+    void setGpsPositions(const std::vector<Common::PositionData> &gpsPositions);
 
     /**
      * Sets the speed for the GPS position updates.
@@ -45,6 +50,7 @@ public:
     void stop();
 
 private:
+    void convertTrackPoints(const std::vector<Common::PositionData> &gpsPositions);
     void handleGPSPositionTick();
 
 private:
