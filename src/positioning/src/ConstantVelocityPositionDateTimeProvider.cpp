@@ -61,6 +61,12 @@ void ConstantVelocityPositionDateTimeProvider::convertTrackPoints(const std::vec
 
 void ConstantVelocityPositionDateTimeProvider::handleGPSPositionTick()
 {
+    if (mTrackData.empty())
+    {
+        std::cout << "ConstantVelocityPositionDateTimeProvider do nothing: PositionData Empty" << std::endl;
+        return;
+    }
+
     if ((mTrackDataIt != mTrackData.cend()) && (mTrackDataIt != mTrackData.begin()))
     {
         auto p0 = *mTrackDataIt;
