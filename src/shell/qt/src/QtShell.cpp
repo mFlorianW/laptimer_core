@@ -12,8 +12,7 @@ namespace LaptimerCore::QtShell
 struct QtShellPrivate
 {
     QQmlApplicationEngine engine;
-    QtShel::MainWindowViewModel mMainWindowViewModel;
-
+    MainWindowViewModel mMainWindowViewModel;
     QTimer laptimerCoreTimer;
 };
 

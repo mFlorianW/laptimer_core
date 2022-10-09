@@ -70,6 +70,8 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
         {
             mLastLapTime = currentLaptime.get();
             mLastSectorTime = currentSectorTime.get();
+            mLapStartedTimestamp = data.getTime();
+            mSectorStartedTimestamp = data.getTime();
             currentLaptime.set(Timestamp{"00:00:00.000"});
             currentSectorTime.set(Timestamp{"00:00:00.000"});
 
@@ -104,6 +106,16 @@ Common::Timestamp SimpleLaptimer::getLastSectorTime() const
 
 bool SimpleLaptimer::passedPoint(const Common::PositionData &point) const
 {
+    constexpr std::uint8_t range = 50;
+    bool pointsInRange = std::all_of(mCurrentPoints.cbegin(), mCurrentPoints.cend(), [=](Common::PositionData pos) {
+        return DistanceCalculator::calculateDistance(pos, point) <= range;
+    });
+
+    if (!pointsInRange)
+    {
+        return false;
+    }
+
     std::array<float, 4> distances;
     for (size_t i = 0; i < 4; ++i)
     {

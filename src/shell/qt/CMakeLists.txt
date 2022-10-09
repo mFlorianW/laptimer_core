@@ -18,6 +18,10 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/CsvGpsFileReader.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MainWindowViewModel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MainWindowViewModel.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/LaptimeModel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/LaptimeModel.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Utils.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Utils.hpp
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/QtShell.hpp
 )
@@ -35,6 +39,7 @@ target_link_libraries(QtShell
 PUBLIC
     LaptimerCore::Common
     LaptimerCore::Positioning
+    LaptimerCore::Algorithm
     Qt5::Core
     Qt5::Quick
     Qt5::Location
