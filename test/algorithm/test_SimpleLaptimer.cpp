@@ -329,10 +329,12 @@ TEST_CASE("The laptimer shall give the last lap time when lap is started and fin
     auto gpsPoint9 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, Timestamp{"15:07:10.234"}, {}};
     auto gpsPoint10 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, Timestamp{"15:07:11.234"}, {}};
     auto gpsPoint11 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, Timestamp{"15:07:12.234"}, {}};
+    auto gpsPoint12 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, Timestamp{"15:07:12.234"}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint9);
     lapTimer.updatePositionAndTime(gpsPoint10);
     lapTimer.updatePositionAndTime(gpsPoint11);
+    lapTimer.updatePositionAndTime(gpsPoint12);
     REQUIRE(lapTimer.getLastLaptime() == Timestamp{"00:01:59.000"});
 }
 
@@ -375,15 +377,14 @@ TEST_CASE("The laptimer shall update the current sector time.")
     lapTimer.updatePositionAndTime(gpsPoint6);
     REQUIRE(currentSectorTimeUpdated == 2);
     REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:58.000"});
-
-    // Sector1 is finshed here
     lapTimer.updatePositionAndTime(gpsPoint7);
-    REQUIRE(currentSectorTimeUpdated == 4);
-    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:00.000"});
-    REQUIRE(lapTimer.getLastSectorTime() == Timestamp{"00:00:59.000"});
+    REQUIRE(currentSectorTimeUpdated == 3);
     lapTimer.updatePositionAndTime(gpsPoint8);
+
+    // Sector1 finished here
     REQUIRE(currentSectorTimeUpdated == 5);
-    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:01.000"});
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:00.000"});
+    REQUIRE(lapTimer.getLastSectorTime() == Timestamp{"00:01:00.000"});
 
     // Positions to finsh sector2
     auto gpsPoint9 = PositionDateTimeData{Positions::OscherslebenSector2Point1, Timestamp{"15:07:10.234"}, {}};
@@ -393,23 +394,24 @@ TEST_CASE("The laptimer shall update the current sector time.")
 
     lapTimer.updatePositionAndTime(gpsPoint9);
     REQUIRE(currentSectorTimeUpdated == 6);
-    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:58.000"});
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:57.000"});
     lapTimer.updatePositionAndTime(gpsPoint10);
     REQUIRE(currentSectorTimeUpdated == 7);
-    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:59.000"});
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:58.000"});
     lapTimer.updatePositionAndTime(gpsPoint11);
     REQUIRE(currentSectorTimeUpdated == 8);
-    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:01:00.000"});
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:59.000"});
     // Sector2 finished here
     lapTimer.updatePositionAndTime(gpsPoint12);
     REQUIRE(currentSectorTimeUpdated == 10);
     REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:00.000"});
-    REQUIRE(lapTimer.getLastSectorTime() == Timestamp{"00:01:01.000"});
+    REQUIRE(lapTimer.getLastSectorTime() == Timestamp{"00:01:00.000"});
 
     // Positions to finish the lap
     auto gpsPoint13 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, Timestamp{"15:08:10.234"}, {}};
     auto gpsPoint14 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, Timestamp{"15:08:11.234"}, {}};
     auto gpsPoint15 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, Timestamp{"15:08:12.234"}, {}};
+    auto gpsPoint16 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, Timestamp{"15:08:13.234"}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint13);
     REQUIRE(currentSectorTimeUpdated == 11);
@@ -418,9 +420,11 @@ TEST_CASE("The laptimer shall update the current sector time.")
     REQUIRE(currentSectorTimeUpdated == 12);
     REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:58.000"});
     lapTimer.updatePositionAndTime(gpsPoint15);
-    REQUIRE(currentSectorTimeUpdated == 14);
+    REQUIRE(currentSectorTimeUpdated == 13);
+    REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:59.000"});
+    lapTimer.updatePositionAndTime(gpsPoint16);
     REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:00.000"});
-    REQUIRE(lapTimer.getLastSectorTime() == Timestamp{"00:00:59.000"});
+    REQUIRE(lapTimer.getLastSectorTime() == Timestamp{"00:01:00.000"});
 }
 
 TEST_CASE("The laptimer shall emit the signals sector and lap started finished even for two laps.")
