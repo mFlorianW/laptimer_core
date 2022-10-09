@@ -1,11 +1,12 @@
 #ifndef MAINWINDOWVIEWMODEL_HPP
 #define MAINWINDOWVIEWMODEL_HPP
 
+#include <QAbstractItemModel>
 #include <QGeoCoordinate>
 #include <QObject>
 #include <memory>
 
-namespace LaptimerCore::QtShel
+namespace LaptimerCore::QtShell
 {
 
 struct MainWindowViewModelPrivate;
@@ -16,6 +17,8 @@ class MainWindowViewModel : public QObject
 
     Q_PROPERTY(QGeoCoordinate currentPosition READ getCurrentPosition NOTIFY currentPositionChanged)
     Q_PROPERTY(bool gpsSourceActive READ isGpsSourceActive NOTIFY gpsSourceActiveChanged)
+    Q_PROPERTY(QString currentLaptime READ getCurrentLaptime NOTIFY currentLaptimeChanged)
+    Q_PROPERTY(QAbstractItemModel *laptimeModel READ getLaptimeModel NOTIFY laptimeModelChanged)
 public:
     MainWindowViewModel();
 
@@ -31,17 +34,25 @@ public:
 
     bool isGpsSourceActive();
 
+    QString getCurrentLaptime() const noexcept;
+
+    QAbstractItemModel *getLaptimeModel() const noexcept;
+
 Q_SIGNALS:
     void currentPositionChanged();
     void gpsSourceActiveChanged();
+    void currentLaptimeChanged();
+    void laptimeModelChanged();
 
 private Q_SLOTS:
     void handlePositionUpdate();
+    void handleLaptimeChanged();
+    void handleLapFinished();
 
 private:
     std::unique_ptr<MainWindowViewModelPrivate> d;
 };
 
-} // namespace LaptimerCore::QtShel
+} // namespace LaptimerCore::QtShell
 
 #endif // MAINWINDOWVIEWMODEL_HPP

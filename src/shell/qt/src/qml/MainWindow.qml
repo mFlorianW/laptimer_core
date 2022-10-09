@@ -75,9 +75,13 @@ ApplicationWindow {
 
     header: ToolBar {
         RowLayout{
+            anchors.fill: parent
+            spacing: 0
+
             ToolButton{
                 icon.name: "document-open"
                 onClicked: fileDialog.open()
+                Layout.alignment: Qt.AlignLeft
 
                 ToolTip{
                     text: qsTr("Open GPS position file");
@@ -88,10 +92,18 @@ ApplicationWindow {
                 id: toolButtonGpsSource
                 onClicked: !g_MainWindowViewModel.gpsSourceActive ? g_MainWindowViewModel.startGpsSource()
                                                                   : g_MainWindowViewModel.stopGpsSource()
-
+                Layout.alignment: Qt.AlignLeft
                 ToolTip{
                     text: qsTr("Start GPS source");
                 }
+            }
+
+            Label{
+                id: activeLaptime
+                horizontalAlignment: Qt.AlignHCenter
+                verticalAlignment: Qt.AlignVCenter
+                Layout.fillWidth: true
+                text: g_MainWindowViewModel.currentLaptime
             }
 
             Slider {
@@ -117,9 +129,15 @@ ApplicationWindow {
             id: lapView
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.alignment: Qt.AlignTop
             implicitHeight: 400
             boundsBehavior: ListView.StopAtBounds
+
+            model: g_MainWindowViewModel.laptimeModel
+
+            delegate: Text {
+                width: lapView.width;
+                text: "Lap "+ index + ": " + laptime
+            }
         }
 
         SplitView{

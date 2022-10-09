@@ -56,7 +56,7 @@ void ConstantVelocityPositionDateTimeProvider::convertTrackPoints(const std::vec
     }
 
     mTrackDataIt = mTrackData.cbegin();
-    mCurrentPosition = *mTrackData.begin();
+    mCurrentPosition = *mTrackData.cbegin();
 }
 
 void ConstantVelocityPositionDateTimeProvider::handleGPSPositionTick()
@@ -93,10 +93,14 @@ void ConstantVelocityPositionDateTimeProvider::handleGPSPositionTick()
         float newLength = std::sqrt(direction.x * direction.x + direction.y * direction.y);
         if (newLength > length)
         {
-            ++mTrackDataIt;
+            mTrackDataIt = mTrackDataIt + 2;
+            if (mTrackDataIt == mTrackData.cend())
+            {
+                mTrackDataIt = mTrackData.cbegin();
+            }
         }
     }
-    else if (mTrackDataIt == mTrackData.begin())
+    else if (mTrackDataIt == mTrackData.cbegin())
     {
         mCurrentPosition = *mTrackDataIt;
         ++mTrackDataIt;

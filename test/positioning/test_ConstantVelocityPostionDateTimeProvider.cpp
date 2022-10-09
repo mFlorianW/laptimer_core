@@ -27,9 +27,9 @@ TEST_CASE("The ConstantVelocityPositionDateTimeProvider shall interpolate the po
 
     std::this_thread::sleep_for(timeToSleep);
     handleTimerTicks();
-    expectedPosition = PositionDateTimeData{{52.026658, 11.282496}, {}, {}};
+    expectedPosition = PositionDateTimeData{{52.02665, 11.28253}, {}, {}};
     REQUIRE(lastPosition.getPosition().getLatitude() == expectedPosition.getPosition().getLatitude());
-    REQUIRE(lastPosition.getPosition().getLongitude() == expectedPosition.getPosition().getLongitude());
+    REQUIRE(lastPosition.getPosition().getLongitude() == Approx(expectedPosition.getPosition().getLongitude()));
 }
 
 TEST_CASE("The ConstantVelocityPositionDateTimeProvider shall provide every 100ms a new position.")
