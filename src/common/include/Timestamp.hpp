@@ -139,6 +139,12 @@ public:
      */
     friend bool operator!=(const Timestamp &lhs, const Timestamp &rhs);
 
+    /**
+     * Gives the system time stamp
+     * @return A timestamp object with the system time.
+     */
+    static Timestamp getSystemTimestamp();
+
 private:
     std::int32_t convertToMilliSeconds() const;
 

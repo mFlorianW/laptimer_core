@@ -1,4 +1,5 @@
 #include "Timestamp.hpp"
+#include <chrono>
 #include <iomanip>
 #include <sstream>
 
@@ -163,6 +164,23 @@ Timestamp Timestamp::operator-(const Timestamp &rhs) const noexcept
     result.setSecond(resultSeconds);
     result.setFractionalOfSecond(resultFractional);
     return result;
+}
+
+Timestamp Timestamp::getSystemTimestamp()
+{
+    const auto timeNow = std::chrono::system_clock::now();
+    const auto timeT = std::chrono::system_clock::to_time_t(timeNow);
+    const auto time = std::localtime(&timeT);
+    auto seconds = std::chrono::time_point_cast<std::chrono::seconds>(timeNow);
+    auto fraction = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - seconds);
+
+    auto timestamp = Timestamp{};
+    timestamp.setHour(time->tm_hour);
+    timestamp.setMinute(time->tm_min);
+    timestamp.setSecond(time->tm_sec);
+    timestamp.setFractionalOfSecond(fraction.count());
+
+    return timestamp;
 }
 
 int32_t Timestamp::convertToMilliSeconds() const

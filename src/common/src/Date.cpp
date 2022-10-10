@@ -1,5 +1,7 @@
 #include "Date.hpp"
 #include <array>
+#include <chrono>
+#include <ctime>
 #include <iomanip>
 #include <iostream>
 
@@ -110,6 +112,19 @@ std::string Date::asString() const noexcept
     // clang-format on
 
     return dateAsString.str();
+}
+
+Date Date::getSystemDate() noexcept
+{
+    auto now = std::chrono::system_clock::now();
+    auto timeT = std::chrono::system_clock::to_time_t(now);
+    const auto time = std::localtime(&timeT);
+
+    auto date = Date{};
+    date.setYear(time->tm_year);
+    date.setMonth(time->tm_mon);
+    date.setDay(time->tm_mday);
+    return date;
 }
 
 bool operator==(const Date &lhs, const Date &rhs)
