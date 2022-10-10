@@ -111,33 +111,20 @@ void ConstantVelocityPositionDateTimeProvider::handleGPSPositionTick()
     }
 
     auto position = PositionDateTimeData{};
-    // set the position
+
+    // Sett the position
     double lat = 0.0f;
     double longi = 0.0f;
     UTM::UTMtoLL(mCurrentPosition.x, mCurrentPosition.y, mCurrentPosition.zone, lat, longi);
     position.setPosition(PositionData{static_cast<float>(lat), static_cast<float>(longi)});
 
-    // set the time
-    const auto timeNow = std::chrono::system_clock::now();
-    const auto timeT = std::chrono::system_clock::to_time_t(timeNow);
-    const auto time = localtime(&timeT);
-    auto seconds = std::chrono::time_point_cast<std::chrono::seconds>(timeNow);
-    auto fraction = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - seconds);
-
-    auto timeStamp = Timestamp{};
-    timeStamp.setHour(time->tm_hour);
-    timeStamp.setMinute(time->tm_min);
-    timeStamp.setSecond(time->tm_sec);
-    timeStamp.setFractionalOfSecond(fraction.count());
-    position.setTime(timeStamp);
+    // Set the time
+    position.setTime(Timestamp::getSystemTimestamp());
 
     // Set the date.
-    auto date = Date{};
-    date.setYear(time->tm_year);
-    date.setMonth(time->tm_mon);
-    date.setDay(time->tm_mday);
-    position.setDate(date);
+    position.setDate(Date::getSystemDate());
 
+    // Set the new PositionDateTime
     positionTimeData.set(position);
 }
 
