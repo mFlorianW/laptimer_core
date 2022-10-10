@@ -110,6 +110,12 @@ public:
      */
     friend bool operator!=(const Date &lhs, const Date &rhs);
 
+    /**
+     * Gives you the date of the system
+     * @return Date object with the system date.
+     */
+    static Date getSystemDate() noexcept;
+
 private:
     SharedDataPointer<SharedDate> mData;
 };
