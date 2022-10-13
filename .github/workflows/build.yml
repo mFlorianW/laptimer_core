@@ -13,6 +13,10 @@ jobs:
     steps:
       - name: install dependencies
         run: sudo apt install libsdl2-dev
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.9.0
+        with:
+          version: '5.15.6'
       - name: checkout
         uses: actions/checkout@v2
       - name: configure
