@@ -1,9 +1,9 @@
 #ifndef __TRACKDETECTIONWORKFLOW__H__
 #define __TRACKDETECTIONWORKFLOW__H__
 
-#include "IPositionInformationProvider.hpp"
-#include "ITrackDetection.hpp"
 #include "ITrackDetectionWorkflow.hpp"
+#include <IPositionDateTimeProvider.hpp>
+#include <ITrackDetection.hpp>
 
 namespace LaptimerCore::Workflow
 {
@@ -19,7 +19,7 @@ public:
      * @param positionInfomationProvider The position information provider that shall be used for the track detection.
      */
     TrackDetectionWorkflow(Algorithm::ITrackDetection &trackDetector,
-                           Positioning::IPositionInformationProvider &positionInfomationProvider);
+                           Positioning::IPositionDateTimeProvider &positionInfomationProvider);
 
     ~TrackDetectionWorkflow();
 
@@ -51,7 +51,7 @@ private:
     Common::TrackData mDetectedTrack;
     std::vector<Common::TrackData> mTracksToDetect;
     Algorithm::ITrackDetection &mTrackDetector;
-    Positioning::IPositionInformationProvider &mPositionInfoProvider;
+    Positioning::IPositionDateTimeProvider &mPositionInfoProvider;
 };
 
 } // namespace LaptimerCore::Workflow

@@ -3,7 +3,6 @@
 
 #include "IPositionDateTimeProvider.hpp"
 #include <IGPSInformationProvider.hpp>
-#include <IPositionInformationProvider.hpp>
 #include <SessionDatabase.hpp>
 #include <memory>
 
@@ -20,7 +19,6 @@ public:
      * @param posInfoProvider  The GPS position information provider service.
      */
     ScreenModel(LaptimerCore::Positioning::IGpsInformationProvider &gpsInfoProvider,
-                LaptimerCore::Positioning::IPositionInformationProvider &posInfoProvider,
                 LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider,
                 LaptimerCore::Session::ISessionDatabase &sessionDatabase);
 
