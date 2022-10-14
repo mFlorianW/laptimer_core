@@ -14,10 +14,15 @@ ActiveSessionModel::ActiveSessionModel(LaptimerCore::Workflow::ITrackDetectionWo
     PositionData finishline;
     finishline.setLatitude(52.25575);
     finishline.setLongitude(8.001452);
-
     zuhauseTrack.setFinishline(finishline);
 
-    mTrackDetector.setTracks({zuhauseTrack});
+    auto oschersleben = TrackData{};
+    oschersleben.setTrackName("Oschersleben");
+    oschersleben.setStartline(PositionData{52.0270889, 11.2803483});
+    oschersleben.setFinishline(PositionData{52.0270889, 11.2803483});
+    oschersleben.setSections({PositionData{52.0298205, 11.2741851}, PositionData{52.0299681, 11.2772076}});
+
+    mTrackDetector.setTracks({zuhauseTrack, oschersleben});
     mTrackDetector.startDetection();
 
     mTrackDetector.trackDetected.connect([=] {
