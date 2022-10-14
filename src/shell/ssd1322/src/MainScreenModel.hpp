@@ -15,7 +15,6 @@ class MainScreenModel
 {
 public:
     MainScreenModel(ScreenModel &screenModel,
-                    LaptimerCore::Positioning::IPositionInformationProvider &gpsPositionProvider,
                     LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider,
                     LaptimerCore::Session::ISessionDatabase &sessionDatabase);
     View &getActiveView();
