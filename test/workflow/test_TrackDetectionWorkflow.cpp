@@ -1,5 +1,5 @@
 #define CATCH_CONFIG_MAIN
-#include "PositionInformationProvider.hpp"
+#include "PositionDateTimeProvider.hpp"
 #include "Positions.hpp"
 #include "TrackDetection.hpp"
 #include "TrackDetectionWorkflow.hpp"
@@ -14,7 +14,7 @@ TEST_CASE("TrackDetectionWorkflow shall emit 'trackDetected' when successful det
 {
     Tracks::init();
     auto trackDetector = TrackDetection{500};
-    auto posInfoProvider = PositionInformationProvider{};
+    auto posInfoProvider = PositionDateTimeProvider{};
     auto tdw = TrackDetectionWorkflow{trackDetector, posInfoProvider};
     bool trackDetectedEmitted{false};
 
@@ -22,7 +22,7 @@ TEST_CASE("TrackDetectionWorkflow shall emit 'trackDetected' when successful det
     tdw.setTracks({Tracks::OscherslebenTrack});
     tdw.startDetection();
 
-    posInfoProvider.setPositionData(Positions::OscherslebenPositionCamp);
+    posInfoProvider.positionTimeData.set({{Positions::OscherslebenPositionCamp}, {}, {}});
 
     REQUIRE(trackDetectedEmitted == true);
 }
@@ -31,13 +31,13 @@ TEST_CASE("TrackDetectionWorkflow shall return the TrackData when successful det
 {
     Tracks::init();
     auto trackDetector = TrackDetection{500};
-    auto posInfoProvider = PositionInformationProvider{};
+    auto posInfoProvider = PositionDateTimeProvider{};
     auto tdw = TrackDetectionWorkflow{trackDetector, posInfoProvider};
 
     tdw.setTracks({Tracks::OscherslebenTrack});
     tdw.startDetection();
 
-    posInfoProvider.setPositionData(Positions::OscherslebenPositionCamp);
+    posInfoProvider.positionTimeData.set({{Positions::OscherslebenPositionCamp}, {}, {}});
 
     REQUIRE(tdw.getDetectedTrack() == Tracks::OscherslebenTrack);
 }
@@ -46,7 +46,7 @@ TEST_CASE("TrackDetectionWorkflow shall not emit 'trackDetected' when stopped.")
 {
     Tracks::init();
     auto trackDetector = TrackDetection{500};
-    auto posInfoProvider = PositionInformationProvider{};
+    auto posInfoProvider = PositionDateTimeProvider{};
     auto tdw = TrackDetectionWorkflow{trackDetector, posInfoProvider};
     bool trackDetectedEmitted{false};
 
@@ -54,13 +54,13 @@ TEST_CASE("TrackDetectionWorkflow shall not emit 'trackDetected' when stopped.")
     tdw.setTracks({Tracks::OscherslebenTrack});
 
     tdw.startDetection();
-    posInfoProvider.setPositionData(Positions::OscherslebenPositionCamp);
+    posInfoProvider.positionTimeData.set({{Positions::OscherslebenPositionCamp}, {}, {}});
 
     REQUIRE(trackDetectedEmitted == true);
 
     trackDetectedEmitted = false;
     tdw.stopDetection();
-    posInfoProvider.setPositionData(Positions::OscherslebenPositionCamp);
+    posInfoProvider.positionTimeData.set({{Positions::OscherslebenPositionCamp}, {}, {}});
 
     REQUIRE(trackDetectedEmitted == false);
 }

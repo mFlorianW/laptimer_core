@@ -3,14 +3,12 @@ add_library(LaptimerCore::TestDummy ALIAS TestDummy)
 
 target_sources(TestDummy
 PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/PositionInformationProvider.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Tracks.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Positions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MemorySessionDatabaseBackend.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sessions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Laptimer.cpp
 PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/PositionInformationProvider.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Positions.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MemorySessionDatabaseBackend.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Sessions.hpp
