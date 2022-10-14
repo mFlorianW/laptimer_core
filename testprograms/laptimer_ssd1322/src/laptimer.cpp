@@ -6,6 +6,9 @@
 #include <SessionDatabase.hpp>
 #include <StaticGpsInformationProvider.hpp>
 #include <StaticPositionDateTimeProvider.hpp>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
 #include <monitor.h>
 #include <mouse.h>
 #include <pwd.h>
@@ -68,6 +71,30 @@ static void hal_init()
     lv_task_create(memory_monitor, 5000, LV_TASK_PRIO_MID, nullptr);
 }
 
+std::vector<LaptimerCore::Common::PositionData> loadPositions(const std::string filePath)
+{
+    auto positions = std::vector<LaptimerCore::Common::PositionData>{};
+    auto file = std::fstream(filePath);
+    auto line = std::string{};
+
+    while (std::getline(file, line))
+    {
+        std::istringstream input(line);
+        std::array<std::string, 2> splittedLine;
+        for (std::size_t i = 0; i < splittedLine.size(); ++i)
+        {
+            getline(input, splittedLine[i], ',');
+        }
+
+        auto longitude = std::stof(splittedLine[0]);
+        auto latitude = std::stof(splittedLine[1]);
+
+        positions.emplace_back(LaptimerCore::Common::PositionData{latitude, longitude});
+    }
+
+    return positions;
+}
+
 int main(int argc, char *argv[])
 {
     (void)argc;
@@ -85,18 +112,24 @@ int main(int argc, char *argv[])
     // Initialize the Controls to navigate the Shell
     Controls ctl;
 
+    // Load GPS position file
+    auto positions = loadPositions("/home/florian/Coding/laptimer_core/laps/Oschersleben.csv");
+
     auto gpsInfoProvider = LaptimerCore::Positioning::StaticGpsInformationProvider{};
-    auto posDateTimeProvider = LaptimerCore::Positioning::ConstantVelocityPositionDateTimeProvider{};
+    auto posDateTimeProvider = LaptimerCore::Positioning::ConstantVelocityPositionDateTimeProvider{positions};
     auto sessionDatabaseBackend = LaptimerCore::Session::FileSystemSessionDatabaseBackend{databaseFolder};
     auto sessionDatabase = LaptimerCore::Session::SessionDatabase{sessionDatabaseBackend};
     auto screenModel = ScreenModel{gpsInfoProvider, posDateTimeProvider, sessionDatabase};
     screenModel.activateMainScreen();
+    posDateTimeProvider.setVelocityInMeterPerSecond(40);
+    posDateTimeProvider.start();
 
     while (true)
     {
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
         lv_task_handler();
+        LaptimerCore::Common::handleTimerTicks();
         usleep(5 * 1000);
     }
 }
