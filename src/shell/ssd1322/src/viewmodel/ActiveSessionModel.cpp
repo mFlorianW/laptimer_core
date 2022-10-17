@@ -36,7 +36,7 @@ ActiveSessionModel::ActiveSessionModel(LaptimerCore::Workflow::ITrackDetectionWo
 
     // TODO: provide these as string so we the UI doesn't to do any formatting
     mActiveSessionWorkFlow.currentSectorTime.valueChanged().connect(
-        [=]() { currentLaptime.set(mActiveSessionWorkFlow.currentLaptime.get()); });
+        [=]() { currentSectorTime.set(mActiveSessionWorkFlow.currentSectorTime.get()); });
 
     mActiveSessionWorkFlow.lapCount.valueChanged().connect(
         [=]() { lapCount.set(mActiveSessionWorkFlow.lapCount.get()); });
@@ -68,12 +68,12 @@ std::string ActiveSessionModel::getLastSector() const noexcept
 void ActiveSessionModel::confirmTrackDetection(bool confirmed)
 {
     // track is not confirmed by the user so we start the track detection again.
-    if (!confirmed)
-    {
-        mTrackDetector.startDetection();
-        return;
-    }
-
+    //    if (!confirmed)
+    //    {
+    //        mTrackDetector.startDetection();
+    //        return;
+    //    }
+    mActiveSessionWorkFlow.setTrack(mTrackDetector.getDetectedTrack());
     mActiveSessionWorkFlow.startActiveSession();
 }
 
@@ -82,7 +82,7 @@ std::string ActiveSessionModel::convertTimeToString(const LaptimerCore::Common::
     std::array<char, 25> buffer;
     std::snprintf(&buffer[0],
                   buffer.size(),
-                  "%01d:%01d.%01d",
+                  "%02d:%02d.%01d",
                   timeStamp.getMinute(),
                   timeStamp.getHour(),
                   timeStamp.getFractionalOfSecond());

@@ -20,6 +20,7 @@ void ActiveSessionWorkflow::startActiveSession() noexcept
     mLaptimer.sectorFinished.connect(&ActiveSessionWorkflow::onSectorFinished, this);
     mLaptimer.currentLaptime.valueChanged().connect(&ActiveSessionWorkflow::onCurrentLaptimeChanged, this);
     mLaptimer.currentSectorTime.valueChanged().connect(&ActiveSessionWorkflow::onCurrentSectorTimeChanged, this);
+    mLaptimer.setTrack(mTrack);
 
     mPositionDateTimeUpdateHandle = mDateTimeProvider.positionTimeData.valueChanged().connect(
         [=]() { mLaptimer.updatePositionAndTime(mDateTimeProvider.positionTimeData.get()); });
@@ -78,6 +79,7 @@ void ActiveSessionWorkflow::onCurrentLaptimeChanged()
 
 void ActiveSessionWorkflow::onCurrentSectorTimeChanged()
 {
+    std::cout << "sectortime:" << mLaptimer.currentSectorTime.get().asString() << std::endl;
     currentSectorTime.set(mLaptimer.currentSectorTime.get());
 }
 

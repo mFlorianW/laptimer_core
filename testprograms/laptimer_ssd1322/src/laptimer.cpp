@@ -6,6 +6,7 @@
 #include <SessionDatabase.hpp>
 #include <StaticGpsInformationProvider.hpp>
 #include <StaticPositionDateTimeProvider.hpp>
+#include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -107,7 +108,12 @@ int main(int argc, char *argv[])
     hal_init();
 
     // get home folder for the session database backend.
-    auto databaseFolder = std::string{getpwuid(getuid())->pw_dir} + "/.local/share/laptimer/sessions";
+    auto databaseFolder = std::string{getpwuid(getuid())->pw_dir} + "/.local/share/laptimer/session";
+    if (!std::filesystem::exists(databaseFolder))
+    {
+        std::cout << "Laptimer data folder doesn't exists. Creating:" << databaseFolder;
+        std::filesystem::create_directories(databaseFolder);
+    }
 
     // Initialize the Controls to navigate the Shell
     Controls ctl;
@@ -121,7 +127,7 @@ int main(int argc, char *argv[])
     auto sessionDatabase = LaptimerCore::Session::SessionDatabase{sessionDatabaseBackend};
     auto screenModel = ScreenModel{gpsInfoProvider, posDateTimeProvider, sessionDatabase};
     screenModel.activateMainScreen();
-    posDateTimeProvider.setVelocityInMeterPerSecond(40);
+    posDateTimeProvider.setVelocityInMeterPerSecond(80.6667);
     posDateTimeProvider.start();
 
     while (true)
