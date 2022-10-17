@@ -56,7 +56,7 @@ ActiveSessionView::ActiveSessionView(ActiveSessionModel &model)
     mActiveSessionModel.currentLaptime.valueChanged().connect([=]() {
         auto timeStamp = mActiveSessionModel.currentLaptime.get();
         lv_label_set_text_fmt(mLaptimeLabel,
-                              "%01d:%01d.%01d",
+                              "%02d:%02d.%03d",
                               timeStamp.getMinute(),
                               timeStamp.getSecond(),
                               timeStamp.getFractionalOfSecond());
@@ -65,7 +65,7 @@ ActiveSessionView::ActiveSessionView(ActiveSessionModel &model)
     mActiveSessionModel.currentSectorTime.valueChanged().connect([=]() {
         auto timeStamp = mActiveSessionModel.currentSectorTime.get();
         lv_label_set_text_fmt(mSectorTimeLabel,
-                              "%01d:%01d.%01d",
+                              "%02d:%02d.%03d",
                               timeStamp.getMinute(),
                               timeStamp.getSecond(),
                               timeStamp.getFractionalOfSecond());
