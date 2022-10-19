@@ -139,3 +139,16 @@ TEST_CASE("The FileSystemSessionDatabaseBackend shall return the number of store
 
     REQUIRE(fsBackend.getNumberOfStoredSessions() == 3);
 }
+
+TEST_CASE(
+    "The FileSystemSessionDatabaseBackend shall return the last stored index after creation without storing anything.")
+{
+    auto dbFolder = getTestDatabseFolder();
+    // Create two empty files. Files are created when the ofstream is running out of scope.
+    {
+        std::ofstream file1{dbFolder + "/session1.json"};
+        std::ofstream file2{dbFolder + "/session2.json"};
+    }
+    auto fsBackend = FileSystemSessionDatabaseBackend{dbFolder};
+    REQUIRE(fsBackend.getLastStoredIndex() == 2);
+}

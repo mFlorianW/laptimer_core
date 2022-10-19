@@ -79,7 +79,6 @@ void ActiveSessionWorkflow::onCurrentLaptimeChanged()
 
 void ActiveSessionWorkflow::onCurrentSectorTimeChanged()
 {
-    std::cout << "sectortime:" << mLaptimer.currentSectorTime.get().asString() << std::endl;
     currentSectorTime.set(mLaptimer.currentSectorTime.get());
 }
 
