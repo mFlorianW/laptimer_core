@@ -1,7 +1,7 @@
-#include "MenuModel.hpp"
+#include "MenuScreenModel.hpp"
 #include "../include/ScreenModel.hpp"
 
-MenuModel::MenuModel(ScreenModel &screenModel)
+MenuScreenModel::MenuScreenModel(ScreenModel &screenModel, LaptimerCore::Session::ISessionDatabase &sessionDb)
     : NavigatableModel(mMenuEntryStack.size())
     , INavigationHandler()
     , mScreenModel(screenModel)
@@ -29,7 +29,7 @@ MenuModel::MenuModel(ScreenModel &screenModel)
     mBluetoothSettings.setNavigateDownCommand(&mNavigateDownCommand);
 }
 
-View &MenuModel::getActiveView() const
+View &MenuScreenModel::getActiveView() const
 {
     auto index = getIndex();
     if (index > mMenuEntryStack.size())
@@ -40,24 +40,24 @@ View &MenuModel::getActiveView() const
     return mMenuEntryStack[index]->getView();
 }
 
-void MenuModel::navigateDown()
+void MenuScreenModel::navigateDown()
 {
     decrementIndex();
     viewChanged.emit();
 }
 
-void MenuModel::navigateUp()
+void MenuScreenModel::navigateUp()
 {
     incrementIndex();
     viewChanged.emit();
 }
 
-void MenuModel::onMenuEntryModelViewChanged()
+void MenuScreenModel::onMenuEntryModelViewChanged()
 {
     viewChanged.emit();
 }
 
-void MenuModel::setupSessionMenuEntry()
+void MenuScreenModel::setupSessionMenuEntry()
 {
     // Setup Session Settings entry
     mSessionEntryView.setCloseCommand(&mShowMainScreenCommand);
@@ -65,7 +65,7 @@ void MenuModel::setupSessionMenuEntry()
     mSessionEntryView.setSecondaryLabel("Settings");
     mSessionEntryView.setNavigateUpCommand(&mNavigateUpCommand);
     mSessionEntryView.setNavigateDownCommand(&mNavigateDownCommand);
-    mSessionEntryModel.viewChanged.connect(&MenuModel::onMenuEntryModelViewChanged, this);
+    mSessionEntryModel.viewChanged.connect(&MenuScreenModel::onMenuEntryModelViewChanged, this);
 
     // Setup Session Sub menu entries
     mSessionOverview.setEntryLabel("Session");
@@ -79,4 +79,5 @@ void MenuModel::setupSessionMenuEntry()
 
     // Setup entry sub view
     mSessionEntryModel.addSubMenuEntry(&mSessionOverview, &mDummyListView);
+    mSessionEntryModel.addSubMenuEntry(&mSessionDelete, &mDummyListView);
 }

@@ -15,8 +15,8 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreenModel.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuEntryModel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuEntryModel.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuModel.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuModel.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuScreenModel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuScreenModel.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuScreen.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuScreen.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/NavigatableModel.cpp
@@ -55,6 +55,8 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/view/PopupView.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/view/View.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/view/View.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/view/SessionView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/view/SessionView.hpp
 
     # View/Dummy
     ${CMAKE_CURRENT_SOURCE_DIR}/src/view/dummy/DummyListView.cpp

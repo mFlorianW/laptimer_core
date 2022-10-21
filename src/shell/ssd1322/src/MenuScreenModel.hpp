@@ -1,5 +1,5 @@
-#ifndef __MENUMODEL__H__
-#define __MENUMODEL__H__
+#ifndef __MENUSCREENMODEL__H__
+#define __MENUSCREENMODEL__H__
 
 #include "DummyListView.hpp"
 #include "INavigationHandler.hpp"
@@ -8,15 +8,17 @@
 #include "NavigatableModel.hpp"
 #include "NavigateDownCommand.hpp"
 #include "NavigateUpCommand.hpp"
+#include "SessionViewModel.hpp"
 #include "ShowMainScreenCommand.hpp"
+#include <ISessionDatabase.hpp>
 #include <array>
 #include <kdbindings/signal.h>
 
 class ScreenModel;
-class MenuModel : public NavigatableModel, public INavigationHandler
+class MenuScreenModel : public NavigatableModel, public INavigationHandler
 {
 public:
-    MenuModel(ScreenModel &screenModel);
+    MenuScreenModel(ScreenModel &screenModel, LaptimerCore::Session::ISessionDatabase &sessionDb);
 
     View &getActiveView() const;
 
@@ -57,4 +59,4 @@ private:
     std::array<MenuEntryModel *, 3> mMenuEntryStack{&mSessionEntryModel, &mWifiEntry, &mBluetoothEntry};
 };
 
-#endif //!__MENUMODEL__H__
+#endif //!__MENUSCREENMODEL__H__
