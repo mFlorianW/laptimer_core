@@ -1,16 +1,22 @@
 #include "MenuEntryModel.hpp"
 
-MenuEntryModel::MenuEntryModel(MenuEntryView &entryView)
-    : NavigatableModel(mSubViews.size())
+MenuEntryModel::MenuEntryModel(MenuEntryView &menuEntryView)
+    : NavigatableModel(0)
     , IOpenCloseHandler()
     , INavigationHandler()
-    , mEntryView(entryView)
+    , mEntryView(menuEntryView)
     , mOpenCommand(*this)
     , mCloseCommand(*this)
     , mNavigateUpCommand(*this)
     , mNavigateDownCommand(*this)
 {
     mEntryView.setOpenCommand(&mOpenCommand);
+
+    mSubEntryView.setOpenCommand(&mOpenCommand);
+    mSubEntryView.setCloseCommand(&mCloseCommand);
+    mSubEntryView.setNavigateUpCommand(&mNavigateUpCommand);
+    mSubEntryView.setNavigateDownCommand(&mNavigateDownCommand);
+
     mActiveView = &mEntryView;
 }
 
@@ -19,9 +25,11 @@ View &MenuEntryModel::getView()
     return *mActiveView;
 }
 
-void MenuEntryModel::addSubMenuEntry(MenuEntryView *entryView, View *settingsView)
+void MenuEntryModel::addSubMenuEntry(const std::string &entryMainText,
+                                     View *settingsView,
+                                     const std::string &entrySecondaryText)
 {
-    if (entryView == nullptr || settingsView == nullptr)
+    if (settingsView == nullptr)
     {
         return;
     }
@@ -29,15 +37,11 @@ void MenuEntryModel::addSubMenuEntry(MenuEntryView *entryView, View *settingsVie
     // clang-format off
     auto settingsEntry = SettingsEntry
     {
-        .entryView = entryView, 
+        .entryMainText = entryMainText,
+        .entrySecondaryText = entrySecondaryText,
         .settingsView = settingsView
     };
     // clang-format on
-
-    settingsEntry.entryView->setOpenCommand(&mOpenCommand);
-    settingsEntry.entryView->setCloseCommand(&mCloseCommand);
-    settingsEntry.entryView->setNavigateUpCommand(&mNavigateUpCommand);
-    settingsEntry.entryView->setNavigateDownCommand(&mNavigateDownCommand);
 
     settingsEntry.settingsView->setCloseCommand(&mCloseCommand);
 
@@ -53,10 +57,12 @@ void MenuEntryModel::open()
         return;
     }
 
-    auto entry = mSubViews[getIndex()];
+    const auto entry = mSubViews[getIndex()];
     if (mActiveView == &mEntryView)
     {
-        mActiveView = entry.entryView;
+        mSubEntryView.setEntryLabel(entry.entryMainText);
+        mSubEntryView.setSecondaryLabel(entry.entrySecondaryText);
+        mActiveView = &mSubEntryView;
     }
     else
     {
@@ -69,14 +75,16 @@ void MenuEntryModel::open()
 void MenuEntryModel::close()
 {
     printf("MenuEntryModel: Close called!\n");
-    auto entry = mSubViews[getIndex()];
-    if (mActiveView == entry.entryView)
+    const auto entry = mSubViews[getIndex()];
+    if (mActiveView == &mSubEntryView)
     {
         mActiveView = &mEntryView;
     }
     else if (mActiveView == entry.settingsView)
     {
-        mActiveView = entry.entryView;
+        mSubEntryView.setEntryLabel(entry.entryMainText);
+        mSubEntryView.setSecondaryLabel(entry.entrySecondaryText);
+        mActiveView = &mSubEntryView;
     }
 
     viewChanged.emit();
@@ -86,7 +94,9 @@ void MenuEntryModel::navigateUp()
 {
     printf("MenuEntryModel: Navigate UP called!\n");
     incrementIndex();
-    mActiveView = mSubViews[getIndex()].entryView;
+    const auto entry = mSubViews[getIndex()];
+    mSubEntryView.setEntryLabel(entry.entryMainText);
+    mSubEntryView.setSecondaryLabel(entry.entrySecondaryText);
     viewChanged.emit();
 }
 
@@ -94,6 +104,8 @@ void MenuEntryModel::navigateDown()
 {
     printf("MenuEntryModel: Navigate Down called!\n");
     decrementIndex();
-    mActiveView = mSubViews[getIndex()].entryView;
+    const auto entry = mSubViews[getIndex()];
+    mSubEntryView.setEntryLabel(entry.entryMainText);
+    mSubEntryView.setSecondaryLabel(entry.entrySecondaryText);
     viewChanged.emit();
 }

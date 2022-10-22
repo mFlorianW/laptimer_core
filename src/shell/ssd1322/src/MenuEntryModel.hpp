@@ -11,14 +11,20 @@
 #include "OpenCommand.hpp"
 #include <kdbindings/signal.h>
 
+/**
+ * The MenuEnrtyModel is a entry in the menu tree. The MenuEntryModel is navigatable up and down and can open a new
+ * view, which then can be a new MenuEntryModel or a normal view.
+ */
 class MenuEntryModel : public NavigatableModel, public IOpenCloseHandler, public INavigationHandler
 {
 public:
-    MenuEntryModel(MenuEntryView &entryView);
+    MenuEntryModel(MenuEntryView &menuEntryView);
 
     View &getView();
 
-    void addSubMenuEntry(MenuEntryView *entryView, View *settingsView);
+    void addSubMenuEntry(const std::string &entryMainText,
+                         View *settingsView,
+                         const std::string &entrySecondaryText = "");
 
     void open() override;
     void close() override;
@@ -30,12 +36,14 @@ public:
 private:
     struct SettingsEntry
     {
-        MenuEntryView *entryView;
+        std::string entryMainText;
+        std::string entrySecondaryText;
         View *settingsView;
     };
 
     // Menu views
     MenuEntryView &mEntryView;
+    MenuEntryView mSubEntryView;
     View *mActiveView{nullptr};
     std::vector<SettingsEntry> mSubViews;
 

@@ -8,7 +8,6 @@
 #include "NavigatableModel.hpp"
 #include "NavigateDownCommand.hpp"
 #include "NavigateUpCommand.hpp"
-#include "SessionViewModel.hpp"
 #include "ShowMainScreenCommand.hpp"
 #include <ISessionDatabase.hpp>
 #include <array>
@@ -41,22 +40,18 @@ private:
 
     // Session Menu entry
     MenuEntryView mSessionEntryView;
-    MenuEntryView mSessionOverview;
-    MenuEntryView mSessionDelete;
-    MenuEntryView mSessionDeleteAll;
-    MenuEntryView mSessionExport;
     MenuEntryModel mSessionEntryModel;
     DummyListView mDummyListView;
 
     MenuEntryView mWifiSettings;
-    MenuEntryModel mWifiEntry;
+    //    MenuEntryModel mWifiEntry;
 
     MenuEntryView mBluetoothSettings;
-    MenuEntryModel mBluetoothEntry;
+    //    MenuEntryModel mBluetoothEntry;
 
     // MenuEntry Stack
     std::size_t mNavigateIndex = 0;
-    std::array<MenuEntryModel *, 3> mMenuEntryStack{&mSessionEntryModel, &mWifiEntry, &mBluetoothEntry};
+    std::array<MenuEntryModel *, 3> mMenuEntryStack{&mSessionEntryModel};
 };
 
 #endif //!__MENUSCREENMODEL__H__
