@@ -1,8 +1,9 @@
 #include "../include/ScreenModel.hpp"
+#include "IMenuEntry.hpp"
 #include "MainScreen.hpp"
 #include "MainScreenModel.hpp"
-#include "MenuScreenModel.hpp"
 #include "MenuScreen.hpp"
+#include "MenuScreenModel.hpp"
 #include <lvgl.h>
 
 struct ScreenModelPrivate

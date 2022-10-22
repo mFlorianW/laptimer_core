@@ -2,6 +2,7 @@
 #define __MENUENTRYMODEL__H__
 
 #include "CloseCommand.hpp"
+#include "IMenuEntry.hpp"
 #include "INavigationHandler.hpp"
 #include "IOpenCloseHandler.hpp"
 #include "MenuEntryView.hpp"
@@ -12,16 +13,25 @@
 #include <kdbindings/signal.h>
 
 /**
- * The MenuEnrtyModel is a entry in the menu tree. The MenuEntryModel is navigatable up and down and can open a new
- * view, which then can be a new MenuEntryModel or a normal view.
+ * The MenuEntryList is a list of menu entries that can be navigated in the menu. The entries in the list can be a leaf
+ * of the menu tree or any kind of IMenuEntry.
  */
-class MenuEntryModel : public NavigatableModel, public IOpenCloseHandler, public INavigationHandler
+class MenuEntryList : public IMenuEntry, public NavigatableModel, public IOpenCloseHandler, public INavigationHandler
 {
 public:
-    MenuEntryModel(MenuEntryView &menuEntryView);
+    MenuEntryList(MenuEntryView &menuEntryView);
 
+    /**
+     * @copydoc IMenuEntry::getMenuEntryView.
+     */
+    View &getMenuEntryView() override;
     View &getView();
 
+    /**
+     * Add as new menu entry to the list.
+     * @param menuEntry The entry that shall be added.
+     */
+    void addMenuEntry(IMenuEntry *menuEntry);
     void addSubMenuEntry(const std::string &entryMainText,
                          View *settingsView,
                          const std::string &entrySecondaryText = "");
@@ -30,8 +40,6 @@ public:
     void close() override;
     void navigateDown() override;
     void navigateUp() override;
-
-    KDBindings::Signal<> viewChanged;
 
 private:
     struct SettingsEntry
@@ -46,12 +54,16 @@ private:
     MenuEntryView mSubEntryView;
     View *mActiveView{nullptr};
     std::vector<SettingsEntry> mSubViews;
+    std::vector<IMenuEntry *> mMenuEntries;
 
     // Commands
     OpenCommand mOpenCommand;
     CloseCommand mCloseCommand;
     NavigateUpCommand mNavigateUpCommand;
     NavigateDownCommand mNavigateDownCommand;
+
+    // IMenuEntry interface
+public:
 };
 
 #endif //!__MENUENTRYMODEL__H__

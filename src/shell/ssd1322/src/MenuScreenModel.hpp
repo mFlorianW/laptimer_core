@@ -2,7 +2,7 @@
 #define __MENUSCREENMODEL__H__
 
 #include "INavigationHandler.hpp"
-#include "MenuEntryModel.hpp"
+#include "MenuEntryList.hpp"
 #include "MenuEntryView.hpp"
 #include "NavigatableModel.hpp"
 #include "NavigateDownCommand.hpp"
@@ -41,7 +41,7 @@ private:
 
     // Session Menu entry
     MenuEntryView mSessionEntryView;
-    MenuEntryModel mSessionEntryModel;
+    MenuEntryList mSessionEntryModel;
     SessionViewModel mSessionViewModel;
     SessionView mSessionView;
 
@@ -53,7 +53,7 @@ private:
 
     // MenuEntry Stack
     std::size_t mNavigateIndex = 0;
-    std::array<MenuEntryModel *, 3> mMenuEntryStack{&mSessionEntryModel};
+    std::array<MenuEntryList *, 3> mMenuEntryStack{&mSessionEntryModel};
 };
 
 #endif //!__MENUSCREENMODEL__H__

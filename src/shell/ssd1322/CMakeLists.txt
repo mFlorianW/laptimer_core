@@ -13,8 +13,8 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreenModel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreenModel.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuEntryModel.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuEntryModel.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuEntryList.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuEntryList.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuScreenModel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuScreenModel.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuScreen.cpp
@@ -26,6 +26,7 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Screen.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Screen.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ScreenModel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/IMenuEntry.hpp
 
     # Command
     ${CMAKE_CURRENT_SOURCE_DIR}/src/command/CloseCommand.cpp
@@ -99,5 +100,3 @@ PUBLIC
     LaptimerCore::Session
     LaptimerCore::Workflow
 )
-
-

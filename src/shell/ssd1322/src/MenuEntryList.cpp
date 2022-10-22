@@ -1,6 +1,6 @@
-#include "MenuEntryModel.hpp"
+#include "MenuEntryList.hpp"
 
-MenuEntryModel::MenuEntryModel(MenuEntryView &menuEntryView)
+MenuEntryList::MenuEntryList(MenuEntryView &menuEntryView)
     : NavigatableModel(0)
     , IOpenCloseHandler()
     , INavigationHandler()
@@ -20,14 +20,14 @@ MenuEntryModel::MenuEntryModel(MenuEntryView &menuEntryView)
     mActiveView = &mEntryView;
 }
 
-View &MenuEntryModel::getView()
+View &MenuEntryList::getView()
 {
     return *mActiveView;
 }
 
-void MenuEntryModel::addSubMenuEntry(const std::string &entryMainText,
-                                     View *settingsView,
-                                     const std::string &entrySecondaryText)
+void MenuEntryList::addSubMenuEntry(const std::string &entryMainText,
+                                    View *settingsView,
+                                    const std::string &entrySecondaryText)
 {
     if (settingsView == nullptr)
     {
@@ -49,7 +49,7 @@ void MenuEntryModel::addSubMenuEntry(const std::string &entryMainText,
     setSize(mSubViews.size());
 }
 
-void MenuEntryModel::open()
+void MenuEntryList::open()
 {
     printf("MenuEntryModel: Open called!\n");
     if (mSubViews.size() == 0)
@@ -72,7 +72,7 @@ void MenuEntryModel::open()
     viewChanged.emit();
 }
 
-void MenuEntryModel::close()
+void MenuEntryList::close()
 {
     printf("MenuEntryModel: Close called!\n");
     const auto entry = mSubViews[getIndex()];
@@ -90,7 +90,7 @@ void MenuEntryModel::close()
     viewChanged.emit();
 }
 
-void MenuEntryModel::navigateUp()
+void MenuEntryList::navigateUp()
 {
     printf("MenuEntryModel: Navigate UP called!\n");
     incrementIndex();
@@ -100,7 +100,7 @@ void MenuEntryModel::navigateUp()
     viewChanged.emit();
 }
 
-void MenuEntryModel::navigateDown()
+void MenuEntryList::navigateDown()
 {
     printf("MenuEntryModel: Navigate Down called!\n");
     decrementIndex();
@@ -108,4 +108,9 @@ void MenuEntryModel::navigateDown()
     mSubEntryView.setEntryLabel(entry.entryMainText);
     mSubEntryView.setSecondaryLabel(entry.entrySecondaryText);
     viewChanged.emit();
+}
+
+View &MenuEntryList::getMenuEntryView()
+{
+    return *mActiveView;
 }
