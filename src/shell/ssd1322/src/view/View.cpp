@@ -36,6 +36,11 @@ bool View::handleButtonUp()
 
 bool View::handleEscape()
 {
+    if (mCloseCommand)
+    {
+        mCloseCommand->execute();
+        return true;
+    }
     return false;
 }
 
@@ -46,4 +51,5 @@ bool View::handleEnter()
 
 void View::setCloseCommand(ICommand *command)
 {
+    mCloseCommand = command;
 }

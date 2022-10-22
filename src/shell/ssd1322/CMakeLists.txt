@@ -67,6 +67,8 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/ActiveSessionModel.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/StatusBarModel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/StatusBarModel.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/SessionViewModel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/SessionViewModel.hpp
 
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/ScreenModel.hpp

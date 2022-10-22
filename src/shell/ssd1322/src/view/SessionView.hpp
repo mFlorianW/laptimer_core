@@ -1,0 +1,35 @@
+#ifndef SESSIONVIEW_HPP
+#define SESSIONVIEW_HPP
+
+#include "SessionViewModel.hpp"
+#include "View.hpp"
+#include <lv_obj.h>
+
+class SessionView final : public View
+{
+public:
+    SessionView(SessionViewModel &sessionViewModel);
+    ~SessionView();
+
+    bool handleButtonDown() override;
+
+    bool handleButtonUp() override;
+
+private:
+    void setTrackName();
+    void setDate();
+    void setTime();
+    void setLaps();
+    void setBestLap();
+
+private:
+    lv_style_t mLabelStyle;
+    lv_obj_t *mTrackNameLabel;
+    lv_obj_t *mDateLabel;
+    lv_obj_t *mLapLabel;
+    lv_obj_t *mTimeLabel;
+    lv_obj_t *mBestLapLabel;
+    SessionViewModel &mSessionViewModel;
+};
+
+#endif // SESSIONVIEW_HPP

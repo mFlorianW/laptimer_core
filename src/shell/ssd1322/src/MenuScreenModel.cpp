@@ -9,6 +9,8 @@ MenuScreenModel::MenuScreenModel(ScreenModel &screenModel, LaptimerCore::Session
     , mNavigateUpCommand(*this)
     , mNavigateDownCommand(*this)
     , mSessionEntryModel(mSessionEntryView)
+    , mSessionViewModel(sessionDb)
+    , mSessionView(mSessionViewModel)
 {
     setupSessionMenuEntry();
 }
@@ -52,6 +54,5 @@ void MenuScreenModel::setupSessionMenuEntry()
     mSessionEntryModel.viewChanged.connect(&MenuScreenModel::onMenuEntryModelViewChanged, this);
 
     // Setup entry sub view
-    mSessionEntryModel.addSubMenuEntry("Session", &mDummyListView, "Overview");
-    mSessionEntryModel.addSubMenuEntry("Session", &mDummyListView, "DeleteAll");
+    mSessionEntryModel.addSubMenuEntry("Session", &mSessionView, "Overview");
 }

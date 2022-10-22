@@ -28,7 +28,7 @@ private:
 
 protected:
     View();
-
+    ICommand *mCloseCommand{nullptr};
     lv_obj_t *mScreenContent;
 };
 

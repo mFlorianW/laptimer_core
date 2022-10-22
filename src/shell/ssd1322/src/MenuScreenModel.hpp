@@ -1,13 +1,14 @@
 #ifndef __MENUSCREENMODEL__H__
 #define __MENUSCREENMODEL__H__
 
-#include "DummyListView.hpp"
 #include "INavigationHandler.hpp"
 #include "MenuEntryModel.hpp"
 #include "MenuEntryView.hpp"
 #include "NavigatableModel.hpp"
 #include "NavigateDownCommand.hpp"
 #include "NavigateUpCommand.hpp"
+#include "SessionView.hpp"
+#include "SessionViewModel.hpp"
 #include "ShowMainScreenCommand.hpp"
 #include <ISessionDatabase.hpp>
 #include <array>
@@ -41,7 +42,8 @@ private:
     // Session Menu entry
     MenuEntryView mSessionEntryView;
     MenuEntryModel mSessionEntryModel;
-    DummyListView mDummyListView;
+    SessionViewModel mSessionViewModel;
+    SessionView mSessionView;
 
     MenuEntryView mWifiSettings;
     //    MenuEntryModel mWifiEntry;
