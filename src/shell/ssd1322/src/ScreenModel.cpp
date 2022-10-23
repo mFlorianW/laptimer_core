@@ -1,5 +1,4 @@
 #include "../include/ScreenModel.hpp"
-#include "IMenuEntry.hpp"
 #include "MainScreen.hpp"
 #include "MainScreenModel.hpp"
 #include "MenuScreen.hpp"
@@ -34,6 +33,7 @@ ScreenModel::ScreenModel(LaptimerCore::Positioning::IGpsInformationProvider &gps
 {
     // Connect to menu model view changed
     mD->mMenuModel.viewChanged.connect(&ScreenModel::activateMenuScreen, this);
+    mD->mMenuModel.closeMenu.connect(&ScreenModel::activateMainScreen, this);
 }
 
 ScreenModel::~ScreenModel() = default;

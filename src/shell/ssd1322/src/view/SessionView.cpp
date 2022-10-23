@@ -1,4 +1,5 @@
 #include "SessionView.hpp"
+#include "SessionViewModel.hpp"
 
 SessionView::SessionView(SessionViewModel &sessionViewModel)
     : mSessionViewModel(sessionViewModel)
@@ -68,16 +69,14 @@ SessionView::~SessionView()
     lv_obj_del(mBestLapLabel);
 }
 
-bool SessionView::handleButtonDown()
+void SessionView::handleButtonDown()
 {
     mSessionViewModel.handleNavigationDown();
-    return true;
 }
 
-bool SessionView::handleButtonUp()
+void SessionView::handleButtonUp()
 {
     mSessionViewModel.handleNavigationUp();
-    return true;
 }
 
 void SessionView::setTrackName()

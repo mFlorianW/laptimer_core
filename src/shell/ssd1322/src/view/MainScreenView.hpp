@@ -7,7 +7,7 @@
 class MainScreenView : public View
 {
 public:
-    bool handleEnter() final;
+    void handleEnter() final;
 
     void setShowMenuScreenCommand(ICommand *command);
 

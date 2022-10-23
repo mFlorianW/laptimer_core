@@ -2,7 +2,8 @@
 #include <sstream>
 
 SessionViewModel::SessionViewModel(LaptimerCore::Session::ISessionDatabase &sessionDb)
-    : NavigatableModel{0}
+    : MenuEntry()
+    , NavigatableModel{0}
     , mSessionDb{sessionDb}
 {
     if (mSessionDb.getSessionCount() == 0)

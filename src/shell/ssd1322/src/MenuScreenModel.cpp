@@ -2,57 +2,66 @@
 #include "../include/ScreenModel.hpp"
 
 MenuScreenModel::MenuScreenModel(ScreenModel &screenModel, LaptimerCore::Session::ISessionDatabase &sessionDb)
-    : NavigatableModel(0)
-    , INavigationHandler()
-    , mScreenModel(screenModel)
-    , mShowMainScreenCommand(mScreenModel)
-    , mNavigateUpCommand(*this)
-    , mNavigateDownCommand(*this)
-    , mSessionEntryModel(mSessionEntryView)
-    , mSessionViewModel(sessionDb)
-    , mSessionView(mSessionViewModel)
+    : mScreenModel(screenModel)
+    , mSessionViewModelEntry{sessionDb}
+    , mSessionView{mSessionViewModelEntry}
 {
-    setupSessionMenuEntry();
+    setupBluetoothMenu();
+    setupSessionMenu();
+
+    setupRootMenu();
 }
 
 View &MenuScreenModel::getActiveView() const
 {
-    auto index = getIndex();
-    if (index > mMenuEntryStack.size())
-    {
-        return mMenuEntryStack[0]->getView();
-    }
-
-    return mMenuEntryStack[index]->getView();
+    return *mRootMenu.getMenuEntryView();
 }
 
-void MenuScreenModel::navigateDown()
+void MenuScreenModel::setupBluetoothMenu()
 {
-    decrementIndex();
+    mRootBluetoohMenuView.setEntryLabel("WLAN");
+    mRootBluetoohMenuView.setSecondaryLabel("Settings");
+    mRootBluetoohMenuEntry.setMenuEntryView(&mRootBluetoohMenuView);
+}
+
+void MenuScreenModel::setupSessionMenu()
+{
+    mSessionViewModelEntry.setMenuEntryView(&mSessionView);
+
+    mSessionOverviewView.setEntryLabel("Session");
+    mSessionOverviewView.setSecondaryLabel("Overview");
+    mSessionOverviewEntry.setMenuEntryView(&mSessionOverviewView);
+    mSessionOverviewEntry.addMenuEntry(&mSessionViewModelEntry);
+
+    mSessionDeleteAllView.setEntryLabel("Session");
+    mSessionDeleteAllView.setSecondaryLabel("Delete All");
+    mSessionDeleteAllEntry.setMenuEntryView(&mSessionDeleteAllView);
+
+    mSessionDetailMenu.addMenuEntry(&mSessionOverviewEntry);
+    mSessionDetailMenu.addMenuEntry(&mSessionDeleteAllEntry);
+
+    mRootSessionMenuView.setEntryLabel("Session");
+    mRootSessionMenuView.setSecondaryLabel("Settings");
+    mRootSessionMenuEntry.setMenuEntryView(&mRootSessionMenuView);
+
+    mRootSessionMenuEntry.addMenuEntry(&mSessionDetailMenu);
+}
+
+void MenuScreenModel::setupRootMenu()
+{
+    mRootMenu.addMenuEntry(&mRootSessionMenuEntry);
+    mRootMenu.addMenuEntry(&mRootBluetoohMenuEntry);
+
+    mRootMenu.viewChanged.connect(&MenuScreenModel::handleMenuViewChanged, this);
+    mRootMenu.closeEntry.connect(&MenuScreenModel::handleCloseEntry, this);
+}
+
+void MenuScreenModel::handleMenuViewChanged()
+{
     viewChanged.emit();
 }
 
-void MenuScreenModel::navigateUp()
+void MenuScreenModel::handleCloseEntry()
 {
-    incrementIndex();
-    viewChanged.emit();
-}
-
-void MenuScreenModel::onMenuEntryModelViewChanged()
-{
-    viewChanged.emit();
-}
-
-void MenuScreenModel::setupSessionMenuEntry()
-{
-    // Setup Session Settings entry
-    mSessionEntryView.setCloseCommand(&mShowMainScreenCommand);
-    mSessionEntryView.setEntryLabel("Session");
-    mSessionEntryView.setSecondaryLabel("Settings");
-    mSessionEntryView.setNavigateUpCommand(&mNavigateUpCommand);
-    mSessionEntryView.setNavigateDownCommand(&mNavigateDownCommand);
-    mSessionEntryModel.viewChanged.connect(&MenuScreenModel::onMenuEntryModelViewChanged, this);
-
-    // Setup entry sub view
-    mSessionEntryModel.addSubMenuEntry("Session", &mSessionView, "Overview");
+    closeMenu.emit();
 }

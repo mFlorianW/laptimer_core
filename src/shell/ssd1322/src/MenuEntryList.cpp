@@ -1,116 +1,65 @@
 #include "MenuEntryList.hpp"
+#include "View.hpp"
 
-MenuEntryList::MenuEntryList(MenuEntryView &menuEntryView)
+MenuEntryList::MenuEntryList()
     : NavigatableModel(0)
-    , IOpenCloseHandler()
-    , INavigationHandler()
-    , mEntryView(menuEntryView)
-    , mOpenCommand(*this)
-    , mCloseCommand(*this)
-    , mNavigateUpCommand(*this)
-    , mNavigateDownCommand(*this)
+    , mUpCommand{*this}
+    , mDownCommand{*this}
+    , mEscapeCommand{*this}
 {
-    mEntryView.setOpenCommand(&mOpenCommand);
-
-    mSubEntryView.setOpenCommand(&mOpenCommand);
-    mSubEntryView.setCloseCommand(&mCloseCommand);
-    mSubEntryView.setNavigateUpCommand(&mNavigateUpCommand);
-    mSubEntryView.setNavigateDownCommand(&mNavigateDownCommand);
-
-    mActiveView = &mEntryView;
 }
 
-View &MenuEntryList::getView()
+void MenuEntryList::addMenuEntry(IMenuEntry *menuEntry) noexcept
 {
-    return *mActiveView;
-}
-
-void MenuEntryList::addSubMenuEntry(const std::string &entryMainText,
-                                    View *settingsView,
-                                    const std::string &entrySecondaryText)
-{
-    if (settingsView == nullptr)
+    if (menuEntry == nullptr)
     {
         return;
     }
 
-    // clang-format off
-    auto settingsEntry = SettingsEntry
-    {
-        .entryMainText = entryMainText,
-        .entrySecondaryText = entrySecondaryText,
-        .settingsView = settingsView
-    };
-    // clang-format on
+    // Set commands for the entry view. The commands are for the navigation in the menu.
+    menuEntry->getMenuEntryView()->setNavigateUpCommand(&mUpCommand);
+    menuEntry->getMenuEntryView()->setNavigateDownCommand(&mDownCommand);
+    menuEntry->getMenuEntryView()->setCloseCommand(&mEscapeCommand);
 
-    settingsEntry.settingsView->setCloseCommand(&mCloseCommand);
+    // Connect to the signals of the menu entry. This handles the sub menu entries.
+    menuEntry->viewChanged.connect([=]() { handleSubMenuUpdate(); });
+    menuEntry->closeEntry.connect([=]() { handleSubMenuUpdate(); });
 
-    mSubViews.push_back(settingsEntry);
-    setSize(mSubViews.size());
-}
-
-void MenuEntryList::open()
-{
-    printf("MenuEntryModel: Open called!\n");
-    if (mSubViews.size() == 0)
-    {
-        return;
-    }
-
-    const auto entry = mSubViews[getIndex()];
-    if (mActiveView == &mEntryView)
-    {
-        mSubEntryView.setEntryLabel(entry.entryMainText);
-        mSubEntryView.setSecondaryLabel(entry.entrySecondaryText);
-        mActiveView = &mSubEntryView;
-    }
-    else
-    {
-        mActiveView = entry.settingsView;
-    }
-
-    viewChanged.emit();
-}
-
-void MenuEntryList::close()
-{
-    printf("MenuEntryModel: Close called!\n");
-    const auto entry = mSubViews[getIndex()];
-    if (mActiveView == &mSubEntryView)
-    {
-        mActiveView = &mEntryView;
-    }
-    else if (mActiveView == entry.settingsView)
-    {
-        mSubEntryView.setEntryLabel(entry.entryMainText);
-        mSubEntryView.setSecondaryLabel(entry.entrySecondaryText);
-        mActiveView = &mSubEntryView;
-    }
-
-    viewChanged.emit();
+    mMenuEntries.push_back(menuEntry);
+    setSize(mMenuEntries.size());
 }
 
 void MenuEntryList::navigateUp()
 {
-    printf("MenuEntryModel: Navigate UP called!\n");
-    incrementIndex();
-    const auto entry = mSubViews[getIndex()];
-    mSubEntryView.setEntryLabel(entry.entryMainText);
-    mSubEntryView.setSecondaryLabel(entry.entrySecondaryText);
+    decrementIndex();
+    mActiveView = mMenuEntries[getIndex()]->getMenuEntryView();
     viewChanged.emit();
 }
 
 void MenuEntryList::navigateDown()
 {
-    printf("MenuEntryModel: Navigate Down called!\n");
-    decrementIndex();
-    const auto entry = mSubViews[getIndex()];
-    mSubEntryView.setEntryLabel(entry.entryMainText);
-    mSubEntryView.setSecondaryLabel(entry.entrySecondaryText);
+    incrementIndex();
+    mActiveView = mMenuEntries[getIndex()]->getMenuEntryView();
     viewChanged.emit();
 }
 
-View &MenuEntryList::getMenuEntryView()
+void MenuEntryList::open()
 {
-    return *mActiveView;
+}
+
+void MenuEntryList::close()
+{
+    closeEntry.emit();
+}
+
+void MenuEntryList::handleSubMenuUpdate()
+{
+    mActiveView = mMenuEntries[getIndex()]->getMenuEntryView();
+    viewChanged.emit();
+}
+
+View *MenuEntryList::getMenuEntryView() const noexcept
+{
+    assert(mMenuEntries.empty() == false);
+    return mMenuEntries[getIndex()]->getMenuEntryView();
 }

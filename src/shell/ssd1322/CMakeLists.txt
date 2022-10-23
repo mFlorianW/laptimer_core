@@ -27,6 +27,8 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Screen.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ScreenModel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/IMenuEntry.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuEntry.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuEntry.hpp
 
     # Command
     ${CMAKE_CURRENT_SOURCE_DIR}/src/command/CloseCommand.cpp
@@ -58,10 +60,6 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/view/View.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/view/SessionView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/view/SessionView.hpp
-
-    # View/Dummy
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/view/dummy/DummyListView.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/view/dummy/DummyListView.hpp
 
     # ViewModel
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/ActiveSessionModel.cpp

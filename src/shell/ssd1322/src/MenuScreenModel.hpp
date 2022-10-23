@@ -1,59 +1,65 @@
 #ifndef __MENUSCREENMODEL__H__
 #define __MENUSCREENMODEL__H__
 
-#include "INavigationHandler.hpp"
+#include "MenuEntry.hpp"
 #include "MenuEntryList.hpp"
 #include "MenuEntryView.hpp"
-#include "NavigatableModel.hpp"
-#include "NavigateDownCommand.hpp"
-#include "NavigateUpCommand.hpp"
 #include "SessionView.hpp"
 #include "SessionViewModel.hpp"
-#include "ShowMainScreenCommand.hpp"
 #include <ISessionDatabase.hpp>
 #include <array>
 #include <kdbindings/signal.h>
 
 class ScreenModel;
-class MenuScreenModel : public NavigatableModel, public INavigationHandler
+class MenuScreenModel
 {
 public:
     MenuScreenModel(ScreenModel &screenModel, LaptimerCore::Session::ISessionDatabase &sessionDb);
 
+    /**
+     * Gives the view that shall be displayed.
+     * @return A reference to the view, that shall be displayed.
+     */
     View &getActiveView() const;
 
-    void navigateDown() override;
-    void navigateUp() override;
-
+    /**
+     * This signal is emitted when the menu has new view that shall be displayed.
+     */
     KDBindings::Signal<> viewChanged;
 
+    /**
+     * This signal is emitted when the menu can be closed and another screen can be displayed.
+     */
+    KDBindings::Signal<> closeMenu;
+
 private:
-    void onMenuEntryModelViewChanged();
-    void setupSessionMenuEntry();
+    void setupBluetoothMenu();
+    void setupSessionMenu();
+    void setupRootMenu();
+
+    void handleMenuViewChanged();
+    void handleCloseEntry();
 
 private:
     ScreenModel &mScreenModel;
 
-    // Commands
-    ShowMainScreenCommand mShowMainScreenCommand;
-    NavigateUpCommand mNavigateUpCommand;
-    NavigateDownCommand mNavigateDownCommand;
+    // Bluetooth MenuList
+    MenuEntry mRootBluetoohMenuEntry;
+    MenuEntryView mRootBluetoohMenuView;
 
-    // Session Menu entry
-    MenuEntryView mSessionEntryView;
-    MenuEntryList mSessionEntryModel;
-    SessionViewModel mSessionViewModel;
+    // Session MenuList
+    MenuEntry mRootSessionMenuEntry;
+    MenuEntryView mRootSessionMenuView;
+    MenuEntryList mSessionDetailMenu;
+    SessionViewModel mSessionViewModelEntry;
     SessionView mSessionView;
+    MenuEntry mSessionDeleteAllEntry;
+    MenuEntryView mSessionDeleteAllView;
+    MenuEntry mSessionOverviewEntry;
+    MenuEntryView mSessionOverviewView;
 
-    MenuEntryView mWifiSettings;
-    //    MenuEntryModel mWifiEntry;
-
-    MenuEntryView mBluetoothSettings;
-    //    MenuEntryModel mBluetoothEntry;
-
-    // MenuEntry Stack
-    std::size_t mNavigateIndex = 0;
-    std::array<MenuEntryList *, 3> mMenuEntryStack{&mSessionEntryModel};
+    // Root MenuList
+    MenuEntryList mRootMenu;
 };
 
 #endif //!__MENUSCREENMODEL__H__

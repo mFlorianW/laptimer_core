@@ -1,21 +1,26 @@
 #ifndef SESSIONVIEWMODEL_HPP
 #define SESSIONVIEWMODEL_HPP
 
+#include "MenuEntry.hpp"
+#include "NavigatableModel.hpp"
 #include <ISessionDatabase.hpp>
 #include <kdbindings/property.h>
-#include "NavigatableModel.hpp"
 
-class SessionViewModel final : public NavigatableModel
+class SessionViewModel final : public MenuEntry, public NavigatableModel
 {
 public:
     SessionViewModel(LaptimerCore::Session::ISessionDatabase &sessionDb);
     ~SessionViewModel();
 
+    /**
+     *
+     */
     void handleNavigationUp();
 
+    /**
+     *
+     */
     void handleNavigationDown();
-
-    KDBindings::Property<std::size_t> sessionCount;
 
     /**
      *

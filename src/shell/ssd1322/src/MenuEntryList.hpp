@@ -1,69 +1,62 @@
 #ifndef __MENUENTRYMODEL__H__
 #define __MENUENTRYMODEL__H__
-
 #include "CloseCommand.hpp"
 #include "IMenuEntry.hpp"
 #include "INavigationHandler.hpp"
 #include "IOpenCloseHandler.hpp"
-#include "MenuEntryView.hpp"
 #include "NavigatableModel.hpp"
 #include "NavigateDownCommand.hpp"
 #include "NavigateUpCommand.hpp"
-#include "OpenCommand.hpp"
 #include <kdbindings/signal.h>
 
 /**
  * The MenuEntryList is a list of menu entries that can be navigated in the menu. The entries in the list can be a leaf
  * of the menu tree or any kind of IMenuEntry.
  */
-class MenuEntryList : public IMenuEntry, public NavigatableModel, public IOpenCloseHandler, public INavigationHandler
+class MenuEntryList final : public IMenuEntry, public NavigatableModel, INavigationHandler, IOpenCloseHandler
 {
 public:
-    MenuEntryList(MenuEntryView &menuEntryView);
+    MenuEntryList();
 
     /**
-     * @copydoc IMenuEntry::getMenuEntryView.
+     * @copydoc IMenuEntry::getMenuEntryView
      */
-    View &getMenuEntryView() override;
-    View &getView();
+    View *getMenuEntryView() const noexcept override;
 
     /**
-     * Add as new menu entry to the list.
-     * @param menuEntry The entry that shall be added.
+     * @copydoc IMenuEntry::getMenuEntryView
      */
-    void addMenuEntry(IMenuEntry *menuEntry);
-    void addSubMenuEntry(const std::string &entryMainText,
-                         View *settingsView,
-                         const std::string &entrySecondaryText = "");
+    void addMenuEntry(IMenuEntry *entry) noexcept;
 
-    void open() override;
-    void close() override;
-    void navigateDown() override;
+    /**
+     * @copydoc INavigationHandler::navigateUp()
+     */
     void navigateUp() override;
 
+    /**
+     * @copydoc INavigationHandler::navigateDown()
+     */
+    void navigateDown() override;
+
+    /**
+     * @copydoc IOpenCloseHandler::open
+     */
+    void open() override;
+
+    /**
+     * @copydoc IOpenCloseHandler::open
+     */
+    void close() override;
+
 private:
-    struct SettingsEntry
-    {
-        std::string entryMainText;
-        std::string entrySecondaryText;
-        View *settingsView;
-    };
+    void handleSubMenuUpdate();
 
-    // Menu views
-    MenuEntryView &mEntryView;
-    MenuEntryView mSubEntryView;
+private:
     View *mActiveView{nullptr};
-    std::vector<SettingsEntry> mSubViews;
     std::vector<IMenuEntry *> mMenuEntries;
-
-    // Commands
-    OpenCommand mOpenCommand;
-    CloseCommand mCloseCommand;
-    NavigateUpCommand mNavigateUpCommand;
-    NavigateDownCommand mNavigateDownCommand;
-
-    // IMenuEntry interface
-public:
+    NavigateUpCommand mUpCommand;
+    NavigateDownCommand mDownCommand;
+    CloseCommand mEscapeCommand;
 };
 
 #endif //!__MENUENTRYMODEL__H__

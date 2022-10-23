@@ -1,19 +1,19 @@
 #ifndef SESSIONVIEW_HPP
 #define SESSIONVIEW_HPP
 
-#include "SessionViewModel.hpp"
 #include "View.hpp"
 #include <lv_obj.h>
 
+class SessionViewModel;
 class SessionView final : public View
 {
 public:
     SessionView(SessionViewModel &sessionViewModel);
     ~SessionView();
 
-    bool handleButtonDown() override;
+    void handleButtonDown() override;
 
-    bool handleButtonUp() override;
+    void handleButtonUp() override;
 
 private:
     void setTrackName();
