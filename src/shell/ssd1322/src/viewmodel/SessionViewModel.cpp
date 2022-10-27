@@ -13,7 +13,7 @@ SessionViewModel::SessionViewModel(LaptimerCore::Session::ISessionDatabase &sess
 
     // set the initial property values
     setSize(mSessionDb.getSessionCount());
-    displaySession(getIndex());
+    displaySession(mSessionDb.getSessionCount() - 1);
 }
 
 SessionViewModel::~SessionViewModel() = default;
@@ -38,6 +38,7 @@ void SessionViewModel::displaySession(std::size_t index)
         return;
     }
 
+    sessionIndicator.set(std::to_string(index + 1) + "/" + std::to_string(mSessionDb.getSessionCount()));
     trackName.set(session->getTrack().getTrackName());
     date.set(session->getSessionDate().asString());
     time.set(session->getSessionTime().asString());

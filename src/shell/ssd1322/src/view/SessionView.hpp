@@ -21,9 +21,12 @@ private:
     void setTime();
     void setLaps();
     void setBestLap();
+    void setSessionIndicator();
 
 private:
     lv_style_t mLabelStyle;
+    lv_obj_t *mSessionLabel;
+    lv_obj_t *mSessionIndicatorLabel;
     lv_obj_t *mTrackNameLabel;
     lv_obj_t *mDateLabel;
     lv_obj_t *mLapLabel;

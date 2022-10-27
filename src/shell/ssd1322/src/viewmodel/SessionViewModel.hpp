@@ -43,6 +43,11 @@ public:
      */
     KDBindings::Property<std::string> bestlap;
 
+    /**
+     *
+     */
+    KDBindings::Property<std::string> sessionIndicator;
+
 private:
     void displaySession(std::size_t index);
 
