@@ -58,6 +58,7 @@ void ActiveSessionWorkflow::onLapFinished()
     mSession->addLap(mCurrentLap);
     mDatabase.storeSession(mSession.value());
     lastLaptime.set(mCurrentLap.getLaptime());
+    mCurrentLap = Common::LapData{};
 
     const auto newLapCount = lapCount.get() + 1;
     lapCount.set(newLapCount);
