@@ -35,7 +35,14 @@ std::size_t MemorySessionDatabaseBackend::getNumberOfStoredSessions() const noex
 
 bool MemorySessionDatabaseBackend::storeSession(std::size_t index, const std::string &sessionData)
 {
-    mLastStoredSession = mStoredSessions.insert({index, sessionData});
+    if (mStoredSessions.count(index))
+    {
+        mStoredSessions[index] = sessionData;
+    }
+    else
+    {
+        mLastStoredSession = mStoredSessions.insert({index, sessionData});
+    }
     return true;
 }
 

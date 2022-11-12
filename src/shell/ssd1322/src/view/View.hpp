@@ -11,15 +11,84 @@ class View
 public:
     virtual ~View();
 
+    /**
+     * Gives the screen context for rendering.
+     * @return A object that contains the screen context to render.
+     */
     lv_obj_t *get_screen_content() const;
 
-    virtual bool handleButtonDown();
-    virtual bool handleButtonUp();
-    virtual bool handleEscape();
-    virtual bool handleEnter();
+    /**
+     * This function is called when the user presses the down button.
+     * The default implementation calls the set commands when it set otherwise the does nothing.
+     */
+    virtual void handleButtonDown();
 
-    virtual void setCloseCommand(ICommand *command);
+    /**
+     * This function is called when the user presses the up button.
+     * The default implementation calls the set commands when it set otherwise the does nothing.
+     */
+    virtual void handleButtonUp();
 
+    /**
+     * This function is called when the user presses the escape button.
+     * The default implementation calls the set commands when it set otherwise the does nothing.
+     */
+    virtual void handleEscape();
+
+    /**
+     * This function is called when the user presses the enter button.
+     * The default implementation calls the set commands when it set otherwise the does nothing.
+     */
+    virtual void handleEnter();
+
+    /**
+     * Sets the command which is called, when the button down handler is called.
+     * @param command The command to call on button down.
+     */
+    void setNavigateUpCommand(ICommand *command);
+
+    /**
+     * Sets the command which is called, when the button down handler is called.
+     * @param command The command to call on button down.
+     */
+    void setNavigateDownCommand(ICommand *command);
+
+    /**
+     * Sets the command which is called, when the button down handler is called.
+     * @param command The command to call on button down.
+     */
+    void setOpenCommand(ICommand *command);
+
+    /**
+     * Sets the command which is called, when the button down handler is called.
+     * @param command The command to call on button down.
+     */
+    void setCloseCommand(ICommand *command);
+
+    /**
+     * This signal is emitted by the view, when the has pressed the enter button.
+     */
+    KDBindings::Signal<> enterClicked;
+
+    /**
+     * This signal is emitted by the view, when the has pressed the enter button.
+     */
+    KDBindings::Signal<> escapeClicked;
+
+    /**
+     * This signal is emitted by the view, when the has pressed the enter button.
+     */
+    KDBindings::Signal<> upClicked;
+
+    /**
+     * This signal is emitted by the view, when the has pressed the enter button.
+     */
+    KDBindings::Signal<> downClicked;
+
+    /**
+     * This signal is emitted by the View when the shell display a popup window.
+     * @param popupRequest The information about the request which kind of popup and text for the popup.
+     */
     KDBindings::Signal<const PopupRequest &> requestPopup;
 
 private:
@@ -28,7 +97,10 @@ private:
 
 protected:
     View();
-
+    ICommand *mUpCommand{nullptr};
+    ICommand *mDownCommand{nullptr};
+    ICommand *mEnterCommand{nullptr};
+    ICommand *mEscapeCommand{nullptr};
     lv_obj_t *mScreenContent;
 };
 

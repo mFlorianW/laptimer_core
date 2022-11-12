@@ -1,15 +1,14 @@
 #include "MainScreenView.hpp"
 #include <cstdio>
 
-bool MainScreenView::handleEnter()
+void MainScreenView::handleEnter()
 {
     if (mNavigateMenuCommand == nullptr)
     {
-        return false;
+        return;
     }
 
     mNavigateMenuCommand->execute();
-    return true;
 }
 
 void MainScreenView::setShowMenuScreenCommand(ICommand *command)

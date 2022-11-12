@@ -1,8 +1,8 @@
 #include "../include/ScreenModel.hpp"
 #include "MainScreen.hpp"
 #include "MainScreenModel.hpp"
-#include "MenuModel.hpp"
 #include "MenuScreen.hpp"
+#include "MenuScreenModel.hpp"
 #include <lvgl.h>
 
 struct ScreenModelPrivate
@@ -12,7 +12,7 @@ struct ScreenModelPrivate
                                 LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider,
                                 LaptimerCore::Session::ISessionDatabase &sessionDatabase)
         : mMainScreen{gpsInfoProvider}
-        , mMenuModel{screenModel}
+        , mMenuModel{screenModel, sessionDatabase}
         , mMainScreenModel{screenModel, posDateTimeProvider, sessionDatabase}
     {
     }
@@ -22,7 +22,7 @@ struct ScreenModelPrivate
     MenuScreen mMenuScreen;
 
     // Screen Models
-    MenuModel mMenuModel;
+    MenuScreenModel mMenuModel;
     MainScreenModel mMainScreenModel;
 };
 
@@ -33,6 +33,7 @@ ScreenModel::ScreenModel(LaptimerCore::Positioning::IGpsInformationProvider &gps
 {
     // Connect to menu model view changed
     mD->mMenuModel.viewChanged.connect(&ScreenModel::activateMenuScreen, this);
+    mD->mMenuModel.closeMenu.connect(&ScreenModel::activateMainScreen, this);
 }
 
 ScreenModel::~ScreenModel() = default;

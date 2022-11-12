@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
+#include <iostream>
+#include <regex>
 
 namespace LaptimerCore::Session
 {
@@ -9,6 +11,26 @@ namespace LaptimerCore::Session
 FileSystemSessionDatabaseBackend::FileSystemSessionDatabaseBackend(const std::string &databaseFolder)
     : mDbDir{databaseFolder}
 {
+    auto indexList = std::vector<std::size_t>{};
+    const auto sessionSubString = std::string{"session"};
+    const auto sessionSubJson = std::string{".json"};
+    for (const auto &entry : std::filesystem::directory_iterator{databaseFolder})
+    {
+        if (entry.is_regular_file() &&
+            std::regex_match(entry.path().filename().string(), std::regex("session[0-9]+.json")))
+        {
+            auto fileName = entry.path().filename().string();
+            std::size_t begin = fileName.find("session");
+            fileName.erase(begin, sessionSubString.length());
+            begin = fileName.find(sessionSubJson);
+            fileName.erase(begin, sessionSubJson.length());
+            std::size_t index = std::stoi(fileName);
+            indexList.push_back(index);
+        }
+    }
+
+    auto maxElement = std::max_element(indexList.begin(), indexList.end());
+    mLastStoredIndex = maxElement == indexList.end() ? 0 : *maxElement;
 }
 
 size_t FileSystemSessionDatabaseBackend::getLastStoredIndex() const noexcept

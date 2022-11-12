@@ -19,8 +19,8 @@ public:
 
     void setCloseCommand(ICommand *command);
 
-    bool handleEnter() override;
-    bool handleEscape() override;
+    void handleEnter() override;
+    void handleEscape() override;
 
     void setMainText(const std::string &mainText);
     void setSecondaryText(const std::string &secondaryText);

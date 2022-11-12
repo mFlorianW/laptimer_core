@@ -13,8 +13,9 @@
                 "ENABLE_TEST": "ON",
                 "ENABLE_CATCH2_FETCH": "ON",
                 "ENABLE_KDBINDINGS_FETCH": "ON",
-                "ENABLE_ARDUINOJSON_FETCH":"ON",
-                "ENABLE_LVGL_FETCH":"ON"
+                "ENABLE_ARDUINOJSON_FETCH": "ON",
+                "ENABLE_LVGL_FETCH": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "1"
             }
         },
         {
@@ -29,8 +30,8 @@
                 "ENABLE_TEST": "ON",
                 "ENABLE_CATCH2_FETCH": "ON",
                 "ENABLE_KDBINDINGS_FETCH": "ON",
-                "ENABLE_ARDUINOJSON_FETCH":"ON",
-                "ENABLE_LVGL_FETCH":"ON"
+                "ENABLE_ARDUINOJSON_FETCH": "ON",
+                "ENABLE_LVGL_FETCH": "ON"
             }
         },
         {

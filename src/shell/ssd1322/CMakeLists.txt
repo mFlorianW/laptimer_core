@@ -4,7 +4,8 @@ add_library(ssd1322Sehll STATIC)
 add_library(LaptimerCore::Ssd1322Shell ALIAS ssd1322Sehll)
 
 target_sources(ssd1322Sehll
-PRIVATE
+    PRIVATE
+
     # Root
     ${LVGL_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/src/INavigationHandler.hpp
@@ -13,10 +14,10 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreen.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreenModel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MainScreenModel.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuEntryModel.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuEntryModel.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuModel.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuModel.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuEntryList.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuEntryList.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuScreenModel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuScreenModel.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuScreen.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuScreen.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/NavigatableModel.cpp
@@ -26,6 +27,9 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Screen.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Screen.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ScreenModel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/IMenuEntry.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuEntry.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/MenuEntry.hpp
 
     # Command
     ${CMAKE_CURRENT_SOURCE_DIR}/src/command/CloseCommand.cpp
@@ -55,28 +59,34 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/view/PopupView.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/view/View.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/view/View.hpp
-
-    # View/Dummy
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/view/dummy/DummyListView.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/view/dummy/DummyListView.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/view/SessionView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/view/SessionView.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/view/TableView.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/view/TableView.cpp
 
     # ViewModel
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/ActiveSessionModel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/ActiveSessionModel.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/StatusBarModel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/StatusBarModel.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/SessionViewModel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/SessionViewModel.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/TableModel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/TableModel.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/LapModel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/viewmodel/LapModel.hpp
 
-PUBLIC
+    PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/ScreenModel.hpp
 )
 
 TARGET_INCLUDE_DIRECTORIES(ssd1322Sehll
-PUBLIC
+    PUBLIC
     $<INSTALL_INTERFACE:include>
     $<INSTALL_INTERFACE:include/platform/desktop>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/platform/desktop>
-PRIVATE
+    PRIVATE
     ${LVGL_INCLUDES}
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}/src/command
@@ -87,7 +97,7 @@ PRIVATE
 )
 
 TARGET_LINK_LIBRARIES(ssd1322Sehll
-PUBLIC
+    PUBLIC
     ${SDL2_LIBRARIES}
     LaptimerCore::Common
     LaptimerCore::Positioning
@@ -95,5 +105,3 @@ PUBLIC
     LaptimerCore::Session
     LaptimerCore::Workflow
 )
-
-

@@ -2,7 +2,6 @@
 #include "MemorySessionDatabaseBackend.hpp"
 #include "SessionDatabase.hpp"
 #include "Sessions.hpp"
-#include "Tracks.hpp"
 #include <catch2/catch.hpp>
 
 using namespace LaptimerCore::Session;
@@ -42,7 +41,9 @@ TEST_CASE("The SessionDatabase shall store two different sessions")
     REQUIRE(result1);
     REQUIRE(result2);
     REQUIRE(backend.getNumberOfStoredSessions() == 2);
-    //    REQUIRE(sessionDb.getSessionCount() == 2);
+    REQUIRE(sessionDb.getSessionCount() == 2);
+    REQUIRE(sessionDb.getSessionByIndex(0) == Sessions::TestSession);
+    REQUIRE(sessionDb.getSessionByIndex(1) == Sessions::TestSession2);
 }
 
 TEST_CASE("The SessionDatabase shall be able to delete a single session.")
@@ -77,9 +78,13 @@ TEST_CASE("The SessionDatabase shall store an already stored session under the s
     auto sessionDb = SessionDatabase{backend};
 
     auto result1 = sessionDb.storeSession(Sessions::TestSession);
-    auto result2 = sessionDb.storeSession(Sessions::TestSession);
+    auto result2 = sessionDb.storeSession(Sessions::TestSession2);
+    auto result3 = sessionDb.storeSession(Sessions::TestSession2);
 
     REQUIRE(result1);
     REQUIRE(result2);
-    REQUIRE(sessionDb.getSessionCount() == 1);
+    REQUIRE(result3);
+    REQUIRE(sessionDb.getSessionCount() == 2);
+    REQUIRE(sessionDb.getSessionByIndex(0) == Sessions::TestSession);
+    REQUIRE(sessionDb.getSessionByIndex(1) == Sessions::TestSession2);
 }

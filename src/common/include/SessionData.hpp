@@ -19,6 +19,11 @@ public:
     using JsonDocument = ArduinoJson::StaticJsonDocument<8196>;
 
     /**
+     * Creates an empty invalid SessionData instance.
+     */
+    SessionData();
+
+    /**
      * Creates SessionData instance
      */
     SessionData(const TrackData &track, const Date &sessionDate, const Timestamp &sessionTime);

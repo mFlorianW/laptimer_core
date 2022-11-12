@@ -44,20 +44,19 @@ void PopupView::setCloseCommand(ICommand *command)
     mCloseCommand = command;
 }
 
-bool PopupView::handleEnter()
+void PopupView::handleEnter()
 {
-    return handleEscape();
+    handleEscape();
 }
 
-bool PopupView::handleEscape()
+void PopupView::handleEscape()
 {
     if (mCloseCommand == nullptr)
     {
-        return false;
+        return;
     }
 
     mCloseCommand->execute();
-    return true;
 }
 
 void PopupView::setMainText(const std::string &mainText)
