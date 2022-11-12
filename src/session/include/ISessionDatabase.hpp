@@ -2,6 +2,7 @@
 #define ISESSIONDATABASE_HPP
 
 #include "SessionData.hpp"
+#include <kdbindings/signal.h>
 
 namespace LaptimerCore::Session
 {
@@ -42,6 +43,24 @@ public:
      * @param index The index which shall deleted.
      */
     virtual void deleteSession(std::size_t index) = 0;
+
+    /**
+     * This signal shall be emitted by a session database, when a new session is stored.
+     * @param index The index that got added to the database.
+     */
+    KDBindings::Signal<std::size_t> sessionAdded;
+
+    /**
+     * This signal shall be emitted by a session database, when a session is updated.
+     * @param index The index of the session that got updated.
+     */
+    KDBindings::Signal<std::size_t> sessionUpdated;
+
+    /**
+     * This signal shall be emitted by a session database when a session is deleted.
+     * @param index The index of the session that got deleted.
+     */
+    KDBindings::Signal<std::size_t> sessionDeleted;
 
 protected:
     ISessionDatabase() = default;

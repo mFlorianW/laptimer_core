@@ -55,19 +55,33 @@ bool SessionDatabase::storeSession(const Common::SessionData &session)
                 (storedSession->getSessionTime() == session.getSessionTime()) &&
                 (storedSession->getTrack() == session.getTrack()))
             {
-                return mBackend.storeSession(index, jsonDoc.as<std::string>());
+                const auto updated = mBackend.storeSession(index, jsonDoc.as<std::string>());
+                if (updated)
+                {
+                    sessionUpdated.emit(index);
+                }
+                return updated;
             }
         }
     }
 
     // This is the case when a new session is started.
     std::size_t storageIndex = (mBackend.getNumberOfStoredSessions() == 0) ? 0 : mBackend.getLastStoredIndex() + 1;
-    return mBackend.storeSession(storageIndex, jsonDoc.as<std::string>());
+    const auto stored = mBackend.storeSession(storageIndex, jsonDoc.as<std::string>());
+    if (stored)
+    {
+        sessionAdded.emit(storageIndex);
+    }
+    return stored;
 }
 
 void SessionDatabase::deleteSession(std::size_t index)
 {
-    mBackend.deleteSession(index);
+    const auto deleted = mBackend.deleteSession(index);
+    if (deleted)
+    {
+        sessionDeleted.emit(index);
+    }
 }
 
 } // namespace LaptimerCore::Session
