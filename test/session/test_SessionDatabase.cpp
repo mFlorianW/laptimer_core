@@ -27,7 +27,7 @@ TEST_CASE("The SessionDatabase shall serialize the SessionData to JSON, store th
     REQUIRE(backend.loadSessionByIndex(0) == Sessions::TestSessionAsJson);
 }
 
-TEST_CASE("The SessionDatabase shall return the amout of the stored sessions")
+TEST_CASE("The SessionDatabase shall return the amount of the stored sessions")
 {
     auto backend = MemorySessionDatabaseBackend{};
     auto sessionDb = SessionDatabase{backend};
@@ -88,10 +88,17 @@ TEST_CASE("The SessionDatabase shall load the Session by the given valid index."
     REQUIRE(session.value() == Sessions::TestSession);
 }
 
-TEST_CASE("The SessionDatabase shall store an already stored session under the same index.")
+TEST_CASE("The SessionDatabase shall store an already stored session under the same index. and shall emit the signal "
+          "session updated.")
 {
     auto backend = MemorySessionDatabaseBackend{};
     auto sessionDb = SessionDatabase{backend};
+    auto sessionUpdatedSpy = false;
+    auto sessionUpdatedIndex = 99;
+    sessionDb.sessionUpdated.connect([&](std::size_t index) {
+        sessionUpdatedSpy = true;
+        sessionUpdatedIndex = index;
+    });
 
     auto result1 = sessionDb.storeSession(Sessions::TestSession);
     auto result2 = sessionDb.storeSession(Sessions::TestSession2);
@@ -103,4 +110,6 @@ TEST_CASE("The SessionDatabase shall store an already stored session under the s
     REQUIRE(sessionDb.getSessionCount() == 2);
     REQUIRE(sessionDb.getSessionByIndex(0) == Sessions::TestSession);
     REQUIRE(sessionDb.getSessionByIndex(1) == Sessions::TestSession2);
+    REQUIRE(sessionUpdatedSpy);
+    REQUIRE(sessionUpdatedIndex == 1);
 }

@@ -55,7 +55,12 @@ bool SessionDatabase::storeSession(const Common::SessionData &session)
                 (storedSession->getSessionTime() == session.getSessionTime()) &&
                 (storedSession->getTrack() == session.getTrack()))
             {
-                return mBackend.storeSession(index, jsonDoc.as<std::string>());
+                const auto updated = mBackend.storeSession(index, jsonDoc.as<std::string>());
+                if (updated)
+                {
+                    sessionUpdated.emit(index);
+                }
+                return updated;
             }
         }
     }
