@@ -67,7 +67,11 @@ bool SessionDatabase::storeSession(const Common::SessionData &session)
 
 void SessionDatabase::deleteSession(std::size_t index)
 {
-    mBackend.deleteSession(index);
+    const auto deleted = mBackend.deleteSession(index);
+    if (deleted)
+    {
+        sessionDeleted.emit(index);
+    }
 }
 
 } // namespace LaptimerCore::Session

@@ -46,17 +46,25 @@ TEST_CASE("The SessionDatabase shall store two different sessions")
     REQUIRE(sessionDb.getSessionByIndex(1) == Sessions::TestSession2);
 }
 
-TEST_CASE("The SessionDatabase shall be able to delete a single session.")
+TEST_CASE("The SessionDatabase shall be able to delete a single session and emit the signal session deleted.")
 {
     auto backend = MemorySessionDatabaseBackend{};
     auto sessionDb = SessionDatabase{backend};
+    auto sessionDeletedSpy = false;
+    auto sessionDeletedIndex = 99;
 
     auto result = sessionDb.storeSession(Sessions::TestSession);
+    sessionDb.sessionDeleted.connect([&](std::size_t index) {
+        sessionDeletedSpy = true;
+        sessionDeletedIndex = index;
+    });
     REQUIRE(sessionDb.getSessionCount() == 1);
     REQUIRE(result);
 
     sessionDb.deleteSession(0);
     REQUIRE(sessionDb.getSessionCount() == 0);
+    REQUIRE(sessionDeletedSpy);
+    REQUIRE(sessionDeletedIndex == 0);
 }
 
 TEST_CASE("The SessionDatabase shall load the Session by the given valid index.")
