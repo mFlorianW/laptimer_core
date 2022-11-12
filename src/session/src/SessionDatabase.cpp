@@ -62,7 +62,12 @@ bool SessionDatabase::storeSession(const Common::SessionData &session)
 
     // This is the case when a new session is started.
     std::size_t storageIndex = (mBackend.getNumberOfStoredSessions() == 0) ? 0 : mBackend.getLastStoredIndex() + 1;
-    return mBackend.storeSession(storageIndex, jsonDoc.as<std::string>());
+    const auto stored = mBackend.storeSession(storageIndex, jsonDoc.as<std::string>());
+    if (stored)
+    {
+        sessionAdded.emit(storageIndex);
+    }
+    return stored;
 }
 
 void SessionDatabase::deleteSession(std::size_t index)

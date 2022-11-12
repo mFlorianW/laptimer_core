@@ -8,14 +8,22 @@ using namespace LaptimerCore::Session;
 using namespace LaptimerCore::Common;
 using namespace LaptimerCore::Test::Dummy;
 
-TEST_CASE("The SessionDatabase shall serialize the SessionData to JSON and store them")
+TEST_CASE("The SessionDatabase shall serialize the SessionData to JSON, store them and emit the signal new session is "
+          "stored.")
 {
     auto backend = MemorySessionDatabaseBackend{};
     auto sessionDb = SessionDatabase{backend};
-
+    auto sessionStoredSpy = false;
+    auto sessionStoredIndex = 99;
+    sessionDb.sessionAdded.connect([&](std::size_t index) {
+        sessionStoredSpy = true;
+        sessionStoredIndex = index;
+    });
     auto result = sessionDb.storeSession(Sessions::TestSession);
 
     REQUIRE(result);
+    REQUIRE(sessionStoredSpy);
+    REQUIRE(sessionStoredIndex == 0);
     REQUIRE(backend.loadSessionByIndex(0) == Sessions::TestSessionAsJson);
 }
 
