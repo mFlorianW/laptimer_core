@@ -15,6 +15,8 @@ public:
 
     void handleButtonUp() override;
 
+    void handleEnter() override;
+
 private:
     void setTrackName();
     void setDate();

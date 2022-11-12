@@ -5,13 +5,15 @@ SessionViewModel::SessionViewModel(LaptimerCore::Session::ISessionDatabase &sess
     : MenuEntry()
     , NavigatableModel{0}
     , mSessionDb{sessionDb}
+    , mLapView{mLapModel}
+    , mLapViewCloseCommand(*this)
 {
     if (mSessionDb.getSessionCount() == 0)
     {
         return;
     }
 
-    // set the initial property values
+    mLapView.setCloseCommand(&mLapViewCloseCommand);
     setSize(mSessionDb.getSessionCount());
     displaySession(mSessionDb.getSessionCount() - 1);
 }
@@ -30,6 +32,18 @@ void SessionViewModel::handleNavigationDown()
     displaySession(getIndex());
 }
 
+void SessionViewModel::open()
+{
+    mActiveView = &mLapView;
+    viewChanged.emit();
+}
+
+void SessionViewModel::close()
+{
+    mActiveView = mEntryView;
+    viewChanged.emit();
+}
+
 void SessionViewModel::displaySession(std::size_t index)
 {
     const auto session = mSessionDb.getSessionByIndex(index);
@@ -38,6 +52,7 @@ void SessionViewModel::displaySession(std::size_t index)
         return;
     }
 
+    mLapModel.setSessionData(session.value());
     sessionIndicator.set(std::to_string(index + 1) + "/" + std::to_string(mSessionDb.getSessionCount()));
     trackName.set(session->getTrack().getTrackName());
     date.set(session->getSessionDate().asString());

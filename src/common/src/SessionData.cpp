@@ -23,6 +23,11 @@ public:
     }
 };
 
+SessionData::SessionData()
+    : mData{new SharedSessionData}
+{
+}
+
 SessionData::SessionData(const TrackData &track, const Date &sessionDate, const Timestamp &sessionTime)
     : mData{new SharedSessionData}
 {

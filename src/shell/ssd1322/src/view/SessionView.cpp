@@ -98,6 +98,11 @@ void SessionView::handleButtonUp()
     mSessionViewModel.handleNavigationUp();
 }
 
+void SessionView::handleEnter()
+{
+    mSessionViewModel.open();
+}
+
 void SessionView::setTrackName()
 {
     lv_label_set_text(mTrackNameLabel, mSessionViewModel.trackName.get().c_str());
