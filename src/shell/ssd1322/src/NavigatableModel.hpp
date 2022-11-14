@@ -11,6 +11,7 @@ public:
 protected:
     NavigatableModel(std::size_t size);
 
+    std::size_t getSize() const noexcept;
     void setSize(std::size_t size);
     std::size_t getIndex() const;
 

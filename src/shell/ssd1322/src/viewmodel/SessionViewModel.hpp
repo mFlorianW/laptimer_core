@@ -68,6 +68,8 @@ public:
 
 private:
     void displaySession(std::size_t index);
+    void onSessionAdded();
+    void onSessionUpdated(std::size_t index);
 
 private:
     LaptimerCore::Session::ISessionDatabase &mSessionDb;

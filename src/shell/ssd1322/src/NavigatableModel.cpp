@@ -5,6 +5,11 @@ NavigatableModel::NavigatableModel(std::size_t size)
 {
 }
 
+std::size_t NavigatableModel::getSize() const noexcept
+{
+    return mSize;
+}
+
 void NavigatableModel::setSize(std::size_t size)
 {
     mSize = size;
@@ -17,24 +22,24 @@ std::size_t NavigatableModel::getIndex() const
 
 void NavigatableModel::incrementIndex()
 {
-    auto tempIndex = ++mIndex;
-    if (tempIndex >= mSize)
+    if ((mIndex + 1) >= mSize)
     {
-        tempIndex = 0;
+        mIndex = 0;
     }
-    mIndex = tempIndex;
+    else
+    {
+        ++mIndex;
+    }
 }
 
 void NavigatableModel::decrementIndex()
 {
-    std::size_t tempIndex;
     if (mIndex == 0)
     {
-        tempIndex = mSize - 1;
+        mIndex = mSize - 1;
     }
     else
     {
-        tempIndex = --mIndex;
+        --mIndex;
     }
-    mIndex = tempIndex;
 }

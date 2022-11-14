@@ -6,11 +6,6 @@ LapModel::~LapModel() = default;
 
 void LapModel::setSessionData(const LaptimerCore::Common::SessionData session) noexcept
 {
-    if (mSession == session)
-    {
-        return;
-    }
-
     mSession = session;
     mLaptimeColumnIndex = 2 + mSession.getTrack().getNumberOfSections();
     setRowCount(mSession.getNumberOfLaps());
