@@ -1,4 +1,4 @@
-name: LaptimerCore CI
+name: Continous Integration
 
 on:
   push:
