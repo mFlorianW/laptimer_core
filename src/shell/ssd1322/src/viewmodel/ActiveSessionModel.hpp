@@ -31,9 +31,15 @@ public:
     void confirmTrackDetection(bool confirmed);
 
     /**
+     * Gives the last detected track data.
+     * @return The last detected track data.
+     */
+    LaptimerCore::Common::TrackData getDetectedTrack() const noexcept;
+
+    /**
      * This property holds the track data when a track is detected.
      */
-    KDBindings::Property<LaptimerCore::Common::TrackData> detectedTrack;
+    KDBindings::Signal<> trackDetected;
 
     /**
      * This signal is emitted
@@ -66,6 +72,7 @@ private:
 private:
     LaptimerCore::Workflow::ITrackDetectionWorkflow &mTrackDetector;
     LaptimerCore::Workflow::IActiveSessionWorkflow &mActiveSessionWorkFlow;
+    LaptimerCore::Common::TrackData mTrackData;
 };
 
 #endif //!__ACTIVESESSIONMODEL__H__

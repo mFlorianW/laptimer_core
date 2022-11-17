@@ -25,9 +25,10 @@ ActiveSessionModel::ActiveSessionModel(LaptimerCore::Workflow::ITrackDetectionWo
     mTrackDetector.setTracks({zuhauseTrack, oschersleben});
     mTrackDetector.startDetection();
 
-    mTrackDetector.trackDetected.connect([=] {
-        detectedTrack = mTrackDetector.getDetectedTrack();
+    mTrackDetector.trackDetected.connect([this] {
+        mTrackData = mTrackDetector.getDetectedTrack();
         mTrackDetector.stopDetection();
+        trackDetected.emit();
     });
 
     // TODO: provide these as string so we the UI doesn't to do any formatting
@@ -68,18 +69,24 @@ std::string ActiveSessionModel::getLastSector() const noexcept
 void ActiveSessionModel::confirmTrackDetection(bool confirmed)
 {
     // track is not confirmed by the user so we start the track detection again.
-    //    if (!confirmed)
-    //    {
-    //        mTrackDetector.startDetection();
-    //        return;
-    //    }
+    if (!confirmed)
+    {
+        mTrackDetector.stopDetection();
+        return;
+    }
+
     mActiveSessionWorkFlow.setTrack(mTrackDetector.getDetectedTrack());
     mActiveSessionWorkFlow.startActiveSession();
 }
 
+TrackData ActiveSessionModel::getDetectedTrack() const noexcept
+{
+    return mTrackData;
+}
+
 std::string ActiveSessionModel::convertTimeToString(const LaptimerCore::Common::Timestamp timeStamp)
 {
-    std::array<char, 25> buffer;
+    std::array<char, 25> buffer = {0};
     std::snprintf(&buffer[0],
                   buffer.size(),
                   "%02d:%02d.%01d",

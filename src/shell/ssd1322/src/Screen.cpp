@@ -5,6 +5,7 @@
 Screen::Screen()
     : m_screen{lv_obj_create(nullptr, nullptr)}
     , mPopupCloseCommand{*this}
+    , mPopupConfirmCommand{*this}
 {
     // setup screen
     lv_style_init(&m_screen_style);
@@ -16,6 +17,7 @@ Screen::Screen()
     lv_obj_set_event_cb(m_screen, Screen::handleLvglEvent);
     lv_obj_set_user_data(m_screen, this);
 
+    mPopupView.setOpenCommand(&mPopupConfirmCommand);
     mPopupView.setCloseCommand(&mPopupCloseCommand);
 }
 

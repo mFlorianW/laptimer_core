@@ -1,5 +1,5 @@
-#ifndef __SCREEN_CONTENT__H__
-#define __SCREEN_CONTENT__H__
+#ifndef VIEW_HPP
+#define VIEW_HPP
 
 #include "ICommand.hpp"
 #include "PopupRequest.hpp"
@@ -66,33 +66,13 @@ public:
     void setCloseCommand(ICommand *command);
 
     /**
-     * This signal is emitted by the view, when the has pressed the enter button.
-     */
-    KDBindings::Signal<> enterClicked;
-
-    /**
-     * This signal is emitted by the view, when the has pressed the enter button.
-     */
-    KDBindings::Signal<> escapeClicked;
-
-    /**
-     * This signal is emitted by the view, when the has pressed the enter button.
-     */
-    KDBindings::Signal<> upClicked;
-
-    /**
-     * This signal is emitted by the view, when the has pressed the enter button.
-     */
-    KDBindings::Signal<> downClicked;
-
-    /**
      * This signal is emitted by the View when the shell display a popup window.
      * @param popupRequest The information about the request which kind of popup and text for the popup.
      */
     KDBindings::Signal<const PopupRequest &> requestPopup;
 
 private:
-    lv_style_t mScreenContentStyle;
+    lv_style_t mScreenContentStyle{};
     lv_obj_t *mBackScreen;
 
 protected:
@@ -104,4 +84,4 @@ protected:
     lv_obj_t *mScreenContent;
 };
 
-#endif //!__SCREEN_CONTENT__H__
+#endif //! VIEW_HPP

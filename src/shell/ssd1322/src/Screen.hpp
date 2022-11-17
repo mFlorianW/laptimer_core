@@ -3,6 +3,7 @@
 
 #include "CloseCommand.hpp"
 #include "IOpenCloseHandler.hpp"
+#include "OpenCommand.hpp"
 #include "PopupView.hpp"
 #include "View.hpp"
 #include <lvgl.h>
@@ -14,8 +15,8 @@ public:
 
     lv_obj_t *getScreen() const;
 
-    void open();
-    void close();
+    void open() override;
+    void close() override;
 
     void setScreenContent(View *content);
 
@@ -41,6 +42,7 @@ private:
     const PopupRequest *mPopupRequest{nullptr};
     PopupView mPopupView;
     CloseCommand mPopupCloseCommand;
+    OpenCommand mPopupConfirmCommand;
     lv_obj_t *mOldPopupParent;
 };
 

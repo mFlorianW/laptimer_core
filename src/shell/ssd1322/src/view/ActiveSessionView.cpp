@@ -51,7 +51,7 @@ ActiveSessionView::ActiveSessionView(ActiveSessionModel &model)
 
     mPopupRequest.setMainText("Use track?");
     mPopupRequest.confirmed.connect(&ActiveSessionView::onTrackDetectionPopupClosed, this);
-    mActiveSessionModel.detectedTrack.valueChanged().connect(&ActiveSessionView::onTrackDetected, this);
+    mActiveSessionModel.trackDetected.connect(&ActiveSessionView::onTrackDetected, this);
 
     mActiveSessionModel.currentLaptime.valueChanged().connect([=]() {
         auto timeStamp = mActiveSessionModel.currentLaptime.get();
@@ -86,7 +86,7 @@ ActiveSessionView::~ActiveSessionView()
 
 void ActiveSessionView::onTrackDetected()
 {
-    mPopupRequest.setSecondaryText("<" + mActiveSessionModel.detectedTrack.get().getTrackName() + ">");
+    mPopupRequest.setSecondaryText("<" + mActiveSessionModel.getDetectedTrack().getTrackName() + ">");
     requestPopup.emit(mPopupRequest);
 }
 
