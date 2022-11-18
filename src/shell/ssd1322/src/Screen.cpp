@@ -105,10 +105,12 @@ void Screen::handleLvglEvent(lv_obj_t *obj, lv_event_t event)
 void Screen::closePopup(PopupReturnType popupReturnType)
 {
     mPopupActive = false;
-    // TODO: Cleanup PopupView
     mPopupView.setMainText("");
     mPopupView.setSecondaryText("");
-    mPopupRequest->confirmed.emit(popupReturnType);
+    if (mPopupView.getType() == Type::Confirmattion)
+    {
+        mPopupRequest->confirmed.emit(popupReturnType);
+    }
     lv_obj_set_parent(mPopupView.get_screen_content(), mOldPopupParent);
 }
 
@@ -119,5 +121,10 @@ void Screen::onPopupRequested(const PopupRequest &popupRequest)
     mOldPopupParent = lv_obj_get_parent(mPopupView.get_screen_content());
     mPopupView.setMainText(mPopupRequest->getMainText());
     mPopupView.setSecondaryText(mPopupRequest->getSecondaryText());
+    mPopupView.setType(mPopupRequest->getPopupType());
+    if (mPopupView.getType() == Type::NoConfirmation && mPopupRequest->isAutoClosing())
+    {
+        mPopupView.setAutoClosingTimeout(popupRequest.getAutoClosingTimeout());
+    }
     lv_obj_set_parent(mPopupView.get_screen_content(), lv_layer_top());
 }

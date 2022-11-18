@@ -29,6 +29,11 @@ PopupView::PopupView()
 
     // setup main text
     mSecondaryText = lv_label_create(mScreenContent, nullptr);
+
+    mAutoClosingTimer.timeout.connect([this]() {
+        mAutoClosingTimer.stop();
+        handleEscape();
+    });
 }
 
 PopupView::~PopupView()
@@ -98,6 +103,21 @@ void PopupView::setType(Type type)
         hide = true;
     }
 
-    lv_obj_set_hidden(mConfirmLabel, hide);
     lv_obj_set_hidden(mCancelLabel, hide);
+}
+
+void PopupView::setAutoClosingTimeout(std::chrono::seconds timeout)
+{
+    if (mType == Type::Confirmattion)
+    {
+        return;
+    }
+
+    mAutoClosingTimer.setInterval(std::chrono::duration_cast<std::chrono::milliseconds>(timeout));
+    mAutoClosingTimer.start();
+}
+
+Type PopupView::getType() const
+{
+    return mType;
 }
