@@ -55,6 +55,8 @@ void ActiveSessionWorkflow::onLapFinished()
         return;
     }
 
+    onSectorFinished();
+
     mSession->addLap(mCurrentLap);
     mDatabase.storeSession(mSession.value());
     lastLaptime.set(mCurrentLap.getLaptime());

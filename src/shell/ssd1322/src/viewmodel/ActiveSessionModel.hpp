@@ -1,5 +1,5 @@
-#ifndef __ACTIVESESSIONMODEL__H__
-#define __ACTIVESESSIONMODEL__H__
+#ifndef ACTIVESESSIONMODEL_HPP
+#define ACTIVESESSIONMODEL_HPP
 
 #include <IActiveSessionWorkflow.hpp>
 #include <ITrackDetectionWorkflow.hpp>
@@ -67,12 +67,9 @@ public:
     KDBindings::Property<LaptimerCore::Common::Timestamp> currentSectorTime;
 
 private:
-    static std::string convertTimeToString(const LaptimerCore::Common::Timestamp timeStamp);
-
-private:
     LaptimerCore::Workflow::ITrackDetectionWorkflow &mTrackDetector;
     LaptimerCore::Workflow::IActiveSessionWorkflow &mActiveSessionWorkFlow;
     LaptimerCore::Common::TrackData mTrackData;
 };
 
-#endif //!__ACTIVESESSIONMODEL__H__
+#endif //! ACTIVESESSIONMODEL_HPP

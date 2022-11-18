@@ -53,7 +53,7 @@ std::string ActiveSessionModel::getLastLapTime() const noexcept
         return {"00:00:000"};
     }
 
-    return convertTimeToString(mActiveSessionWorkFlow.lastLaptime.get());
+    return mActiveSessionWorkFlow.lastLaptime.get().asString();
 }
 
 std::string ActiveSessionModel::getLastSector() const noexcept
@@ -63,7 +63,7 @@ std::string ActiveSessionModel::getLastSector() const noexcept
         return {"00:00:000"};
     }
 
-    return convertTimeToString(mActiveSessionWorkFlow.lastSectorTime.get());
+    return mActiveSessionWorkFlow.lastSectorTime.get().asString();
 }
 
 void ActiveSessionModel::confirmTrackDetection(bool confirmed)
@@ -82,17 +82,4 @@ void ActiveSessionModel::confirmTrackDetection(bool confirmed)
 TrackData ActiveSessionModel::getDetectedTrack() const noexcept
 {
     return mTrackData;
-}
-
-std::string ActiveSessionModel::convertTimeToString(const LaptimerCore::Common::Timestamp timeStamp)
-{
-    std::array<char, 25> buffer = {0};
-    std::snprintf(&buffer[0],
-                  buffer.size(),
-                  "%02d:%02d.%01d",
-                  timeStamp.getMinute(),
-                  timeStamp.getHour(),
-                  timeStamp.getFractionalOfSecond());
-
-    return {buffer[0]};
 }

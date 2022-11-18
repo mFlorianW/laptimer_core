@@ -100,7 +100,6 @@ TEST_CASE("The ActiveSessionWorkflow shall store the laptime when finished.")
     actSessWf.startActiveSession();
     actSessWf.lapFinished.connect([&lapFinishedEmitted]() { lapFinishedEmitted = true; });
     lp.sectorTimes.push_back(Timestamp{"00:23:13.123"});
-    lp.sectorFinished.emit();
     lp.lapFinished.emit();
 
     REQUIRE(actSessWf.getSession()->getLaps().size() == 1);
@@ -120,7 +119,6 @@ TEST_CASE("The ActiveSessionWorkflow shall update the round laptime property whe
 
     actSessWf.startActiveSession();
     lp.sectorTimes.push_back(Timestamp{"00:00:12.123"});
-    lp.sectorFinished.emit();
     lp.lapFinished.emit();
 
     REQUIRE(actSessWf.lastLaptime.get() == expectedLaptime);
@@ -186,7 +184,6 @@ TEST_CASE("The ActiveSessionWorkflow shall store the sector times in a lap of a 
     lp.sectorFinished.emit();
 
     lp.sectorTimes.push_back(Timestamp{"00:23:123.233"});
-    lp.sectorFinished.emit();
     lp.lapFinished.emit();
 
     REQUIRE(actSessWf.getSession());
