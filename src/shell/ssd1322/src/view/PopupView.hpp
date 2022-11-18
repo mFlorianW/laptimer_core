@@ -1,15 +1,9 @@
 #ifndef POPUPVIEW_HPP
 #define POPUPVIEW_HPP
 
-#include "ICommand.hpp"
+#include "PopupViewDefinition.hpp"
 #include "View.hpp"
 #include <lvgl.h>
-
-enum Type
-{
-    NoConfirmation,
-    Confirmattion
-};
 
 class PopupView final : public View
 {
