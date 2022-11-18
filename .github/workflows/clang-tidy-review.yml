@@ -13,9 +13,9 @@ jobs:
       id: review
       uses: ZedThree/clang-tidy-review@v0.10.1
       with:
-        build_dir: build
-        config_file: '.clang-tidy'
+        build_dir: build/github-ci-debug
+        config_file: .clang-tidy
         apt_packages: libsdl2-dev,qtbase5-dev,qtdeclarative5-dev,qtlocation5-dev,qtpositioning5-dev
-        cmake_command: cmake --preset github-ci-debug .
+        cmake_command: cmake --preset github-ci-debug
     - if: steps.review.outputs.total_comments > 0
       run: exit 1

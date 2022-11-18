@@ -39,24 +39,30 @@ PopupView::~PopupView()
     lv_obj_del(mSecondaryText);
 }
 
-void PopupView::setCloseCommand(ICommand *command)
-{
-    mCloseCommand = command;
-}
-
 void PopupView::handleEnter()
 {
-    handleEscape();
-}
+    // If the popup doesn't a confirmation we directly call handle escape.
+    if (mType == Type::NoConfirmation)
+    {
+        handleEscape();
+    }
 
-void PopupView::handleEscape()
-{
-    if (mCloseCommand == nullptr)
+    if (mEscapeCommand == nullptr)
     {
         return;
     }
 
-    mCloseCommand->execute();
+    mEnterCommand->execute();
+}
+
+void PopupView::handleEscape()
+{
+    if (mEscapeCommand == nullptr)
+    {
+        return;
+    }
+
+    mEscapeCommand->execute();
 }
 
 void PopupView::setMainText(const std::string &mainText)
