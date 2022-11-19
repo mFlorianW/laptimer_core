@@ -1,5 +1,6 @@
 #include "Screen.hpp"
 #include <cstdio>
+#include <iostream>
 #include <lv_obj.h>
 
 Screen::Screen()
@@ -8,10 +9,10 @@ Screen::Screen()
     , mPopupConfirmCommand{*this}
 {
     // setup screen
-    lv_style_init(&m_screen_style);
+    lv_style_init(&mScreenStyle);
     lv_obj_set_size(m_screen, 256, 64);
-    lv_style_set_bg_color(&m_screen_style, LV_STATE_DEFAULT, LV_COLOR_BLACK);
-    lv_obj_add_style(m_screen, LV_OBJ_PART_MAIN, &m_screen_style);
+    lv_style_set_bg_color(&mScreenStyle, LV_STATE_DEFAULT, LV_COLOR_BLACK);
+    lv_obj_add_style(m_screen, LV_OBJ_PART_MAIN, &mScreenStyle);
 
     // setup event handling
     lv_obj_set_event_cb(m_screen, Screen::handleLvglEvent);
@@ -38,7 +39,6 @@ void Screen::open()
         return;
     }
 
-    printf("Close popup confirmed\n");
     closePopup(PopupReturnType::Confirmed);
 }
 
@@ -49,7 +49,6 @@ void Screen::close()
         return;
     }
 
-    printf("Close popup canceld\n");
     closePopup(PopupReturnType::Cancled);
 }
 
@@ -57,17 +56,19 @@ void Screen::setScreenContent(View *content)
 {
     // Restore old parent otherwise the Screen may contain
     // old objects.
-    if (mOldScreenContentParent != nullptr && mActiveView != nullptr)
-    {
-        lv_obj_set_parent(mActiveView->get_screen_content(), mOldScreenContentParent);
-        mActiveView->requestPopup.disconnect(mPopupRequestConnectionHandle);
-    }
+    restoreParent();
 
     mOldScreenContentParent = lv_obj_get_parent(content->get_screen_content());
     lv_obj_set_parent(content->get_screen_content(), m_screen);
     lv_event_send_refresh_recursive(m_screen);
     mActiveView = content;
+    mActiveView->setVisible(true);
     mPopupRequestConnectionHandle = mActiveView->requestPopup.connect(&Screen::onPopupRequested, this);
+}
+
+bool Screen::isVisible() const noexcept
+{
+    return mVisible;
 }
 
 void Screen::handleLvglEvent(lv_obj_t *obj, lv_event_t event)
@@ -105,10 +106,13 @@ void Screen::handleLvglEvent(lv_obj_t *obj, lv_event_t event)
 void Screen::closePopup(PopupReturnType popupReturnType)
 {
     mPopupActive = false;
-    // TODO: Cleanup PopupView
     mPopupView.setMainText("");
     mPopupView.setSecondaryText("");
-    mPopupRequest->confirmed.emit(popupReturnType);
+    if (mPopupView.getType() == Type::Confirmattion)
+    {
+        mPopupRequest->confirmed.emit(popupReturnType);
+    }
+    mPopupView.setVisible(false);
     lv_obj_set_parent(mPopupView.get_screen_content(), mOldPopupParent);
 }
 
@@ -119,5 +123,40 @@ void Screen::onPopupRequested(const PopupRequest &popupRequest)
     mOldPopupParent = lv_obj_get_parent(mPopupView.get_screen_content());
     mPopupView.setMainText(mPopupRequest->getMainText());
     mPopupView.setSecondaryText(mPopupRequest->getSecondaryText());
+    mPopupView.setType(mPopupRequest->getPopupType());
+    if (mPopupView.getType() == Type::NoConfirmation && mPopupRequest->isAutoClosing())
+    {
+        mPopupView.setAutoClosingTimeout(popupRequest.getAutoClosingTimeout());
+    }
+    mPopupView.setVisible(true);
     lv_obj_set_parent(mPopupView.get_screen_content(), lv_layer_top());
+}
+
+void Screen::restoreParent()
+{
+    if (mActiveView != nullptr)
+    {
+        if (mOldScreenContentParent != nullptr)
+        {
+            lv_obj_set_parent(mActiveView->get_screen_content(), mOldScreenContentParent);
+        }
+        mActiveView->setVisible(false);
+
+        try
+        {
+            mActiveView->requestPopup.disconnect(mPopupRequestConnectionHandle);
+        }
+        catch (const std::out_of_range &e)
+        {
+        }
+    }
+}
+
+void Screen::setVisible(const bool visible) noexcept
+{
+    mVisible = true;
+    if (!mVisible)
+    {
+        restoreParent();
+    }
 }

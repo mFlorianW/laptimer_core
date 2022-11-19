@@ -23,6 +23,10 @@ Common::Timestamp Laptimer::getLastLaptime() const
 
 Common::Timestamp Laptimer::getLastSectorTime() const
 {
+    if (sectorTimes.empty())
+    {
+        return Common::Timestamp{};
+    }
     return sectorTimes.back();
 }
 

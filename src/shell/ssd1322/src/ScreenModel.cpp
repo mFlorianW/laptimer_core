@@ -40,6 +40,7 @@ ScreenModel::~ScreenModel() = default;
 
 void ScreenModel::activateMainScreen()
 {
+    mD->mMenuScreen.setVisible(false);
     auto &mainScreenView = mD->mMainScreenModel.getActiveView();
     mD->mMainScreen.setScreenContent(&mainScreenView);
     lv_scr_load(mD->mMainScreen.getScreen());
@@ -47,6 +48,7 @@ void ScreenModel::activateMainScreen()
 
 void ScreenModel::activateMenuScreen()
 {
+    mD->mMainScreen.setVisible(false);
     auto &menuView = mD->mMenuModel.getActiveView();
     mD->mMenuScreen.setScreenContent(&menuView);
     lv_scr_load(mD->mMenuScreen.getScreen());

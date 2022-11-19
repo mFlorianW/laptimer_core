@@ -87,7 +87,6 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
                 mCurrentPoints.clear();
             }
 
-            sectorFinished.emit();
             lapFinished.emit();
             lapStarted.emit();
         }

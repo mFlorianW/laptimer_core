@@ -12,7 +12,10 @@ ActiveSessionView::ActiveSessionView(ActiveSessionModel &model)
     mLaptimeContainer = lv_cont_create(mScreenContent, nullptr);
     lv_obj_set_size(mLaptimeContainer, 256, 28);
     lv_obj_add_style(mLaptimeContainer, LV_CONT_PART_MAIN, &mLaptimeContainerStyle);
-    lv_obj_set_x(mLaptimeContainer, (lv_obj_get_width(mScreenContent) / 2) - (lv_obj_get_width(mLaptimeContainer) / 2));
+
+    auto xcoord = static_cast<std::int16_t>(lv_obj_get_width(mScreenContent) / static_cast<std::uint16_t>(2) -
+                                            (lv_obj_get_width(mLaptimeContainer) / static_cast<std::uint16_t>(2)));
+    lv_obj_set_x(mLaptimeContainer, xcoord);
     lv_obj_set_y(mLaptimeContainer, 4);
     lv_cont_set_fit(mLaptimeContainer, LV_FIT_NONE);
     lv_cont_set_layout(mLaptimeContainer, LV_LAYOUT_CENTER);
@@ -49,9 +52,14 @@ ActiveSessionView::ActiveSessionView(ActiveSessionModel &model)
     lv_obj_align(mLapCountLabel, mScreenContent, LV_ALIGN_IN_BOTTOM_RIGHT, -38, 0);
     lv_label_set_text_fmt(mLapCountLabel, "Lap: %03d", 0);
 
+    mPopupRequest.setPopupType(Type::Confirmattion);
     mPopupRequest.setMainText("Use track?");
     mPopupRequest.confirmed.connect(&ActiveSessionView::onTrackDetectionPopupClosed, this);
     mActiveSessionModel.trackDetected.connect(&ActiveSessionView::onTrackDetected, this);
+
+    mLaptimePopupRequest.setPopupType(Type::NoConfirmation);
+    mLaptimePopupRequest.setAutoClosing(true);
+    mLaptimePopupRequest.setAutoClosingTimeout(std::chrono::seconds(5));
 
     mActiveSessionModel.currentLaptime.valueChanged().connect([=]() {
         auto timeStamp = mActiveSessionModel.currentLaptime.get();
@@ -73,6 +81,9 @@ ActiveSessionView::ActiveSessionView(ActiveSessionModel &model)
 
     mActiveSessionModel.lapCount.valueChanged().connect(
         [=]() { lv_label_set_text_fmt(mLapCountLabel, "Lap: %03d", mActiveSessionModel.lapCount.get()); });
+
+    mActiveSessionModel.lapFinished.connect(&ActiveSessionView::onLapFinished, this);
+    mActiveSessionModel.sectorFinished.connect(&ActiveSessionView::onSectorFinshed, this);
 }
 
 ActiveSessionView::~ActiveSessionView()
@@ -88,6 +99,20 @@ void ActiveSessionView::onTrackDetected()
 {
     mPopupRequest.setSecondaryText("<" + mActiveSessionModel.getDetectedTrack().getTrackName() + ">");
     requestPopup.emit(mPopupRequest);
+}
+
+void ActiveSessionView::onLapFinished()
+{
+    mLaptimePopupRequest.setMainText(mActiveSessionModel.getLastLapTime());
+    mLaptimePopupRequest.setSecondaryText("<LapFinished>");
+    requestPopup.emit(mLaptimePopupRequest);
+}
+
+void ActiveSessionView::onSectorFinshed()
+{
+    mLaptimePopupRequest.setMainText(mActiveSessionModel.getLastSector());
+    mLaptimePopupRequest.setSecondaryText("<Sector Finished>");
+    requestPopup.emit(mLaptimePopupRequest);
 }
 
 void ActiveSessionView::onTrackDetectionPopupClosed(PopupReturnType returnType)

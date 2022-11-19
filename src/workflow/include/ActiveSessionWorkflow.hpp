@@ -63,6 +63,8 @@ private:
     void onCurrentSectorTimeChanged();
 
 private:
+    void addSectorTime();
+
     Positioning::IPositionDateTimeProvider &mDateTimeProvider;
     Algorithm::ILaptimer &mLaptimer;
     Session::ISessionDatabase &mDatabase;

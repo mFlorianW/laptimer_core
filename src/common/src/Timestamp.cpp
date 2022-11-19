@@ -8,10 +8,10 @@ namespace LaptimerCore::Common
 class SharedTimestamp : public SharedData
 {
 public:
-    std::uint8_t hour;
-    std::uint8_t minute;
-    std::uint8_t second;
-    std::uint16_t fractionalOfSecond;
+    std::uint8_t hour{0};
+    std::uint8_t minute{0};
+    std::uint8_t second{0};
+    std::uint16_t fractionalOfSecond{0};
 
     friend bool operator==(const SharedTimestamp &lhs, const SharedTimestamp &rhs)
     {
