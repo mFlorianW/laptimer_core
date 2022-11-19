@@ -20,6 +20,12 @@ public:
 
     void setScreenContent(View *content);
 
+    /**
+     * Gives the visibility of the screen.
+     * @return True screen is shown to the user otherwise false.
+     */
+    bool isVisible() const noexcept;
+
 protected:
     Screen();
     static void handleLvglEvent(lv_obj_t *obj, lv_event_t event);
@@ -31,10 +37,19 @@ protected:
 private:
     void closePopup(PopupReturnType popupReturnType);
     void onPopupRequested(const PopupRequest &popupRequest);
+    void restoreParent();
+    /**
+     * Sets the visibility of screen.
+     * @param visible The new visibility of the screen.
+     */
+    void setVisible(const bool visible) noexcept;
 
 private:
-    lv_style_t m_screen_style;
+    friend class ScreenModel;
+    lv_style_t mScreenStyle{};
     lv_obj_t *mOldScreenContentParent{nullptr};
+
+    bool mVisible{false};
 
     // Popup View Handling
     bool mPopupActive{false};

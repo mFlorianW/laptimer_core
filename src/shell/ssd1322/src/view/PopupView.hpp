@@ -82,12 +82,12 @@ public:
 
 private:
     Type mType = Type::Confirmattion;
-    lv_style_t mLabelStyle;
-    lv_obj_t *mConfirmLabel;
-    lv_obj_t *mCancelLabel;
+    lv_style_t mLabelStyle{};
+    lv_obj_t *mConfirmLabel{nullptr};
+    lv_obj_t *mCancelLabel{nullptr};
 
-    lv_obj_t *mMainText;
-    lv_obj_t *mSecondaryText;
+    lv_obj_t *mMainText{nullptr};
+    lv_obj_t *mSecondaryText{nullptr};
     LaptimerCore::Common::Timer mAutoClosingTimer;
 };
 

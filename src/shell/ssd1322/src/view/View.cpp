@@ -75,3 +75,13 @@ void View::setCloseCommand(ICommand *command)
 {
     mEscapeCommand = command;
 }
+
+bool View::isVisible() const
+{
+    return mVisible;
+}
+
+void View::setVisible(bool visible) noexcept
+{
+    mVisible = visible;
+}

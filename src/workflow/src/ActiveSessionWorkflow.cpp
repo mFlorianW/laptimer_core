@@ -47,6 +47,13 @@ std::optional<Common::SessionData> ActiveSessionWorkflow::getSession() const noe
     return mSession;
 }
 
+void LaptimerCore::Workflow::ActiveSessionWorkflow::addSectorTime()
+{
+    const auto sectorTime = mLaptimer.getLastSectorTime();
+    lastSectorTime.set(sectorTime);
+    mCurrentLap.addSectorTime(sectorTime);
+}
+
 void ActiveSessionWorkflow::onLapFinished()
 {
     // Session not started immediately return.
@@ -55,7 +62,7 @@ void ActiveSessionWorkflow::onLapFinished()
         return;
     }
 
-    onSectorFinished();
+    addSectorTime();
 
     mSession->addLap(mCurrentLap);
     mDatabase.storeSession(mSession.value());
@@ -69,9 +76,7 @@ void ActiveSessionWorkflow::onLapFinished()
 
 void ActiveSessionWorkflow::onSectorFinished()
 {
-    const auto sectorTime = mLaptimer.getLastSectorTime();
-    lastSectorTime.set(sectorTime);
-    mCurrentLap.addSectorTime(sectorTime);
+    addSectorTime();
     sectorFinshed.emit();
 }
 

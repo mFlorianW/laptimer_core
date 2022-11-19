@@ -103,7 +103,6 @@ void ActiveSessionView::onTrackDetected()
 
 void ActiveSessionView::onLapFinished()
 {
-    std::cout << "Laptime:" << mActiveSessionModel.getLastLapTime() << std::endl;
     mLaptimePopupRequest.setMainText(mActiveSessionModel.getLastLapTime());
     mLaptimePopupRequest.setSecondaryText("<LapFinished>");
     requestPopup.emit(mLaptimePopupRequest);

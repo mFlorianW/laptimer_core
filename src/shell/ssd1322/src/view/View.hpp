@@ -71,9 +71,19 @@ public:
      */
     KDBindings::Signal<const PopupRequest &> requestPopup;
 
+    /**
+     * Gives visible state of the view.
+     * @return True means view is display to the user otherwise false.
+     */
+    bool isVisible() const;
+
 private:
+    void setVisible(bool visible) noexcept;
+
+    friend class Screen;
     lv_style_t mScreenContentStyle{};
     lv_obj_t *mBackScreen;
+    bool mVisible;
 
 protected:
     View();

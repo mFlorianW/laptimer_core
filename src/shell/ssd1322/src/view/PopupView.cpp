@@ -67,6 +67,10 @@ void PopupView::handleEscape()
         return;
     }
 
+    if (mAutoClosingTimer.isRunning())
+    {
+        mAutoClosingTimer.stop();
+    }
     mEscapeCommand->execute();
 }
 
