@@ -6,14 +6,13 @@ SRC_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/command
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/view
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/view/dummy
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/viewmodel
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/session/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/positioning/src
 PRIV_INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/command
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/view
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/view/dummy
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/viewmodel
 INCLUDE_DIRS
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/algorithm/include"
@@ -22,4 +21,7 @@ INCLUDE_DIRS
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/workflow/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/session/include"
+EXCLUDE_SRCS
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/session/src/FileSystemSessionDatabaseBackend.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/session/inc/FileSystemSessionDatabaseBackend.hpp
 )
