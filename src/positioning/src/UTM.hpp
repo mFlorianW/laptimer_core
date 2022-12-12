@@ -165,7 +165,7 @@ static inline void LLtoUTM(const double Lat, const double Long, double &UTMNorth
     LongOriginRad = LongOrigin * DEG_TO_RAD;
 
     // compute the UTM Zone from the latitude and longitude
-    sprintf(UTMZone, "%d%c", ZoneNumber, UTMLetterDesignator(Lat));
+    sprintf(UTMZone, "%hu%c", static_cast<unsigned short>(ZoneNumber), UTMLetterDesignator(Lat));
 
     eccPrimeSquared = (eccSquared) / (1 - eccSquared);
 
