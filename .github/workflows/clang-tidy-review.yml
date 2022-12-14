@@ -15,7 +15,7 @@ jobs:
       with:
         build_dir: build/github-ci-debug
         config_file: .clang-tidy
-        apt_packages: libsdl2-dev,qtbase5-dev,qtdeclarative5-dev,qtlocation5-dev,qtpositioning5-dev
+        apt_packages: libsdl2-dev,qtbase5-dev,qtdeclarative5-dev,qtlocation5-dev,qtpositioning5-dev,libsqlite3-dev
         cmake_command: cmake --preset github-ci-debug
     - if: steps.review.outputs.total_comments > 0
       run: exit 1

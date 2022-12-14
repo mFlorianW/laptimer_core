@@ -8,6 +8,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 include(FetchContent)
 include(FeatureSummary)
+include(CheckCCompilerFlag)
 
 option(ENABLE_TEST "Enable unit tests" OFF)
 option(ENABLE_CATCH2_FETCH "This option enables that catch2 is fetched in configuration" OFF)
@@ -83,8 +84,16 @@ if (ENABLE_LVGL_FETCH)
     find_package(SDL2 REQUIRED)
 endif(ENABLE_LVGL_FETCH)
 
+find_package(SQLite3 REQUIRED)
+
+check_c_compiler_flag(-Wall HAS_WALL)
+if(HAS_WALL)
+    set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -Wall")
+endif()
+
 add_subdirectory(src)
 add_subdirectory(testprograms)
+add_subdirectory(db)
 
 if(ENABLE_TEST)
     enable_testing()

@@ -110,7 +110,7 @@ bool operator==(const TrackData &lhs, const TrackData &rhs)
 
 bool operator!=(const TrackData &lhs, const TrackData &rhs)
 {
-    return !(lhs != rhs);
+    return !(lhs == rhs);
 }
 
 } // namespace LaptimerCore::Common
