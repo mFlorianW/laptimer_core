@@ -17,4 +17,5 @@ PRIVATE
 target_link_libraries(laptimer_ssd1322
 PRIVATE
     LaptimerCore::Ssd1322Shell
+    LaptimerCore::LibraryPath
 )

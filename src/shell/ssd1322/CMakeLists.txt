@@ -104,4 +104,5 @@ TARGET_LINK_LIBRARIES(ssd1322Sehll
     LaptimerCore::Algorithm
     LaptimerCore::Session
     LaptimerCore::Workflow
+    LaptimerCore::TrackManagement
 )

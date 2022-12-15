@@ -5,24 +5,14 @@
 using namespace LaptimerCore::Common;
 
 ActiveSessionModel::ActiveSessionModel(LaptimerCore::Workflow::ITrackDetectionWorkflow &trackDetector,
-                                       LaptimerCore::Workflow::IActiveSessionWorkflow &activeWorkSessionFlow)
+                                       LaptimerCore::Workflow::IActiveSessionWorkflow &activeWorkSessionFlow,
+                                       LaptimerCore::TrackManagement::ITrackDatabase &trackDatabase)
     : mTrackDetector{trackDetector}
     , mActiveSessionWorkFlow{activeWorkSessionFlow}
+    , mTrackDatabase{trackDatabase}
 {
-    TrackData zuhauseTrack;
-    zuhauseTrack.setTrackName("Flo Zuhause");
-    PositionData finishline;
-    finishline.setLatitude(52.25575);
-    finishline.setLongitude(8.001452);
-    zuhauseTrack.setFinishline(finishline);
-
-    auto oschersleben = TrackData{};
-    oschersleben.setTrackName("Oschersleben");
-    oschersleben.setStartline(PositionData{52.0270889, 11.2803483});
-    oschersleben.setFinishline(PositionData{52.0270889, 11.2803483});
-    oschersleben.setSections({PositionData{52.0298205, 11.2741851}, PositionData{52.0299681, 11.2772076}});
-
-    mTrackDetector.setTracks({zuhauseTrack, oschersleben});
+    const auto tracks = mTrackDatabase.getTracks();
+    mTrackDetector.setTracks({tracks});
     mTrackDetector.startDetection();
 
     mTrackDetector.trackDetected.connect([this] {

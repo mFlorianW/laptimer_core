@@ -10,10 +10,11 @@ struct ScreenModelPrivate
     explicit ScreenModelPrivate(ScreenModel &screenModel,
                                 LaptimerCore::Positioning::IGpsInformationProvider &gpsInfoProvider,
                                 LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider,
-                                LaptimerCore::Session::ISessionDatabase &sessionDatabase)
+                                LaptimerCore::Session::ISessionDatabase &sessionDatabase,
+                                LaptimerCore::TrackManagement::ITrackDatabase &trackDatabase)
         : mMainScreen{gpsInfoProvider}
         , mMenuModel{screenModel, sessionDatabase}
-        , mMainScreenModel{screenModel, posDateTimeProvider, sessionDatabase}
+        , mMainScreenModel{screenModel, posDateTimeProvider, sessionDatabase, trackDatabase}
     {
     }
 
@@ -28,8 +29,13 @@ struct ScreenModelPrivate
 
 ScreenModel::ScreenModel(LaptimerCore::Positioning::IGpsInformationProvider &gpsInfoProvider,
                          LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider,
-                         LaptimerCore::Session::ISessionDatabase &sessionDatabase)
-    : mD{std::make_unique<ScreenModelPrivate>(*this, gpsInfoProvider, posDateTimeProvider, sessionDatabase)}
+                         LaptimerCore::Session::ISessionDatabase &sessionDatabase,
+                         LaptimerCore::TrackManagement::ITrackDatabase &trackDatabase)
+    : mD{std::make_unique<ScreenModelPrivate>(*this,
+                                              gpsInfoProvider,
+                                              posDateTimeProvider,
+                                              sessionDatabase,
+                                              trackDatabase)}
 {
     // Connect to menu model view changed
     mD->mMenuModel.viewChanged.connect(&ScreenModel::activateMenuScreen, this);
