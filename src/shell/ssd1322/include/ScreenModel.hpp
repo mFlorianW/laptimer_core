@@ -3,6 +3,7 @@
 
 #include "IPositionDateTimeProvider.hpp"
 #include <IGPSInformationProvider.hpp>
+#include <ITrackDatabase.hpp>
 #include <SessionDatabase.hpp>
 #include <memory>
 
@@ -20,7 +21,8 @@ public:
      */
     ScreenModel(LaptimerCore::Positioning::IGpsInformationProvider &gpsInfoProvider,
                 LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider,
-                LaptimerCore::Session::ISessionDatabase &sessionDatabase);
+                LaptimerCore::Session::ISessionDatabase &sessionDatabase,
+                LaptimerCore::TrackManagement::ITrackDatabase &trackDatabase);
 
     virtual ~ScreenModel();
 

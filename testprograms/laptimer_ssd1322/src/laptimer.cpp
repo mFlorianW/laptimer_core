@@ -1,9 +1,11 @@
 #include "Controls.hpp"
 #include <ConstantVelocityPositionDateTimeProvider.hpp>
 #include <FileSystemSessionDatabaseBackend.hpp>
+#include <LibraryPath.hpp>
 #include <SDL2/SDL.h>
 #include <ScreenModel.hpp>
 #include <SessionDatabase.hpp>
+#include <SqliteTrackDatabase.hpp>
 #include <StaticGpsInformationProvider.hpp>
 #include <StaticPositionDateTimeProvider.hpp>
 #include <filesystem>
@@ -125,7 +127,8 @@ int main(int argc, char *argv[])
     auto posDateTimeProvider = LaptimerCore::Positioning::ConstantVelocityPositionDateTimeProvider{positions};
     auto sessionDatabaseBackend = LaptimerCore::Session::FileSystemSessionDatabaseBackend{databaseFolder};
     auto sessionDatabase = LaptimerCore::Session::SessionDatabase{sessionDatabaseBackend};
-    auto screenModel = ScreenModel{gpsInfoProvider, posDateTimeProvider, sessionDatabase};
+    auto trackDatabase = LaptimerCore::TrackManagement::SqliteTrackDatabase{LIBRARY_FILE};
+    auto screenModel = ScreenModel{gpsInfoProvider, posDateTimeProvider, sessionDatabase, trackDatabase};
     screenModel.activateMainScreen();
     posDateTimeProvider.setVelocityInMeterPerSecond(80.6667);
     posDateTimeProvider.start();

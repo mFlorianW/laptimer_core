@@ -1,0 +1,6 @@
+#ifndef LIBRARYPATH_HPP
+#define LIBRARYPATH_HPP
+
+constexpr auto LIBRARY_FILE = "@LIBRARY_FILE@";
+
+#endif // LIBRARYPATH_HPP

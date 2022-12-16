@@ -1,7 +1,6 @@
 #ifndef __TRACKS__H__
 #define __TRACKS__H__
 
-#include "PositionData.hpp"
 #include "TrackData.hpp"
 
 namespace LaptimerCore::Test::Dummy

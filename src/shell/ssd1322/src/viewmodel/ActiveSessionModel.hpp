@@ -2,6 +2,7 @@
 #define ACTIVESESSIONMODEL_HPP
 
 #include <IActiveSessionWorkflow.hpp>
+#include <ITrackDatabase.hpp>
 #include <ITrackDetectionWorkflow.hpp>
 #include <kdbindings/property.h>
 
@@ -9,7 +10,8 @@ class ActiveSessionModel
 {
 public:
     ActiveSessionModel(LaptimerCore::Workflow::ITrackDetectionWorkflow &trackDetector,
-                       LaptimerCore::Workflow::IActiveSessionWorkflow &activeWorkSessionFlow);
+                       LaptimerCore::Workflow::IActiveSessionWorkflow &activeWorkSessionFlow,
+                       LaptimerCore::TrackManagement::ITrackDatabase &trackDatabase);
 
     /**
      * Gives the last completed lap time. If none is present 00:00:00.000 as string is returned
@@ -69,6 +71,7 @@ public:
 private:
     LaptimerCore::Workflow::ITrackDetectionWorkflow &mTrackDetector;
     LaptimerCore::Workflow::IActiveSessionWorkflow &mActiveSessionWorkFlow;
+    LaptimerCore::TrackManagement::ITrackDatabase &mTrackDatabase;
     LaptimerCore::Common::TrackData mTrackData;
 };
 
