@@ -61,7 +61,7 @@ private:
         char zone[3] = {0};
     };
 
-    float mSpeed;
+    float mSpeed{0};
     Common::Timer mTickTimer;
     std::vector<Point> mTrackData;
     std::vector<Point>::const_iterator mTrackDataIt;
