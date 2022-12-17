@@ -39,3 +39,11 @@ INSERT INTO Sektor (TrackId, PositionId, SektorIndex)
 INSERT INTO Sektor (TrackId, PositionId, SektorIndex)
     VALUES
     ((SELECT TrackId FROM Track WHERE NAME = 'Oschersleben'), (SELECT PositionId FROM Position WHERE Latitude = 52.955628 AND Longitude = 6.512773), 2);
+
+-- INSERT FloZuHause
+INSERT INTO Position (Latitude, Longitude) VALUES
+    (52.25575, 8.001452); -- Finishline
+
+-- INSERT INTO TRACKS (Longitude, Latitude)
+INSERT INTO Track (Name, Finishline) VALUES
+    ('Flo Zuhause', (SELECT PositionId FROM Position WHERE Latitude = 52.25575 AND Longitude = 8.001452));
