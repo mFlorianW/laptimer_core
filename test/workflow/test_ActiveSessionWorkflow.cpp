@@ -8,7 +8,7 @@
 #include <catch2/catch.hpp>
 
 using namespace LaptimerCore::Workflow;
-using namespace LaptimerCore::Test::Dummy;
+using namespace LaptimerCore::TestHelper;
 using namespace LaptimerCore::Session;
 using namespace LaptimerCore::Common;
 

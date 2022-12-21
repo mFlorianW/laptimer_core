@@ -4,7 +4,7 @@
 
 using namespace LaptimerCore::Common;
 
-namespace LaptimerCore::Test::Dummy
+namespace LaptimerCore::TestHelper
 {
 namespace
 {
@@ -53,4 +53,4 @@ TrackData Tracks::getOscherslebenTrack()
     return createOscherslebenTrack();
 }
 
-} // namespace LaptimerCore::Test::Dummy
+} // namespace LaptimerCore::TestHelper

@@ -5,7 +5,7 @@
 
 using namespace LaptimerCore::Algorithm;
 using namespace LaptimerCore::Common;
-using namespace LaptimerCore::Test::Dummy;
+using namespace LaptimerCore::TestHelper;
 
 TEST_CASE("The laptimer shall emit lapStarted Signal when crossing the start line for the first time. Case1")
 {

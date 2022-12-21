@@ -3,7 +3,7 @@
 
 #include "SessionData.hpp"
 
-namespace LaptimerCore::Test::Dummy
+namespace LaptimerCore::TestHelper
 {
 
 class Sessions
@@ -55,6 +55,6 @@ public:
     // clang-format on
 };
 
-} // namespace LaptimerCore::Test::Dummy
+} // namespace LaptimerCore::TestHelper
 
 #endif // SESSION_HPP

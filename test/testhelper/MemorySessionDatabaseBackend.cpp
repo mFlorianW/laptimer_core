@@ -1,6 +1,6 @@
 #include "MemorySessionDatabaseBackend.hpp"
 
-namespace LaptimerCore::Test::Dummy
+namespace LaptimerCore::TestHelper
 {
 
 MemorySessionDatabaseBackend::MemorySessionDatabaseBackend()
@@ -61,4 +61,4 @@ bool MemorySessionDatabaseBackend::deleteSession(std::size_t index)
     return false;
 }
 
-} // namespace LaptimerCore::Test::Dummy
+} // namespace LaptimerCore::TestHelper

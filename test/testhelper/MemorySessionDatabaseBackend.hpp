@@ -4,7 +4,7 @@
 #include "ISessionDatabaseBackend.hpp"
 #include <unordered_map>
 
-namespace LaptimerCore::Test::Dummy
+namespace LaptimerCore::TestHelper
 {
 
 class MemorySessionDatabaseBackend : public LaptimerCore::Session::ISessionDatabaseBackend
@@ -24,6 +24,6 @@ private:
     std::pair<std::unordered_map<std::size_t, std::string>::const_iterator, bool> mLastStoredSession;
 };
 
-} // namespace LaptimerCore::Test::Dummy
+} // namespace LaptimerCore::TestHelper
 
 #endif // MEMORYSESSIONDATABASE_HPP

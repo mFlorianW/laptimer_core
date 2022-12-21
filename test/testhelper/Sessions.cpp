@@ -3,7 +3,7 @@
 
 using namespace LaptimerCore::Common;
 
-namespace LaptimerCore::Test::Dummy
+namespace LaptimerCore::TestHelper
 {
 
 SessionData createSession()
@@ -95,4 +95,4 @@ SessionData Sessions::getTestSession3()
     return createSession3();
 }
 
-} // namespace LaptimerCore::Test::Dummy
+} // namespace LaptimerCore::TestHelper

@@ -5,8 +5,8 @@
 #include <catch2/catch.hpp>
 
 using namespace LaptimerCore::Session;
-using namespace LaptimerCore::Test::Dummy;
-using namespace LaptimerCore::Test::Dummy::SqliteDatabaseTestHelper;
+using namespace LaptimerCore::TestHelper;
+using namespace LaptimerCore::TestHelper::SqliteDatabaseTestHelper;
 
 namespace
 {
