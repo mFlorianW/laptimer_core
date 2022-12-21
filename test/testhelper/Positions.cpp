@@ -2,7 +2,7 @@
 
 using namespace LaptimerCore::Common;
 
-namespace LaptimerCore::Test::Dummy
+namespace LaptimerCore::TestHelper
 {
 
 const PositionData Positions::OscherslebenPositionCamp{52.0258333, 11.279166666};
@@ -30,4 +30,4 @@ PositionData Positions::getOscherslebenPositionCamp()
     return Common::PositionData{52.0258333, 11.279166666};
 }
 
-} // namespace LaptimerCore::Test::Dummy
+} // namespace LaptimerCore::TestHelper

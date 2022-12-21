@@ -10,7 +10,7 @@ VERBATIM)
 add_custom_target(test_trackmangement_db ALL DEPENDS test_trackmanagement.db)
 
 add_executable(test_SqliteTrackDatabase test_SqliteTrackDatabase.cpp)
-target_link_libraries(test_SqliteTrackDatabase PRIVATE Catch2::Catch2 LaptimerCore::TrackManagement LaptimerCore::TestDummy)
+target_link_libraries(test_SqliteTrackDatabase PRIVATE Catch2::Catch2 LaptimerCore::TrackManagement LaptimerCore::TestHelper)
 add_dependencies(test_SqliteTrackDatabase test_trackmangement_db)
 
 catch_discover_tests(test_SqliteTrackDatabase)

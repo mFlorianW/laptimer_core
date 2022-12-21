@@ -1,7 +1,7 @@
-add_library(TestDummy OBJECT)
-add_library(LaptimerCore::TestDummy ALIAS TestDummy)
+add_library(TestHelper OBJECT)
+add_library(LaptimerCore::TestHelper ALIAS TestHelper)
 
-target_sources(TestDummy
+target_sources(TestHelper
 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Tracks.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Positions.cpp
@@ -19,13 +19,13 @@ PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/SqliteDatabaseTestHelper.hpp
 )
 
-target_include_directories(TestDummy
+target_include_directories(TestHelper
 PUBLIC
     $<INSTALL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
 
-target_link_libraries(TestDummy
+target_link_libraries(TestHelper
 PRIVATE
     LaptimerCore::CommonObject
     LaptimerCore::Positioning

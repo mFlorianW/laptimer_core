@@ -6,7 +6,7 @@
 
 using namespace LaptimerCore::Session;
 using namespace LaptimerCore::Common;
-using namespace LaptimerCore::Test::Dummy;
+using namespace LaptimerCore::TestHelper;
 
 TEST_CASE("The SessionDatabase shall serialize the SessionData to JSON, store them and emit the signal new session is "
           "stored.")

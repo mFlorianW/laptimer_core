@@ -4,7 +4,7 @@
 #include <catch2/catch.hpp>
 
 using namespace LaptimerCore::TrackManagement;
-using namespace LaptimerCore::Test::Dummy::SqliteDatabaseTestHelper;
+using namespace LaptimerCore::TestHelper::SqliteDatabaseTestHelper;
 namespace
 {
 

@@ -4,7 +4,7 @@
 #include <catch2/catch.hpp>
 
 using namespace LaptimerCore::Common;
-using namespace LaptimerCore::Test::Dummy;
+using namespace LaptimerCore::TestHelper;
 
 TEST_CASE("The JsonDeserializer shall deserialize a valid json string into a SessionData")
 {

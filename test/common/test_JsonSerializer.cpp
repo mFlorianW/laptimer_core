@@ -6,7 +6,7 @@
 #include <catch2/catch.hpp>
 
 using namespace LaptimerCore::Common;
-using namespace LaptimerCore::Test::Dummy;
+using namespace LaptimerCore::TestHelper;
 
 TEST_CASE("JSONSerializer shall serialize PositionData to JSON.")
 {

@@ -8,7 +8,7 @@
 
 using namespace LaptimerCore::Workflow;
 using namespace LaptimerCore::Algorithm;
-using namespace LaptimerCore::Test::Dummy;
+using namespace LaptimerCore::TestHelper;
 
 TEST_CASE("TrackDetectionWorkflow shall emit 'trackDetected' when successful detected a track.")
 {

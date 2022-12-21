@@ -3,13 +3,13 @@
 
 #include "IPositionDateTimeProvider.hpp"
 
-namespace LaptimerCore::Test::Dummy
+namespace LaptimerCore::TestHelper
 {
 
 class PositionDateTimeProvider : public LaptimerCore::Positioning::IPositionDateTimeProvider
 {
 };
 
-} // namespace LaptimerCore::Test::Dummy
+} // namespace LaptimerCore::TestHelper
 
 #endif // POSITIONDATETIMEPROVIDER_HPP

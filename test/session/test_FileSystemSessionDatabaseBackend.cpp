@@ -6,7 +6,7 @@
 #include <unistd.h>
 
 using namespace LaptimerCore::Session;
-using namespace LaptimerCore::Test::Dummy;
+using namespace LaptimerCore::TestHelper;
 
 namespace
 {

@@ -3,7 +3,7 @@
 
 #include "PositionData.hpp"
 
-namespace LaptimerCore::Test::Dummy
+namespace LaptimerCore::TestHelper
 {
 
 class Positions
@@ -32,6 +32,6 @@ public:
     const static Common::PositionData OscherslebenSector2Point4;
 };
 
-} // namespace LaptimerCore::Test::Dummy
+} // namespace LaptimerCore::TestHelper
 
 #endif //!__POSITIONS__H__

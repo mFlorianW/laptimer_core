@@ -3,7 +3,7 @@
 
 #include "TrackData.hpp"
 
-namespace LaptimerCore::Test::Dummy
+namespace LaptimerCore::TestHelper
 {
 
 class Tracks
@@ -18,6 +18,6 @@ public:
     const static Common::TrackData OscherslebenTrack2;
 };
 
-} // namespace LaptimerCore::Test::Dummy
+} // namespace LaptimerCore::TestHelper
 
 #endif //!__TRACKS__H__
