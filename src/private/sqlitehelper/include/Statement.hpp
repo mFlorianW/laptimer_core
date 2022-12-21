@@ -35,6 +35,15 @@ enum class HasColumnValueResult
     Null
 };
 
+enum class ColumnType
+{
+    Integer = 1,
+    Float = 2,
+    Text = 3,
+    Blob = 4,
+    Null = 5
+};
+
 /**
  * A SQLite prepare statement
  */
@@ -46,7 +55,7 @@ public:
      * @param connection The db connection that shall be used to communicate with database. The connection must live as
      * long as the statment class.
      */
-    Statement(Connection &dbConnection);
+    Statement(const Connection &dbConnection);
 
     /**
      * Default destructor finialize the statement if necessary.
@@ -107,11 +116,27 @@ public:
     BindResult bindIntValue(std::size_t index, std::int32_t value) noexcept;
 
     /**
+     * Binds a string value to the statement under the given index.
+     * @param index The index that shall be bind.
+     * @param string The string value that shall be replaced in the statement.
+     * @return "Ok" Value is succesful binded.
+     * @return "InvalidIndex" The index of the value is not valid.
+     * @return "Error" for any other error. Check the error message of the connection.
+     */
+    BindResult bindStringValue(std::size_t index, const std::string &value);
+
+    /**
      * Gives the number of columns of the result. The value is zero when the statement doesn't select anything from the
      * database, e.g. UPDATE. The column count is zero when the statement isn't prepared and not succesful executed.
      * @return The number of columns in the result.
      */
     std::size_t getColumnCount() const noexcept;
+
+    /**
+     * Gives the type for the specific column type. Is the index out of range the ColumnTpye::Null is returned.
+     * @return The column type.
+     */
+    ColumnType getColumnType(std::size_t index) const noexcept;
 
     /**
      * Checks if the column has a value.
@@ -143,7 +168,7 @@ public:
 
 private:
     sqlite3_stmt *mStatement{nullptr};
-    Connection &mDbConnection;
+    const Connection &mDbConnection;
 };
 
 } // namespace LaptimerCore::Private::SqliteHelper

@@ -52,7 +52,8 @@ CREATE TABLE SektorTime
 (
   SektorTimeId INTEGER NOT NULL UNIQUE,
   LapId        INTEGER NOT NULL,
-  time         TEXT    NOT NULL,
+  SektorIndex  INTEGER NOT NULL,
+  Time         TEXT    NOT NULL,
   PRIMARY KEY (SektorTimeId AUTOINCREMENT),
   FOREIGN KEY (LapId) REFERENCES Lap (LapId)
 );

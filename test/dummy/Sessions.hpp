@@ -9,8 +9,11 @@ namespace LaptimerCore::Test::Dummy
 class Sessions
 {
 public:
-    static Common::SessionData TestSession;
-    static Common::SessionData TestSession2;
+    const static Common::SessionData TestSession;
+    const static Common::SessionData TestSession2;
+    const static Common::SessionData TestSession3;
+
+    static Common::SessionData getTestSession3();
 
     // clang-format off
     static constexpr char TestSessionAsJson[] =

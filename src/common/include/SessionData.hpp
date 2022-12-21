@@ -88,7 +88,7 @@ public:
      * @param index The index of the lap.
      * @return Gives the lap for the given index or a nullopt if the index is not valid.
      */
-    std::optional<LapData> getLap(std::size_t index);
+    std::optional<LapData> getLap(std::size_t index) const noexcept;
 
     /**
      * Gives all laps of the session.

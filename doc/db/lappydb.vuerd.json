@@ -3,9 +3,9 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -509,
-    "scrollLeft": 0,
-    "zoomLevel": 0.9,
+    "scrollTop": -650,
+    "scrollLeft": -183,
+    "zoomLevel": 0.8,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -564,7 +564,30 @@
             "id": "bb55646d-89f3-4f2d-9135-2a98ea569378"
           },
           {
-            "name": "time",
+            "name": "SektorIndex",
+            "comment": "",
+            "dataType": "INTEGER",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 75,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "6c3c9ecd-782c-4677-af4d-e86e44d7f467"
+          },
+          {
+            "name": "Time",
             "comment": "",
             "dataType": "TEXT",
             "default": "",
@@ -591,7 +614,7 @@
           "active": false,
           "left": 523.75,
           "top": 1287,
-          "zIndex": 3,
+          "zIndex": 36,
           "widthName": 70,
           "widthComment": 60
         },
@@ -706,18 +729,18 @@
           "columnIds": [
             "98ade16c-fb7e-4073-908d-57a44206f6f5"
           ],
-          "x": 350.4201,
-          "y": 1130.6046000000001,
-          "direction": "bottom"
+          "x": 547.4201,
+          "y": 1065.3546000000001,
+          "direction": "right"
         },
         "end": {
           "tableId": "338fbfb0-31ee-49de-bea7-f126a92336fc",
           "columnIds": [
             "bb55646d-89f3-4f2d-9135-2a98ea569378"
           ],
-          "x": 523.75,
-          "y": 1352.25,
-          "direction": "left"
+          "x": 731.75,
+          "y": 1287,
+          "direction": "top"
         },
         "constraintName": "fk_lap_to_sektortime",
         "visible": true,

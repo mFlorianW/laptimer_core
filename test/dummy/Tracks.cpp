@@ -6,19 +6,51 @@ using namespace LaptimerCore::Common;
 
 namespace LaptimerCore::Test::Dummy
 {
-TrackData Tracks::TrackWithoutSector{};
-TrackData Tracks::OscherslebenTrack{};
+namespace
+{
+Common::TrackData createTrackWithoutSector()
+{
+    auto trackWithoutSector = TrackData{};
+    trackWithoutSector.setTrackName("TrackWithoutSector");
+    trackWithoutSector.setStartline(Positions::getOscherslebenPositionCamp());
+    trackWithoutSector.setFinishline(Positions::getOscherslebenPositionCamp());
+
+    return trackWithoutSector;
+}
+
+Common::TrackData createOscherslebenTrack()
+{
+    auto oschersleben = TrackData{};
+    oschersleben.setTrackName("Oschersleben");
+    oschersleben.setStartline(Positions::getOscherslebenPositionCamp());
+    oschersleben.setFinishline(Positions::getOscherslebenPositionCamp());
+    oschersleben.setSections({Positions::getOscherslebenPositionCamp(), Positions::getOscherslebenPositionCamp()});
+
+    return oschersleben;
+}
+
+Common::TrackData createOscherslebenTrack2()
+{
+    auto oschersleben = TrackData{};
+    oschersleben.setTrackName("Oschersleben");
+    oschersleben.setStartline(Positions::getOscherslebenPositionCamp());
+    oschersleben.setFinishline(Positions::getOscherslebenPositionCamp());
+    oschersleben.setSections({Positions::getOscherslebenPositionCamp(), Common::PositionData{52.258335, 11.279166666}});
+
+    return oschersleben;
+}
+} // namespace
+const TrackData Tracks::TrackWithoutSector{createTrackWithoutSector()};
+const TrackData Tracks::OscherslebenTrack{createOscherslebenTrack()};
+const TrackData Tracks::OscherslebenTrack2{createOscherslebenTrack2()};
 
 void Tracks::init()
 {
-    TrackWithoutSector.setTrackName("TrackWithoutSector");
-    TrackWithoutSector.setStartline(Positions::OscherslebenPositionCamp);
-    TrackWithoutSector.setFinishline(Positions::OscherslebenPositionCamp);
+}
 
-    OscherslebenTrack.setTrackName("Oschersleben");
-    OscherslebenTrack.setStartline(Positions::OscherslebenPositionCamp);
-    OscherslebenTrack.setFinishline(Positions::OscherslebenPositionCamp);
-    OscherslebenTrack.setSections({Positions::OscherslebenPositionCamp, Positions::OscherslebenPositionCamp});
+TrackData Tracks::getOscherslebenTrack()
+{
+    return createOscherslebenTrack();
 }
 
 } // namespace LaptimerCore::Test::Dummy
