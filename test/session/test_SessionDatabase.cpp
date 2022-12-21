@@ -19,12 +19,12 @@ TEST_CASE("The SessionDatabase shall serialize the SessionData to JSON, store th
         sessionStoredSpy = true;
         sessionStoredIndex = index;
     });
-    auto result = sessionDb.storeSession(Sessions::TestSession);
+    auto result = sessionDb.storeSession(Sessions::getTestSession());
 
     REQUIRE(result);
     REQUIRE(sessionStoredSpy);
     REQUIRE(sessionStoredIndex == 0);
-    REQUIRE(backend.loadSessionByIndex(0) == Sessions::TestSessionAsJson);
+    REQUIRE(backend.loadSessionByIndex(0) == Sessions::getTestSessionAsJson());
 }
 
 TEST_CASE("The SessionDatabase shall return the amount of the stored sessions")
@@ -32,7 +32,7 @@ TEST_CASE("The SessionDatabase shall return the amount of the stored sessions")
     auto backend = MemorySessionDatabaseBackend{};
     auto sessionDb = SessionDatabase{backend};
 
-    auto result = sessionDb.storeSession(Sessions::TestSession);
+    auto result = sessionDb.storeSession(Sessions::getTestSession());
 
     REQUIRE(result);
     REQUIRE(sessionDb.getSessionCount() == 1);
@@ -43,15 +43,15 @@ TEST_CASE("The SessionDatabase shall store two different sessions")
     auto backend = MemorySessionDatabaseBackend{};
     auto sessionDb = SessionDatabase{backend};
 
-    auto result1 = sessionDb.storeSession(Sessions::TestSession);
-    auto result2 = sessionDb.storeSession(Sessions::TestSession2);
+    auto result1 = sessionDb.storeSession(Sessions::getTestSession());
+    auto result2 = sessionDb.storeSession(Sessions::getTestSession2());
 
     REQUIRE(result1);
     REQUIRE(result2);
     REQUIRE(backend.getNumberOfStoredSessions() == 2);
     REQUIRE(sessionDb.getSessionCount() == 2);
-    REQUIRE(sessionDb.getSessionByIndex(0) == Sessions::TestSession);
-    REQUIRE(sessionDb.getSessionByIndex(1) == Sessions::TestSession2);
+    REQUIRE(sessionDb.getSessionByIndex(0) == Sessions::getTestSession());
+    REQUIRE(sessionDb.getSessionByIndex(1) == Sessions::getTestSession2());
 }
 
 TEST_CASE("The SessionDatabase shall be able to delete a single session and emit the signal session deleted.")
@@ -61,7 +61,7 @@ TEST_CASE("The SessionDatabase shall be able to delete a single session and emit
     auto sessionDeletedSpy = false;
     auto sessionDeletedIndex = 99;
 
-    auto result = sessionDb.storeSession(Sessions::TestSession);
+    auto result = sessionDb.storeSession(Sessions::getTestSession());
     sessionDb.sessionDeleted.connect([&](std::size_t index) {
         sessionDeletedSpy = true;
         sessionDeletedIndex = index;
@@ -80,12 +80,12 @@ TEST_CASE("The SessionDatabase shall load the Session by the given valid index."
     auto backend = MemorySessionDatabaseBackend{};
     auto sessionDb = SessionDatabase{backend};
 
-    auto result = sessionDb.storeSession(Sessions::TestSession);
+    auto result = sessionDb.storeSession(Sessions::getTestSession());
     auto session = sessionDb.getSessionByIndex(0);
 
     REQUIRE(result);
     REQUIRE(session);
-    REQUIRE(session.value() == Sessions::TestSession);
+    REQUIRE(session.value() == Sessions::getTestSession());
 }
 
 TEST_CASE("The SessionDatabase shall store an already stored session under the same index. and shall emit the signal "
@@ -100,16 +100,16 @@ TEST_CASE("The SessionDatabase shall store an already stored session under the s
         sessionUpdatedIndex = index;
     });
 
-    auto result1 = sessionDb.storeSession(Sessions::TestSession);
-    auto result2 = sessionDb.storeSession(Sessions::TestSession2);
-    auto result3 = sessionDb.storeSession(Sessions::TestSession2);
+    auto result1 = sessionDb.storeSession(Sessions::getTestSession());
+    auto result2 = sessionDb.storeSession(Sessions::getTestSession2());
+    auto result3 = sessionDb.storeSession(Sessions::getTestSession2());
 
     REQUIRE(result1);
     REQUIRE(result2);
     REQUIRE(result3);
     REQUIRE(sessionDb.getSessionCount() == 2);
-    REQUIRE(sessionDb.getSessionByIndex(0) == Sessions::TestSession);
-    REQUIRE(sessionDb.getSessionByIndex(1) == Sessions::TestSession2);
+    REQUIRE(sessionDb.getSessionByIndex(0) == Sessions::getTestSession());
+    REQUIRE(sessionDb.getSessionByIndex(1) == Sessions::getTestSession2());
     REQUIRE(sessionUpdatedSpy);
     REQUIRE(sessionUpdatedIndex == 1);
 }

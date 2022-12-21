@@ -8,7 +8,7 @@ using namespace LaptimerCore::TestHelper;
 
 TEST_CASE("The JsonDeserializer shall deserialize a valid json string into a SessionData")
 {
-    auto expectedSession = Sessions::TestSession;
-    auto result = JsonDeserializer::deserializeSessionData(Sessions::TestSessionAsJson);
+    auto expectedSession = Sessions::getTestSession();
+    auto result = JsonDeserializer::deserializeSessionData(Sessions::getTestSessionAsJson());
     REQUIRE(result.value() == expectedSession);
 }

@@ -4,7 +4,7 @@
 
 using namespace LaptimerCore::Common;
 
-namespace LaptimerCore::TestHelper
+namespace LaptimerCore::TestHelper::Tracks
 {
 namespace
 {
@@ -39,18 +39,22 @@ Common::TrackData createOscherslebenTrack2()
 
     return oschersleben;
 }
+
 } // namespace
-const TrackData Tracks::TrackWithoutSector{createTrackWithoutSector()};
-const TrackData Tracks::OscherslebenTrack{createOscherslebenTrack()};
-const TrackData Tracks::OscherslebenTrack2{createOscherslebenTrack2()};
 
-void Tracks::init()
-{
-}
-
-TrackData Tracks::getOscherslebenTrack()
+TrackData getOscherslebenTrack()
 {
     return createOscherslebenTrack();
 }
 
-} // namespace LaptimerCore::TestHelper
+TrackData getOscherslebenTrack2()
+{
+    return createOscherslebenTrack2();
+}
+
+TrackData getTrackWithoutSector()
+{
+    return createTrackWithoutSector();
+}
+
+} // namespace LaptimerCore::TestHelper::Tracks

@@ -60,7 +60,7 @@ TEST_CASE("The FileSystemSessionDatabaseBackend shall store the first session un
     auto fsBackend = FileSystemSessionDatabaseBackend{dbFolder};
     auto expectedFilePath = std::filesystem::path{dbFolder + "/session1.json"};
 
-    REQUIRE(fsBackend.storeSession(1, Sessions::TestSessionAsJson));
+    REQUIRE(fsBackend.storeSession(1, Sessions::getTestSessionAsJson()));
     REQUIRE(std::filesystem::exists(expectedFilePath));
 }
 
@@ -72,7 +72,7 @@ TEST_CASE("The FileSystemSessionDatabaseBackend store shall fail when database f
 
     std::filesystem::remove_all(dbFolder);
 
-    REQUIRE(!fsBackend.storeSession(1, Sessions::TestSessionAsJson));
+    REQUIRE(!fsBackend.storeSession(1, Sessions::getTestSessionAsJson()));
 }
 
 TEST_CASE("The FileSystemSessionDatabaseBackend shall be able to load a session by it's index")
@@ -82,12 +82,12 @@ TEST_CASE("The FileSystemSessionDatabaseBackend shall be able to load a session 
 
     // create Session
     auto testSessionFile = std::ofstream{dbFolder + "/" + "session1.json"};
-    testSessionFile << Sessions::TestSessionAsJson;
+    testSessionFile << Sessions::getTestSessionAsJson();
     testSessionFile.close();
 
     auto loadedSession = fsBackend.loadSessionByIndex(1);
 
-    REQUIRE(loadedSession == Sessions::TestSessionAsJson);
+    REQUIRE(loadedSession == Sessions::getTestSessionAsJson());
 }
 
 TEST_CASE("The FileSystemSessionDatabaseBackend shall return the last stored index")
@@ -96,7 +96,7 @@ TEST_CASE("The FileSystemSessionDatabaseBackend shall return the last stored ind
     auto fsBackend = FileSystemSessionDatabaseBackend{dbFolder};
     auto expectedFilePath = std::filesystem::path{dbFolder + "/session1.json"};
 
-    REQUIRE(fsBackend.storeSession(1, Sessions::TestSessionAsJson));
+    REQUIRE(fsBackend.storeSession(1, Sessions::getTestSessionAsJson()));
     REQUIRE(fsBackend.getLastStoredIndex() == 1);
 }
 
@@ -108,11 +108,11 @@ TEST_CASE("The FileSystemSessionDatabaseBackend shall return a list of all store
 
     // create Session
     auto testSessionFile = std::ofstream{dbFolder + "/" + "session1.json"};
-    testSessionFile << Sessions::TestSessionAsJson;
+    testSessionFile << Sessions::getTestSessionAsJson();
     testSessionFile.close();
 
     auto testSessionFile2 = std::ofstream{dbFolder + "/" + "session5.json"};
-    testSessionFile << Sessions::TestSessionAsJson;
+    testSessionFile << Sessions::getTestSessionAsJson();
     testSessionFile.close();
 
     REQUIRE(fsBackend.getIndexList() == expectedIndexList);
@@ -126,15 +126,15 @@ TEST_CASE("The FileSystemSessionDatabaseBackend shall return the number of store
 
     // create Session
     auto testSessionFile = std::ofstream{dbFolder + "/" + "session1.json"};
-    testSessionFile << Sessions::TestSessionAsJson;
+    testSessionFile << Sessions::getTestSessionAsJson();
     testSessionFile.close();
 
     auto testSessionFile2 = std::ofstream{dbFolder + "/" + "session5.json"};
-    testSessionFile << Sessions::TestSessionAsJson;
+    testSessionFile << Sessions::getTestSessionAsJson();
     testSessionFile.close();
 
     auto testSessionFile3 = std::ofstream{dbFolder + "/" + "session10.json"};
-    testSessionFile << Sessions::TestSessionAsJson;
+    testSessionFile << Sessions::getTestSessionAsJson();
     testSessionFile.close();
 
     REQUIRE(fsBackend.getNumberOfStoredSessions() == 3);

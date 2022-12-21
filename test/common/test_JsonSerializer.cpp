@@ -14,7 +14,7 @@ TEST_CASE("JSONSerializer shall serialize PositionData to JSON.")
     ArduinoJson::StaticJsonDocument<1024> jsonDoc;
     auto jsonRoot = jsonDoc.to<JsonObject>();
 
-    JsonSerializer::serializePositionData(Positions::OscherslebenPositionCamp, jsonRoot);
+    JsonSerializer::serializePositionData(Positions::getOscherslebenPositionCamp(), jsonRoot);
     std::string result;
     ArduinoJson::serializeJson(jsonDoc, result);
 
@@ -37,11 +37,10 @@ TEST_CASE("JSONSerializer shall serialize the TrackData without sector to JSON")
     "}";
     // clang-format on
 
-    Tracks::init();
     ArduinoJson::StaticJsonDocument<1024> jsonDoc;
     auto jsonRoot = jsonDoc.to<JsonObject>();
 
-    JsonSerializer::serializeTrackData(Tracks::TrackWithoutSector, jsonRoot);
+    JsonSerializer::serializeTrackData(Tracks::getTrackWithoutSector(), jsonRoot);
     std::string result;
     ArduinoJson::serializeJson(jsonDoc, result);
 
@@ -73,11 +72,10 @@ TEST_CASE("JSONSerializer shall serialize the TrackData to JSON")
         "]"
     "}";
     // clang-format on
-    Tracks::init();
     ArduinoJson::StaticJsonDocument<1024> jsonDoc;
     auto jsonRoot = jsonDoc.to<JsonObject>();
 
-    JsonSerializer::serializeTrackData(Tracks::OscherslebenTrack, jsonRoot);
+    JsonSerializer::serializeTrackData(Tracks::getOscherslebenTrack(), jsonRoot);
     std::string result;
     ArduinoJson::serializeJson(jsonDoc, result);
 
@@ -120,7 +118,7 @@ TEST_CASE("JSONSerializer shall serialize the LapData to JSON")
 
 TEST_CASE("JSONSerializer shall serialize SessionData to JSON")
 {
-    auto session = Sessions::TestSession;
+    auto session = Sessions::getTestSession();
     ArduinoJson::StaticJsonDocument<8192> jsonDoc;
     auto jsonRoot = jsonDoc.to<JsonObject>();
 
@@ -128,5 +126,5 @@ TEST_CASE("JSONSerializer shall serialize SessionData to JSON")
     std::string result;
     ArduinoJson::serializeJson(jsonDoc, result);
 
-    REQUIRE(result == Sessions::TestSessionAsJson);
+    REQUIRE(result == Sessions::getTestSessionAsJson());
 }
