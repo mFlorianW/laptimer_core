@@ -1,15 +1,14 @@
 #include "Sessions.hpp"
 #include "Tracks.hpp"
+#include <array>
 
 using namespace LaptimerCore::Common;
 
-namespace LaptimerCore::TestHelper
+namespace LaptimerCore::TestHelper::Sessions
 {
 
 SessionData createSession()
 {
-    Tracks::init();
-
     Date sessionDate;
     sessionDate.setYear(1970);
     sessionDate.setMonth(1);
@@ -27,7 +26,7 @@ SessionData createSession()
     lap.addSectorTime(sectorTime);
     lap.addSectorTime(sectorTime);
 
-    auto session = SessionData{Tracks::OscherslebenTrack, sessionDate, sessionTime};
+    auto session = SessionData{Tracks::getOscherslebenTrack(), sessionDate, sessionTime};
     session.addLap(lap);
 
     return session;
@@ -35,8 +34,6 @@ SessionData createSession()
 
 SessionData createSession2()
 {
-    Tracks::init();
-
     Date sessionDate;
     sessionDate.setYear(1970);
     sessionDate.setMonth(2);
@@ -54,7 +51,7 @@ SessionData createSession2()
     lap.addSectorTime(sectorTime);
     lap.addSectorTime(sectorTime);
 
-    auto session = SessionData{Tracks::OscherslebenTrack, sessionDate, sessionTime};
+    auto session = SessionData{Tracks::getOscherslebenTrack(), sessionDate, sessionTime};
     session.addLap(lap);
 
     return session;
@@ -79,20 +76,70 @@ SessionData createSession3()
     lap.addSectorTime(sectorTime);
     lap.addSectorTime(sectorTime);
 
-    auto session = SessionData{Tracks::OscherslebenTrack2, sessionDate, sessionTime};
+    auto session = SessionData{Tracks::getOscherslebenTrack2(), sessionDate, sessionTime};
     session.addLap(lap);
     session.addLap(lap);
 
     return session;
 }
 
-const SessionData Sessions::TestSession{createSession()};
-const SessionData Sessions::TestSession2{createSession2()};
-const SessionData Sessions::TestSession3{createSession3()};
-
-SessionData Sessions::getTestSession3()
+SessionData getTestSession3()
 {
     return createSession3();
 }
 
-} // namespace LaptimerCore::TestHelper
+SessionData getTestSession()
+{
+    return createSession();
+}
+
+SessionData getTestSession2()
+{
+    return createSession2();
+}
+
+const char *getTestSessionAsJson()
+{
+    // clang-format off
+    static constexpr std::array<char, 392> TestSessionAsJson = {
+        "{"
+            "\"date\":\"01.01.1970\","
+            "\"time\":\"13:00:00.000\","
+            "\"track\":{"
+                "\"name\":\"Oschersleben\","
+                "\"startline\":{"
+                    "\"latitude\":\"52.025833\","
+                    "\"longitude\":\"11.279166\""
+                "},"
+            "\"finishline\":{"
+                    "\"latitude\":\"52.025833\","
+                    "\"longitude\":\"11.279166\""
+            "},"
+            "\"sectors\":["
+                "{"
+                    "\"latitude\":\"52.025833\","
+                    "\"longitude\":\"11.279166\""
+                "},"
+                "{"
+                    "\"latitude\":\"52.025833\","
+                    "\"longitude\":\"11.279166\""
+                "}"
+            "]"
+            "},"
+            "\"laps\":["
+                "{"
+                "\"sectors\":["
+                        "\"00:00:25.144\","
+                        "\"00:00:25.144\","
+                        "\"00:00:25.144\","
+                        "\"00:00:25.144\""
+                    "]"
+                "}"
+            "]"
+        "}"
+    };
+    // clang-format on
+    return &TestSessionAsJson[0];
+}
+
+} // namespace LaptimerCore::TestHelper::Sessions

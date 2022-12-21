@@ -13,15 +13,15 @@ TEST_CASE("The laptimer shall emit lapStarted Signal when crossing the start lin
     bool lapStartedEmitted = false;
 
     auto track = TrackData{};
-    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
+    track.setStartline(Positions::getOscherslebenPositionStartFinishLine());
 
     lapTimer.setTrack(track);
     lapTimer.lapStarted.connect([&lapStartedEmitted](void) { lapStartedEmitted = true; });
 
-    auto gpsPoint1 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, {}, {}};
-    auto gpsPoint2 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, {}, {}};
-    auto gpsPoint3 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, {}, {}};
-    auto gpsPoint4 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, {}, {}};
+    auto gpsPoint1 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), {}, {}};
+    auto gpsPoint2 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), {}, {}};
+    auto gpsPoint3 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), {}, {}};
+    auto gpsPoint4 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), {}, {}};
 
     lapTimer.setTrack(track);
     lapTimer.updatePositionAndTime(gpsPoint1);
@@ -38,15 +38,15 @@ TEST_CASE("The laptimer shall call the lap started callback when crossing the st
     bool lapStartedEmitted = false;
 
     auto track = TrackData{};
-    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
+    track.setStartline(Positions::getOscherslebenPositionStartFinishLine());
 
     lapTimer.setTrack(track);
     lapTimer.lapStarted.connect([&lapStartedEmitted](void) { lapStartedEmitted = true; });
 
-    auto gpsPoint1 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, {}, {}};
-    auto gpsPoint2 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, {}, {}};
-    auto gpsPoint3 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, {}, {}};
-    auto gpsPoint4 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, {}, {}};
+    auto gpsPoint1 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), {}, {}};
+    auto gpsPoint2 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), {}, {}};
+    auto gpsPoint3 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), {}, {}};
+    auto gpsPoint4 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), {}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint1);
     lapTimer.updatePositionAndTime(gpsPoint2);
@@ -63,18 +63,18 @@ TEST_CASE("The laptimer shall emit the lap finished signal and lap started signa
     bool lapFinishedEmitted = false;
 
     auto track = TrackData{};
-    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
-    track.setFinishline(Positions::OscherslebenPositionStartFinishLine);
+    track.setStartline(Positions::getOscherslebenPositionStartFinishLine());
+    track.setFinishline(Positions::getOscherslebenPositionStartFinishLine());
 
     lapTimer.setTrack(track);
     lapTimer.lapStarted.connect([&lapStartedEmitted](void) { lapStartedEmitted = true; });
     lapTimer.lapFinished.connect([&lapFinishedEmitted](void) { lapFinishedEmitted = true; });
 
     // Positions to start the lap
-    auto gpsPoint1 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, {}, {}};
-    auto gpsPoint2 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, {}, {}};
-    auto gpsPoint3 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, {}, {}};
-    auto gpsPoint4 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, {}, {}};
+    auto gpsPoint1 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), {}, {}};
+    auto gpsPoint2 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), {}, {}};
+    auto gpsPoint3 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), {}, {}};
+    auto gpsPoint4 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), {}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint1);
     lapTimer.updatePositionAndTime(gpsPoint2);
@@ -82,10 +82,10 @@ TEST_CASE("The laptimer shall emit the lap finished signal and lap started signa
     lapTimer.updatePositionAndTime(gpsPoint4);
 
     // Position to finish the lap
-    auto gpsPoint5 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, {}, {}};
-    auto gpsPoint6 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, {}, {}};
-    auto gpsPoint7 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, {}, {}};
-    auto gpsPoint8 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, {}, {}};
+    auto gpsPoint5 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), {}, {}};
+    auto gpsPoint6 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), {}, {}};
+    auto gpsPoint7 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), {}, {}};
+    auto gpsPoint8 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), {}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint5);
     lapTimer.updatePositionAndTime(gpsPoint6);
@@ -103,18 +103,18 @@ TEST_CASE("The laptimer shall call the sector finished signal when a sector is f
     bool sectorFinishedEmitted = false;
 
     auto track = TrackData{};
-    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
-    track.setSections({Positions::OscherslebenPositionSector1Line});
+    track.setStartline(Positions::getOscherslebenPositionStartFinishLine());
+    track.setSections({Positions::getOscherslebenPositionSector1Line()});
 
     lapTimer.setTrack(track);
     lapTimer.lapStarted.connect([&lapStartedEmitted](void) { lapStartedEmitted = true; });
     lapTimer.sectorFinished.connect([&sectorFinishedEmitted](void) { sectorFinishedEmitted = true; });
 
     // Positions to start the lap
-    auto gpsPoint1 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, {}, {}};
-    auto gpsPoint2 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, {}, {}};
-    auto gpsPoint3 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, {}, {}};
-    auto gpsPoint4 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, {}, {}};
+    auto gpsPoint1 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), {}, {}};
+    auto gpsPoint2 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), {}, {}};
+    auto gpsPoint3 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), {}, {}};
+    auto gpsPoint4 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), {}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint1);
     lapTimer.updatePositionAndTime(gpsPoint2);
@@ -124,10 +124,10 @@ TEST_CASE("The laptimer shall call the sector finished signal when a sector is f
     REQUIRE(lapStartedEmitted == true);
 
     // Positions to finsh a sector
-    auto gpsPoint5 = PositionDateTimeData{Positions::OscherslebenSector1Point1, {}, {}};
-    auto gpsPoint6 = PositionDateTimeData{Positions::OscherslebenSector1Point2, {}, {}};
-    auto gpsPoint7 = PositionDateTimeData{Positions::OscherslebenSector1Point3, {}, {}};
-    auto gpsPoint8 = PositionDateTimeData{Positions::OscherslebenSector1Point4, {}, {}};
+    auto gpsPoint5 = PositionDateTimeData{Positions::getOscherslebenSector1Point1(), {}, {}};
+    auto gpsPoint6 = PositionDateTimeData{Positions::getOscherslebenSector1Point2(), {}, {}};
+    auto gpsPoint7 = PositionDateTimeData{Positions::getOscherslebenSector1Point3(), {}, {}};
+    auto gpsPoint8 = PositionDateTimeData{Positions::getOscherslebenSector1Point4(), {}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint5);
     lapTimer.updatePositionAndTime(gpsPoint6);
@@ -145,9 +145,10 @@ TEST_CASE("The laptimer shall send all signals for a whole map.")
     bool lapFinishedEmitted = false;
 
     auto track = TrackData{};
-    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
-    track.setSections({Positions::OscherslebenPositionSector1Line, Positions::OscherslebenPositionSector2Line});
-    track.setFinishline(Positions::OscherslebenPositionStartFinishLine);
+    track.setStartline(Positions::getOscherslebenPositionStartFinishLine());
+    track.setSections(
+        {Positions::getOscherslebenPositionSector1Line(), Positions::getOscherslebenPositionSector2Line()});
+    track.setFinishline(Positions::getOscherslebenPositionStartFinishLine());
 
     lapTimer.setTrack(track);
     lapTimer.lapStarted.connect([&lapStartedEmitted](void) { lapStartedEmitted = true; });
@@ -155,10 +156,10 @@ TEST_CASE("The laptimer shall send all signals for a whole map.")
     lapTimer.lapFinished.connect([&lapFinishedEmitted](void) { lapFinishedEmitted = true; });
 
     // Positions to start the lap
-    auto gpsPoint1 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, {}, {}};
-    auto gpsPoint2 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, {}, {}};
-    auto gpsPoint3 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, {}, {}};
-    auto gpsPoint4 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, {}, {}};
+    auto gpsPoint1 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), {}, {}};
+    auto gpsPoint2 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), {}, {}};
+    auto gpsPoint3 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), {}, {}};
+    auto gpsPoint4 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), {}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint1);
     lapTimer.updatePositionAndTime(gpsPoint2);
@@ -168,10 +169,10 @@ TEST_CASE("The laptimer shall send all signals for a whole map.")
     REQUIRE(lapStartedEmitted == true);
 
     // Positions to finsh sector1
-    auto gpsPoint5 = PositionDateTimeData{Positions::OscherslebenSector1Point1, {}, {}};
-    auto gpsPoint6 = PositionDateTimeData{Positions::OscherslebenSector1Point2, {}, {}};
-    auto gpsPoint7 = PositionDateTimeData{Positions::OscherslebenSector1Point3, {}, {}};
-    auto gpsPoint8 = PositionDateTimeData{Positions::OscherslebenSector1Point4, {}, {}};
+    auto gpsPoint5 = PositionDateTimeData{Positions::getOscherslebenSector1Point1(), {}, {}};
+    auto gpsPoint6 = PositionDateTimeData{Positions::getOscherslebenSector1Point2(), {}, {}};
+    auto gpsPoint7 = PositionDateTimeData{Positions::getOscherslebenSector1Point3(), {}, {}};
+    auto gpsPoint8 = PositionDateTimeData{Positions::getOscherslebenSector1Point4(), {}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint5);
     lapTimer.updatePositionAndTime(gpsPoint6);
@@ -182,10 +183,10 @@ TEST_CASE("The laptimer shall send all signals for a whole map.")
 
     // Positions to finsh sector2
     sectorFinishedEmitted = false;
-    auto gpsPoint9 = PositionDateTimeData{Positions::OscherslebenSector2Point1, {}, {}};
-    auto gpsPoint10 = PositionDateTimeData{Positions::OscherslebenSector2Point2, {}, {}};
-    auto gpsPoint11 = PositionDateTimeData{Positions::OscherslebenSector2Point3, {}, {}};
-    auto gpsPoint12 = PositionDateTimeData{Positions::OscherslebenSector2Point4, {}, {}};
+    auto gpsPoint9 = PositionDateTimeData{Positions::getOscherslebenSector2Point1(), {}, {}};
+    auto gpsPoint10 = PositionDateTimeData{Positions::getOscherslebenSector2Point2(), {}, {}};
+    auto gpsPoint11 = PositionDateTimeData{Positions::getOscherslebenSector2Point3(), {}, {}};
+    auto gpsPoint12 = PositionDateTimeData{Positions::getOscherslebenSector2Point4(), {}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint9);
     lapTimer.updatePositionAndTime(gpsPoint10);
@@ -194,10 +195,10 @@ TEST_CASE("The laptimer shall send all signals for a whole map.")
 
     // Positions to start the lap
     lapStartedEmitted = false;
-    auto gpsPoint13 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, {}, {}};
-    auto gpsPoint14 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, {}, {}};
-    auto gpsPoint15 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, {}, {}};
-    auto gpsPoint16 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, {}, {}};
+    auto gpsPoint13 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), {}, {}};
+    auto gpsPoint14 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), {}, {}};
+    auto gpsPoint15 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), {}, {}};
+    auto gpsPoint16 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), {}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint13);
     lapTimer.updatePositionAndTime(gpsPoint14);
@@ -215,18 +216,18 @@ TEST_CASE("The laptimer shall update the lap time after lap is started unit lap 
     std::uint32_t lapTimeUpdateCounter = 0;
 
     auto track = TrackData{};
-    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
-    track.setFinishline(Positions::OscherslebenPositionStartFinishLine);
+    track.setStartline(Positions::getOscherslebenPositionStartFinishLine());
+    track.setFinishline(Positions::getOscherslebenPositionStartFinishLine());
 
     lapTimer.setTrack(track);
     lapTimer.currentLaptime.valueChanged().connect(
         [&lapTimeUpdateCounter](Timestamp newTimeStamp) { ++lapTimeUpdateCounter; });
 
     // Positions to start the lap
-    auto gpsPoint1 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, Timestamp{"15:05:10.234"}, {}};
-    auto gpsPoint2 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, Timestamp{"15:05:11.234"}, {}};
-    auto gpsPoint3 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, Timestamp{"15:05:12.234"}, {}};
-    auto gpsPoint4 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, Timestamp{"15:05:13.234"}, {}};
+    auto gpsPoint1 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), Timestamp{"15:05:10.234"}, {}};
+    auto gpsPoint2 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), Timestamp{"15:05:11.234"}, {}};
+    auto gpsPoint3 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), Timestamp{"15:05:12.234"}, {}};
+    auto gpsPoint4 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), Timestamp{"15:05:13.234"}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint1);
     lapTimer.updatePositionAndTime(gpsPoint2);
@@ -236,10 +237,10 @@ TEST_CASE("The laptimer shall update the lap time after lap is started unit lap 
     REQUIRE(lapTimer.currentLaptime.get() == Timestamp{"00:00:00.000"});
 
     // Positions to finish the lap
-    auto gpsPoint5 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, Timestamp{"15:06:10.234"}, {}};
-    auto gpsPoint6 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, Timestamp{"15:06:11.234"}, {}};
-    auto gpsPoint7 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, Timestamp{"15:06:12.234"}, {}};
-    auto gpsPoint8 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, Timestamp{"15:06:13.234"}, {}};
+    auto gpsPoint5 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), Timestamp{"15:06:10.234"}, {}};
+    auto gpsPoint6 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), Timestamp{"15:06:11.234"}, {}};
+    auto gpsPoint7 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), Timestamp{"15:06:12.234"}, {}};
+    auto gpsPoint8 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), Timestamp{"15:06:13.234"}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint5);
     lapTimer.updatePositionAndTime(gpsPoint6);
@@ -256,16 +257,16 @@ TEST_CASE("The laptimer shall give the last lap time when lap is started and fin
     SimpleLaptimer lapTimer;
 
     auto track = TrackData{};
-    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
-    track.setFinishline(Positions::OscherslebenPositionStartFinishLine);
+    track.setStartline(Positions::getOscherslebenPositionStartFinishLine());
+    track.setFinishline(Positions::getOscherslebenPositionStartFinishLine());
 
     lapTimer.setTrack(track);
 
     // Positions to start the lap
-    auto gpsPoint1 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, Timestamp{"15:05:10.234"}, {}};
-    auto gpsPoint2 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, Timestamp{"15:05:11.234"}, {}};
-    auto gpsPoint3 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, Timestamp{"15:05:12.234"}, {}};
-    auto gpsPoint4 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, Timestamp{"15:05:13.234"}, {}};
+    auto gpsPoint1 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), Timestamp{"15:05:10.234"}, {}};
+    auto gpsPoint2 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), Timestamp{"15:05:11.234"}, {}};
+    auto gpsPoint3 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), Timestamp{"15:05:12.234"}, {}};
+    auto gpsPoint4 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), Timestamp{"15:05:13.234"}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint1);
     lapTimer.updatePositionAndTime(gpsPoint2);
@@ -275,10 +276,10 @@ TEST_CASE("The laptimer shall give the last lap time when lap is started and fin
     REQUIRE(lapTimer.currentLaptime.get() == Timestamp{"00:00:00.000"});
 
     // Positions to finish the lap
-    auto gpsPoint5 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, Timestamp{"15:06:10.234"}, {}};
-    auto gpsPoint6 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, Timestamp{"15:06:11.234"}, {}};
-    auto gpsPoint7 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, Timestamp{"15:06:12.234"}, {}};
-    auto gpsPoint8 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, Timestamp{"15:06:13.234"}, {}};
+    auto gpsPoint5 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), Timestamp{"15:06:10.234"}, {}};
+    auto gpsPoint6 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), Timestamp{"15:06:11.234"}, {}};
+    auto gpsPoint7 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), Timestamp{"15:06:12.234"}, {}};
+    auto gpsPoint8 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), Timestamp{"15:06:13.234"}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint5);
     lapTimer.updatePositionAndTime(gpsPoint6);
@@ -293,17 +294,17 @@ TEST_CASE("The laptimer shall give the last lap time when lap is started and fin
     SimpleLaptimer lapTimer;
 
     auto track = TrackData{};
-    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
-    track.setSections({Positions::OscherslebenPositionSector1Line});
-    track.setFinishline(Positions::OscherslebenPositionStartFinishLine);
+    track.setStartline(Positions::getOscherslebenPositionStartFinishLine());
+    track.setSections({Positions::getOscherslebenPositionSector1Line()});
+    track.setFinishline(Positions::getOscherslebenPositionStartFinishLine());
 
     lapTimer.setTrack(track);
 
     // Positions to start the lap
-    auto gpsPoint1 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, Timestamp{"15:05:10.234"}, {}};
-    auto gpsPoint2 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, Timestamp{"15:05:11.234"}, {}};
-    auto gpsPoint3 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, Timestamp{"15:05:12.234"}, {}};
-    auto gpsPoint4 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, Timestamp{"15:05:13.234"}, {}};
+    auto gpsPoint1 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), Timestamp{"15:05:10.234"}, {}};
+    auto gpsPoint2 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), Timestamp{"15:05:11.234"}, {}};
+    auto gpsPoint3 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), Timestamp{"15:05:12.234"}, {}};
+    auto gpsPoint4 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), Timestamp{"15:05:13.234"}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint1);
     lapTimer.updatePositionAndTime(gpsPoint2);
@@ -313,10 +314,10 @@ TEST_CASE("The laptimer shall give the last lap time when lap is started and fin
     REQUIRE(lapTimer.currentLaptime.get() == Timestamp{"00:00:00.000"});
 
     // Positions to finsh sector1
-    auto gpsPoint5 = PositionDateTimeData{Positions::OscherslebenSector1Point1, Timestamp{"15:06:10.234"}, {}};
-    auto gpsPoint6 = PositionDateTimeData{Positions::OscherslebenSector1Point2, Timestamp{"15:06:11.234"}, {}};
-    auto gpsPoint7 = PositionDateTimeData{Positions::OscherslebenSector1Point3, Timestamp{"15:06:12.234"}, {}};
-    auto gpsPoint8 = PositionDateTimeData{Positions::OscherslebenSector1Point4, Timestamp{"15:06:13.234"}, {}};
+    auto gpsPoint5 = PositionDateTimeData{Positions::getOscherslebenSector1Point1(), Timestamp{"15:06:10.234"}, {}};
+    auto gpsPoint6 = PositionDateTimeData{Positions::getOscherslebenSector1Point2(), Timestamp{"15:06:11.234"}, {}};
+    auto gpsPoint7 = PositionDateTimeData{Positions::getOscherslebenSector1Point3(), Timestamp{"15:06:12.234"}, {}};
+    auto gpsPoint8 = PositionDateTimeData{Positions::getOscherslebenSector1Point4(), Timestamp{"15:06:13.234"}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint5);
     lapTimer.updatePositionAndTime(gpsPoint6);
@@ -326,10 +327,10 @@ TEST_CASE("The laptimer shall give the last lap time when lap is started and fin
     REQUIRE(lapTimer.currentLaptime.get() == Timestamp{"00:01:00.000"});
 
     // Positions to finish the lap
-    auto gpsPoint9 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, Timestamp{"15:07:10.234"}, {}};
-    auto gpsPoint10 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, Timestamp{"15:07:11.234"}, {}};
-    auto gpsPoint11 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, Timestamp{"15:07:12.234"}, {}};
-    auto gpsPoint12 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, Timestamp{"15:07:12.234"}, {}};
+    auto gpsPoint9 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), Timestamp{"15:07:10.234"}, {}};
+    auto gpsPoint10 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), Timestamp{"15:07:11.234"}, {}};
+    auto gpsPoint11 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), Timestamp{"15:07:12.234"}, {}};
+    auto gpsPoint12 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), Timestamp{"15:07:12.234"}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint9);
     lapTimer.updatePositionAndTime(gpsPoint10);
@@ -344,19 +345,20 @@ TEST_CASE("The laptimer shall update the current sector time.")
     std::uint32_t currentSectorTimeUpdated = 0;
 
     auto track = TrackData{};
-    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
-    track.setSections({Positions::OscherslebenPositionSector1Line, Positions::OscherslebenPositionSector2Line});
-    track.setFinishline(Positions::OscherslebenPositionStartFinishLine);
+    track.setStartline(Positions::getOscherslebenPositionStartFinishLine());
+    track.setSections(
+        {Positions::getOscherslebenPositionSector1Line(), Positions::getOscherslebenPositionSector2Line()});
+    track.setFinishline(Positions::getOscherslebenPositionStartFinishLine());
 
     lapTimer.setTrack(track);
     lapTimer.currentSectorTime.valueChanged().connect(
         [&currentSectorTimeUpdated](Timestamp newTimestamp) { ++currentSectorTimeUpdated; });
 
     // Positions to start the lap
-    auto gpsPoint1 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, Timestamp{"15:05:10.234"}, {}};
-    auto gpsPoint2 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, Timestamp{"15:05:11.234"}, {}};
-    auto gpsPoint3 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, Timestamp{"15:05:12.234"}, {}};
-    auto gpsPoint4 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, Timestamp{"15:05:13.234"}, {}};
+    auto gpsPoint1 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), Timestamp{"15:05:10.234"}, {}};
+    auto gpsPoint2 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), Timestamp{"15:05:11.234"}, {}};
+    auto gpsPoint3 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), Timestamp{"15:05:12.234"}, {}};
+    auto gpsPoint4 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), Timestamp{"15:05:13.234"}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint1);
     lapTimer.updatePositionAndTime(gpsPoint2);
@@ -366,10 +368,10 @@ TEST_CASE("The laptimer shall update the current sector time.")
     REQUIRE(lapTimer.currentSectorTime.get() == Timestamp{"00:00:00.000"});
 
     // Positions to finsh sector1
-    auto gpsPoint5 = PositionDateTimeData{Positions::OscherslebenSector1Point1, Timestamp{"15:06:10.234"}, {}};
-    auto gpsPoint6 = PositionDateTimeData{Positions::OscherslebenSector1Point2, Timestamp{"15:06:11.234"}, {}};
-    auto gpsPoint7 = PositionDateTimeData{Positions::OscherslebenSector1Point3, Timestamp{"15:06:12.234"}, {}};
-    auto gpsPoint8 = PositionDateTimeData{Positions::OscherslebenSector1Point4, Timestamp{"15:06:13.234"}, {}};
+    auto gpsPoint5 = PositionDateTimeData{Positions::getOscherslebenSector1Point1(), Timestamp{"15:06:10.234"}, {}};
+    auto gpsPoint6 = PositionDateTimeData{Positions::getOscherslebenSector1Point2(), Timestamp{"15:06:11.234"}, {}};
+    auto gpsPoint7 = PositionDateTimeData{Positions::getOscherslebenSector1Point3(), Timestamp{"15:06:12.234"}, {}};
+    auto gpsPoint8 = PositionDateTimeData{Positions::getOscherslebenSector1Point4(), Timestamp{"15:06:13.234"}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint5);
     REQUIRE(currentSectorTimeUpdated == 1);
@@ -387,10 +389,10 @@ TEST_CASE("The laptimer shall update the current sector time.")
     REQUIRE(lapTimer.getLastSectorTime() == Timestamp{"00:01:00.000"});
 
     // Positions to finsh sector2
-    auto gpsPoint9 = PositionDateTimeData{Positions::OscherslebenSector2Point1, Timestamp{"15:07:10.234"}, {}};
-    auto gpsPoint10 = PositionDateTimeData{Positions::OscherslebenSector2Point2, Timestamp{"15:07:11.234"}, {}};
-    auto gpsPoint11 = PositionDateTimeData{Positions::OscherslebenSector2Point3, Timestamp{"15:07:12.234"}, {}};
-    auto gpsPoint12 = PositionDateTimeData{Positions::OscherslebenSector2Point4, Timestamp{"15:07:13.234"}, {}};
+    auto gpsPoint9 = PositionDateTimeData{Positions::getOscherslebenSector2Point1(), Timestamp{"15:07:10.234"}, {}};
+    auto gpsPoint10 = PositionDateTimeData{Positions::getOscherslebenSector2Point2(), Timestamp{"15:07:11.234"}, {}};
+    auto gpsPoint11 = PositionDateTimeData{Positions::getOscherslebenSector2Point3(), Timestamp{"15:07:12.234"}, {}};
+    auto gpsPoint12 = PositionDateTimeData{Positions::getOscherslebenSector2Point4(), Timestamp{"15:07:13.234"}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint9);
     REQUIRE(currentSectorTimeUpdated == 6);
@@ -408,10 +410,10 @@ TEST_CASE("The laptimer shall update the current sector time.")
     REQUIRE(lapTimer.getLastSectorTime() == Timestamp{"00:01:00.000"});
 
     // Positions to finish the lap
-    auto gpsPoint13 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, Timestamp{"15:08:10.234"}, {}};
-    auto gpsPoint14 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, Timestamp{"15:08:11.234"}, {}};
-    auto gpsPoint15 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, Timestamp{"15:08:12.234"}, {}};
-    auto gpsPoint16 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, Timestamp{"15:08:13.234"}, {}};
+    auto gpsPoint13 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), Timestamp{"15:08:10.234"}, {}};
+    auto gpsPoint14 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), Timestamp{"15:08:11.234"}, {}};
+    auto gpsPoint15 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), Timestamp{"15:08:12.234"}, {}};
+    auto gpsPoint16 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), Timestamp{"15:08:13.234"}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint13);
     REQUIRE(currentSectorTimeUpdated == 11);
@@ -435,9 +437,9 @@ TEST_CASE("The laptimer shall emit the signals sector and lap started finished e
     bool sectorFinishedEmitted = false;
 
     auto track = TrackData{};
-    track.setStartline(Positions::OscherslebenPositionStartFinishLine);
-    track.setFinishline(Positions::OscherslebenPositionStartFinishLine);
-    track.setSections({Positions::OscherslebenPositionSector1Line});
+    track.setStartline(Positions::getOscherslebenPositionStartFinishLine());
+    track.setFinishline(Positions::getOscherslebenPositionStartFinishLine());
+    track.setSections({Positions::getOscherslebenPositionSector1Line()});
 
     lapTimer.setTrack(track);
     lapTimer.lapStarted.connect([&lapStartedEmitted](void) { lapStartedEmitted = true; });
@@ -445,10 +447,10 @@ TEST_CASE("The laptimer shall emit the signals sector and lap started finished e
     lapTimer.sectorFinished.connect([&sectorFinishedEmitted](void) { sectorFinishedEmitted = true; });
 
     // Positions to start the lap
-    auto gpsPoint1 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, {}, {}};
-    auto gpsPoint2 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, {}, {}};
-    auto gpsPoint3 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, {}, {}};
-    auto gpsPoint4 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, {}, {}};
+    auto gpsPoint1 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), {}, {}};
+    auto gpsPoint2 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), {}, {}};
+    auto gpsPoint3 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), {}, {}};
+    auto gpsPoint4 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), {}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint1);
     lapTimer.updatePositionAndTime(gpsPoint2);
@@ -459,10 +461,10 @@ TEST_CASE("The laptimer shall emit the signals sector and lap started finished e
     lapStartedEmitted = false;
 
     // Positions to finsh sector1
-    auto gpsPoint5 = PositionDateTimeData{Positions::OscherslebenSector1Point1, Timestamp{"15:06:10.234"}, {}};
-    auto gpsPoint6 = PositionDateTimeData{Positions::OscherslebenSector1Point2, Timestamp{"15:06:11.234"}, {}};
-    auto gpsPoint7 = PositionDateTimeData{Positions::OscherslebenSector1Point3, Timestamp{"15:06:12.234"}, {}};
-    auto gpsPoint8 = PositionDateTimeData{Positions::OscherslebenSector1Point4, Timestamp{"15:06:13.234"}, {}};
+    auto gpsPoint5 = PositionDateTimeData{Positions::getOscherslebenSector1Point1(), Timestamp{"15:06:10.234"}, {}};
+    auto gpsPoint6 = PositionDateTimeData{Positions::getOscherslebenSector1Point2(), Timestamp{"15:06:11.234"}, {}};
+    auto gpsPoint7 = PositionDateTimeData{Positions::getOscherslebenSector1Point3(), Timestamp{"15:06:12.234"}, {}};
+    auto gpsPoint8 = PositionDateTimeData{Positions::getOscherslebenSector1Point4(), Timestamp{"15:06:13.234"}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint5);
     lapTimer.updatePositionAndTime(gpsPoint6);
@@ -472,10 +474,10 @@ TEST_CASE("The laptimer shall emit the signals sector and lap started finished e
     REQUIRE(sectorFinishedEmitted == true);
 
     // Position to finish the lap
-    auto gpsPoint9 = PositionDateTimeData{Positions::OscherslebenStartFinishLine1, {}, {}};
-    auto gpsPoint10 = PositionDateTimeData{Positions::OscherslebenStartFinishLine2, {}, {}};
-    auto gpsPoint11 = PositionDateTimeData{Positions::OscherslebenStartFinishLine3, {}, {}};
-    auto gpsPoint12 = PositionDateTimeData{Positions::OscherslebenStartFinishLine4, {}, {}};
+    auto gpsPoint9 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine1(), {}, {}};
+    auto gpsPoint10 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine2(), {}, {}};
+    auto gpsPoint11 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine3(), {}, {}};
+    auto gpsPoint12 = PositionDateTimeData{Positions::getOscherslebenStartFinishLine4(), {}, {}};
 
     lapTimer.updatePositionAndTime(gpsPoint9);
     lapTimer.updatePositionAndTime(gpsPoint10);

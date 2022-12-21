@@ -1,23 +1,13 @@
-#ifndef __TRACKS__H__
-#define __TRACKS__H__
+#ifndef TRACKS_HPP
+#define TRACKS_HPP
 
 #include "TrackData.hpp"
 
-namespace LaptimerCore::TestHelper
+namespace LaptimerCore::TestHelper::Tracks
 {
+Common::TrackData getTrackWithoutSector();
+Common::TrackData getOscherslebenTrack();
+Common::TrackData getOscherslebenTrack2();
+} // namespace LaptimerCore::TestHelper::Tracks
 
-class Tracks
-{
-public:
-    static void init();
-
-    static Common::TrackData getOscherslebenTrack();
-
-    const static Common::TrackData TrackWithoutSector;
-    const static Common::TrackData OscherslebenTrack;
-    const static Common::TrackData OscherslebenTrack2;
-};
-
-} // namespace LaptimerCore::TestHelper
-
-#endif //!__TRACKS__H__
+#endif //! TRACKS_HPP

@@ -221,9 +221,10 @@ TEST_CASE("The ActiveSessionWorkflow shall forward all PositionTimeDate Updates 
     auto actSessWf = ActiveSessionWorkflow{dp, lp, sdb};
 
     actSessWf.startActiveSession();
-    dp.positionTimeData.set(PositionDateTimeData{Positions::OscherslebenPositionStartFinishLine, {}, {}});
+    dp.positionTimeData.set(PositionDateTimeData{Positions::getOscherslebenPositionStartFinishLine(), {}, {}});
 
-    REQUIRE(lp.lastPostionDateTime == PositionDateTimeData{Positions::OscherslebenPositionStartFinishLine, {}, {}});
+    REQUIRE(lp.lastPostionDateTime ==
+            PositionDateTimeData{Positions::getOscherslebenPositionStartFinishLine(), {}, {}});
 }
 
 TEST_CASE("The ActiveSessionWorkflow shall not forward all PositionTimeDate updates to the laptimer when session is "
@@ -237,7 +238,7 @@ TEST_CASE("The ActiveSessionWorkflow shall not forward all PositionTimeDate upda
 
     actSessWf.startActiveSession();
     actSessWf.stopActiveSession();
-    dp.positionTimeData.set(PositionDateTimeData{Positions::OscherslebenPositionStartFinishLine, {}, {}});
+    dp.positionTimeData.set(PositionDateTimeData{Positions::getOscherslebenPositionStartFinishLine(), {}, {}});
 
     REQUIRE(lp.lastPostionDateTime == PositionDateTimeData{{}, {}, {}});
 }

@@ -1,37 +1,29 @@
-#ifndef __POSITIONS__H__
-#define __POSITIONS__H__
+#ifndef POSITIONS_HPP
+#define POSITIONS_HPP
 
 #include "PositionData.hpp"
 
-namespace LaptimerCore::TestHelper
+namespace LaptimerCore::TestHelper::Positions
 {
+Common::PositionData getOscherslebenPositionCamp();
+Common::PositionData getOscherslebenPositionStartFinishLine();
+Common::PositionData getOscherslebenPositionSector1Line();
+Common::PositionData getOscherslebenPositionSector2Line();
 
-class Positions
-{
-public:
-    static Common::PositionData getOscherslebenPositionCamp();
+Common::PositionData getOscherslebenStartFinishLine1();
+Common::PositionData getOscherslebenStartFinishLine2();
+Common::PositionData getOscherslebenStartFinishLine3();
+Common::PositionData getOscherslebenStartFinishLine4();
 
-    const static Common::PositionData OscherslebenPositionCamp;
-    const static Common::PositionData OscherslebenPositionStartFinishLine;
-    const static Common::PositionData OscherslebenPositionSector1Line;
-    const static Common::PositionData OscherslebenPositionSector2Line;
+Common::PositionData getOscherslebenSector1Point1();
+Common::PositionData getOscherslebenSector1Point2();
+Common::PositionData getOscherslebenSector1Point3();
+Common::PositionData getOscherslebenSector1Point4();
 
-    const static Common::PositionData OscherslebenStartFinishLine1;
-    const static Common::PositionData OscherslebenStartFinishLine2;
-    const static Common::PositionData OscherslebenStartFinishLine3;
-    const static Common::PositionData OscherslebenStartFinishLine4;
+Common::PositionData getOscherslebenSector2Point1();
+Common::PositionData getOscherslebenSector2Point2();
+Common::PositionData getOscherslebenSector2Point3();
+Common::PositionData getOscherslebenSector2Point4();
+} // namespace LaptimerCore::TestHelper::Positions
 
-    const static Common::PositionData OscherslebenSector1Point1;
-    const static Common::PositionData OscherslebenSector1Point2;
-    const static Common::PositionData OscherslebenSector1Point3;
-    const static Common::PositionData OscherslebenSector1Point4;
-
-    const static Common::PositionData OscherslebenSector2Point1;
-    const static Common::PositionData OscherslebenSector2Point2;
-    const static Common::PositionData OscherslebenSector2Point3;
-    const static Common::PositionData OscherslebenSector2Point4;
-};
-
-} // namespace LaptimerCore::TestHelper
-
-#endif //!__POSITIONS__H__
+#endif //! POSITIONS_HPP
