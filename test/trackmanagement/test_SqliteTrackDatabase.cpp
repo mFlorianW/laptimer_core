@@ -1,35 +1,12 @@
 #define CATCH_CONFIG_MAIN
 #include "SqliteTrackDatabase.hpp"
+#include <SqliteDatabaseTestHelper.hpp>
 #include <catch2/catch.hpp>
-#include <filesystem>
 
 using namespace LaptimerCore::TrackManagement;
-
+using namespace LaptimerCore::Test::Dummy::SqliteDatabaseTestHelper;
 namespace
 {
-std::string getWorkingDir()
-{
-    auto buffer = std::array<char, 512>{0};
-    auto *bufferPtr = getcwd(&buffer.at(0), buffer.size());
-    if (bufferPtr == nullptr)
-    {
-        FAIL("Unable to get the database folder.");
-    }
-
-    return std::string{&buffer.at(0)};
-}
-
-std::string getTestDatabseFolder()
-{
-    auto dbDir = getWorkingDir() + "/database";
-    return dbDir;
-}
-
-std::string getTestDatabseFile()
-{
-    return getTestDatabseFolder() + "/trackmanagement_test.db";
-}
-} // namespace
 
 class SqliteDatabaseTestEventlistener : public Catch::TestEventListenerBase
 {
@@ -41,7 +18,7 @@ public:
         // For the case the test crashes.
         if (std::filesystem::exists(getTestDatabseFolder()) == true)
         {
-            REQUIRE(std::filesystem::remove_all(getTestDatabseFolder()) == true);
+            std::filesystem::remove_all(getTestDatabseFolder());
         }
         REQUIRE(std::filesystem::create_directory(getTestDatabseFolder()) == true);
         const auto cleanDbFile = getWorkingDir() + "/test_trackmanagement.db";
@@ -53,6 +30,7 @@ public:
         REQUIRE(std::filesystem::remove(getTestDatabseFile()) == true);
     }
 };
+} // namespace
 CATCH_REGISTER_LISTENER(SqliteDatabaseTestEventlistener);
 
 TEST_CASE("The SqliteDatabaseTrackDatabase shall return the number of stored tracks.")

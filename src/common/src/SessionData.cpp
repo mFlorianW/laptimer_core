@@ -81,7 +81,7 @@ std::size_t SessionData::getNumberOfLaps() const noexcept
     return mData->mLaps.size();
 }
 
-std::optional<LapData> SessionData::getLap(std::size_t index)
+std::optional<LapData> SessionData::getLap(std::size_t index) const noexcept
 {
     if (index > mData->mLaps.size())
     {

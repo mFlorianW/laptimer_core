@@ -4,7 +4,7 @@
 namespace LaptimerCore::Private::SqliteHelper
 {
 
-Statement::Statement(Connection &dbConnection)
+Statement::Statement(const Connection &dbConnection)
     : mDbConnection{dbConnection}
 {
 }
@@ -92,6 +92,26 @@ BindResult Statement::bindIntValue(std::size_t index, int32_t value) noexcept
     return BindResult::Error;
 }
 
+BindResult Statement::bindStringValue(std::size_t index, const std::string &value)
+{
+    if (mStatement == nullptr)
+    {
+        return BindResult::Error;
+    }
+
+    const auto result = sqlite3_bind_text(mStatement,
+                                          static_cast<int>(index),
+                                          value.c_str(),
+                                          static_cast<int>(value.size()),
+                                          SQLITE_STATIC);
+    if (result == SQLITE_OK)
+    {
+        return BindResult::Ok;
+    }
+
+    return BindResult::Error;
+}
+
 std::size_t Statement::getColumnCount() const noexcept
 {
     if (mStatement == nullptr)
@@ -100,6 +120,29 @@ std::size_t Statement::getColumnCount() const noexcept
     }
 
     return sqlite3_column_count(mStatement);
+}
+
+ColumnType Statement::getColumnType(std::size_t index) const noexcept
+{
+    if (mStatement == nullptr || index > getColumnCount())
+    {
+        return ColumnType::Null;
+    }
+
+    const auto type = sqlite3_column_type(mStatement, static_cast<int>(index));
+    switch (type)
+    {
+    case 1:
+        return ColumnType::Integer;
+    case 2:
+        return ColumnType::Float;
+    case 3:
+        return ColumnType::Text;
+    case 4:
+        return ColumnType::Blob;
+    default:
+        return ColumnType::Null;
+    }
 }
 
 HasColumnValueResult Statement::hasColumnValue(std::size_t index) const noexcept
@@ -142,8 +185,9 @@ std::optional<std::string> Statement::getStringColumn(std::size_t index) const n
 
     // TODO: This maybe contains a UTF-8 encoding, we need better encoding :-D
     // NOLINTBEGIN
-    return std::string{
-        reinterpret_cast<const char *>(sqlite3_column_text(mStatement, static_cast<std::int32_t>(index)))};
+    auto type = sqlite3_column_type(mStatement, static_cast<int>(index));
+    auto string = reinterpret_cast<const char *>(sqlite3_column_text(mStatement, static_cast<std::int32_t>(index)));
+    return std::string{string};
     // NOLINTEND
 }
 

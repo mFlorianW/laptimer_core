@@ -1,4 +1,6 @@
 #include "PositionData.hpp"
+#include <cmath>
+#include <limits>
 
 namespace LaptimerCore::Common
 {
@@ -12,8 +14,8 @@ public:
     friend bool operator==(const SharedPositionData &lhs, const SharedPositionData &rhs)
     {
         // clang-format off
-        return ((lhs.latitude) == (rhs.latitude) &&
-                (lhs.longitude) == (rhs.longitude));
+        return  ((std::fabs(lhs.latitude - rhs.latitude) < std::numeric_limits<float>::epsilon()) &&
+                 (std::fabs(lhs.longitude - rhs.longitude) < std::numeric_limits<float>::epsilon()));
         // clang-format on
     }
 };

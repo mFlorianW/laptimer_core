@@ -26,7 +26,7 @@ OpenResult Connection::open(const std::string &database)
     return OpenResult::Error;
 }
 
-std::string Connection::getErrorMessage()
+std::string Connection::getErrorMessage() const noexcept
 {
     if (mHandle != nullptr)
     {

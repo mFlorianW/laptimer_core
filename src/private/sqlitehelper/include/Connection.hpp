@@ -63,7 +63,7 @@ public:
      * database failed. The error message is only after calling  @ref open() with OpenResult::Successful.
      * @return The error message of the database as string.
      */
-    std::string getErrorMessage();
+    std::string getErrorMessage() const noexcept;
 
 private:
     friend class Statement;
