@@ -101,6 +101,14 @@ void SessionData::addLap(const LapData &lap)
     mData->mLaps.push_back(lap);
 }
 
+void SessionData::addLaps(const std::vector<LapData> &laps)
+{
+    for (const auto &lap : laps)
+    {
+        mData->mLaps.push_back(lap);
+    }
+}
+
 bool operator==(const SessionData &lhs, const SessionData &rhs)
 {
     return lhs.mData == rhs.mData || *lhs.mData == *rhs.mData;
