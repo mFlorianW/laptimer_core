@@ -65,3 +65,24 @@ TEST_CASE("The SqliteSessionDatabase shall store a session and the session shall
     REQUIRE(readResult.has_value() == true);
     REQUIRE(readResult.value() == Sessions::getTestSession3());
 }
+
+TEST_CASE("The SqliteSessionDatabase shall store a already stored session under the same index and shall emit session "
+          "updated.")
+{
+    auto db = SqliteSessionDatabase{getTestDatabseFile("test_session.db")};
+    auto updatedIndex = std::size_t{123456};
+    db.sessionUpdated.connect([&updatedIndex](std::size_t index) { updatedIndex = index; });
+
+    auto insertResult = db.storeSession(Sessions::getTestSession3());
+    REQUIRE(insertResult == true);
+
+    auto lapData = LaptimerCore::Common::LapData{};
+    lapData.addSectorTimes({{"00:23:32.003"}, {"00:23:32.004"}, {"00:23:32.005"}});
+    auto session = Sessions::getTestSession3();
+    session.addLap(lapData);
+
+    insertResult = db.storeSession(session);
+    REQUIRE(insertResult == true);
+    REQUIRE(updatedIndex == 0);
+    REQUIRE(db.getSessionByIndex(0) == session);
+}

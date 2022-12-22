@@ -103,6 +103,12 @@ public:
     void addLap(const LapData &lap);
 
     /**
+     * Adds the list of laps to the session.
+     * @param laps The list of laps that shall be added.
+     */
+    void addLaps(const std::vector<LapData> &laps);
+
+    /**
      * Equal operator
      * @return true The two objects are the same.
      * @return false The two objects are not the same.
