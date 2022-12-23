@@ -2,7 +2,7 @@ include(Catch)
 
 # Create empty database on every build
 add_custom_command(OUTPUT test_session.db
-    COMMAND rm -f ${CMAKE_CURRENT_BINARY_DIR}/database/test_sesion.db && sqlite3 test_session.db < "${CMAKE_SOURCE_DIR}/db/schema.sql"
+    COMMAND rm -f ${CMAKE_CURRENT_BINARY_DIR}/test_sesion.db && sqlite3 test_session.db < "${CMAKE_SOURCE_DIR}/db/schema.sql"
     COMMAND sqlite3 "${CMAKE_CURRENT_BINARY_DIR}/test_session.db" < "${CMAKE_CURRENT_SOURCE_DIR}/test_session.sql"
     DEPENDS ${CMAKE_SOURCE_DIR}/db/schema.sql
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/test_session.sql
