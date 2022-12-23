@@ -33,12 +33,12 @@ INSERT INTO Track (Name, Finishline) VALUES
 -- SEKTOR1
 INSERT INTO Sektor (TrackId, PositionId, SektorIndex)
     VALUES
-    ((SELECT TrackId FROM Track WHERE name = 'Oschersleben'), (SELECT PositionId FROM Position WHERE Latitude = 52.959453 AND Longitude = 6.525305), 1);
+    ((SELECT TrackId FROM Track WHERE name = 'Assen'), (SELECT PositionId FROM Position WHERE Latitude = 52.959453 AND Longitude = 6.525305), 1);
 
 -- SEKTOR2
 INSERT INTO Sektor (TrackId, PositionId, SektorIndex)
     VALUES
-    ((SELECT TrackId FROM Track WHERE NAME = 'Oschersleben'), (SELECT PositionId FROM Position WHERE Latitude = 52.955628 AND Longitude = 6.512773), 2);
+    ((SELECT TrackId FROM Track WHERE NAME = 'Assen'), (SELECT PositionId FROM Position WHERE Latitude = 52.955628 AND Longitude = 6.512773), 2);
 
 -- INSERT FloZuHause
 INSERT INTO Position (Latitude, Longitude) VALUES

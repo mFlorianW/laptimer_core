@@ -35,7 +35,8 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
 
     if (mLapState == LapState::WaitingForFirstStart)
     {
-        const auto startLine = mTrackData.getStartline();
+        const auto useFinishLineAsStartline = mTrackData.getStartline() == Common::PositionData{};
+        const auto startLine = useFinishLineAsStartline ? mTrackData.getFinishline() : mTrackData.getStartline();
         if (passedPoint(startLine))
         {
             mLapState =
