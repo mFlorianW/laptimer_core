@@ -115,7 +115,13 @@ bool SqliteSessionDatabase::updateSession(std::size_t sessionId, const Common::S
             return false;
         }
     }
-    sessionUpdated.emit(0);
+
+    const auto updatedIndex = getIndexOfSessionId(sessionId);
+    if (!updatedIndex.has_value())
+    {
+        return false;
+    }
+    sessionUpdated.emit(*updatedIndex);
     return true;
 }
 
@@ -156,41 +162,14 @@ bool SqliteSessionDatabase::storeNewSession(const Common::SessionData &session)
             return false;
         }
     }
-    sessionAdded.emit(0);
+    const auto addedIndex = getSessionCount() > 0 ? getSessionCount() - 1 : 0;
+    sessionAdded.emit(addedIndex);
     return true;
 }
 
 std::optional<std::size_t> SqliteSessionDatabase::getSessionIdOfIndex(std::size_t sessionIndex) const noexcept
 {
-    // clang-format off
-    constexpr auto sessionIdsQuery = "SELECT "
-                                        "Session.SessionId "
-                                    "FROM "
-                                        "Session";
-    // clang-format on
-    auto sessionIdsStm = Statement{mDbConnection};
-    if (sessionIdsStm.prepare(sessionIdsQuery) != PrepareResult::Ok)
-    {
-        std::cout << "Failed to prepare query for session id of" << sessionIndex
-                  << ". Error: " << mDbConnection.getErrorMessage() << std::endl;
-        return std::nullopt;
-    }
-
-    auto sessionIds = std::vector<std::size_t>();
-    auto rowReadResult = ExecuteResult::Error;
-    while (((rowReadResult = sessionIdsStm.execute()) == ExecuteResult::Row) && (sessionIdsStm.getColumnCount() > 0))
-    {
-        const auto sessionId = sessionIdsStm.getIntColumn(0);
-        if (sessionId.has_value())
-        {
-            sessionIds.push_back(*sessionId);
-        }
-        else
-        {
-            return std::nullopt;
-        }
-    }
-
+    const auto sessionIds = getSessionIds();
     if (sessionIndex > sessionIds.size())
     {
         return std::nullopt;
@@ -223,6 +202,51 @@ std::optional<std::size_t> SqliteSessionDatabase::getSessionId(const Common::Ses
         return static_cast<std::size_t>(sessionIdStm.getIntColumn(0).value());
     }
     return std::nullopt;
+}
+
+std::optional<std::size_t> SqliteSessionDatabase::getIndexOfSessionId(std::size_t sessionId) const noexcept
+{
+    const auto sessionIds = getSessionIds();
+    auto idIter =
+        std::find_if(sessionIds.cbegin(), sessionIds.cend(), [sessionId](std::size_t id) { return id == sessionId; });
+    if (idIter != sessionIds.cend())
+    {
+        return std::distance(sessionIds.cbegin(), idIter);
+    }
+    return std::nullopt;
+}
+
+std::vector<std::size_t> SqliteSessionDatabase::getSessionIds() const noexcept
+{
+    // clang-format off
+    constexpr auto sessionIdsQuery = "SELECT "
+                                        "Session.SessionId "
+                                    "FROM "
+                                        "Session";
+    // clang-format on
+    auto sessionIdsStm = Statement{mDbConnection};
+    if (sessionIdsStm.prepare(sessionIdsQuery) != PrepareResult::Ok)
+    {
+        std::cout << "Failed to prepare query for session ids. Error: " << mDbConnection.getErrorMessage() << std::endl;
+        return {};
+    }
+
+    auto sessionIds = std::vector<std::size_t>();
+    auto rowReadResult = ExecuteResult::Error;
+    while (((rowReadResult = sessionIdsStm.execute()) == ExecuteResult::Row) && (sessionIdsStm.getColumnCount() > 0))
+    {
+        const auto sessionId = sessionIdsStm.getIntColumn(0);
+        if (sessionId.has_value())
+        {
+            sessionIds.push_back(*sessionId);
+        }
+        else
+        {
+            return {};
+        }
+    }
+
+    return sessionIds;
 }
 
 std::optional<std::vector<Common::LapData>> SqliteSessionDatabase::getLapsOfSession(
