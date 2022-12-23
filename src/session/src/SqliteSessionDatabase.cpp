@@ -90,6 +90,29 @@ bool SqliteSessionDatabase::storeSession(const Common::SessionData &session)
 
 void SqliteSessionDatabase::deleteSession(std::size_t index)
 {
+    // clang-format off
+    constexpr auto sessionDeleteQuery = "DELETE "
+                                        "FROM "
+                                            "Session "
+                                        "WHERE "
+                                            "Session.SessionId = ?";
+    // clang-format on
+    const auto sessionId = getSessionIdOfIndex(index);
+    if (!sessionId.has_value())
+    {
+        std::cout << "Failed to delete session under index" << index << " not found." << std::endl;
+        return;
+    }
+
+    auto sessionDeleteStm = Statement{mDbConnection};
+    if ((sessionDeleteStm.prepare(sessionDeleteQuery) != PrepareResult::Ok) ||
+        (sessionDeleteStm.bindIntValue(1, static_cast<int>(*sessionId)) != BindResult::Ok) ||
+        (sessionDeleteStm.execute() != ExecuteResult::Ok))
+    {
+        std::cout << "Failed to delete session under index" << index << "Error:" << mDbConnection.getErrorMessage()
+                  << std::endl;
+    }
+    sessionDeleted.emit(index);
 }
 
 bool SqliteSessionDatabase::updateSession(std::size_t sessionId, const Common::SessionData &session)

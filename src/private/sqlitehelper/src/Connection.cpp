@@ -18,8 +18,9 @@ OpenResult Connection::open(const std::string &database)
         sqlite3_close(mHandle);
     }
 
-    if (sqlite3_open(database.c_str(), &mHandle))
+    if (sqlite3_open(database.c_str(), &mHandle) == SQLITE_OK)
     {
+        sqlite3_exec(mHandle, "PRAGMA foreign_keys = 1", nullptr, nullptr, nullptr);
         return OpenResult::Ok;
     }
 
