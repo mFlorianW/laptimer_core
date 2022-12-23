@@ -45,9 +45,14 @@ TEST_CASE("The SqliteSessionDatabase shall store as session and shall emit the s
         addedIndex = index;
     });
 
-    const auto insertResult = db.storeSession(Sessions::getTestSession3());
+    auto insertResult = db.storeSession(Sessions::getTestSession3());
     REQUIRE(insertResult == true);
     REQUIRE(addedIndex == 0);
+    REQUIRE(sessionAddedSignalEmitted == true);
+
+    insertResult = db.storeSession(Sessions::getTestSession4());
+    REQUIRE(insertResult == true);
+    REQUIRE(addedIndex == 1);
     REQUIRE(sessionAddedSignalEmitted == true);
 }
 
@@ -75,16 +80,25 @@ TEST_CASE("The SqliteSessionDatabase shall store a already stored session under 
 
     auto insertResult = db.storeSession(Sessions::getTestSession3());
     REQUIRE(insertResult == true);
+    insertResult = db.storeSession(Sessions::getTestSession4());
+    REQUIRE(insertResult == true);
 
     auto lapData = LaptimerCore::Common::LapData{};
     lapData.addSectorTimes({{"00:23:32.003"}, {"00:23:32.004"}, {"00:23:32.005"}});
-    auto session = Sessions::getTestSession3();
-    session.addLap(lapData);
+    auto session1 = Sessions::getTestSession3();
+    session1.addLap(lapData);
+    auto session2 = Sessions::getTestSession4();
+    session2.addLap(lapData);
 
-    insertResult = db.storeSession(session);
+    insertResult = db.storeSession(session1);
     REQUIRE(insertResult == true);
     REQUIRE(updatedIndex == 0);
-    REQUIRE(db.getSessionByIndex(0) == session);
+    REQUIRE(db.getSessionByIndex(0) == session1);
+
+    insertResult = db.storeSession(session2);
+    REQUIRE(insertResult == true);
+    REQUIRE(updatedIndex == 1);
+    REQUIRE(db.getSessionByIndex(1) == session2);
 }
 
 TEST_CASE("The SqliteSessionDatabase shall gives the number of stored sessions and should return the correct session "
