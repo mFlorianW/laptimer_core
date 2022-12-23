@@ -123,3 +123,27 @@ TEST_CASE("The SqliteSessionDatabase shall gives the number of stored sessions a
     REQUIRE(db.getSessionByIndex(1).value() == session2);
     REQUIRE(db.getSessionByIndex(2) == std::nullopt);
 }
+
+TEST_CASE(
+    "The SqliteSessionDatabase shall delete a session under the index and shall emit the sessionDelete signal with the "
+    "index.")
+{
+    auto db = SqliteSessionDatabase{getTestDatabseFile("test_session.db")};
+    const auto session1 = Sessions::getTestSession3();
+    const auto session2 = Sessions::getTestSession4();
+    auto deletedIndex = std::size_t{123456};
+    constexpr auto indexToDelete = 1;
+    db.sessionDeleted.connect([&deletedIndex](std::size_t index) { deletedIndex = index; });
+
+    // Prepare database.
+    auto storeResult = db.storeSession(session1);
+    REQUIRE(storeResult == true);
+    storeResult = false;
+    storeResult = db.storeSession(session2);
+    REQUIRE(storeResult == true);
+    REQUIRE(db.getSessionCount() == 2);
+
+    db.deleteSession(indexToDelete);
+    REQUIRE(deletedIndex == indexToDelete);
+    REQUIRE(db.getSessionCount() == 1);
+}
