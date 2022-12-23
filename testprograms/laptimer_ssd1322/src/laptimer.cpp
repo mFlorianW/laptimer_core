@@ -4,7 +4,7 @@
 #include <LibraryPath.hpp>
 #include <SDL2/SDL.h>
 #include <ScreenModel.hpp>
-#include <SessionDatabase.hpp>
+#include <SqliteSessionDatabase.hpp>
 #include <SqliteTrackDatabase.hpp>
 #include <StaticGpsInformationProvider.hpp>
 #include <StaticPositionDateTimeProvider.hpp>
@@ -125,8 +125,7 @@ int main(int argc, char *argv[])
 
     auto gpsInfoProvider = LaptimerCore::Positioning::StaticGpsInformationProvider{};
     auto posDateTimeProvider = LaptimerCore::Positioning::ConstantVelocityPositionDateTimeProvider{positions};
-    auto sessionDatabaseBackend = LaptimerCore::Session::FileSystemSessionDatabaseBackend{databaseFolder};
-    auto sessionDatabase = LaptimerCore::Session::SessionDatabase{sessionDatabaseBackend};
+    auto sessionDatabase = LaptimerCore::Session::SqliteSessionDatabase{LIBRARY_FILE};
     auto trackDatabase = LaptimerCore::TrackManagement::SqliteTrackDatabase{LIBRARY_FILE};
     auto screenModel = ScreenModel{gpsInfoProvider, posDateTimeProvider, sessionDatabase, trackDatabase};
     screenModel.activateMainScreen();
