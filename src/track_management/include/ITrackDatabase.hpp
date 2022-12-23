@@ -35,7 +35,8 @@ public:
     ITrackDatabase &operator=(ITrackDatabase &&other) = delete;
 
     /**
-     * Gives the number of stored tracks in the database.
+     * Gives the number of stored tracks in the database. The number from 0...[TrackCount-1] is the valid index range
+     * for track requests and deletions.
      * @return The nummber of stored tracks.
      */
     virtual std::size_t getTrackCount() = 0;
@@ -60,7 +61,7 @@ public:
      * @return true Track data successful deleted.
      * @return false Failed to delete the track data.
      */
-    virtual bool deleteTrack(const Common::TrackData &tracks) = 0;
+    virtual bool deleteTrack(std::size_t trackIndex) = 0;
 
     /**
      * Deletes all track data.

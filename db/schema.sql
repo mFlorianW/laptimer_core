@@ -13,8 +13,8 @@ CREATE TABLE Track
   Finishline INTEGER NOT NULL,
   Startline  INTEGER NULL    ,
   PRIMARY KEY (TrackId AUTOINCREMENT),
-  FOREIGN KEY (Finishline) REFERENCES Position (PositionId),
-  FOREIGN KEY (Startline) REFERENCES Position (PositionId)
+  FOREIGN KEY (Finishline) REFERENCES Position (PositionId) ON DELETE CASCADE,
+  FOREIGN KEY (Startline) REFERENCES Position (PositionId) ON DELETE CASCADE
 );
 
 CREATE TABLE Session
@@ -26,7 +26,7 @@ CREATE TABLE Session
   -- time of session
   Time      TEXT    NOT NULL,
   PRIMARY KEY (SessionId AUTOINCREMENT),
-  FOREIGN KEY (TrackId) REFERENCES Track (TrackId)
+  FOREIGN KEY (TrackId) REFERENCES Track (TrackId) ON DELETE CASCADE
 );
 
 CREATE TABLE Lap
@@ -45,8 +45,8 @@ CREATE TABLE Sektor
   TrackId     INTEGER NOT NULL,
   SektorIndex INTEGER NOT NULL,
   PRIMARY KEY (PositionId, TrackId),
-  FOREIGN KEY (PositionId) REFERENCES Position (PositionId),
-  FOREIGN KEY (TrackId) REFERENCES Track (TrackId)
+  FOREIGN KEY (PositionId) REFERENCES Position (PositionId) ON DELETE CASCADE,
+  FOREIGN KEY (TrackId) REFERENCES Track (TrackId) ON DELETE CASCADE
 );
 
 CREATE TABLE SektorTime

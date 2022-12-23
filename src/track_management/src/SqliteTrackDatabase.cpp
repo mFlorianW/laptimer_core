@@ -39,7 +39,6 @@ std::vector<Common::TrackData> SqliteTrackDatabase::getTracks()
         "FL.PositionId LEFT JOIN Position SL ON Track.Startline = SL.PositionId";
     auto tracksResult = std::vector<Common::TrackData>{};
 
-    //    auto *stm = static_cast<sqlite3_stmt *>(nullptr);
     Statement stm{mDbConnection};
     if (stm.prepare(trackQuery) == PrepareResult::Ok)
     {
@@ -84,14 +83,80 @@ bool SqliteTrackDatabase::saveTrack(const std::vector<Common::TrackData> &tracks
     return false;
 }
 
-bool SqliteTrackDatabase::deleteTrack(const Common::TrackData &tracks)
+bool SqliteTrackDatabase::deleteTrack(std::size_t trackIndex)
 {
-    return false;
+    // clang-format off
+    constexpr auto deleteTrackQuery = "DELETE "
+                                     "FROM "
+                                        "TRACK "
+                                     "WHERE "
+                                        "Track.TrackId = ?";
+    // clang-format on
+    const auto trackId = getTrackIdOfIndex(trackIndex);
+    if (!trackId.has_value())
+    {
+        std::cout << "Failed to delete Track. Index not found:" << trackIndex << std::endl;
+        return false;
+    }
+
+    auto deleteTrackStm = Statement{mDbConnection};
+    if ((deleteTrackStm.prepare(deleteTrackQuery) != PrepareResult::Ok) ||
+        (deleteTrackStm.bindIntValue(1, static_cast<int>(*trackId)) != BindResult::Ok) ||
+        (deleteTrackStm.execute() != ExecuteResult::Ok))
+    {
+        std::cout << "Failed to delete track. Error:" << mDbConnection.getErrorMessage() << std::endl;
+        return false;
+    }
+    return true;
 }
 
 bool SqliteTrackDatabase::deleteAllTracks()
 {
     return false;
+}
+
+std::vector<std::size_t> SqliteTrackDatabase::getTrackIds() const noexcept
+{
+    // clang-format off
+    constexpr auto trackIdQuery = "SELECT "
+                                    "Track.TrackId "
+                                  "FROM "
+                                    "Track";
+    // clang-format on
+    auto trackIdStm = Statement{mDbConnection};
+    if (trackIdStm.prepare(trackIdQuery) != PrepareResult::Ok)
+    {
+        std::cout << "Failed to prepare track id query. Error:" << mDbConnection.getErrorMessage();
+        return {};
+    }
+
+    auto executeResult = ExecuteResult::Error;
+    auto trackIds = std::vector<std::size_t>{};
+    while (((executeResult = trackIdStm.execute()) == ExecuteResult::Row) && (trackIdStm.getColumnCount() > 0))
+    {
+        const auto trackId = trackIdStm.getIntColumn(0);
+        if (trackId.has_value())
+        {
+            trackIds.push_back(*trackId);
+        }
+        else
+        {
+            return {};
+        }
+    }
+
+    return trackIds;
+}
+
+std::optional<std::size_t> SqliteTrackDatabase::getTrackIdOfIndex(std::size_t trackIndex) const noexcept
+{
+    const auto trackIds = getTrackIds();
+    if (trackIndex > trackIds.size())
+    {
+        return std::nullopt;
+    }
+
+    return trackIds[trackIndex];
 }
 
 } // namespace LaptimerCore::TrackManagement

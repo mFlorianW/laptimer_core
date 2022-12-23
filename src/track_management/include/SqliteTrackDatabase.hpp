@@ -3,6 +3,7 @@
 
 #include "ITrackDatabase.hpp"
 #include <Connection.hpp>
+#include <optional>
 
 namespace LaptimerCore::TrackManagement
 {
@@ -56,9 +57,9 @@ public:
     bool saveTrack(const std::vector<Common::TrackData> &tracks) override;
 
     /**
-     * @copydoc ITrackdatabase::deleteTrack(const Common::TrackData &tracks)
+     * @copydoc ITrackdatabase::deleteTrack(std::size_t trackIndex)
      */
-    bool deleteTrack(const Common::TrackData &tracks) override;
+    bool deleteTrack(std::size_t trackIndex) override;
 
     /**
      * @copydoc ITrackdatabase::deleteAllTracks()
@@ -66,6 +67,9 @@ public:
     bool deleteAllTracks() override;
 
 private:
+    std::vector<std::size_t> getTrackIds() const noexcept;
+    std::optional<std::size_t> getTrackIdOfIndex(std::size_t trackIndex) const noexcept;
+
     LaptimerCore::Private::SqliteHelper::Connection mDbConnection{};
 };
 
