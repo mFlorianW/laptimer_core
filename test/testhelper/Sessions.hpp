@@ -8,6 +8,7 @@ namespace LaptimerCore::TestHelper::Sessions
 Common::SessionData getTestSession();
 Common::SessionData getTestSession2();
 Common::SessionData getTestSession3();
+Common::SessionData getTestSession4();
 const char *getTestSessionAsJson();
 
 } // namespace LaptimerCore::TestHelper::Sessions

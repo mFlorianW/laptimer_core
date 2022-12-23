@@ -64,6 +64,7 @@ public:
 private:
     bool updateSession(std::size_t sessionId, const Common::SessionData &session);
     bool storeNewSession(const Common::SessionData &session);
+    std::optional<std::size_t> getSessionIdOfIndex(std::size_t sessionIndex) const noexcept;
     std::optional<std::size_t> getSessionId(const Common::SessionData &session) const noexcept;
     std::optional<std::vector<Common::LapData>> getLapsOfSession(std::size_t sessionId) const noexcept;
     std::optional<Common::TrackData> getTrack(std::size_t trackId) const noexcept;

@@ -86,3 +86,26 @@ TEST_CASE("The SqliteSessionDatabase shall store a already stored session under 
     REQUIRE(updatedIndex == 0);
     REQUIRE(db.getSessionByIndex(0) == session);
 }
+
+TEST_CASE("The SqliteSessionDatabase shall gives the number of stored sessions and should return the correct session "
+          "for that index.")
+{
+    auto db = SqliteSessionDatabase{getTestDatabseFile("test_session.db")};
+    const auto session1 = Sessions::getTestSession3();
+    const auto session2 = Sessions::getTestSession4();
+    constexpr auto expectedSessionCount = 2;
+
+    // Prepare database.
+    auto storeResult = db.storeSession(session1);
+    REQUIRE(storeResult == true);
+    storeResult = false;
+    storeResult = db.storeSession(session2);
+    REQUIRE(storeResult == true);
+
+    const auto sessionCount = db.getSessionCount();
+    REQUIRE(sessionCount == expectedSessionCount);
+
+    REQUIRE(db.getSessionByIndex(0).value() == session1);
+    REQUIRE(db.getSessionByIndex(1).value() == session2);
+    REQUIRE(db.getSessionByIndex(2) == std::nullopt);
+}

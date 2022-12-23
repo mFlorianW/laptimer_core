@@ -16,44 +16,64 @@ SqliteSessionDatabase::~SqliteSessionDatabase() = default;
 
 std::size_t SqliteSessionDatabase::getSessionCount()
 {
-    return 0;
+    // clang-format off
+    constexpr auto countSessionsQuery = "SELECT "
+                                            "COUNT(Session.SessionId) "
+                                        "FROM "
+                                            "Session";
+    // clang-format on
+    auto countSessionsStm = Statement{mDbConnection};
+    if ((countSessionsStm.prepare(countSessionsQuery) != PrepareResult::Ok) ||
+        (countSessionsStm.execute() != ExecuteResult::Row) || (countSessionsStm.getColumnCount() < 1))
+    {
+        std::cout << "Failed to query session count. Error:" << mDbConnection.getErrorMessage() << std::endl;
+        return 0;
+    }
+
+    return countSessionsStm.getIntColumn(0).value_or(0);
 }
 
 std::optional<Common::SessionData> SqliteSessionDatabase::getSessionByIndex(std::size_t index) const noexcept
 {
     // clang-format off
     constexpr auto sessionQuery = "SELECT "
-                                    "Session.SessionId, Session.Date, Session.Time, Session.TrackId "
+                                    "Session.Date, Session.Time, Session.TrackId "
                                   "FROM "
                                     "Session "
-                                  "LEFT JOIN Track ON "
-                                    "Track.TrackId = Session.TrackId";
+                                  "WHERE "
+                                    "Session.SessionId = ?";
     // clang-format on
+    const auto sessionId = getSessionIdOfIndex(index);
+    if (!sessionId.has_value())
+    {
+        return std::nullopt;
+    }
+
     auto sessionStm = Statement{mDbConnection};
-    if ((sessionStm.prepare(sessionQuery) != PrepareResult::Ok) || (sessionStm.execute() != ExecuteResult::Row) ||
-        (sessionStm.getColumnCount() < 4))
+    if ((sessionStm.prepare(sessionQuery) != PrepareResult::Ok) ||
+        (sessionStm.bindIntValue(1, static_cast<int>(*sessionId)) != BindResult::Ok) ||
+        (sessionStm.execute() != ExecuteResult::Row) || (sessionStm.getColumnCount() < 3))
     {
         std::cout << "Error query session:" << mDbConnection.getErrorMessage() << std::endl;
         return std::nullopt;
     }
 
-    const auto sessionId = static_cast<std::size_t>(sessionStm.getIntColumn(0).value_or(0));
-    const auto trackId = static_cast<std::size_t>(sessionStm.getIntColumn(3).value_or(0));
+    const auto trackId = static_cast<std::size_t>(sessionStm.getIntColumn(2).value_or(0));
     auto trackData = getTrack(trackId);
     if (!trackData.has_value())
     {
         return std::nullopt;
     }
 
-    auto laps = getLapsOfSession(sessionId);
+    auto laps = getLapsOfSession(*sessionId);
     if (!laps.has_value())
     {
         return std::nullopt;
     }
 
     auto session = Common::SessionData{trackData.value_or(Common::TrackData{}),
-                                       Common::Date{sessionStm.getStringColumn(1).value_or("")},
-                                       Common::Timestamp{sessionStm.getStringColumn(2).value_or("")}};
+                                       Common::Date{sessionStm.getStringColumn(0).value_or("")},
+                                       Common::Timestamp{sessionStm.getStringColumn(1).value_or("")}};
     session.addLaps(laps.value_or(std::vector<Common::LapData>{}));
     return session;
 }
@@ -138,6 +158,45 @@ bool SqliteSessionDatabase::storeNewSession(const Common::SessionData &session)
     }
     sessionAdded.emit(0);
     return true;
+}
+
+std::optional<std::size_t> SqliteSessionDatabase::getSessionIdOfIndex(std::size_t sessionIndex) const noexcept
+{
+    // clang-format off
+    constexpr auto sessionIdsQuery = "SELECT "
+                                        "Session.SessionId "
+                                    "FROM "
+                                        "Session";
+    // clang-format on
+    auto sessionIdsStm = Statement{mDbConnection};
+    if (sessionIdsStm.prepare(sessionIdsQuery) != PrepareResult::Ok)
+    {
+        std::cout << "Failed to prepare query for session id of" << sessionIndex
+                  << ". Error: " << mDbConnection.getErrorMessage() << std::endl;
+        return std::nullopt;
+    }
+
+    auto sessionIds = std::vector<std::size_t>();
+    auto rowReadResult = ExecuteResult::Error;
+    while (((rowReadResult = sessionIdsStm.execute()) == ExecuteResult::Row) && (sessionIdsStm.getColumnCount() > 0))
+    {
+        const auto sessionId = sessionIdsStm.getIntColumn(0);
+        if (sessionId.has_value())
+        {
+            sessionIds.push_back(*sessionId);
+        }
+        else
+        {
+            return std::nullopt;
+        }
+    }
+
+    if (sessionIndex > sessionIds.size())
+    {
+        return std::nullopt;
+    }
+
+    return sessionIds[sessionIndex];
 }
 
 std::optional<std::size_t> SqliteSessionDatabase::getSessionId(const Common::SessionData &session) const noexcept
