@@ -83,6 +83,32 @@ SessionData createSession3()
     return session;
 }
 
+SessionData createSession4()
+{
+    Date sessionDate;
+    sessionDate.setYear(1970);
+    sessionDate.setMonth(2);
+    sessionDate.setDay(1);
+    Timestamp sessionTime;
+    sessionTime.setHour(15);
+
+    Timestamp sectorTime;
+    sectorTime.setFractionalOfSecond(144);
+    sectorTime.setSecond(25);
+
+    LapData lap;
+    lap.addSectorTime(sectorTime);
+    lap.addSectorTime(sectorTime);
+    lap.addSectorTime(sectorTime);
+    lap.addSectorTime(sectorTime);
+
+    auto session = SessionData{Tracks::getOscherslebenTrack2(), sessionDate, sessionTime};
+    session.addLap(lap);
+    session.addLap(lap);
+
+    return session;
+}
+
 SessionData getTestSession3()
 {
     return createSession3();
@@ -140,6 +166,11 @@ const char *getTestSessionAsJson()
     };
     // clang-format on
     return &TestSessionAsJson[0];
+}
+
+SessionData getTestSession4()
+{
+    return createSession4();
 }
 
 } // namespace LaptimerCore::TestHelper::Sessions

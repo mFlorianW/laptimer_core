@@ -18,7 +18,28 @@ public:
     virtual ~ISessionDatabase() = default;
 
     /**
-     * Gives the number of stored sessions
+     * Deleted copy constructor
+     */
+    ISessionDatabase(const ISessionDatabase &other) = delete;
+
+    /**
+     * Deleted copy assignment operator
+     */
+    ISessionDatabase &operator=(const ISessionDatabase &other) = delete;
+
+    /**
+     * Deleted move constructor
+     */
+    ISessionDatabase(ISessionDatabase &&ohter) = delete;
+
+    /**
+     * Deleted move assignemnt operator
+     */
+    ISessionDatabase &operator=(ISessionDatabase &&other) = delete;
+
+    /**
+     * Gives the number of stored sessions and defines the width of indexs. The session
+     * are accessable from 0...[SessionCount].
      * @return The number of stored sessions.
      */
     virtual std::size_t getSessionCount() = 0;
