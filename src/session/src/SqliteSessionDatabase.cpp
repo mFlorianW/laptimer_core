@@ -8,8 +8,8 @@ namespace LaptimerCore::Session
 {
 
 SqliteSessionDatabase::SqliteSessionDatabase(const std::string &databaseFile)
+    : mDbConnection{Connection::connection(databaseFile)}
 {
-    mDbConnection.open(databaseFile);
 }
 
 SqliteSessionDatabase::~SqliteSessionDatabase() = default;
@@ -389,8 +389,7 @@ std::optional<Common::TrackData> SqliteSessionDatabase::getTrack(std::size_t tra
     auto sections = std::vector<LaptimerCore::Common::PositionData>{};
     while (sektorStm.execute() == ExecuteResult::Row && sektorStm.getColumnCount() == 2)
     {
-        sections.emplace_back(
-            Common::PositionData{sektorStm.getFloatColumn(0).value_or(0), sektorStm.getFloatColumn(1).value_or(0)});
+        sections.emplace_back(sektorStm.getFloatColumn(0).value_or(0), sektorStm.getFloatColumn(1).value_or(0));
     }
     track.setSections(sections);
     return track;

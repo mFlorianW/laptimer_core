@@ -72,7 +72,7 @@ private:
     std::optional<Common::TrackData> getTrack(std::size_t trackId) const noexcept;
     bool storeLapOfSession(std::size_t sessionId, std::size_t lapIndex, const Common::LapData &lapData) const noexcept;
 
-    Private::SqliteHelper::Connection mDbConnection{};
+    Private::SqliteHelper::Connection &mDbConnection;
 };
 
 } // namespace LaptimerCore::Session

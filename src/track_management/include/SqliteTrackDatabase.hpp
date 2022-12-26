@@ -70,7 +70,7 @@ private:
     std::vector<std::size_t> getTrackIds() const noexcept;
     std::optional<std::size_t> getTrackIdOfIndex(std::size_t trackIndex) const noexcept;
 
-    LaptimerCore::Private::SqliteHelper::Connection mDbConnection{};
+    LaptimerCore::Private::SqliteHelper::Connection &mDbConnection;
 };
 
 } // namespace LaptimerCore::TrackManagement

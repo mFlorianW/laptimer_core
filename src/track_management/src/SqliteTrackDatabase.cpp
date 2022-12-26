@@ -10,9 +10,8 @@ namespace LaptimerCore::TrackManagement
 {
 
 SqliteTrackDatabase::SqliteTrackDatabase(const std::string &pathToDatabase)
+    : mDbConnection{Connection::connection(pathToDatabase)}
 {
-    // TODO log error when fails.
-    mDbConnection.open(pathToDatabase);
 }
 
 SqliteTrackDatabase::~SqliteTrackDatabase() = default;

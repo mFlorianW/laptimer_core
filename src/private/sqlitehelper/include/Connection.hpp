@@ -6,14 +6,6 @@
 
 namespace LaptimerCore::Private::SqliteHelper
 {
-/**
- * Return codes for opening the database.
- */
-enum class OpenResult
-{
-    Ok,
-    Error
-};
 
 /**
  * This Sqlite database connection. A connection is unique and is not copyable nor movable.
@@ -22,9 +14,11 @@ class Connection final
 {
 public:
     /**
-     * Creates an Connection instance
+     * Create the connection instance for the process it's only possible to have connection
+     * per process. This for the reason to correctly handle changes on the database.
+     * @param database The path to the SQLite Database file.
      */
-    Connection() = default;
+    static Connection &connection(const std::string &database);
 
     /**
      * Default empty constructor
@@ -52,21 +46,12 @@ public:
     Connection &operator=(Connection &&other) = delete;
 
     /**
-     * Tries to open the sqlite3 database for the given string.
-     * @param database The path to the database.
-     * @return On success returns OpenResult::Successful otherwise
-     */
-    OpenResult open(const std::string &database);
-
-    /**
      * Gives the last reported error message of the database. The function should be called when an operation of the
      * database failed. The error message is only after calling  @ref open() with OpenResult::Successful.
      * @return The error message of the database as string.
      */
     std::string getErrorMessage() const noexcept;
 
-private:
-    friend class Statement;
     /**
      * Gives the raw handle to the database. It's only valid after calling @open() with a positive result.
      * @return If connection is correctly created the valid handle otherwise a nullptr.
@@ -74,7 +59,14 @@ private:
     sqlite3 *getRawHandle() const noexcept;
 
 private:
-    sqlite3 *mHandle;
+    /**
+     * Tries to open the sqlite3 database for the given string.
+     * @param database The path to the database.
+     */
+    Connection(const std::string &database);
+
+private:
+    sqlite3 *mHandle{nullptr};
 };
 
 } // namespace LaptimerCore::Private::SqliteHelper
