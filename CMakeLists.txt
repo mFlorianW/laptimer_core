@@ -15,6 +15,8 @@ option(ENABLE_CATCH2_FETCH "This option enables that catch2 is fetched in config
 option(ENABLE_KDBINDINGS_FETCH "This option enables that KDBindings is fetched in configuration" ON)
 option(ENABLE_ARDUINOJSON_FETCH "This option enables that ARDUIONJSON is fetched in configuration" ON)
 option(ENABLE_LVGL_FETCH "This option enables that LVGL is fetched in configuration" ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 
 if(ENABLE_KDBINDINGS_FETCH)
     FetchContent_Declare(

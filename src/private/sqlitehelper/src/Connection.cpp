@@ -1,7 +1,14 @@
 #include "Connection.hpp"
+#include <iostream>
 
 namespace LaptimerCore::Private::SqliteHelper
 {
+
+Connection &Connection::connection(const std::string &database)
+{
+    static auto connection = Connection{database};
+    return connection;
+}
 
 Connection::~Connection()
 {
@@ -11,7 +18,7 @@ Connection::~Connection()
     }
 }
 
-OpenResult Connection::open(const std::string &database)
+Connection::Connection(const std::string &database)
 {
     if (mHandle != nullptr)
     {
@@ -21,10 +28,11 @@ OpenResult Connection::open(const std::string &database)
     if (sqlite3_open(database.c_str(), &mHandle) == SQLITE_OK)
     {
         sqlite3_exec(mHandle, "PRAGMA foreign_keys = 1", nullptr, nullptr, nullptr);
-        return OpenResult::Ok;
+        return;
     }
 
-    return OpenResult::Error;
+    std::cout << "Exiting failed to create database connection" << std::endl;
+    std::exit(255);
 }
 
 std::string Connection::getErrorMessage() const noexcept
