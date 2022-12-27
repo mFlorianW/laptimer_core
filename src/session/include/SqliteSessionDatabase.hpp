@@ -3,6 +3,7 @@
 
 #include "ISessionDatabase.hpp"
 #include <Connection.hpp>
+#include <map>
 
 namespace LaptimerCore::Session
 {
@@ -72,7 +73,12 @@ private:
     std::optional<Common::TrackData> getTrack(std::size_t trackId) const noexcept;
     bool storeLapOfSession(std::size_t sessionId, std::size_t lapIndex, const Common::LapData &lapData) const noexcept;
 
+    static void handleUpdates(void *objPtr, int event, char const *database, char const *table, sqlite3_int64 rowId);
+
+    void updateIndexMapper();
+
     Private::SqliteHelper::Connection &mDbConnection;
+    std::map<std::size_t, std::size_t> mIndexMapper;
 };
 
 } // namespace LaptimerCore::Session
