@@ -1,5 +1,6 @@
 #include "SqliteSessionDatabase.hpp"
 #include <Statement.hpp>
+#include <cstring>
 #include <iostream>
 
 using namespace LaptimerCore::Private::SqliteHelper;
@@ -10,27 +11,16 @@ namespace LaptimerCore::Session
 SqliteSessionDatabase::SqliteSessionDatabase(const std::string &databaseFile)
     : mDbConnection{Connection::connection(databaseFile)}
 {
+    auto *rawHandle = mDbConnection.getRawHandle();
+    sqlite3_update_hook(rawHandle, &SqliteSessionDatabase::handleUpdates, this);
+    updateIndexMapper();
 }
 
 SqliteSessionDatabase::~SqliteSessionDatabase() = default;
 
 std::size_t SqliteSessionDatabase::getSessionCount()
 {
-    // clang-format off
-    constexpr auto countSessionsQuery = "SELECT "
-                                            "COUNT(Session.SessionId) "
-                                        "FROM "
-                                            "Session";
-    // clang-format on
-    auto countSessionsStm = Statement{mDbConnection};
-    if ((countSessionsStm.prepare(countSessionsQuery) != PrepareResult::Ok) ||
-        (countSessionsStm.execute() != ExecuteResult::Row) || (countSessionsStm.getColumnCount() < 1))
-    {
-        std::cout << "Failed to query session count. Error:" << mDbConnection.getErrorMessage() << std::endl;
-        return 0;
-    }
-
-    return countSessionsStm.getIntColumn(0).value_or(0);
+    return mIndexMapper.size();
 }
 
 std::optional<Common::SessionData> SqliteSessionDatabase::getSessionByIndex(std::size_t index) const noexcept
@@ -43,15 +33,15 @@ std::optional<Common::SessionData> SqliteSessionDatabase::getSessionByIndex(std:
                                   "WHERE "
                                     "Session.SessionId = ?";
     // clang-format on
-    const auto sessionId = getSessionIdOfIndex(index);
-    if (!sessionId.has_value())
+    const auto sessionIndex = mIndexMapper.find(index);
+    if (sessionIndex == mIndexMapper.cend())
     {
         return std::nullopt;
     }
 
     auto sessionStm = Statement{mDbConnection};
     if ((sessionStm.prepare(sessionQuery) != PrepareResult::Ok) ||
-        (sessionStm.bindIntValue(1, static_cast<int>(*sessionId)) != BindResult::Ok) ||
+        (sessionStm.bindIntValue(1, static_cast<int>(sessionIndex->second)) != BindResult::Ok) ||
         (sessionStm.execute() != ExecuteResult::Row) || (sessionStm.getColumnCount() < 3))
     {
         std::cout << "Error query session:" << mDbConnection.getErrorMessage() << std::endl;
@@ -65,7 +55,7 @@ std::optional<Common::SessionData> SqliteSessionDatabase::getSessionByIndex(std:
         return std::nullopt;
     }
 
-    auto laps = getLapsOfSession(*sessionId);
+    auto laps = getLapsOfSession(sessionIndex->second);
     if (!laps.has_value())
     {
         return std::nullopt;
@@ -97,8 +87,8 @@ void SqliteSessionDatabase::deleteSession(std::size_t index)
                                         "WHERE "
                                             "Session.SessionId = ?";
     // clang-format on
-    const auto sessionId = getSessionIdOfIndex(index);
-    if (!sessionId.has_value())
+    const auto sessionIndex = mIndexMapper.find(index);
+    if (sessionIndex == mIndexMapper.cend())
     {
         std::cout << "Failed to delete session under index" << index << " not found." << std::endl;
         return;
@@ -106,12 +96,13 @@ void SqliteSessionDatabase::deleteSession(std::size_t index)
 
     auto sessionDeleteStm = Statement{mDbConnection};
     if ((sessionDeleteStm.prepare(sessionDeleteQuery) != PrepareResult::Ok) ||
-        (sessionDeleteStm.bindIntValue(1, static_cast<int>(*sessionId)) != BindResult::Ok) ||
+        (sessionDeleteStm.bindIntValue(1, static_cast<int>(sessionIndex->second)) != BindResult::Ok) ||
         (sessionDeleteStm.execute() != ExecuteResult::Ok))
     {
         std::cout << "Failed to delete session under index" << index << "Error:" << mDbConnection.getErrorMessage()
                   << std::endl;
     }
+    updateIndexMapper();
     sessionDeleted.emit(index);
 }
 
@@ -185,6 +176,8 @@ bool SqliteSessionDatabase::storeNewSession(const Common::SessionData &session)
             return false;
         }
     }
+
+    updateIndexMapper();
     const auto addedIndex = getSessionCount() > 0 ? getSessionCount() - 1 : 0;
     sessionAdded.emit(addedIndex);
     return true;
@@ -258,10 +251,10 @@ std::vector<std::size_t> SqliteSessionDatabase::getSessionIds() const noexcept
     auto rowReadResult = ExecuteResult::Error;
     while (((rowReadResult = sessionIdsStm.execute()) == ExecuteResult::Row) && (sessionIdsStm.getColumnCount() > 0))
     {
-        const auto sessionId = sessionIdsStm.getIntColumn(0);
-        if (sessionId.has_value())
+        const auto sessionIndex = sessionIdsStm.getIntColumn(0);
+        if (sessionIndex.has_value())
         {
-            sessionIds.push_back(*sessionId);
+            sessionIds.push_back(*sessionIndex);
         }
         else
         {
@@ -443,6 +436,66 @@ bool SqliteSessionDatabase::storeLapOfSession(std::size_t sessionId,
         }
     }
     return true;
+}
+
+void SqliteSessionDatabase::handleUpdates(void *objPtr,
+                                          int event,
+                                          char const *database,
+                                          char const *table,
+                                          sqlite3_int64 rowId)
+{
+    constexpr auto sessionTable = "Session";
+    if ((event == SQLITE_DELETE) && (std::strcmp(table, sessionTable) == 0))
+    {
+        auto sessionDatabase = static_cast<SqliteSessionDatabase *>(objPtr);
+        for (const auto &[index, sessionId] : sessionDatabase->mIndexMapper)
+        {
+            if (sessionId == static_cast<std::size_t>(rowId))
+            {
+                sessionDatabase->sessionDeleted.emit(index);
+                sessionDatabase->mIndexMapper.erase(index);
+                break;
+            }
+        }
+    }
+}
+
+void SqliteSessionDatabase::updateIndexMapper()
+{
+    // clang-format off
+    constexpr auto sessionIdsQuery = "SELECT "
+                                          "Session.SessionId "
+                                      "FROM "
+                                          "Session "
+                                      "ORDER BY "
+                                          "Session.SessionId  "
+                                      "ASC";
+    // clang-format on
+    auto sessionIdsStm = Statement{mDbConnection};
+    if (sessionIdsStm.prepare(sessionIdsQuery) != PrepareResult::Ok)
+    {
+        std::cout << "Failed to query session count. Error:" << mDbConnection.getErrorMessage() << std::endl;
+        return;
+    }
+
+    mIndexMapper.clear();
+    auto executeResult = ExecuteResult::Error;
+    auto index = std::size_t{0};
+    while (((executeResult = sessionIdsStm.execute()) == ExecuteResult::Row) && (sessionIdsStm.getColumnCount() == 1))
+    {
+        const auto sessionId = sessionIdsStm.getIntColumn(0);
+        if (sessionId.has_value())
+        {
+            mIndexMapper.emplace(index, *sessionId);
+            ++index;
+        }
+    }
+
+    if (executeResult != ExecuteResult::Ok)
+    {
+        mIndexMapper.clear();
+        std::cout << "Failed to query all session ids. Error:" << mDbConnection.getErrorMessage() << std::endl;
+    }
 }
 
 } // namespace LaptimerCore::Session

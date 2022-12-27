@@ -1,12 +1,15 @@
 #define CATCH_CONFIG_MAIN
 #include "Sessions.hpp"
 #include "SqliteSessionDatabase.hpp"
+#include <Connection.hpp>
 #include <SqliteDatabaseTestHelper.hpp>
 #include <catch2/catch.hpp>
+#include <sqlite3.h>
 
 using namespace LaptimerCore::Session;
 using namespace LaptimerCore::TestHelper;
 using namespace LaptimerCore::TestHelper::SqliteDatabaseTestHelper;
+using namespace LaptimerCore::Private::SqliteHelper;
 
 namespace
 {
@@ -146,4 +149,23 @@ TEST_CASE(
     db.deleteSession(indexToDelete);
     REQUIRE(deletedIndex == indexToDelete);
     REQUIRE(db.getSessionCount() == 1);
+}
+
+TEST_CASE("The SqlieSessionDatabase shall emit session deteled on referential integrity changes")
+{
+    auto db = SqliteSessionDatabase{getTestDatabseFile("test_session.db")};
+    const auto session1 = Sessions::getTestSession3();
+    auto deletedIndex = std::size_t{123456};
+    constexpr auto indexToDelete = 0;
+
+    REQUIRE(db.storeSession(session1) == true);
+    db.sessionDeleted.connect([&deletedIndex](std::size_t index) { deletedIndex = index; });
+
+    // Delete the Oschersleben Track these commands should trigger the referential integrity changes
+    // and that should also delete session in the database.
+    auto *dbCon = Connection::connection(getTestDatabseFile("test_session.db")).getRawHandle();
+    REQUIRE(sqlite3_exec(dbCon, "DELETE FROM Track WHERE Track.Name = 'Oschersleben'", nullptr, nullptr, nullptr) ==
+            SQLITE_OK);
+
+    REQUIRE(deletedIndex == indexToDelete);
 }
