@@ -58,7 +58,7 @@ void MainWindowViewModel::stopGpsSource()
 
 void MainWindowViewModel::loadGpsFile(const QUrl &fileName)
 {
-    auto fileReader = QtShell::CsvGpsFileReader{};
+    auto fileReader = LaptimerCore::Positioning::Qt::CsvGpsFileReader{};
     fileReader.setFileName(fileName.toLocalFile());
     if (!fileReader.read())
     {
