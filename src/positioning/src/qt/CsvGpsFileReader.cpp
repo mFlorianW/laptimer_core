@@ -2,7 +2,7 @@
 #include <QDebug>
 #include <QFile>
 
-namespace LaptimerCore::QtShell
+namespace LaptimerCore::Positioning::Qt
 {
 
 void CsvGpsFileReader::setFileName(const QString &fileName)
@@ -59,4 +59,4 @@ std::vector<LaptimerCore::Common::PositionData> CsvGpsFileReader::getPostions() 
     return mPositions;
 }
 
-} // namespace LaptimerCore::QtShell
+} // namespace LaptimerCore::Positioning::Qt

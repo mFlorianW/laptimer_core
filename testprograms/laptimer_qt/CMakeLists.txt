@@ -15,6 +15,7 @@ PRIVATE
 target_link_libraries(laptimer_qt
 PRIVATE
     LaptimerCore::QtShell
+    LaptimerCore::PositioningQt
     Qt5::Core
     Qt5::Gui
     Qt5::Widgets

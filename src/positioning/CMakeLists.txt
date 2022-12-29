@@ -23,3 +23,29 @@ PUBLIC
     LaptimerCore::Common
     KDAB::KDBindings
 )
+
+
+#TODO: Add global option to disable all Qtbased Components entirely
+find_package(Qt5 REQUIRED COMPONENTS Core)
+
+add_library(PositioningQt SHARED)
+add_library(LaptimerCore::PositioningQt ALIAS PositioningQt)
+
+target_sources(PositioningQt
+PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/qt/CsvGpsFileReader.cpp
+PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/qt/CsvGpsFileReader.hpp
+)
+
+target_include_directories(PositioningQt
+PUBLIC
+    $<INSTALL_INTERFACE:include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/qt>
+)
+
+target_link_libraries(PositioningQt
+PUBLIC
+    LaptimerCore::Positioning
+    Qt5::Core
+)
