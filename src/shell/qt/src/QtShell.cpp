@@ -37,7 +37,7 @@ QtShell::~QtShell() = default;
 void QtShell::show()
 {
     QObject *topLevel = d->engine.rootObjects().value(0);
-    QQuickWindow *window = qobject_cast<QQuickWindow *>(topLevel);
+    auto *window = qobject_cast<QQuickWindow *>(topLevel);
     window->show();
 }
 
