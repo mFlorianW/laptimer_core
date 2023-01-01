@@ -1,0 +1,53 @@
+#pragma once
+
+#include "RestRequest.hpp"
+namespace LaptimerCore::Rest
+{
+
+enum class RequestHandleResult
+{
+    Ok,
+    Error
+};
+
+class IRestRequestHandler
+{
+public:
+    /**
+     * Defalut destructor
+     */
+    virtual ~IRestRequestHandler() = default;
+
+    /**
+     * Deleted copy constructor.
+     */
+    IRestRequestHandler(const IRestRequestHandler &other) = delete;
+
+    /**
+     * Deleted copy assignment operator
+     */
+    IRestRequestHandler &operator=(const IRestRequestHandler &other) = delete;
+
+    /**
+     * Deleted move constructor
+     */
+    IRestRequestHandler(IRestRequestHandler &&other) = delete;
+
+    /**
+     * Deleted move assignment operator
+     */
+    IRestRequestHandler &operator=(const IRestRequestHandler &&other) = delete;
+
+    /**
+     * Function that is called when the handler is registered in the RestServer.
+     * @param request The Request that the service receives and that shall be handled.
+     * @return RequestHandleResult::Ok The Request is correctly handled.
+     * @return RequestHandleResult::Error The Request couldn't be handled.
+     */
+    virtual RequestHandleResult handleRestRequest(const RestRequest &request) = 0;
+
+protected:
+    IRestRequestHandler() = default;
+};
+
+} // namespace LaptimerCore::Rest
