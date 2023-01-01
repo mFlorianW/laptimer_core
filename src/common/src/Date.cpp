@@ -121,8 +121,8 @@ Date Date::getSystemDate() noexcept
     const auto time = std::localtime(&timeT);
 
     auto date = Date{};
-    date.setYear(time->tm_year);
-    date.setMonth(time->tm_mon);
+    date.setYear(1900 + time->tm_year); // The year is relativ to 1900.
+    date.setMonth(++time->tm_mon); // The month is in the range 0-11.
     date.setDay(time->tm_mday);
     return date;
 }
