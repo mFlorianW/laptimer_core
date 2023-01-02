@@ -58,12 +58,17 @@ public:
      * Registers a POST method handler in the server. The handler is called when a request for the registered type is
      * received. The server can only have one handle for each type at the time. The last set handle for a type is called
      * by the server.
+     *
+     * @note
+     * The Server doesn't take any ownership about the handler object. The caller must guarantee that object lives as
+     * long as the server.
+     *
      * @param type The type to register the handler.
      * @param handler The handler object that is called when the type receives a request.
      */
-    virtual void registerPostHandler(PostHandler type, IRestRequestHandler &handler) noexcept;
+    virtual void registerPostHandler(PostHandler type, IRestRequestHandler *handler) noexcept;
 
-private:
+protected:
     IRestServer() = default;
 };
 } // namespace LaptimerCore::Rest

@@ -24,27 +24,27 @@ public:
      * Copy constructor for RestRequest.
      * @param other The object to copy from.
      */
-    RestRequest(const RestRequest &other) noexcept;
+    RestRequest(const RestRequest &other) noexcept = default;
 
     /**
      * Copy assignment operator for RestRequest.
      * @param other The object to copy from.
      * @return RestRequest& A reference to the copied instance.
      */
-    RestRequest &operator=(const RestRequest &other) noexcept;
+    RestRequest &operator=(const RestRequest &other) noexcept = default;
 
     /**
      * The move constructor for RestRequest.
      * @param other The object to move from.
      */
-    RestRequest(RestRequest &&other) noexcept;
+    RestRequest(RestRequest &&other) noexcept = default;
 
     /**
      * The move assignment operator for RestRequest.
      * @param other The object to move from.
      * @return RestRequest& A reference of the moved instance.
      */
-    RestRequest &operator=(RestRequest &&other) noexcept;
+    RestRequest &operator=(RestRequest &&other) noexcept = default;
 
     /**
      * Gives the raw data of the request for further processing.

@@ -20,10 +20,6 @@ RestRequest::RestRequest(const std::string &rawData) noexcept
 }
 
 RestRequest::~RestRequest() noexcept = default;
-RestRequest::RestRequest(const RestRequest &other) noexcept = default;
-RestRequest &RestRequest::operator=(const RestRequest &other) noexcept = default;
-RestRequest::RestRequest(RestRequest &&other) noexcept = default;
-RestRequest &RestRequest::operator=(RestRequest &&other) noexcept = default;
 
 std::string_view RestRequest::getRawData() const noexcept
 {
