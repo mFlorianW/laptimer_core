@@ -35,8 +35,8 @@ void RestHttpClient::sendPosition(const LaptimerCore::Common::PositionDateTimeDa
 
     auto positionObject = QJsonObject{{"latitude", {position.getPosition().getLatitude()}},
                                       {"longitude", {position.getPosition().getLongitude()}},
-                                      {"date:", {QString::fromStdString(position.getDate().asString())}},
-                                      {"time:", {QString::fromStdString(position.getTime().asString())}}};
+                                      {"date", {QString::fromStdString(position.getDate().asString())}},
+                                      {"time", {QString::fromStdString(position.getTime().asString())}}};
     auto body = QJsonDocument{positionObject};
 
     auto *reply = d->mNetworkAccessManager.post(request, body.toJson());
