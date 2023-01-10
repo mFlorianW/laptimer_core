@@ -12,7 +12,6 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/JsonSerializer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/JsonDeserializer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/PositionDateTimeData.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Timer.cpp
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/TrackData.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/PositionData.hpp
@@ -24,7 +23,6 @@ PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/JsonSerializer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/JsonDeserializer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/PositionDateTimeData.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/Timer.hpp
 )
 
 target_include_directories(CommonObject
