@@ -62,7 +62,7 @@ private:
     };
 
     float mSpeed{0};
-    Common::Timer mTickTimer;
+    System::Timer mTickTimer;
     std::vector<Point> mTrackData;
     std::vector<Point>::const_iterator mTrackDataIt;
     Point mCurrentPosition;

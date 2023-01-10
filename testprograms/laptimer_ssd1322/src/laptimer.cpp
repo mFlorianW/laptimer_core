@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
         lv_task_handler();
-        LaptimerCore::Common::handleTimerTicks();
+        LaptimerCore::System::handleTimerTicks();
         usleep(5 * 1000);
     }
 }

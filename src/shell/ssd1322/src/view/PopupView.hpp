@@ -88,7 +88,7 @@ private:
 
     lv_obj_t *mMainText{nullptr};
     lv_obj_t *mSecondaryText{nullptr};
-    LaptimerCore::Common::Timer mAutoClosingTimer;
+    LaptimerCore::System::Timer mAutoClosingTimer;
 };
 
 #endif //! POPUPVIEW_HPP
