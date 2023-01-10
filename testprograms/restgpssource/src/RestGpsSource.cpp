@@ -22,7 +22,7 @@ RestGpsSource::RestGpsSource()
     // TODO: move this in somehow in the mainloop
     d->mLaptimerCoreTimer.setInterval(std::chrono::milliseconds(5));
     QObject::connect(&d->mLaptimerCoreTimer, &QTimer::timeout, &d->mLaptimerCoreTimer, [=]() {
-        LaptimerCore::Common::handleTimerTicks();
+        LaptimerCore::System::handleTimerTicks();
     });
     d->mLaptimerCoreTimer.start();
 }

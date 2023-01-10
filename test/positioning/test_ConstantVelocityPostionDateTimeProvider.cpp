@@ -6,6 +6,7 @@
 
 using namespace LaptimerCore::Positioning;
 using namespace LaptimerCore::Common;
+using namespace LaptimerCore::System;
 
 TEST_CASE("The ConstantVelocityPositionDateTimeProvider shall interpolate the position between two points if the given "
           "point data is insufficent.")

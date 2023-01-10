@@ -1,12 +1,12 @@
 #include "Timer.hpp"
 #include <unordered_set>
 
-namespace LaptimerCore::Common
+namespace LaptimerCore::System
 {
 
 struct TimerRegister
 {
-    std::unordered_set<Timer *> timers;
+    std::unordered_set<Timer *> timers{};
 
     void handleAllTimerTicks()
     {
@@ -91,4 +91,4 @@ void Timer::handleTicks()
     }
 }
 
-} // namespace LaptimerCore::Common
+} // namespace LaptimerCore::System

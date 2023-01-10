@@ -27,7 +27,7 @@ QtShell::QtShell()
     // TODO: move this in somehow in the mainloop
     d->laptimerCoreTimer.setInterval(5);
     QObject::connect(&d->laptimerCoreTimer, &QTimer::timeout, &d->laptimerCoreTimer, [=]() {
-        Common::handleTimerTicks();
+        System::handleTimerTicks();
     });
     d->laptimerCoreTimer.start();
 }

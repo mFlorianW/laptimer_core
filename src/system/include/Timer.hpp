@@ -4,7 +4,7 @@
 #include <chrono>
 #include <kdbindings/signal.h>
 
-namespace LaptimerCore::Common
+namespace LaptimerCore::System
 {
 /**
  * This function must be called frequently in the main loop,
@@ -66,6 +66,6 @@ private:
     bool mRunning{false};
 };
 
-} // namespace LaptimerCore::Common
+} // namespace LaptimerCore::System
 
 #endif // TIMER_HPP
