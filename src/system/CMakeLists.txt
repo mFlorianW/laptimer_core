@@ -4,8 +4,10 @@ add_library(LaptimerCore::System ALIAS System)
 target_sources(System
 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Timer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/FutureWatcher.cpp
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Timer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/FutureWatcher.hpp
 )
 
 target_link_libraries(System

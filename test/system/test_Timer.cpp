@@ -3,7 +3,7 @@
 #include <catch2/catch.hpp>
 #include <thread>
 
-using namespace LaptimerCore::Common;
+using namespace LaptimerCore::System;
 
 TEST_CASE("The timer shall emit the timeout event after the elapsed time set by the interval.")
 {
