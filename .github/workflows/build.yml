@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: install dependencies
-        run: sudo apt install libsdl2-dev
+        run: sudo apt update && sudo apt install libsdl2-dev
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
