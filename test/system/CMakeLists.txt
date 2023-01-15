@@ -6,4 +6,9 @@ target_link_libraries(test_Timer PRIVATE Catch2::Catch2 LaptimerCore::System)
 add_executable(test_FutureWatcher test_FutureWatcher.cpp)
 target_link_libraries(test_FutureWatcher PRIVATE Catch2::Catch2 LaptimerCore::System)
 
+add_executable(test_SignalDispatcher test_SignalDispatcher.cpp)
+target_link_libraries(test_SignalDispatcher PRIVATE Catch2::Catch2 LaptimerCore::System)
+
 catch_discover_tests(test_Timer)
+catch_discover_tests(test_FutureWatcher)
+catch_discover_tests(test_SignalDispatcher)
