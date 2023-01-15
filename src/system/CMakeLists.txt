@@ -5,9 +5,15 @@ target_sources(System
 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Timer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FutureWatcher.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/ISignalDispatcher.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/SignalDispatcher.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/SignalDispatcherRegistry.cpp
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Timer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/FutureWatcher.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/ISignalDispatcher.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/SignalDispatcher.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/SystemTypes.hpp
 )
 
 target_link_libraries(System
