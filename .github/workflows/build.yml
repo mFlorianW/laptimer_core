@@ -7,6 +7,12 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+  issues: read
+  checks: write
+  pull-requests: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,4 +30,8 @@ jobs:
       - name: make
         run: cmake --build --preset github-ci-debug
       - name: test
-        run: ctest --preset github-test -V
+        run: ctest --preset github-test -V --output-junit test_results.xml
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          junit_files: "build/github-ci-debug/test_results.xml"
