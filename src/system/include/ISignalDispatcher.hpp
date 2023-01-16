@@ -1,6 +1,8 @@
 #pragma once
 
-#include <IDispatcherObject.hpp>
+#include "IDispatcherObject.hpp"
+#include "SystemTypes.hpp"
+#include <thread>
 
 namespace LaptimerCore::System
 {
@@ -45,16 +47,20 @@ public:
      * Register an object for signal dispatching.
      * @param timer that shall be registered.
      */
-    virtual void registerObject(IDispatcherObject *obj) noexcept = 0;
+    virtual Result registerObject(IDispatcherObject *obj, const std::thread::id &id) noexcept = 0;
 
     /**
      * Unregister an object from signal dispatching.
      * @param timer that shall be unregistered.
      */
-    virtual void unregisterObject(IDispatcherObject *obj) noexcept = 0;
+    virtual Result unregisterObject(IDispatcherObject *obj, const std::thread::id &id) noexcept = 0;
 
     /**
-     * Gives the SignalDispatcher for the thread.
+     * Gives the SignalDispatcher for the thread if the functions returns a nullptr, that means that there
+     * is no SignalDispatcher created for the thread where the function got called.
+     * In that the case a SignalDispatcher instance must be created first. This behavior is on purpose so
+     * you can not accidently call this function from the wrong thread.
+     *
      * @return A SignalDispatcher for the thread.
      * @return A nullptr when no SignalDispatcher is present for the thread.
      */

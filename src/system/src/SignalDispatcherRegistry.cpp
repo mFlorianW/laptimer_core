@@ -9,17 +9,16 @@ SignalDispatcherRegistry &SignalDispatcherRegistry::getInstance() noexcept
     return registry;
 }
 
-RegisterResult SignalDispatcherRegistry::registerDispatcher(ISignalDispatcher *dispatcher,
-                                                            const std::thread::id &id) noexcept
+Result SignalDispatcherRegistry::registerDispatcher(ISignalDispatcher *dispatcher, const std::thread::id &id) noexcept
 {
     auto contains = mContexts.find(id);
     if (contains != mContexts.end())
     {
-        return RegisterResult::AlreadyRegistered;
+        return Result::Error;
     }
 
     mContexts.emplace(id, std::make_unique<SignalDispatcherContext>(dispatcher));
-    return RegisterResult::Ok;
+    return Result::Ok;
 }
 
 SignalDispatcherContext *SignalDispatcherRegistry::getContext(const std::thread::id &id) noexcept
