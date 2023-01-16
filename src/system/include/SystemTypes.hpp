@@ -1,21 +1,15 @@
 #pragma once
 
-#include "IDispatcherObject.hpp"
-#include "ISignalDispatcher.hpp"
-#include <unordered_set>
-
 namespace LaptimerCore::System
 {
 
-struct SignalDispatcherContext
+/**
+ * The result of operation which may fail.
+ */
+enum class Result
 {
-    SignalDispatcherContext(ISignalDispatcher *disp)
-        : dispatcher{disp}
-    {
-    }
-
-    ISignalDispatcher *dispatcher;
-    std::unordered_set<IDispatcherObject *> objects;
+    Ok, //< The opration is finshed sucessful
+    Error //< The operation failed
 };
 
 } // namespace LaptimerCore::System

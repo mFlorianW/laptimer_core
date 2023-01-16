@@ -13,6 +13,7 @@ PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/FutureWatcher.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/ISignalDispatcher.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SignalDispatcher.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/DispatcherTypes.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SystemTypes.hpp
 )
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "ISignalDispatcher.hpp"
-#include "SystemTypes.hpp"
+#include <thread>
 
 namespace LaptimerCore::System
 {
@@ -46,12 +46,15 @@ public:
     /**
      * @copydoc ISignalDispatcher::registerObject()
      */
-    void registerObject(IDispatcherObject *obj) noexcept override;
+    Result registerObject(IDispatcherObject *obj, const std::thread::id &id) noexcept override;
 
     /**
      * @copydoc ISignalDispatcher::unregisterObject()
      */
-    void unregisterObject(IDispatcherObject *obj) noexcept override;
+    Result unregisterObject(IDispatcherObject *obj, const std::thread::id &id) noexcept override;
+
+private:
+    std::thread::id mThreadId;
 };
 
 } // namespace LaptimerCore::System

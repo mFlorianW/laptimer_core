@@ -1,25 +1,20 @@
 #pragma once
 
+#include "DispatcherTypes.hpp"
 #include "ISignalDispatcher.hpp"
-#include "SystemTypes.hpp"
 #include <mutex>
 #include <thread>
 #include <unordered_map>
 
 namespace LaptimerCore::System
 {
-enum class RegisterResult
-{
-    Ok,
-    AlreadyRegistered,
-};
 
 class SignalDispatcherRegistry
 {
 public:
     static SignalDispatcherRegistry &getInstance() noexcept;
 
-    RegisterResult registerDispatcher(ISignalDispatcher *dispatcher, const std::thread::id &id) noexcept;
+    Result registerDispatcher(ISignalDispatcher *dispatcher, const std::thread::id &id) noexcept;
 
     SignalDispatcherContext *getContext(const std::thread::id &id) noexcept;
 
