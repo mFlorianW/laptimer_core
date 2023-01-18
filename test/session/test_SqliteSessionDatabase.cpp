@@ -7,6 +7,7 @@
 #include <sqlite3.h>
 
 using namespace LaptimerCore::Session;
+using namespace LaptimerCore::System;
 using namespace LaptimerCore::TestHelper;
 using namespace LaptimerCore::TestHelper::SqliteDatabaseTestHelper;
 using namespace LaptimerCore::Private::SqliteHelper;
@@ -49,12 +50,13 @@ TEST_CASE("The SqliteSessionDatabase shall store as session and shall emit the s
     });
 
     auto insertResult = db.storeSession(Sessions::getTestSession3());
-    REQUIRE(insertResult == true);
+    REQUIRE(insertResult->getResult() == Result::Ok);
     REQUIRE(addedIndex == 0);
     REQUIRE(sessionAddedSignalEmitted == true);
 
+    sessionAddedSignalEmitted = false;
     insertResult = db.storeSession(Sessions::getTestSession4());
-    REQUIRE(insertResult == true);
+    REQUIRE(insertResult->getResult() == Result::Ok);
     REQUIRE(addedIndex == 1);
     REQUIRE(sessionAddedSignalEmitted == true);
 }
@@ -66,7 +68,7 @@ TEST_CASE("The SqliteSessionDatabase shall store a session and the session shall
     db.sessionAdded.connect([&addedIndex](std::size_t index) { addedIndex = index; });
 
     const auto insertResult = db.storeSession(Sessions::getTestSession3());
-    REQUIRE(insertResult == true);
+    REQUIRE(insertResult->getResult() == Result::Ok);
     REQUIRE(addedIndex == 0);
 
     const auto readResult = db.getSessionByIndex(addedIndex);
@@ -82,9 +84,9 @@ TEST_CASE("The SqliteSessionDatabase shall store a already stored session under 
     db.sessionUpdated.connect([&updatedIndex](std::size_t index) { updatedIndex = index; });
 
     auto insertResult = db.storeSession(Sessions::getTestSession3());
-    REQUIRE(insertResult == true);
+    REQUIRE(insertResult->getResult() == Result::Ok);
     insertResult = db.storeSession(Sessions::getTestSession4());
-    REQUIRE(insertResult == true);
+    REQUIRE(insertResult->getResult() == Result::Ok);
 
     auto lapData = LaptimerCore::Common::LapData{};
     lapData.addSectorTimes({{"00:23:32.003"}, {"00:23:32.004"}, {"00:23:32.005"}});
@@ -94,12 +96,12 @@ TEST_CASE("The SqliteSessionDatabase shall store a already stored session under 
     session2.addLap(lapData);
 
     insertResult = db.storeSession(session1);
-    REQUIRE(insertResult == true);
+    REQUIRE(insertResult->getResult() == Result::Ok);
     REQUIRE(updatedIndex == 0);
     REQUIRE(db.getSessionByIndex(0) == session1);
 
     insertResult = db.storeSession(session2);
-    REQUIRE(insertResult == true);
+    REQUIRE(insertResult->getResult() == Result::Ok);
     REQUIRE(updatedIndex == 1);
     REQUIRE(db.getSessionByIndex(1) == session2);
 }
@@ -114,10 +116,9 @@ TEST_CASE("The SqliteSessionDatabase shall gives the number of stored sessions a
 
     // Prepare database.
     auto storeResult = db.storeSession(session1);
-    REQUIRE(storeResult == true);
-    storeResult = false;
+    REQUIRE(storeResult->getResult() == Result::Ok);
     storeResult = db.storeSession(session2);
-    REQUIRE(storeResult == true);
+    REQUIRE(storeResult->getResult() == Result::Ok);
 
     const auto sessionCount = db.getSessionCount();
     REQUIRE(sessionCount == expectedSessionCount);
@@ -140,10 +141,9 @@ TEST_CASE(
 
     // Prepare database.
     auto storeResult = db.storeSession(session1);
-    REQUIRE(storeResult == true);
-    storeResult = false;
+    REQUIRE(storeResult->getResult() == Result::Ok);
     storeResult = db.storeSession(session2);
-    REQUIRE(storeResult == true);
+    REQUIRE(storeResult->getResult() == Result::Ok);
     REQUIRE(db.getSessionCount() == 2);
 
     db.deleteSession(indexToDelete);
@@ -158,7 +158,7 @@ TEST_CASE("The SqlieSessionDatabase shall emit session deteled on referential in
     auto deletedIndex = std::size_t{123456};
     constexpr auto indexToDelete = 0;
 
-    REQUIRE(db.storeSession(session1) == true);
+    REQUIRE(db.storeSession(session1)->getResult() == Result::Ok);
     db.sessionDeleted.connect([&deletedIndex](std::size_t index) { deletedIndex = index; });
 
     // Delete the Oschersleben Track these commands should trigger the referential integrity changes

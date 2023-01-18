@@ -19,7 +19,7 @@ public:
     /**
      * Default Destructor
      */
-    virtual ~SessionDatabase();
+    ~SessionDatabase() override;
 
     /**
      * Gives the number of stored session.
@@ -37,7 +37,7 @@ public:
     /**
      * @copydoc ISessionDatabase::storeSession(const Common::SessionData &session)
      */
-    bool storeSession(const Common::SessionData &session) override;
+    std::shared_ptr<System::AsyncResult> storeSession(const Common::SessionData &session) override;
 
     /**
      * @copydoc ISessionDatabase::deleteSession(std::size_t index)

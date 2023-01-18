@@ -1,8 +1,10 @@
 #ifndef ISESSIONDATABASE_HPP
 #define ISESSIONDATABASE_HPP
 
+#include "AsyncResult.hpp"
 #include "SessionData.hpp"
 #include <kdbindings/signal.h>
+#include <memory>
 
 namespace LaptimerCore::Session
 {
@@ -56,7 +58,7 @@ public:
      * @param session The session that shall bestored.
      * @return True session successful stored otherwise false.
      */
-    virtual bool storeSession(const Common::SessionData &session) = 0;
+    virtual std::shared_ptr<System::AsyncResult> storeSession(const Common::SessionData &session) = 0;
 
     /**
      * Deletes the session under the given index.

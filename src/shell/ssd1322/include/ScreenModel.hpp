@@ -3,8 +3,8 @@
 
 #include "IPositionDateTimeProvider.hpp"
 #include <IGPSInformationProvider.hpp>
+#include <ISessionDatabase.hpp>
 #include <ITrackDatabase.hpp>
-#include <SessionDatabase.hpp>
 #include <memory>
 
 /**

@@ -1,4 +1,5 @@
 #include "SessionDatabase.hpp"
+#include "AsyncResultDb.hpp"
 #include "JsonDeserializer.hpp"
 #include "JsonSerializer.hpp"
 
@@ -34,13 +35,15 @@ std::optional<LaptimerCore::Common::SessionData> SessionDatabase::getSessionByIn
     return sessionData;
 }
 
-bool SessionDatabase::storeSession(const Common::SessionData &session)
+std::shared_ptr<System::AsyncResult> SessionDatabase::storeSession(const Common::SessionData &session)
 {
     ArduinoJson::StaticJsonDocument<8192> jsonDoc;
+    auto result = std::make_shared<AsyncResultDb>();
     auto jsonRootObject = jsonDoc.to<ArduinoJson::JsonObject>();
     if (!Common::JsonSerializer::serializeSessionData(session, jsonRootObject))
     {
-        return false;
+        result->setDbResult(System::Result::Error);
+        return result;
     }
 
     // This is the case when the active session is stored.
@@ -60,7 +63,10 @@ bool SessionDatabase::storeSession(const Common::SessionData &session)
                 {
                     sessionUpdated.emit(index);
                 }
-                return updated;
+
+                const auto updateResult = updated ? System::Result::Ok : System::Result::Error;
+                result->setDbResult(updateResult);
+                return result;
             }
         }
     }
@@ -72,7 +78,9 @@ bool SessionDatabase::storeSession(const Common::SessionData &session)
     {
         sessionAdded.emit(storageIndex);
     }
-    return stored;
+    const auto storeResult = stored ? System::Result::Ok : System::Result::Error;
+    result->setDbResult(storeResult);
+    return result;
 }
 
 void SessionDatabase::deleteSession(std::size_t index)
