@@ -8,6 +8,7 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ISignalDispatcher.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SignalDispatcher.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SignalDispatcherRegistry.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/AsyncResult.cpp
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/Timer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/FutureWatcher.hpp
@@ -15,6 +16,7 @@ PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SignalDispatcher.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/DispatcherTypes.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SystemTypes.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/AsyncResult.hpp
 )
 
 target_link_libraries(System
