@@ -1,4 +1,5 @@
 #include "SqliteSessionDatabase.hpp"
+#include <AsyncResultDb.hpp>
 #include <Statement.hpp>
 #include <cstring>
 #include <iostream>
@@ -68,14 +69,20 @@ std::optional<Common::SessionData> SqliteSessionDatabase::getSessionByIndex(std:
     return session;
 }
 
-bool SqliteSessionDatabase::storeSession(const Common::SessionData &session)
+std::shared_ptr<System::AsyncResult> SqliteSessionDatabase::storeSession(const Common::SessionData &session)
 {
     auto sessionId = getSessionId(session);
+    auto result = System::Result{};
+    auto asyncResult = std::make_shared<AsyncResultDb>();
     if (sessionId.has_value())
     {
-        return updateSession(sessionId.value_or(0), session);
+        result = updateSession(sessionId.value_or(0), session) ? System::Result::Ok : System::Result::Error;
+        asyncResult->setDbResult(result);
+        return asyncResult;
     }
-    return storeNewSession(session);
+    result = storeNewSession(session) ? System::Result::Ok : System::Result::Error;
+    asyncResult->setDbResult(result);
+    return asyncResult;
 }
 
 void SqliteSessionDatabase::deleteSession(std::size_t index)

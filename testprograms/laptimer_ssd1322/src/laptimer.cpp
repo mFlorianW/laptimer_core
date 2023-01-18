@@ -1,6 +1,5 @@
 #include "Controls.hpp"
 #include <ConstantVelocityPositionDateTimeProvider.hpp>
-#include <FileSystemSessionDatabaseBackend.hpp>
 #include <LibraryPath.hpp>
 #include <SDL2/SDL.h>
 #include <ScreenModel.hpp>

@@ -3,14 +3,14 @@ add_library(LaptimerCore::Session ALIAS Session)
 
 target_sources(Session
 PRIVATE
-   ${CMAKE_CURRENT_SOURCE_DIR}/src/SessionDatabase.cpp
-   ${CMAKE_CURRENT_SOURCE_DIR}/src/FileSystemSessionDatabaseBackend.cpp
    ${CMAKE_CURRENT_SOURCE_DIR}/src/SqliteSessionDatabase.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/SessionDatabase.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/AsyncResultDb.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/AsyncResultDb.hpp
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/ISessionDatabase.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/ISessionDatabaseBackend.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/FileSystemSessionDatabaseBackend.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SessionDatabase.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/ISessionDatabaseBackend.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/SqliteSessionDatabase.hpp
 )
 
@@ -24,6 +24,7 @@ PRIVATE
 
 target_link_libraries(Session
 PUBLIC
+    LaptimerCore::System
     LaptimerCore::Common
     LaptimerCore::Private::SqliteHelper
 )

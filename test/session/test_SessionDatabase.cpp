@@ -5,6 +5,7 @@
 #include <catch2/catch.hpp>
 
 using namespace LaptimerCore::Session;
+using namespace LaptimerCore::System;
 using namespace LaptimerCore::Common;
 using namespace LaptimerCore::TestHelper;
 
@@ -21,7 +22,7 @@ TEST_CASE("The SessionDatabase shall serialize the SessionData to JSON, store th
     });
     auto result = sessionDb.storeSession(Sessions::getTestSession());
 
-    REQUIRE(result);
+    REQUIRE(result->getResult() == Result::Ok);
     REQUIRE(sessionStoredSpy);
     REQUIRE(sessionStoredIndex == 0);
     REQUIRE(backend.loadSessionByIndex(0) == Sessions::getTestSessionAsJson());
@@ -34,7 +35,7 @@ TEST_CASE("The SessionDatabase shall return the amount of the stored sessions")
 
     auto result = sessionDb.storeSession(Sessions::getTestSession());
 
-    REQUIRE(result);
+    REQUIRE(result->getResult() == Result::Ok);
     REQUIRE(sessionDb.getSessionCount() == 1);
 }
 
@@ -46,8 +47,8 @@ TEST_CASE("The SessionDatabase shall store two different sessions")
     auto result1 = sessionDb.storeSession(Sessions::getTestSession());
     auto result2 = sessionDb.storeSession(Sessions::getTestSession2());
 
-    REQUIRE(result1);
-    REQUIRE(result2);
+    REQUIRE(result1->getResult() == Result::Ok);
+    REQUIRE(result2->getResult() == Result::Ok);
     REQUIRE(backend.getNumberOfStoredSessions() == 2);
     REQUIRE(sessionDb.getSessionCount() == 2);
     REQUIRE(sessionDb.getSessionByIndex(0) == Sessions::getTestSession());
@@ -67,7 +68,7 @@ TEST_CASE("The SessionDatabase shall be able to delete a single session and emit
         sessionDeletedIndex = index;
     });
     REQUIRE(sessionDb.getSessionCount() == 1);
-    REQUIRE(result);
+    REQUIRE(result->getResult() == Result::Ok);
 
     sessionDb.deleteSession(0);
     REQUIRE(sessionDb.getSessionCount() == 0);
@@ -83,7 +84,7 @@ TEST_CASE("The SessionDatabase shall load the Session by the given valid index."
     auto result = sessionDb.storeSession(Sessions::getTestSession());
     auto session = sessionDb.getSessionByIndex(0);
 
-    REQUIRE(result);
+    REQUIRE(result->getResult() == Result::Ok);
     REQUIRE(session);
     REQUIRE(session.value() == Sessions::getTestSession());
 }
@@ -104,9 +105,9 @@ TEST_CASE("The SessionDatabase shall store an already stored session under the s
     auto result2 = sessionDb.storeSession(Sessions::getTestSession2());
     auto result3 = sessionDb.storeSession(Sessions::getTestSession2());
 
-    REQUIRE(result1);
-    REQUIRE(result2);
-    REQUIRE(result3);
+    REQUIRE(result1->getResult() == Result::Ok);
+    REQUIRE(result2->getResult() == Result::Ok);
+    REQUIRE(result3->getResult() == Result::Ok);
     REQUIRE(sessionDb.getSessionCount() == 2);
     REQUIRE(sessionDb.getSessionByIndex(0) == Sessions::getTestSession());
     REQUIRE(sessionDb.getSessionByIndex(1) == Sessions::getTestSession2());
