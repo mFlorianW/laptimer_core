@@ -59,6 +59,12 @@ public:
     std::string_view getErrorMessage() const noexcept;
 
     /**
+     * Blocks until the async result is there and suspends the current running thread.
+     * The function periodically calls the SignalDispatcher for the thread.
+     */
+    void waitForFinished() noexcept;
+
+    /**
      * The done signal is emitted when the async operation is finished.
      * @param The signal contains a pointer to Async instance for directly requesting the
      * result in the slot.

@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include "AsyncResult.hpp"
 #include <catch2/catch.hpp>
+#include <thread>
 
 using namespace LaptimerCore::System;
 
@@ -16,6 +17,16 @@ public:
         AsyncResult::setResult(result, errorMessage);
     }
 };
+
+std::shared_ptr<AsyncResult> startLongOperation(std::thread &thread)
+{
+    auto result = std::make_shared<TestAsyncResult>();
+    thread = std::thread([result]() {
+        std::this_thread::sleep_for(std::chrono::milliseconds(3));
+        result->setResult(Result::Ok);
+    });
+    return result;
+}
 } // namespace
 
 SCENARIO("The AsyncResult shall emit done signal when operation is finshed")
@@ -86,5 +97,24 @@ SCENARIO("The AsyncResult shall return the error message when set")
                 REQUIRE(aResult.getErrorMessage() == errMsg);
             }
         }
+    }
+}
+
+SCENARIO("The AsyncResult shall be to suspend the current thread and should wait for the result")
+{
+    GIVEN("A AsyncResult")
+    {
+        auto thread = std::thread{};
+
+        WHEN("The AsyncResult suspend the current running thread")
+        {
+            auto aResult = startLongOperation(thread);
+            aResult->waitForFinished();
+            THEN("The AsyncResult should be there")
+            {
+                CHECK(aResult->getResult() == Result::Ok);
+            }
+        }
+        thread.join();
     }
 }

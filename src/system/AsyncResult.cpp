@@ -1,4 +1,5 @@
 #include "AsyncResult.hpp"
+#include "SignalDispatcher.hpp"
 
 namespace LaptimerCore::System
 {
@@ -16,6 +17,21 @@ Result AsyncResult::getResult() const noexcept
 std::string_view AsyncResult::getErrorMessage() const noexcept
 {
     return mErrorMsg;
+}
+
+void AsyncResult::waitForFinished() noexcept
+{
+    if (mResult != Result::NotFinished)
+    {
+        return;
+    }
+
+    auto disp = SignalDispatcher{};
+    while (mResult == Result::NotFinished)
+    {
+        disp.exec();
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
 }
 
 void AsyncResult::setResult(Result result, const std::string &errorMessage) noexcept
