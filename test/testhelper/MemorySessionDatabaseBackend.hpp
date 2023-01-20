@@ -7,7 +7,7 @@
 namespace LaptimerCore::TestHelper
 {
 
-class MemorySessionDatabaseBackend : public LaptimerCore::Session::ISessionDatabaseBackend
+class MemorySessionDatabaseBackend : public LaptimerCore::Storage::ISessionDatabaseBackend
 {
 public:
     MemorySessionDatabaseBackend();

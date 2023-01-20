@@ -14,7 +14,7 @@ class ScreenModel;
 class MenuScreenModel
 {
 public:
-    MenuScreenModel(ScreenModel &screenModel, LaptimerCore::Session::ISessionDatabase &sessionDb);
+    MenuScreenModel(ScreenModel &screenModel, LaptimerCore::Storage::ISessionDatabase &sessionDb);
 
     /**
      * Gives the view that shall be displayed.

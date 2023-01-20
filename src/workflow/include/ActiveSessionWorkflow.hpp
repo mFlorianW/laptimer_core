@@ -19,7 +19,7 @@ public:
      */
     ActiveSessionWorkflow(Positioning::IPositionDateTimeProvider &positionDateTimeProvider,
                           Algorithm::ILaptimer &laptimer,
-                          Session::ISessionDatabase &database);
+                          Storage::ISessionDatabase &database);
 
     /**
      * @copydoc IActiveSessionWorkflow::startActiveSession()
@@ -67,7 +67,7 @@ private:
 
     Positioning::IPositionDateTimeProvider &mDateTimeProvider;
     Algorithm::ILaptimer &mLaptimer;
-    Session::ISessionDatabase &mDatabase;
+    Storage::ISessionDatabase &mDatabase;
     std::optional<Common::SessionData> mSession;
     Common::TrackData mTrack;
     Common::LapData mCurrentLap;

@@ -6,7 +6,7 @@ using namespace LaptimerCore::Common;
 
 ActiveSessionModel::ActiveSessionModel(LaptimerCore::Workflow::ITrackDetectionWorkflow &trackDetector,
                                        LaptimerCore::Workflow::IActiveSessionWorkflow &activeWorkSessionFlow,
-                                       LaptimerCore::TrackManagement::ITrackDatabase &trackDatabase)
+                                       LaptimerCore::Storage::ITrackDatabase &trackDatabase)
     : mTrackDetector{trackDetector}
     , mActiveSessionWorkFlow{activeWorkSessionFlow}
     , mTrackDatabase{trackDatabase}

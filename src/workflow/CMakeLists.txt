@@ -25,5 +25,5 @@ PUBLIC
     LaptimerCore::Common
     LaptimerCore::Positioning
     LaptimerCore::Algorithm
-    LaptimerCore::Session
+    LaptimerCore::Storage
 )
