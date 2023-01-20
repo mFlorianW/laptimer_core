@@ -1,5 +1,5 @@
 #include "SignalDispatcher.hpp"
-#include "SignalDispatcherRegistry.hpp"
+#include "private/SignalDispatcherRegistry.hpp"
 #include <iostream>
 
 namespace LaptimerCore::System

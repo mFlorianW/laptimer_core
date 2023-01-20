@@ -3,20 +3,20 @@ add_library(LaptimerCore::System ALIAS System)
 
 target_sources(System
 PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Timer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/FutureWatcher.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/ISignalDispatcher.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/SignalDispatcher.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/SignalDispatcherRegistry.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/AsyncResult.cpp
-PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/Timer.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/FutureWatcher.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/ISignalDispatcher.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/SignalDispatcher.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/DispatcherTypes.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/SystemTypes.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/AsyncResult.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Timer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FutureWatcher.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ISignalDispatcher.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SignalDispatcher.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/private/SignalDispatcherRegistry.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/private/SignalDispatcherRegistry.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/AsyncResult.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Timer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FutureWatcher.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ISignalDispatcher.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SignalDispatcher.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/DispatcherTypes.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SystemTypes.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/AsyncResult.hpp
 )
 
 target_link_libraries(System
@@ -25,9 +25,6 @@ PUBLIC
 )
 
 target_include_directories(System
-    PUBLIC
-        $<INSTALL_INTERFACE:include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
+PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
