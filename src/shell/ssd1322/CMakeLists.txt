@@ -102,8 +102,7 @@ TARGET_LINK_LIBRARIES(ssd1322Sehll
     LaptimerCore::Common
     LaptimerCore::Positioning
     LaptimerCore::Algorithm
-    LaptimerCore::Session
+    LaptimerCore::Storage
     LaptimerCore::Workflow
-    LaptimerCore::TrackManagement
     LaptimerCore::System
 )

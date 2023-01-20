@@ -5,7 +5,7 @@
 MainScreenModel::MainScreenModel(ScreenModel &screenModel,
                                  LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider,
                                  LaptimerCore::Session::ISessionDatabase &sessionDatabase,
-                                 LaptimerCore::TrackManagement::ITrackDatabase &trackDatabase)
+                                 LaptimerCore::Storage::ITrackDatabase &trackDatabase)
     : mActiveSessionWorkflow{posDateTimeProvider, mLapTimer, sessionDatabase}
     , mScreenModel{screenModel}
     , mTrackDetectionWorkflow{mTrackDetector, posDateTimeProvider}

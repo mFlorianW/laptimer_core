@@ -3,7 +3,7 @@
 
 #include <TrackData.hpp>
 
-namespace LaptimerCore::TrackManagement
+namespace LaptimerCore::Storage
 {
 
 class ITrackDatabase
@@ -77,6 +77,6 @@ protected:
     ITrackDatabase() = default;
 };
 
-} // namespace LaptimerCore::TrackManagement
+} // namespace LaptimerCore::Storage
 
 #endif //! ITRACKDATABASEBACKEND_HPP

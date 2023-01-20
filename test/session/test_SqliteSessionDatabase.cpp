@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include "Sessions.hpp"
 #include "SqliteSessionDatabase.hpp"
-#include <Connection.hpp>
+#include "private/Connection.hpp"
 #include <SqliteDatabaseTestHelper.hpp>
 #include <catch2/catch.hpp>
 #include <sqlite3.h>

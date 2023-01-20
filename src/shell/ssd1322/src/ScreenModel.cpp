@@ -11,7 +11,7 @@ struct ScreenModelPrivate
                                 LaptimerCore::Positioning::IGpsInformationProvider &gpsInfoProvider,
                                 LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider,
                                 LaptimerCore::Session::ISessionDatabase &sessionDatabase,
-                                LaptimerCore::TrackManagement::ITrackDatabase &trackDatabase)
+                                LaptimerCore::Storage::ITrackDatabase &trackDatabase)
         : mMainScreen{gpsInfoProvider}
         , mMenuModel{screenModel, sessionDatabase}
         , mMainScreenModel{screenModel, posDateTimeProvider, sessionDatabase, trackDatabase}
@@ -30,7 +30,7 @@ struct ScreenModelPrivate
 ScreenModel::ScreenModel(LaptimerCore::Positioning::IGpsInformationProvider &gpsInfoProvider,
                          LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider,
                          LaptimerCore::Session::ISessionDatabase &sessionDatabase,
-                         LaptimerCore::TrackManagement::ITrackDatabase &trackDatabase)
+                         LaptimerCore::Storage::ITrackDatabase &trackDatabase)
     : mD{std::make_unique<ScreenModelPrivate>(*this,
                                               gpsInfoProvider,
                                               posDateTimeProvider,

@@ -1,5 +1,5 @@
 #include "SqliteSessionDatabase.hpp"
-#include <Statement.hpp>
+#include "private/Statement.hpp"
 #include <cstring>
 #include <iostream>
 

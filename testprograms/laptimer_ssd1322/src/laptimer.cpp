@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
     auto gpsInfoProvider = LaptimerCore::Positioning::StaticGpsInformationProvider{};
     auto posDateTimeProvider = LaptimerCore::Positioning::ConstantVelocityPositionDateTimeProvider{positions};
     auto sessionDatabase = LaptimerCore::Session::SqliteSessionDatabase{LIBRARY_FILE};
-    auto trackDatabase = LaptimerCore::TrackManagement::SqliteTrackDatabase{LIBRARY_FILE};
+    auto trackDatabase = LaptimerCore::Storage::SqliteTrackDatabase{LIBRARY_FILE};
     auto screenModel = ScreenModel{gpsInfoProvider, posDateTimeProvider, sessionDatabase, trackDatabase};
     screenModel.activateMainScreen();
     posDateTimeProvider.setVelocityInMeterPerSecond(80.6667);

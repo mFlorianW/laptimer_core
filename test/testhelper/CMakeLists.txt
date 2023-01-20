@@ -30,6 +30,6 @@ PRIVATE
     LaptimerCore::CommonObject
     LaptimerCore::Positioning
     LaptimerCore::AlgorithmObject
-    LaptimerCore::Session
+    LaptimerCore::Storage
     Catch2::Catch2
 )

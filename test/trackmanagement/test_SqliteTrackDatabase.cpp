@@ -1,9 +1,10 @@
 #define CATCH_CONFIG_MAIN
 #include "SqliteTrackDatabase.hpp"
+#include "private/Connection.hpp"
 #include <SqliteDatabaseTestHelper.hpp>
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::TrackManagement;
+using namespace LaptimerCore::Storage;
 using namespace LaptimerCore::TestHelper::SqliteDatabaseTestHelper;
 namespace
 {

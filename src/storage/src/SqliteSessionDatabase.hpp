@@ -2,8 +2,13 @@
 #define SQLITESESSIONDATABASE_HPP
 
 #include "ISessionDatabase.hpp"
-#include <Connection.hpp>
 #include <map>
+#include <sqlite3.h>
+
+namespace LaptimerCore::Private::SqliteHelper
+{
+class Connection;
+}
 
 namespace LaptimerCore::Session
 {

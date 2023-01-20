@@ -1,12 +1,12 @@
 #include "SqliteTrackDatabase.hpp"
-#include <Statement.hpp>
+#include "private/Statement.hpp"
 #include <iostream>
 #include <string>
 #include <unordered_map>
 
 using namespace LaptimerCore::Private::SqliteHelper;
 
-namespace LaptimerCore::TrackManagement
+namespace LaptimerCore::Storage
 {
 
 SqliteTrackDatabase::SqliteTrackDatabase(const std::string &pathToDatabase)
@@ -158,4 +158,4 @@ std::optional<std::size_t> SqliteTrackDatabase::getTrackIdOfIndex(std::size_t tr
     return trackIds[trackIndex];
 }
 
-} // namespace LaptimerCore::TrackManagement
+} // namespace LaptimerCore::Storage

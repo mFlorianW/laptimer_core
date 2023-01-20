@@ -2,10 +2,10 @@
 #define SQLLITETRACKDATABASE_HPP
 
 #include "ITrackDatabase.hpp"
-#include <Connection.hpp>
+#include "private/Connection.hpp"
 #include <optional>
 
-namespace LaptimerCore::TrackManagement
+namespace LaptimerCore::Storage
 {
 class SqliteTrackDatabase : public ITrackDatabase
 {
@@ -73,6 +73,6 @@ private:
     LaptimerCore::Private::SqliteHelper::Connection &mDbConnection;
 };
 
-} // namespace LaptimerCore::TrackManagement
+} // namespace LaptimerCore::Storage
 
 #endif // SQLLITETRACKDATABASE_HPP

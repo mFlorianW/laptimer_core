@@ -11,7 +11,7 @@ class ActiveSessionModel
 public:
     ActiveSessionModel(LaptimerCore::Workflow::ITrackDetectionWorkflow &trackDetector,
                        LaptimerCore::Workflow::IActiveSessionWorkflow &activeWorkSessionFlow,
-                       LaptimerCore::TrackManagement::ITrackDatabase &trackDatabase);
+                       LaptimerCore::Storage::ITrackDatabase &trackDatabase);
 
     /**
      * Gives the last completed lap time. If none is present 00:00:00.000 as string is returned
@@ -71,7 +71,7 @@ public:
 private:
     LaptimerCore::Workflow::ITrackDetectionWorkflow &mTrackDetector;
     LaptimerCore::Workflow::IActiveSessionWorkflow &mActiveSessionWorkFlow;
-    LaptimerCore::TrackManagement::ITrackDatabase &mTrackDatabase;
+    LaptimerCore::Storage::ITrackDatabase &mTrackDatabase;
     LaptimerCore::Common::TrackData mTrackData;
 };
 

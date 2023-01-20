@@ -10,13 +10,13 @@ VERBATIM)
 add_custom_target(test_session_database ALL DEPENDS test_session.db)
 
 add_executable(test_SessionDatabase test_SessionDatabase.cpp)
-target_link_libraries(test_SessionDatabase PRIVATE Catch2::Catch2 LaptimerCore::Session LaptimerCore::TestHelper)
+target_link_libraries(test_SessionDatabase PRIVATE Catch2::Catch2 LaptimerCore::Storage LaptimerCore::TestHelper)
 
 add_executable(test_FileSystemDataBaseBackend test_FileSystemSessionDatabaseBackend.cpp)
-target_link_libraries(test_FileSystemDataBaseBackend PRIVATE Catch2::Catch2 LaptimerCore::Session LaptimerCore::TestHelper)
+target_link_libraries(test_FileSystemDataBaseBackend PRIVATE Catch2::Catch2 LaptimerCore::Storage LaptimerCore::TestHelper)
 
 add_executable(test_SqliteSessionDatabase test_SqliteSessionDatabase.cpp)
-target_link_libraries(test_SqliteSessionDatabase PRIVATE Catch2::Catch2 LaptimerCore::Session LaptimerCore::TestHelper)
+target_link_libraries(test_SqliteSessionDatabase PRIVATE Catch2::Catch2 LaptimerCore::Storage LaptimerCore::TestHelper)
 
 catch_discover_tests(test_SessionDatabase)
 catch_discover_tests(test_FileSystemDataBaseBackend)
