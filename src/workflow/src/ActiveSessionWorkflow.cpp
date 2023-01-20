@@ -7,7 +7,7 @@ namespace LaptimerCore::Workflow
 
 ActiveSessionWorkflow::ActiveSessionWorkflow(Positioning::IPositionDateTimeProvider &positionDateTimeProvider,
                                              Algorithm::ILaptimer &laptimer,
-                                             Session::ISessionDatabase &database)
+                                             Storage::ISessionDatabase &database)
     : mDateTimeProvider{positionDateTimeProvider}
     , mLaptimer{laptimer}
     , mDatabase{database}
