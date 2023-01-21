@@ -33,7 +33,7 @@ SCENARIO("The FutureWatcher shall emit the finish signal when the future finishe
 
             THEN("The finished signal should be emitted")
             {
-                handleFutureWatcher();
+                SignalDispatcher{}.exec();
                 REQUIRE(finishSignalEmitted == true);
             }
         }
@@ -54,7 +54,7 @@ SCENARIO("The FutureWatcher shall be to return the result of the observed future
 
             THEN("The correct value of the future shall be returned")
             {
-                handleFutureWatcher();
+                SignalDispatcher{}.exec();
                 REQUIRE(futureWatcher.getResult() == true);
             }
         }

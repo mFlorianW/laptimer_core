@@ -10,6 +10,8 @@ using namespace LaptimerCore::System;
 class TestDispatcherObject : public IDispatcherObject
 {
 public:
+    explicit TestDispatcherObject() = default;
+
     void dispatch() override
     {
         signal.emit();
