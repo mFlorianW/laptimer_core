@@ -17,7 +17,11 @@ SqliteSessionDatabase::SqliteSessionDatabase(const std::string &databaseFile)
     updateIndexMapper();
 }
 
-SqliteSessionDatabase::~SqliteSessionDatabase() = default;
+SqliteSessionDatabase::~SqliteSessionDatabase()
+{
+    auto *rawHandle = mDbConnection.getRawHandle();
+    sqlite3_update_hook(rawHandle, nullptr, nullptr);
+}
 
 std::size_t SqliteSessionDatabase::getSessionCount()
 {
