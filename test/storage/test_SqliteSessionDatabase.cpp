@@ -23,16 +23,25 @@ class TestSqliteSessionDatabaseEventListener : public Catch::TestEventListenerBa
         // For the case the test crashes.
         if (std::filesystem::exists(getTestDatabseFolder()) == true)
         {
-            std::filesystem::remove_all(getTestDatabseFolder());
+            dropSessionData();
         }
-        REQUIRE(std::filesystem::create_directory(getTestDatabseFolder()) == true);
-        const auto cleanDbFile = getWorkingDir() + "/test_session.db";
-        REQUIRE(std::filesystem::copy_file(cleanDbFile, getTestDatabseFile("test_session.db")) == true);
+        else
+        {
+            REQUIRE(std::filesystem::create_directory(getTestDatabseFolder()) == true);
+            const auto cleanDbFile = getWorkingDir() + "/test_session.db";
+            REQUIRE(std::filesystem::copy_file(cleanDbFile, getTestDatabseFile("test_session.db")) == true);
+        }
     }
 
     void testCaseEnded(const Catch::TestCaseStats &testCaseStatu) override
     {
-        REQUIRE(std::filesystem::remove(getTestDatabseFile("test_session.db")) == true);
+        dropSessionData();
+    }
+
+    void dropSessionData()
+    {
+        auto *dbCon = Connection::connection(getTestDatabseFile("test_session.db")).getRawHandle();
+        REQUIRE(sqlite3_exec(dbCon, "DELETE FROM Session", nullptr, nullptr, nullptr) == SQLITE_OK);
     }
 };
 } // namespace
