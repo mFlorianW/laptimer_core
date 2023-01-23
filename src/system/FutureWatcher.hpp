@@ -82,7 +82,15 @@ public:
      */
     [[nodiscard]] T getResult() noexcept
     {
-        return mFuture.get();
+        try
+        {
+            mFinished = false;
+            return mFuture.get();
+        }
+        catch (std::exception &e)
+        {
+            std::cout << e.what() << std::endl;
+        }
     }
 
     /**

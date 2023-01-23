@@ -9,6 +9,21 @@ using namespace LaptimerCore::Storage::Private;
 namespace LaptimerCore::Storage
 {
 
+SqliteSessionDatabase::StorageContext::StorageContext()
+    : mResult{std::make_shared<AsyncResultDb>()}
+{
+    // mStorageResult.setFuture(mStoragePromise.get_future());
+    mStorageResult.finished.connect([this] { done.emit(this); });
+}
+
+SqliteSessionDatabase::StorageContext::~StorageContext()
+{
+    if (mStorageThread.joinable())
+    {
+        mStorageThread.join();
+    }
+}
+
 SqliteSessionDatabase::SqliteSessionDatabase(const std::string &databaseFile)
     : mDbConnection{Connection::connection(databaseFile)}
 {
@@ -21,6 +36,13 @@ SqliteSessionDatabase::~SqliteSessionDatabase()
 {
     auto *rawHandle = mDbConnection.getRawHandle();
     sqlite3_update_hook(rawHandle, nullptr, nullptr);
+    for (auto &[result, context] : mStorageCache)
+    {
+        if (context->mStorageThread.joinable())
+        {
+            context->mStorageThread.join();
+        }
+    }
 }
 
 std::size_t SqliteSessionDatabase::getSessionCount()
@@ -30,6 +52,7 @@ std::size_t SqliteSessionDatabase::getSessionCount()
 
 std::optional<Common::SessionData> SqliteSessionDatabase::getSessionByIndex(std::size_t index) const noexcept
 {
+    const std::lock_guard<std::mutex> guard{mMutex};
     // clang-format off
     constexpr auto sessionQuery = "SELECT "
                                     "Session.Date, Session.Time, Session.TrackId "
@@ -75,22 +98,37 @@ std::optional<Common::SessionData> SqliteSessionDatabase::getSessionByIndex(std:
 
 std::shared_ptr<System::AsyncResult> SqliteSessionDatabase::storeSession(const Common::SessionData &session)
 {
+    const std::lock_guard<std::mutex> guard{mMutex};
     auto sessionId = getSessionId(session);
-    auto result = System::Result{};
-    auto asyncResult = std::make_shared<AsyncResultDb>();
+
     if (sessionId.has_value())
     {
-        result = updateSession(sessionId.value_or(0), session) ? System::Result::Ok : System::Result::Error;
-        asyncResult->setDbResult(result);
+        auto storageContext = std::make_shared<StorageContext>();
+        mStorageCache.emplace(storageContext.get(), storageContext);
+        auto asyncResult = storageContext->mResult;
+        storageContext->mSession = session;
+        storageContext->mSessionId = sessionId.value_or(0);
+        storageContext->mStorageResult.setFuture(storageContext->mStoragePromise.get_future());
+        storageContext->mStorageThread = std::thread(&SqliteSessionDatabase::updateSession, this, storageContext.get());
+        storageContext->done.connect([&](StorageContext *ctx) {
+            const auto updateResult = ctx->mStorageResult.getResult() ? System::Result::Ok : System::Result::Error;
+            ctx->mResult->setDbResult(updateResult);
+            sessionUpdated.emit(getIndexOfSessionId(ctx->mSessionId).value_or(0));
+            mStorageCache.erase(ctx);
+        });
+
         return asyncResult;
     }
-    result = storeNewSession(session) ? System::Result::Ok : System::Result::Error;
+
+    System::Result result = storeNewSession(session) ? System::Result::Ok : System::Result::Error;
+    auto asyncResult = std::make_shared<AsyncResultDb>();
     asyncResult->setDbResult(result);
     return asyncResult;
 }
 
 void SqliteSessionDatabase::deleteSession(std::size_t index)
 {
+    const std::lock_guard<std::mutex> guard{mMutex};
     // clang-format off
     constexpr auto sessionDeleteQuery = "DELETE "
                                         "FROM "
@@ -117,37 +155,48 @@ void SqliteSessionDatabase::deleteSession(std::size_t index)
     sessionDeleted.emit(index);
 }
 
-bool SqliteSessionDatabase::updateSession(std::size_t sessionId, const Common::SessionData &session)
+void SqliteSessionDatabase::updateSession(StorageContext *ctx)
 {
-    // In the update case it's only necessary to add new laps to session if needed because other parts of a session
-    // shouldn't be changed.
-    const auto storedLaps = getLapsOfSession(sessionId);
-    if (!storedLaps.has_value())
+    if (ctx == nullptr || mStorageCache.count(ctx) == 0)
     {
-        return false;
+        std::cerr << "Update session called with an invalid context.\n";
+        return;
     }
 
-    const auto sessionLaps = session.getLaps();
+    auto context = mStorageCache.at(ctx);
+    // In the update case it's only necessary to add new laps to session if needed because other parts of a session
+    // shouldn't be changed.
+    const auto storedLaps = getLapsOfSession(context->mSessionId);
+    if (!storedLaps.has_value())
+    {
+        ctx->mStoragePromise.set_value(false);
+        return;
+    }
+
+    const auto sessionLaps = context->mSession.getLaps();
     if (sessionLaps.size() < storedLaps->size())
     {
-        return true;
+        ctx->mStoragePromise.set_value(true);
+        return;
     }
 
     for (std::size_t lapIndex = storedLaps->size(); lapIndex < sessionLaps.size(); ++lapIndex)
     {
-        if (!storeLapOfSession(sessionId, lapIndex, session.getLaps().at(lapIndex)))
+        if (!storeLapOfSession(context->mSessionId, lapIndex, context->mSession.getLaps().at(lapIndex)))
         {
-            return false;
+            ctx->mStoragePromise.set_value(false);
+            return;
         }
     }
 
-    const auto updatedIndex = getIndexOfSessionId(sessionId);
+    const auto updatedIndex = getIndexOfSessionId(context->mSessionId);
     if (!updatedIndex.has_value())
     {
-        return false;
+        ctx->mStoragePromise.set_value(false);
+        return;
     }
-    sessionUpdated.emit(*updatedIndex);
-    return true;
+
+    ctx->mStoragePromise.set_value(true);
 }
 
 bool SqliteSessionDatabase::storeNewSession(const Common::SessionData &session)

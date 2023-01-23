@@ -1,14 +1,16 @@
 #ifndef SQLITESESSIONDATABASE_HPP
 #define SQLITESESSIONDATABASE_HPP
 
+#include "FutureWatcher.hpp"
 #include "ISessionDatabase.hpp"
 #include "private/Connection.hpp"
 #include <map>
 #include <sqlite3.h>
+#include <thread>
 
 namespace LaptimerCore::Storage
 {
-
+class AsyncResultDb;
 class SqliteSessionDatabase : public ISessionDatabase
 {
 public:
@@ -64,7 +66,28 @@ public:
     void deleteSession(std::size_t index) override;
 
 private:
-    bool updateSession(std::size_t sessionId, const Common::SessionData &session);
+    struct StorageContext
+    {
+        StorageContext();
+        ~StorageContext();
+
+        StorageContext(const StorageContext &other) = delete;
+        StorageContext &operator=(const StorageContext &ohter) = delete;
+
+        StorageContext(StorageContext &&other) noexcept = delete;
+        StorageContext &operator=(StorageContext &&ohter) = delete;
+
+        std::size_t mSessionId{0};
+        std::thread mStorageThread{};
+        std::promise<bool> mStoragePromise;
+        System::FutureWatcher<bool> mStorageResult;
+        std::shared_ptr<AsyncResultDb> mResult;
+        Common::SessionData mSession;
+
+        KDBindings::Signal<StorageContext *> done;
+    };
+
+    void updateSession(StorageContext *ctx);
     bool storeNewSession(const Common::SessionData &session);
     std::optional<std::size_t> getSessionIdOfIndex(std::size_t sessionIndex) const noexcept;
     std::optional<std::size_t> getSessionId(const Common::SessionData &session) const noexcept;
@@ -80,6 +103,9 @@ private:
 
     Private::Connection &mDbConnection;
     std::map<std::size_t, std::size_t> mIndexMapper;
+
+    std::unordered_map<StorageContext *, std::shared_ptr<StorageContext>> mStorageCache;
+    std::mutex mutable mMutex;
 };
 
 } // namespace LaptimerCore::Storage

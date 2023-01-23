@@ -1,4 +1,5 @@
 #include "SignalDispatcherRegistry.hpp"
+#include <algorithm>
 
 namespace LaptimerCore::System
 {
@@ -51,7 +52,7 @@ void SignalDispatcherRegistry::registerObject(IDispatcherObject *obj, const std:
     if ((obj != nullptr) && contains)
     {
         const std::lock_guard<std::mutex> guard{mRegistryMutex};
-        mContexts.at(id)->objects.insert(obj);
+        mContexts.at(id)->objects.push_back(obj);
     }
 }
 
@@ -61,7 +62,12 @@ void SignalDispatcherRegistry::unregisterObject(IDispatcherObject *obj, const st
     if ((obj != nullptr) && contains)
     {
         const std::lock_guard<std::mutex> guard{mRegistryMutex};
-        mContexts.at(id)->objects.erase(obj);
+        auto &objects = mContexts.at(id)->objects;
+        auto objPos = std::find(objects.begin(), objects.end(), obj);
+        if (objPos != objects.end())
+        {
+            mContexts.at(id)->objects.erase(objPos);
+        }
     }
 }
 

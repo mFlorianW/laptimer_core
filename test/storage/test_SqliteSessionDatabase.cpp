@@ -14,6 +14,7 @@ using namespace LaptimerCore::Storage::Private;
 
 namespace
 {
+
 class TestSqliteSessionDatabaseEventListener : public Catch::TestEventListenerBase
 {
     using Catch::TestEventListenerBase::TestEventListenerBase;
@@ -21,13 +22,16 @@ class TestSqliteSessionDatabaseEventListener : public Catch::TestEventListenerBa
     void testCaseStarting(const Catch::TestCaseInfo &testInfo) override
     {
         // For the case the test crashes.
-        if (std::filesystem::exists(getTestDatabseFolder()) == true)
+        if (std::filesystem::exists(getTestDatabseFile("test_session.db")) == true)
         {
             dropSessionData();
         }
         else
         {
-            REQUIRE(std::filesystem::create_directory(getTestDatabseFolder()) == true);
+            if (!std::filesystem::exists(getTestDatabseFolder()))
+            {
+                REQUIRE(std::filesystem::create_directory(getTestDatabseFolder()) == true);
+            }
             const auto cleanDbFile = getWorkingDir() + "/test_session.db";
             REQUIRE(std::filesystem::copy_file(cleanDbFile, getTestDatabseFile("test_session.db")) == true);
         }
@@ -59,12 +63,14 @@ TEST_CASE("The SqliteSessionDatabase shall store as session and shall emit the s
     });
 
     auto insertResult = db.storeSession(Sessions::getTestSession3());
+    insertResult->waitForFinished();
     REQUIRE(insertResult->getResult() == Result::Ok);
     REQUIRE(addedIndex == 0);
     REQUIRE(sessionAddedSignalEmitted == true);
 
     sessionAddedSignalEmitted = false;
     insertResult = db.storeSession(Sessions::getTestSession4());
+    insertResult->waitForFinished();
     REQUIRE(insertResult->getResult() == Result::Ok);
     REQUIRE(addedIndex == 1);
     REQUIRE(sessionAddedSignalEmitted == true);
@@ -77,6 +83,7 @@ TEST_CASE("The SqliteSessionDatabase shall store a session and the session shall
     db.sessionAdded.connect([&addedIndex](std::size_t index) { addedIndex = index; });
 
     const auto insertResult = db.storeSession(Sessions::getTestSession3());
+    insertResult->waitForFinished();
     REQUIRE(insertResult->getResult() == Result::Ok);
     REQUIRE(addedIndex == 0);
 
@@ -93,8 +100,10 @@ TEST_CASE("The SqliteSessionDatabase shall store a already stored session under 
     db.sessionUpdated.connect([&updatedIndex](std::size_t index) { updatedIndex = index; });
 
     auto insertResult = db.storeSession(Sessions::getTestSession3());
+    insertResult->waitForFinished();
     REQUIRE(insertResult->getResult() == Result::Ok);
     insertResult = db.storeSession(Sessions::getTestSession4());
+    insertResult->waitForFinished();
     REQUIRE(insertResult->getResult() == Result::Ok);
 
     auto lapData = LaptimerCore::Common::LapData{};
@@ -105,11 +114,13 @@ TEST_CASE("The SqliteSessionDatabase shall store a already stored session under 
     session2.addLap(lapData);
 
     insertResult = db.storeSession(session1);
+    insertResult->waitForFinished();
     REQUIRE(insertResult->getResult() == Result::Ok);
     REQUIRE(updatedIndex == 0);
     REQUIRE(db.getSessionByIndex(0) == session1);
 
     insertResult = db.storeSession(session2);
+    insertResult->waitForFinished();
     REQUIRE(insertResult->getResult() == Result::Ok);
     REQUIRE(updatedIndex == 1);
     REQUIRE(db.getSessionByIndex(1) == session2);
@@ -125,8 +136,10 @@ TEST_CASE("The SqliteSessionDatabase shall gives the number of stored sessions a
 
     // Prepare database.
     auto storeResult = db.storeSession(session1);
+    storeResult->waitForFinished();
     REQUIRE(storeResult->getResult() == Result::Ok);
     storeResult = db.storeSession(session2);
+    storeResult->waitForFinished();
     REQUIRE(storeResult->getResult() == Result::Ok);
 
     const auto sessionCount = db.getSessionCount();
@@ -150,8 +163,10 @@ TEST_CASE(
 
     // Prepare database.
     auto storeResult = db.storeSession(session1);
+    storeResult->waitForFinished();
     REQUIRE(storeResult->getResult() == Result::Ok);
     storeResult = db.storeSession(session2);
+    storeResult->waitForFinished();
     REQUIRE(storeResult->getResult() == Result::Ok);
     REQUIRE(db.getSessionCount() == 2);
 
@@ -162,6 +177,7 @@ TEST_CASE(
 
 TEST_CASE("The SqlieSessionDatabase shall emit session deteled on referential integrity changes")
 {
+
     auto db = SqliteSessionDatabase{getTestDatabseFile("test_session.db")};
     const auto session1 = Sessions::getTestSession3();
     auto deletedIndex = std::size_t{123456};
@@ -177,4 +193,28 @@ TEST_CASE("The SqlieSessionDatabase shall emit session deteled on referential in
             SQLITE_OK);
 
     REQUIRE(deletedIndex == indexToDelete);
+
+    // Restore the deleted track
+    // clang-format off
+    constexpr auto osl = \
+        "-- INSERT OSCHERSLEBEN TRACK\n"
+        "INSERT INTO Position (Latitude, Longitude) VALUES\n"
+        "   (52.0258333, 11.279166666), -- Finishline Position\n"
+        "  (52.0258333, 11.279166666), -- Startline Position\n"
+        "   (52.0258333, 11.279166666), -- Sektor1 Position\n"
+        "   (52.258335, 11.279166666); -- Sektor2 Position\n"
+        "-- INSERT INTO TRACKS (Longitude, Latitude)\n"
+        "INSERT INTO Track (Name, Finishline, Startline) VALUES\n"
+        "    ('Oschersleben', (SELECT PositionId FROM Position WHERE Latitude = 52.0258333 AND Longitude = 11.279166666), (SELECT PositionId FROM Position WHERE Latitude = 52.0258333 AND Longitude = 11.279166666));\n"
+        "-- SECTORS\n"
+        "-- SEKTOR1\n"
+        "INSERT INTO Sektor (TrackId, PositionId, SektorIndex)\n"
+        "    VALUES\n"
+        "    ((SELECT TrackId FROM Track WHERE name = 'Oschersleben'), (SELECT PositionId FROM Position WHERE Latitude = 52.0258333 AND Longitude = 11.279166666), 1);\n"
+        "-- SEKTOR2\n"
+        "INSERT INTO Sektor (TrackId, PositionId, SektorIndex)\n"
+        "    VALUES\n"
+        "    ((SELECT TrackId FROM Track WHERE NAME = 'Oschersleben'), (SELECT PositionId FROM Position WHERE Latitude = 52.258335 AND Longitude = 11.279166666), 2);\n";
+    // clang-format on
+    REQUIRE(sqlite3_exec(dbCon, osl, nullptr, nullptr, nullptr) == SQLITE_OK);
 }
