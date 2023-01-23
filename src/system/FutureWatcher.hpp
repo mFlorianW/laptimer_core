@@ -78,6 +78,7 @@ public:
 
     /**
      * Gives the result of the future. If the still running the function will block and waits until the future is ready.
+     * If it failed to request the future, defaulted constructed T will be returned.
      * @return The Result of the underlying future.
      */
     [[nodiscard]] T getResult() noexcept
@@ -90,6 +91,7 @@ public:
         catch (std::exception &e)
         {
             std::cout << e.what() << std::endl;
+            return T{};
         }
     }
 

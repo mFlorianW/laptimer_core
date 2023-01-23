@@ -183,7 +183,9 @@ TEST_CASE("The SqlieSessionDatabase shall emit session deteled on referential in
     auto deletedIndex = std::size_t{123456};
     constexpr auto indexToDelete = 0;
 
-    REQUIRE(db.storeSession(session1)->getResult() == Result::Ok);
+    auto storeResult = db.storeSession(session1);
+    storeResult->waitForFinished();
+    REQUIRE(storeResult->getResult() == Result::Ok);
     db.sessionDeleted.connect([&deletedIndex](std::size_t index) { deletedIndex = index; });
 
     // Delete the Oschersleben Track these commands should trigger the referential integrity changes
