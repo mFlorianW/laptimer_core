@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ISignalDispatcher.hpp"
-#include <unordered_set>
+#include <vector>
 
 namespace LaptimerCore::System
 {
@@ -14,7 +14,7 @@ struct SignalDispatcherContext
     }
 
     ISignalDispatcher *dispatcher;
-    std::unordered_set<IDispatcherObject *> objects;
+    std::vector<IDispatcherObject *> objects;
 };
 
 } // namespace LaptimerCore::System

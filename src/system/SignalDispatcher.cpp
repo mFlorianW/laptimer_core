@@ -22,10 +22,13 @@ void SignalDispatcher::exec() noexcept
         return;
     }
 
-    auto *context = SignalDispatcherRegistry::getInstance().getContext(mThreadId);
-    for (auto *obj : context->objects)
+    auto &context = SignalDispatcherRegistry::getInstance().getContext(mThreadId)->objects;
+    for (auto &obj : context)
     {
-        obj->dispatch();
+        if (!context.empty())
+        {
+            obj->dispatch();
+        }
     }
 }
 
@@ -44,7 +47,7 @@ Result SignalDispatcher::unregisterObject(IDispatcherObject *obj, const std::thr
 {
     if ((obj != nullptr) && (mThreadId == id))
     {
-        SignalDispatcherRegistry::getInstance().unregisterObject(obj, mThreadId);
+        SignalDispatcherRegistry::getInstance().unregisterObject(obj, id);
         return Result::Ok;
     }
     std::cerr << "Objects can only be unregistered from the same thread as the SignalDispatcher\n";

@@ -35,12 +35,7 @@ public:
      */
     AsyncResultDb &operator=(AsyncResultDb &&other) noexcept;
 
-protected:
     void setDbResult(System::Result result, const std::string &errMsg = "") noexcept;
-
-private:
-    friend class SessionDatabase;
-    friend class SqliteSessionDatabase;
 };
 
 } // namespace LaptimerCore::Storage
