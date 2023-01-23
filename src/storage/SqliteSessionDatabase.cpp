@@ -12,7 +12,7 @@ namespace LaptimerCore::Storage
 SqliteSessionDatabase::StorageContext::StorageContext()
     : mResult{std::make_shared<AsyncResultDb>()}
 {
-    // mStorageResult.setFuture(mStoragePromise.get_future());
+    mStorageResult.setFuture(mStoragePromise.get_future());
     mStorageResult.finished.connect([this] { done.emit(this); });
 }
 
@@ -101,29 +101,44 @@ std::shared_ptr<System::AsyncResult> SqliteSessionDatabase::storeSession(const C
     const std::lock_guard<std::mutex> guard{mMutex};
     auto sessionId = getSessionId(session);
 
+    auto storageContext = std::make_shared<StorageContext>();
+    mStorageCache.emplace(storageContext.get(), storageContext);
+    storageContext->mSession = session;
+    storageContext->mSessionId = sessionId.value_or(0);
+
     if (sessionId.has_value())
     {
-        auto storageContext = std::make_shared<StorageContext>();
-        mStorageCache.emplace(storageContext.get(), storageContext);
-        auto asyncResult = storageContext->mResult;
-        storageContext->mSession = session;
-        storageContext->mSessionId = sessionId.value_or(0);
-        storageContext->mStorageResult.setFuture(storageContext->mStoragePromise.get_future());
         storageContext->mStorageThread = std::thread(&SqliteSessionDatabase::updateSession, this, storageContext.get());
         storageContext->done.connect([&](StorageContext *ctx) {
             const auto updateResult = ctx->mStorageResult.getResult() ? System::Result::Ok : System::Result::Error;
             ctx->mResult->setDbResult(updateResult);
-            sessionUpdated.emit(getIndexOfSessionId(ctx->mSessionId).value_or(0));
+            if (updateResult == System::Result::Ok)
+            {
+                sessionUpdated.emit(getIndexOfSessionId(ctx->mSessionId).value_or(0));
+            }
             mStorageCache.erase(ctx);
         });
 
-        return asyncResult;
+        return storageContext->mResult;
     }
+    else
+    {
+        storageContext->mStorageThread = std::thread(&SqliteSessionDatabase::addSession, this, storageContext.get());
+        storageContext->done.connect([&](StorageContext *ctx) {
+            const auto updateResult = ctx->mStorageResult.getResult() ? System::Result::Ok : System::Result::Error;
+            ctx->mResult->setDbResult(updateResult);
+            if (updateResult == System::Result::Ok)
+            {
+                sessionAdded.emit(getIndexOfSessionId(ctx->mSessionId).value_or(0));
+            }
+            mStorageCache.erase(ctx);
+        });
 
-    System::Result result = storeNewSession(session) ? System::Result::Ok : System::Result::Error;
-    auto asyncResult = std::make_shared<AsyncResultDb>();
-    asyncResult->setDbResult(result);
-    return asyncResult;
+        // System::Result result = storeNewSession(session) ? System::Result::Ok : System::Result::Error;
+        // auto asyncResult = std::make_shared<AsyncResultDb>();
+        // asyncResult->setDbResult(result);
+        return storageContext->mResult;
+    }
 }
 
 void SqliteSessionDatabase::deleteSession(std::size_t index)
@@ -199,8 +214,15 @@ void SqliteSessionDatabase::updateSession(StorageContext *ctx)
     ctx->mStoragePromise.set_value(true);
 }
 
-bool SqliteSessionDatabase::storeNewSession(const Common::SessionData &session)
+void SqliteSessionDatabase::addSession(StorageContext *ctx)
 {
+    if (ctx == nullptr || mStorageCache.count(ctx) == 0)
+    {
+        std::cerr << "Update session called with an invalid context.\n";
+        return;
+    }
+
+    auto context = mStorageCache.at(ctx);
     // clang-format off
     constexpr auto insertQuery = "INSERT INTO SESSION (TrackId, Date, Time) "
                                  "VALUES "
@@ -210,37 +232,39 @@ bool SqliteSessionDatabase::storeNewSession(const Common::SessionData &session)
     // insert the session
     auto insertStm = Statement{mDbConnection};
     if ((insertStm.prepare(insertQuery) != PrepareResult::Ok) ||
-        (insertStm.bindStringValue(1, session.getTrack().getTrackName()) != BindResult::Ok) ||
-        (insertStm.bindStringValue(2, session.getSessionDate().asString()) != BindResult::Ok) ||
-        (insertStm.bindStringValue(3, session.getSessionTime().asString()) != BindResult::Ok) ||
+        (insertStm.bindStringValue(1, ctx->mSession.getTrack().getTrackName()) != BindResult::Ok) ||
+        (insertStm.bindStringValue(2, ctx->mSession.getSessionDate().asString()) != BindResult::Ok) ||
+        (insertStm.bindStringValue(3, ctx->mSession.getSessionTime().asString()) != BindResult::Ok) ||
         (insertStm.execute() != ExecuteResult::Ok))
     {
         std::cout << "Error insert session:" << mDbConnection.getErrorMessage() << std::endl;
-        return false;
+        ctx->mStoragePromise.set_value(false);
+        return;
     }
 
     // get the session for inserting the laps.
-    auto sessionId = getSessionId(session);
+    auto sessionId = getSessionId(ctx->mSession);
     if (!sessionId.has_value())
     {
         std::cout << "Failed to query session of new stored session." << std::endl;
-        return false;
+        ctx->mStoragePromise.set_value(false);
+        return;
     }
 
     // insert the laps of the session
-    const auto laps = session.getLaps();
+    const auto laps = ctx->mSession.getLaps();
     for (std::size_t lapIndex = 0; lapIndex < laps.size(); ++lapIndex)
     {
-        if (!storeLapOfSession(*sessionId, lapIndex, laps.at(lapIndex)))
+        if (!storeLapOfSession(sessionId.value(), lapIndex, laps.at(lapIndex)))
         {
-            return false;
+            ctx->mStoragePromise.set_value(false);
+            return;
         }
     }
 
     updateIndexMapper();
-    const auto addedIndex = getSessionCount() > 0 ? getSessionCount() - 1 : 0;
-    sessionAdded.emit(addedIndex);
-    return true;
+    ctx->mSessionId = sessionId.value();
+    ctx->mStoragePromise.set_value(true);
 }
 
 std::optional<std::size_t> SqliteSessionDatabase::getSessionIdOfIndex(std::size_t sessionIndex) const noexcept

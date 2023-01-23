@@ -88,7 +88,7 @@ private:
     };
 
     void updateSession(StorageContext *ctx);
-    bool storeNewSession(const Common::SessionData &session);
+    void addSession(StorageContext *ctx);
     std::optional<std::size_t> getSessionIdOfIndex(std::size_t sessionIndex) const noexcept;
     std::optional<std::size_t> getSessionId(const Common::SessionData &session) const noexcept;
     std::optional<std::size_t> getIndexOfSessionId(std::size_t sessionId) const noexcept;
