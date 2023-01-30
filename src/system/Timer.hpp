@@ -1,18 +1,14 @@
 #ifndef TIMER_HPP
 #define TIMER_HPP
 
+#include "IDispatcherObject.hpp"
 #include <chrono>
 #include <kdbindings/signal.h>
 
 namespace LaptimerCore::System
 {
-/**
- * This function must be called frequently in the main loop,
- * to update the timeout intervals.
- */
-extern void handleTimerTicks();
 
-class Timer final
+class Timer final : public IDispatcherObject
 {
     friend struct TimerRegister;
 
@@ -22,7 +18,30 @@ public:
      */
     Timer();
 
-    ~Timer();
+    /**
+     * Default destructor
+     */
+    ~Timer() override;
+
+    /**
+     * Deleted copy constructor
+     */
+    Timer(const Timer &other) = delete;
+
+    /**
+     * Deleted copy operator
+     */
+    Timer &operator=(const Timer &other) = delete;
+
+    /**
+     * Deleted move constructor
+     */
+    Timer(Timer &&other) = delete;
+
+    /**
+     * Deleted move operator
+     */
+    Timer &operator=(Timer &&other) = delete;
 
     /**
      * Starts the timer. The timer sends the timeout signal when the set interval is reached.
@@ -57,8 +76,8 @@ public:
      */
     KDBindings::Signal<> timeout;
 
-private:
-    void handleTicks();
+protected:
+    void dispatch() override;
 
 private:
     std::chrono::milliseconds mInterval{0};

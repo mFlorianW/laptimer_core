@@ -1,38 +1,13 @@
 #include "Timer.hpp"
+#include "SignalDispatcher.hpp"
 #include <unordered_set>
 
 namespace LaptimerCore::System
 {
 
-struct TimerRegister
-{
-    std::unordered_set<Timer *> timers{};
-
-    void handleAllTimerTicks()
-    {
-        for (const auto &timer : timers)
-        {
-            if (timer->isRunning())
-            {
-                timer->handleTicks();
-            }
-        }
-    }
-};
-
-namespace
-{
-auto s_timers = TimerRegister{};
-} // namespace
-
-void handleTimerTicks()
-{
-    s_timers.handleAllTimerTicks();
-}
-
 Timer::Timer()
 {
-    s_timers.timers.insert(this);
+    SignalDispatcher{}.registerObject(this, std::this_thread::get_id());
 }
 
 Timer::~Timer()
@@ -41,7 +16,8 @@ Timer::~Timer()
     {
         stop();
     }
-    s_timers.timers.erase(this);
+
+    SignalDispatcher{}.unregisterObject(this, std::this_thread::get_id());
 }
 
 void Timer::start()
@@ -80,14 +56,18 @@ bool Timer::isRunning()
     return mRunning;
 }
 
-void Timer::handleTicks()
+void Timer::dispatch()
 {
-    const auto elapsedTime =
-        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - mStartTime).count();
-    if (elapsedTime >= mInterval.count())
+    if (mRunning)
     {
-        mStartTime = std::chrono::steady_clock::now();
-        timeout.emit();
+        const auto elapsedTime =
+            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - mStartTime)
+                .count();
+        if (elapsedTime >= mInterval.count())
+        {
+            mStartTime = std::chrono::steady_clock::now();
+            timeout.emit();
+        }
     }
 }
 

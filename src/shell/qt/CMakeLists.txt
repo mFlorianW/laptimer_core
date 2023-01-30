@@ -39,6 +39,7 @@ PUBLIC
     LaptimerCore::Positioning
     LaptimerCore::PositioningQt
     LaptimerCore::Algorithm
+    LaptimerCore::System
     Qt5::Core
     Qt5::Quick
     Qt5::Location

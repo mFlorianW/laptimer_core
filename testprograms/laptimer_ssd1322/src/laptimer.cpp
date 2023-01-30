@@ -122,6 +122,7 @@ int main(int argc, char *argv[])
     // Load GPS position file
     auto positions = loadPositions("/home/florian/Coding/laptimer_core/laps/Oschersleben.csv");
 
+    auto dispatcher = LaptimerCore::System::SignalDispatcher{};
     auto gpsInfoProvider = LaptimerCore::Positioning::StaticGpsInformationProvider{};
     auto posDateTimeProvider = LaptimerCore::Positioning::ConstantVelocityPositionDateTimeProvider{positions};
     auto sessionDatabase = LaptimerCore::Storage::SqliteSessionDatabase{LIBRARY_FILE};
@@ -136,7 +137,7 @@ int main(int argc, char *argv[])
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
         lv_task_handler();
-        LaptimerCore::System::handleTimerTicks();
+        dispatcher.exec();
         usleep(5 * 1000);
     }
 }

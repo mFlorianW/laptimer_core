@@ -1,5 +1,6 @@
 #include "RestGpsSource.hpp"
 #include "MainWindowViewModel.hpp"
+#include "SignalDispatcher.hpp"
 #include <QQmlContext>
 #include <QQuickWindow>
 #include <QTimer>
@@ -10,6 +11,7 @@ struct RestGpsSourcePrivate
     QQmlApplicationEngine mEngine;
     MainWindowViewModel mMainWindowViewModel;
     QTimer mLaptimerCoreTimer;
+    LaptimerCore::System::SignalDispatcher mDispatcher;
 };
 RestGpsSource::RestGpsSource()
     : d{std::make_unique<RestGpsSourcePrivate>()}
@@ -22,7 +24,7 @@ RestGpsSource::RestGpsSource()
     // TODO: move this in somehow in the mainloop
     d->mLaptimerCoreTimer.setInterval(std::chrono::milliseconds(5));
     QObject::connect(&d->mLaptimerCoreTimer, &QTimer::timeout, &d->mLaptimerCoreTimer, [=]() {
-        LaptimerCore::System::handleTimerTicks();
+        d->mDispatcher.exec();
     });
     d->mLaptimerCoreTimer.start();
 }
