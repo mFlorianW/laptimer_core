@@ -1,5 +1,6 @@
 #include "QtShell.hpp"
 #include "MainWindowViewModel.hpp"
+#include "SignalDispatcher.hpp"
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickView>
@@ -14,6 +15,7 @@ struct QtShellPrivate
     QQmlApplicationEngine engine;
     MainWindowViewModel mMainWindowViewModel;
     QTimer laptimerCoreTimer;
+    System::SignalDispatcher mDispatcher;
 };
 
 QtShell::QtShell()
@@ -26,9 +28,7 @@ QtShell::QtShell()
 
     // TODO: move this in somehow in the mainloop
     d->laptimerCoreTimer.setInterval(5);
-    QObject::connect(&d->laptimerCoreTimer, &QTimer::timeout, &d->laptimerCoreTimer, [=]() {
-        System::handleTimerTicks();
-    });
+    QObject::connect(&d->laptimerCoreTimer, &QTimer::timeout, &d->laptimerCoreTimer, [=]() { d->mDispatcher.exec(); });
     d->laptimerCoreTimer.start();
 }
 
