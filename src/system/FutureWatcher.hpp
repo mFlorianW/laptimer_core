@@ -11,7 +11,7 @@
 namespace LaptimerCore::System
 {
 
-template <class T>
+template<class T>
 class FutureWatcher : public IDispatcherObject
 {
 public:
@@ -34,9 +34,9 @@ public:
      */
     ~FutureWatcher() noexcept override
     {
-        if (mFutureObserver.joinable())
+        if (mFutureObserver->joinable())
         {
-            mFutureObserver.join();
+            mFutureObserver->join();
         }
 
         SignalDispatcher{}.unregisterObject(this, std::this_thread::get_id());
@@ -70,10 +70,17 @@ public:
     {
         mFuture = std::move(future);
         SignalDispatcher{}.registerObject(this, std::this_thread::get_id());
-        mFutureObserver = std::thread([this]() {
-            mFuture.wait();
-            mFinished = true;
-        });
+        try
+        {
+            mFutureObserver = std::make_unique<std::thread>([this]() {
+                mFuture.wait();
+                mFinished = true;
+            });
+        }
+        catch (std::system_error &e)
+        {
+            std::cout << "Failed to create future observer error:" << e.what() << std::endl;
+        }
     }
 
     /**
@@ -117,7 +124,7 @@ private:
 
 private:
     std::atomic_bool mFinished{false};
-    std::thread mFutureObserver{};
+    std::unique_ptr<std::thread> mFutureObserver{};
     std::future<T> mFuture{};
 };
 

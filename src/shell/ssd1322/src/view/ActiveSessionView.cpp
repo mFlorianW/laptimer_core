@@ -62,7 +62,7 @@ ActiveSessionView::ActiveSessionView(ActiveSessionModel &model)
     mLaptimePopupRequest.setAutoClosingTimeout(std::chrono::seconds(5));
 
     mActiveSessionModel.currentLaptime.valueChanged().connect([=]() {
-        auto timeStamp = mActiveSessionModel.currentLaptime.get();
+        const auto timeStamp = mActiveSessionModel.currentLaptime.get();
         lv_label_set_text_fmt(mLaptimeLabel,
                               "%02d:%02d.%03d",
                               timeStamp.getMinute(),

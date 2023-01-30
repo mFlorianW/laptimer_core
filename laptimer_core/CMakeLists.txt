@@ -7,10 +7,11 @@ SRC_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/command
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/view
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/viewmodel
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/session/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/storage
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/storage/private
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/system
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/system/private
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/positioning/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/track_management/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/private/sqlitehelper/src
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/rest/src
 PRIV_INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src
@@ -23,13 +24,12 @@ INCLUDE_DIRS
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/positioning/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/workflow/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/include"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../src/session/include"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../src/track_management/include"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../src/private/sqlitehelper/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src/storage/"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src/system/"
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/rest/include"
 EXCLUDE_SRCS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/session/src/FileSystemSessionDatabaseBackend.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/session/inc/FileSystemSessionDatabaseBackend.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/storage/FileSystemSessionDatabaseBackend.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/storage/FileSystemSessionDatabaseBackend.hpp
 )
 
 add_custom_command(OUTPUT laptimer_core.db
