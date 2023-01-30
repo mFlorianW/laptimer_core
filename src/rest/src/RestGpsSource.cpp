@@ -11,7 +11,7 @@ RestGpsSource::~RestGpsSource() = default;
 
 RequestHandleResult RestGpsSource::handleRestRequest(const RestRequest &request)
 {
-    auto jsonDoc = ArduinoJson::StaticJsonDocument<1024>{};
+    auto jsonDoc = ArduinoJson::DynamicJsonDocument{512};
     if ((ArduinoJson::deserializeJson(jsonDoc, request.getRawData()) != ArduinoJson::DeserializationError::Ok) &&
         jsonDoc.containsKey("date") && jsonDoc.containsKey("time") && jsonDoc.containsKey("latitude") &&
         jsonDoc.containsKey("longitude"))
