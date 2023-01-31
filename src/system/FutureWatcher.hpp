@@ -34,9 +34,9 @@ public:
      */
     ~FutureWatcher() noexcept override
     {
-        if (mFutureObserver->joinable())
+        if (mFutureObserver.joinable())
         {
-            mFutureObserver->join();
+            mFutureObserver.join();
         }
 
         SignalDispatcher{}.unregisterObject(this, std::this_thread::get_id());
@@ -72,10 +72,10 @@ public:
         SignalDispatcher{}.registerObject(this, std::this_thread::get_id());
         try
         {
-            mFutureObserver = std::make_unique<std::thread>([this]() {
+            mFutureObserver = std::thread{[this]() {
                 mFuture.wait();
                 mFinished = true;
-            });
+            }};
         }
         catch (std::system_error &e)
         {
@@ -124,7 +124,7 @@ private:
 
 private:
     std::atomic_bool mFinished{false};
-    std::unique_ptr<std::thread> mFutureObserver{};
+    std::thread mFutureObserver{};
     std::future<T> mFuture{};
 };
 

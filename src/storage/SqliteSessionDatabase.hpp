@@ -78,7 +78,7 @@ private:
         StorageContext &operator=(StorageContext &&ohter) = delete;
 
         std::size_t mSessionId{0};
-        std::unique_ptr<std::thread> mStorageThread{};
+        std::thread mStorageThread{};
         std::promise<bool> mStoragePromise;
         System::FutureWatcher<bool> mStorageResult;
         std::shared_ptr<AsyncResultDb> mResult;
