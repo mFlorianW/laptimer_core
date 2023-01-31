@@ -18,9 +18,9 @@ SqliteSessionDatabase::StorageContext::StorageContext()
 
 SqliteSessionDatabase::StorageContext::~StorageContext()
 {
-    if (mStorageThread->joinable())
+    if (mStorageThread.joinable())
     {
-        mStorageThread->join();
+        mStorageThread.join();
     }
 }
 
@@ -38,9 +38,9 @@ SqliteSessionDatabase::~SqliteSessionDatabase()
     sqlite3_update_hook(rawHandle, nullptr, nullptr);
     for (auto &[result, context] : mStorageCache)
     {
-        if (context->mStorageThread->joinable())
+        if (context->mStorageThread.joinable())
         {
-            context->mStorageThread->join();
+            context->mStorageThread.join();
         }
     }
 }
@@ -108,8 +108,7 @@ std::shared_ptr<System::AsyncResult> SqliteSessionDatabase::storeSession(const C
 
     if (sessionId.has_value())
     {
-        storageContext->mStorageThread =
-            std::make_unique<std::thread>(&SqliteSessionDatabase::updateSession, this, storageContext.get());
+        storageContext->mStorageThread = std::thread{&SqliteSessionDatabase::updateSession, this, storageContext.get()};
         storageContext->done.connect([&](StorageContext *ctx) {
             const auto updateResult = ctx->mStorageResult.getResult() ? System::Result::Ok : System::Result::Error;
             ctx->mResult->setDbResult(updateResult);
@@ -124,8 +123,7 @@ std::shared_ptr<System::AsyncResult> SqliteSessionDatabase::storeSession(const C
     }
     else
     {
-        storageContext->mStorageThread =
-            std::make_unique<std::thread>(&SqliteSessionDatabase::addSession, this, storageContext.get());
+        storageContext->mStorageThread = std::thread{&SqliteSessionDatabase::addSession, this, storageContext.get()};
         storageContext->done.connect([&](StorageContext *ctx) {
             const auto updateResult = ctx->mStorageResult.getResult() ? System::Result::Ok : System::Result::Error;
             ctx->mResult->setDbResult(updateResult);
