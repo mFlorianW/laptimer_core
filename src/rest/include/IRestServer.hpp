@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IRestRequestHandler.hpp"
+
 namespace LaptimerCore::Rest
 {
 enum ServerStartResult
@@ -11,7 +12,12 @@ enum ServerStartResult
 
 enum class PostHandler
 {
-    PositionHandler
+    PositionHandler,
+};
+
+enum class GetHandler
+{
+    SessionHandler,
 };
 
 class IRestServer
@@ -66,7 +72,21 @@ public:
      * @param type The type to register the handler.
      * @param handler The handler object that is called when the type receives a request.
      */
-    virtual void registerPostHandler(PostHandler type, IRestRequestHandler *handler) noexcept;
+    virtual void registerPostHandler(PostHandler type, IRestRequestHandler *handler) noexcept = 0;
+
+    /**
+     * Registers a GET method handler in the server. The handler is called when a request for the registered type is
+     * received. The Server can only have on handler for each type at the time. The last set handler for a type is
+     * called by the server.
+     *
+     * @note
+     * The Server doesn't take any ownership about the handler object. The caller must guarantee that object lives as
+     * long as the server.
+     *
+     * @param type The type to register the handler.
+     * @param handler The handler object that is called when the type receives a request.
+     */
+    virtual void registerGethandler(GetHandler type, IRestRequestHandler *handler) noexcept = 0;
 
 protected:
     IRestServer() = default;
