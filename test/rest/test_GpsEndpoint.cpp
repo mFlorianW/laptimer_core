@@ -1,5 +1,5 @@
 #define CATCH_CONFIG_MAIN
-#include "RestGpsSource.hpp"
+#include "GpsEndpoint.hpp"
 #include <catch2/catch.hpp>
 
 using namespace LaptimerCore::Rest;
@@ -14,10 +14,10 @@ const auto request = std::string{"{\"date\":\"01.00.0123\","
 
 } // namespace
 
-TEST_CASE("The RestGpsSource shall parse the JSON RestRequest and shall update the PositionDateTime Property")
+TEST_CASE("The GpsEndpoint shall parse the JSON RestRequest and shall update the PositionDateTime Property")
 {
     const auto restRequest = RestRequest{request};
-    auto source = RestGpsSource{};
+    auto source = GpsEndpoint{};
     auto expectedResult = PositionDateTimeData{};
     expectedResult.setDate({"01.00.0123"});
     expectedResult.setTime({"17:19:05.045"});

@@ -6,38 +6,38 @@
 namespace LaptimerCore::Rest
 {
 
-class RestGpsSource final : public IRestRequestHandler, public Positioning::IPositionDateTimeProvider
+class GpsEndpoint final : public IRestRequestHandler, public Positioning::IPositionDateTimeProvider
 {
 public:
     /**
-     * Creates an Instance of the RestGpsSource
+     * Creates an Instance of the GpsEndpoint
      */
-    RestGpsSource();
+    GpsEndpoint();
 
     /**
      * Defalut destructor
      */
-    ~RestGpsSource() override;
+    ~GpsEndpoint() override;
 
     /**
      * Deleted copy constructor.
      */
-    RestGpsSource(const RestGpsSource &other) = delete;
+    GpsEndpoint(const GpsEndpoint &other) = delete;
 
     /**
      * Deleted copy assignment operator
      */
-    RestGpsSource &operator=(const RestGpsSource &other) = delete;
+    GpsEndpoint &operator=(const GpsEndpoint &other) = delete;
 
     /**
      * Deleted move constructor
      */
-    RestGpsSource(RestGpsSource &&other) = delete;
+    GpsEndpoint(GpsEndpoint &&other) = delete;
 
     /**
      * Deleted move assignment operator
      */
-    RestGpsSource &operator=(const RestGpsSource &&other) = delete;
+    GpsEndpoint &operator=(const GpsEndpoint &&other) = delete;
 
     /**
      * @copydoc IRestRequestHandler::handleRestRequest(const RestRequest &request)

@@ -1,4 +1,4 @@
-#include "RestGpsSource.hpp"
+#include "GpsEndpoint.hpp"
 #include "RestRequest.hpp"
 #include <ArduinoJson.hpp>
 
@@ -6,10 +6,10 @@ using namespace LaptimerCore::Common;
 
 namespace LaptimerCore::Rest
 {
-RestGpsSource::RestGpsSource() = default;
-RestGpsSource::~RestGpsSource() = default;
+GpsEndpoint::GpsEndpoint() = default;
+GpsEndpoint::~GpsEndpoint() = default;
 
-RequestHandleResult RestGpsSource::handleRestRequest(const RestRequest &request)
+RequestHandleResult GpsEndpoint::handleRestRequest(const RestRequest &request)
 {
     auto jsonDoc = ArduinoJson::DynamicJsonDocument{512};
     if ((ArduinoJson::deserializeJson(jsonDoc, request.getRawData()) != ArduinoJson::DeserializationError::Ok) &&
