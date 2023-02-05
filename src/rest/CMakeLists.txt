@@ -3,8 +3,8 @@ add_library(LaptimerCore::Rest ALIAS Rest)
 
 target_sources(Rest
 PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/RestGpsSource.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/RestGpsSource.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/GpsEndpoint.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/GpsEndpoint.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RestRequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RestRequest.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/IRestRequestHandler.hpp
