@@ -5,25 +5,25 @@ namespace LaptimerCore::Rest
 {
 struct SharedRestRequest : public Common::SharedData
 {
-    std::string mRawData;
+    std::string mRequestBody;
 
     friend bool operator==(const SharedRestRequest &lhs, const SharedRestRequest &rhs)
     {
-        return lhs.mRawData == rhs.mRawData;
+        return lhs.mRequestBody == rhs.mRequestBody;
     }
 };
 
 RestRequest::RestRequest(const std::string &rawData) noexcept
-    : mData{new (std::nothrow) SharedRestRequest{}}
+    : mData{new(std::nothrow) SharedRestRequest{}}
 {
-    mData->mRawData = rawData;
+    mData->mRequestBody = rawData;
 }
 
 RestRequest::~RestRequest() noexcept = default;
 
-std::string_view RestRequest::getRawData() const noexcept
+std::string_view RestRequest::getRequestBody() const noexcept
 {
-    return mData->mRawData;
+    return mData->mRequestBody;
 }
 
 bool operator==(const RestRequest &lhs, const RestRequest &rhs) noexcept
