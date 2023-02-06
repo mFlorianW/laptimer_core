@@ -13,7 +13,7 @@ public:
      * Creates an instance of the RestRequest.
      * @param rawData The rawdata of the request
      */
-    RestRequest(const std::string &rawData) noexcept;
+    RestRequest() noexcept;
 
     /**
      * Default destructor.
@@ -51,6 +51,12 @@ public:
      * @return The raw data.
      */
     [[nodiscard]] std::string_view getRequestBody() const noexcept;
+
+    /**
+     * Sets the request body.
+     * @param requestBody The new request body
+     */
+    void setRequestBody(const std::string &requestBody) noexcept;
 
     /**
      * Equal operator

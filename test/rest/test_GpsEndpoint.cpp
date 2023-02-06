@@ -16,13 +16,14 @@ const auto request = std::string{"{\"date\":\"01.00.0123\","
 
 TEST_CASE("The GpsEndpoint shall parse the JSON RestRequest and shall update the PositionDateTime Property")
 {
-    const auto restRequest = RestRequest{request};
+    auto restRequest = RestRequest{};
     auto source = GpsEndpoint{};
     auto expectedResult = PositionDateTimeData{};
     expectedResult.setDate({"01.00.0123"});
     expectedResult.setTime({"17:19:05.045"});
     expectedResult.setPosition({52.02739715576172, 11.278840065002441});
 
+    restRequest.setRequestBody(request);
     const auto handleResult = source.handleRestRequest(restRequest);
 
     REQUIRE(handleResult == RequestHandleResult::Ok);
