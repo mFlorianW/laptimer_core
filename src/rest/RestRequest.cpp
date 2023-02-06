@@ -13,10 +13,9 @@ struct SharedRestRequest : public Common::SharedData
     }
 };
 
-RestRequest::RestRequest(const std::string &rawData) noexcept
+RestRequest::RestRequest() noexcept
     : mData{new(std::nothrow) SharedRestRequest{}}
 {
-    mData->mRequestBody = rawData;
 }
 
 RestRequest::~RestRequest() noexcept = default;
@@ -24,6 +23,11 @@ RestRequest::~RestRequest() noexcept = default;
 std::string_view RestRequest::getRequestBody() const noexcept
 {
     return mData->mRequestBody;
+}
+
+void RestRequest::setRequestBody(const std::string &requestBody) noexcept
+{
+    mData->mRequestBody = requestBody;
 }
 
 bool operator==(const RestRequest &lhs, const RestRequest &rhs) noexcept
