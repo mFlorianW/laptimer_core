@@ -47,10 +47,10 @@ public:
     RestRequest &operator=(RestRequest &&other) noexcept = default;
 
     /**
-     * Gives the raw data of the request for further processing.
+     * Gives the body of the request for further processing.
      * @return The raw data.
      */
-    [[nodiscard]] std::string_view getRawData() const noexcept;
+    [[nodiscard]] std::string_view getRequestBody() const noexcept;
 
     /**
      * Equal operator
