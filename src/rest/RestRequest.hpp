@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Path.hpp"
 #include "SharedDataPointer.hpp"
 #include <string_view>
 
@@ -57,6 +58,21 @@ public:
      * @param requestBody The new request body
      */
     void setRequestBody(const std::string &requestBody) noexcept;
+
+    /**
+     * Get the path of the Request. Every call should have a path
+     * at least one element the path to the endpoint.
+     * @reutrn The path
+     */
+    [[nodiscard]] Path getPath() const noexcept;
+
+    /**
+     * Sets the raw path and creates internally new instance of Path
+     * for further processing. Call @ref RestRequest::getPath() to get
+     * the path instance.
+     * @param path The raw path.
+     */
+    void setPath(const std::string &path) noexcept;
 
     /**
      * Equal operator
