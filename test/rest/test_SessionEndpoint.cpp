@@ -21,7 +21,7 @@ SCENARIO("Calling the Session on the folder /sessions shall return the session c
 
         WHEN("Requesting the top folder /sessions shall return the session count")
         {
-            auto request = RestRequest{"/sessions"};
+            auto request = RestRequest{RequestType::Get, "/sessions"};
             endpoint.handleRestRequest(request);
             THEN("Give the correct session id list.")
             {
@@ -44,7 +44,7 @@ SCENARIO("Calling the Session endpoint on a specific path under /sessions/{n} sh
 
         WHEN("Requesting the a specifc under /sessions/0 shall return the session")
         {
-            auto request = RestRequest{"/sessions/0"};
+            auto request = RestRequest{RequestType::Get, "/sessions/0"};
             endpoint.handleRestRequest(request);
             THEN("Give the correct session id list.")
             {

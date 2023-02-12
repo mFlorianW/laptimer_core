@@ -8,22 +8,29 @@ struct SharedRestRequest : public Common::SharedData
     Path mRequestPath;
     std::string mRequestBody;
     std::string mReturnBody;
+    RequestType mType{};
 
     friend bool operator==(const SharedRestRequest &lhs, const SharedRestRequest &rhs)
     {
         return (lhs.mRequestBody == rhs.mRequestBody) && (lhs.mReturnBody == rhs.mReturnBody) &&
-               (lhs.mRequestPath == rhs.mRequestPath);
+               (lhs.mRequestPath == rhs.mRequestPath) && (lhs.mType == rhs.mType);
     }
 };
 
-RestRequest::RestRequest(std::string requestPath, std::string requestBody) noexcept
+RestRequest::RestRequest(RequestType type, std::string requestPath, std::string requestBody) noexcept
     : mData{new(std::nothrow) SharedRestRequest{}}
 {
+    mData->mType = type;
     mData->mRequestBody = std::move(requestBody);
     mData->mRequestPath = Path{std::move(requestPath)};
 }
 
 RestRequest::~RestRequest() noexcept = default;
+
+RequestType RestRequest::getType() const noexcept
+{
+    return mData->mType;
+}
 
 std::string_view RestRequest::getRequestBody() const noexcept
 {
