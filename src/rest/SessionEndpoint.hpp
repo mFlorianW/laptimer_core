@@ -14,6 +14,10 @@ public:
     RequestHandleResult handleRestRequest(RestRequest &request) noexcept override;
 
 private:
+    RequestHandleResult handleGetRequest(RestRequest &request) noexcept;
+    RequestHandleResult handleDeleteRequest(RestRequest &request) noexcept;
+
+private:
     Storage::ISessionDatabase &mDb;
 };
 
