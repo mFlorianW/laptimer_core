@@ -12,7 +12,7 @@ SRC_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/system
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/system/private
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/positioning/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/rest/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/rest
 PRIV_INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/command
@@ -26,7 +26,7 @@ INCLUDE_DIRS
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/include"
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/storage/"
     "${CMAKE_CURRENT_SOURCE_DIR}/../src/system/"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../src/rest/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src/rest"
 EXCLUDE_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/storage/FileSystemSessionDatabaseBackend.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/storage/FileSystemSessionDatabaseBackend.hpp

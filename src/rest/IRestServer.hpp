@@ -86,7 +86,7 @@ public:
      * @param type The type to register the handler.
      * @param handler The handler object that is called when the type receives a request.
      */
-    virtual void registerGethandler(GetHandler type, IRestRequestHandler *handler) noexcept = 0;
+    virtual void registerGetHandler(GetHandler type, IRestRequestHandler *handler) noexcept = 0;
 
 protected:
     IRestServer() = default;
