@@ -10,14 +10,24 @@ class SharedPath : public Common::SharedData
 public:
     std::string mPath;
     std::vector<std::size_t> mPositions{};
+
+    friend bool operator==(const SharedPath &lhs, const SharedPath &rhs)
+    {
+        return (lhs.mPositions == rhs.mPositions) && (lhs.mPath == rhs.mPath);
+    }
 };
+
+Path::Path() noexcept
+    : mData{new(std::nothrow) SharedPath{}}
+{
+}
 
 Path::Path(std::string path) noexcept
     : mData{new(std::nothrow) SharedPath{}}
 {
     mData->mPath = std::move(path);
     mData->mPositions.reserve(getDepth());
-    for (auto i = 0; i < mData->mPath.size(); ++i)
+    for (auto i = std::size_t{0}; i < mData->mPath.size(); ++i)
     {
         if (mData->mPath.at(i) == '/')
         {
@@ -51,7 +61,7 @@ std::size_t Path::getDepth() const noexcept
         return 0;
     }
 
-    const auto count = std::count(mData->mPath.cbegin(), mData->mPath.cend(), '/') + 1;
+    const auto count = std::count(mData->mPath.cbegin(), mData->mPath.cend(), '/');
     return count;
 }
 
@@ -62,10 +72,21 @@ std::optional<std::string_view> Path::getEntry(std::size_t index) const noexcept
         return std::nullopt;
     }
 
-    const auto entryBegin = index > 0 ? mData->mPositions.at(index - 1) + 1 : 0;
-    const auto entryEnd = index + 1 > mData->mPositions.size() ? mData->mPath.size() : mData->mPositions.at(index);
+    constexpr auto pathDelimiterSize = std::size_t{1};
+    const auto entryBegin = mData->mPositions.at(index) + pathDelimiterSize;
+    const auto entryEnd = index + 1 >= mData->mPositions.size() ? mData->mPath.size() : mData->mPositions.at(index + 1);
     const auto entry = std::string_view{mData->mPath.data() + entryBegin, entryEnd - entryBegin};
     return entry;
+}
+
+bool operator==(const Path &lhs, const Path &rhs)
+{
+    return lhs.mData == rhs.mData || *lhs.mData == *rhs.mData;
+}
+
+bool operator!=(const Path &lhs, const Path &rhs)
+{
+    return !(lhs == rhs);
 }
 
 } // namespace LaptimerCore::Rest

@@ -9,7 +9,7 @@ namespace LaptimerCore::Rest
 GpsEndpoint::GpsEndpoint() = default;
 GpsEndpoint::~GpsEndpoint() = default;
 
-RequestHandleResult GpsEndpoint::handleRestRequest(const RestRequest &request)
+RequestHandleResult GpsEndpoint::handleRestRequest(RestRequest &request) noexcept
 {
     auto jsonDoc = ArduinoJson::DynamicJsonDocument{512};
     if ((ArduinoJson::deserializeJson(jsonDoc, request.getRequestBody()) != ArduinoJson::DeserializationError::Ok) &&

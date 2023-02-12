@@ -39,12 +39,13 @@ public:
     IRestRequestHandler &operator=(const IRestRequestHandler &&other) = delete;
 
     /**
-     * Function that is called when the handler is registered in the RestServer.
+     * Function that is called when the handler is registered in the RestServer. The reqeust handler shall
+     * also set the return body of the request when needed otherwise the return body is empty.
      * @param request The Request that the service receives and that shall be handled.
      * @return RequestHandleResult::Ok The Request is correctly handled.
      * @return RequestHandleResult::Error The Request couldn't be handled.
      */
-    virtual RequestHandleResult handleRestRequest(const RestRequest &request) = 0;
+    virtual RequestHandleResult handleRestRequest(RestRequest &request) noexcept = 0;
 
 protected:
     IRestRequestHandler() = default;

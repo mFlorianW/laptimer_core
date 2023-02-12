@@ -15,6 +15,11 @@ class Path final
 {
 public:
     /**
+     * Creates an empty path.
+     */
+    Path() noexcept;
+
+    /**
      * Creates an instance of the path.
      * @param path The that shall be used.
      */
@@ -63,6 +68,20 @@ public:
      * @return The entry or an invalid index if the is not present.
      */
     std::optional<std::string_view> getEntry(std::size_t index) const noexcept;
+
+    /**
+     * Equal operator
+     * @return true The two objects are the same.
+     * @return false The two objects are not the same.
+     */
+    friend bool operator==(const Path &lhs, const Path &rhs);
+
+    /**
+     * Not Equal operator
+     * @return true The two objects are not the same.
+     * @return false The two objects are the same.
+     */
+    friend bool operator!=(const Path &lhs, const Path &rhs);
 
 private:
     Common::SharedDataPointer<SharedPath> mData;
