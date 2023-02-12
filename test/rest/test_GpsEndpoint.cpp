@@ -16,7 +16,7 @@ const auto request = std::string{"{\"date\":\"01.00.0123\","
 
 TEST_CASE("The GpsEndpoint shall parse the JSON RestRequest and shall update the PositionDateTime Property")
 {
-    auto restRequest = RestRequest{"/gps", request};
+    auto restRequest = RestRequest{RequestType::Post, "/gps", request};
     auto source = GpsEndpoint{};
     auto expectedResult = PositionDateTimeData{};
     expectedResult.setDate({"01.00.0123"});

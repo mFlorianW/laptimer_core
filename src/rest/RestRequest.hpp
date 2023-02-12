@@ -6,6 +6,12 @@
 
 namespace LaptimerCore::Rest
 {
+enum class RequestType
+{
+    Get,
+    Post,
+    Delete,
+};
 struct SharedRestRequest;
 class RestRequest
 {
@@ -15,7 +21,7 @@ public:
      * @param requestPath The path of the request
      * @param requestBody The rawdata of the request
      */
-    RestRequest(std::string requestPath, std::string requestBody = "") noexcept;
+    RestRequest(RequestType type, std::string requestPath, std::string requestBody = "") noexcept;
 
     /**
      * Default destructor.
@@ -47,6 +53,12 @@ public:
      * @return RestRequest& A reference of the moved instance.
      */
     RestRequest &operator=(RestRequest &&other) noexcept = default;
+
+    /**
+     * Gives the type of the request.
+     * @return The type of the request.
+     */
+    RequestType getType() const noexcept;
 
     /**
      * Gives the body of the request for further processing.
