@@ -9,15 +9,17 @@ using namespace LaptimerCore::Rest;
 using namespace LaptimerCore::TestHelper;
 using namespace LaptimerCore::Storage;
 
-SCENARIO("Calling the Session on the folder /sessions shall return the session count")
+SCENARIO("Calling the Session endpoint /sessions with GET shall return the session count")
 {
     GIVEN("A session endpoint with two session")
     {
         auto dbBackend = MemorySessionDatabaseBackend{};
         auto db = SessionDatabase{dbBackend};
         auto endpoint = SessionEndpoint{db};
-        db.storeSession(Sessions::getTestSession());
-        db.storeSession(Sessions::getTestSession2());
+        auto result = db.storeSession(Sessions::getTestSession());
+        result->waitForFinished();
+        result = db.storeSession(Sessions::getTestSession2());
+        result->waitForFinished();
 
         WHEN("Requesting the top folder /sessions shall return the session count")
         {
@@ -32,7 +34,7 @@ SCENARIO("Calling the Session on the folder /sessions shall return the session c
     }
 }
 
-SCENARIO("Calling the Session endpoint on a specific path under /sessions/{n} shall return the session")
+SCENARIO("Calling the Session endpoint with GET on a specific path under /sessions/{n} shall return the session")
 {
     GIVEN("A session endpoint with one session")
     {
@@ -46,10 +48,32 @@ SCENARIO("Calling the Session endpoint on a specific path under /sessions/{n} sh
         {
             auto request = RestRequest{RequestType::Get, "/sessions/0"};
             endpoint.handleRestRequest(request);
-            THEN("Give the correct session id list.")
+            THEN("Give the correct session as json in the return body")
             {
                 auto expectedReturnBody = Sessions::getTestSessionAsJson();
                 REQUIRE(request.getReturnBody() == expectedReturnBody);
+            }
+        }
+    }
+}
+
+SCENARIO("Calling the Session endpoint with DELETE on a specific path under /sessions/{n} shall delete the session")
+{
+    GIVEN("A session endpoint with one session")
+    {
+        auto dbBackend = MemorySessionDatabaseBackend{};
+        auto db = SessionDatabase{dbBackend};
+        auto endpoint = SessionEndpoint{db};
+        auto asyncResult = db.storeSession(Sessions::getTestSession());
+        asyncResult->waitForFinished();
+
+        WHEN("The endpoint with a DELETE request is called")
+        {
+            auto request = RestRequest{RequestType::Delete, "/sessions/0"};
+            endpoint.handleRestRequest(request);
+            THEN("The session under the index shall be deleted")
+            {
+                REQUIRE(db.getSessionCount() == 0);
             }
         }
     }
