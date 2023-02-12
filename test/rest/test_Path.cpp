@@ -8,7 +8,7 @@ SCENARIO("A path shall give the number of level in the path")
 {
     GIVEN("A path with three levels")
     {
-        const auto path = Path{"test/path/dup"};
+        const auto path = Path{"/test/path/dup"};
         constexpr auto expectedLevels = 3;
 
         WHEN("The path levels are requested.")
@@ -41,7 +41,7 @@ SCENARIO("A path shall give the path elements addressed by the element index")
 {
     GIVEN("A path with three levels")
     {
-        const auto path = Path{"test/path/dup"};
+        const auto path = Path{"/test/path/dup"};
 
         WHEN("The path element with index 0 is requested")
         {
@@ -95,6 +95,21 @@ SCENARIO("A path shall give the path elements addressed by the element index")
             THEN("A nullopt shall be returned")
             {
                 REQUIRE(element.has_value() == false);
+            }
+        }
+    }
+
+    GIVEN("A path with on level")
+    {
+        const auto path = Path{"/sessions"};
+        WHEN("The path element for index 0 is requested")
+        {
+            const auto element = path.getEntry(0);
+            const auto expectedElement = "sessions";
+            THEN("The correct entry shall be returned")
+            {
+                REQUIRE(element.has_value() == true);
+                REQUIRE(element.value_or("") == expectedElement);
             }
         }
     }

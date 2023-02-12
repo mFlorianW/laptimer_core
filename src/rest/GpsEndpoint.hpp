@@ -42,6 +42,6 @@ public:
     /**
      * @copydoc IRestRequestHandler::handleRestRequest(const RestRequest &request)
      */
-    RequestHandleResult handleRestRequest(const RestRequest &request) override;
+    RequestHandleResult handleRestRequest(RestRequest &request) noexcept override;
 };
 } // namespace LaptimerCore::Rest
