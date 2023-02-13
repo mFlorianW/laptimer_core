@@ -78,7 +78,7 @@ public:
      * The body can be empty when the call doesn't need one.
      * @return The return body for the caller.
      */
-    std::string getReturnBody() const noexcept;
+    std::string_view getReturnBody() const noexcept;
 
     /**
      * Sets the return body for the call. This setter is typically called by the

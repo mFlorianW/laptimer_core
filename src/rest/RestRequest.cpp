@@ -42,7 +42,7 @@ Path RestRequest::getPath() const noexcept
     return mData->mRequestPath;
 }
 
-std::string RestRequest::getReturnBody() const noexcept
+std::string_view RestRequest::getReturnBody() const noexcept
 {
     return mData->mReturnBody;
 }
