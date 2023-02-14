@@ -58,7 +58,7 @@ private:
     PopupView mPopupView;
     CloseCommand mPopupCloseCommand;
     OpenCommand mPopupConfirmCommand;
-    lv_obj_t *mOldPopupParent;
+    lv_obj_t *mOldPopupParent{nullptr};
 };
 
 #endif //!__SCREEN__H__

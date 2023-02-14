@@ -154,7 +154,7 @@ void Screen::restoreParent()
 
 void Screen::setVisible(const bool visible) noexcept
 {
-    mVisible = true;
+    mVisible = visible;
     if (!mVisible)
     {
         restoreParent();
