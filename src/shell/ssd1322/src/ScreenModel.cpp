@@ -50,6 +50,7 @@ void ScreenModel::activateMainScreen()
     auto &mainScreenView = mD->mMainScreenModel.getActiveView();
     mD->mMainScreen.setScreenContent(&mainScreenView);
     lv_scr_load(mD->mMainScreen.getScreen());
+    mD->mMainScreen.setVisible(true);
 }
 
 void ScreenModel::activateMenuScreen()
@@ -58,4 +59,5 @@ void ScreenModel::activateMenuScreen()
     auto &menuView = mD->mMenuModel.getActiveView();
     mD->mMenuScreen.setScreenContent(&menuView);
     lv_scr_load(mD->mMenuScreen.getScreen());
+    mD->mMenuScreen.setVisible(true);
 }
