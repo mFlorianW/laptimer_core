@@ -96,6 +96,7 @@ endif()
 add_subdirectory(src)
 add_subdirectory(testprograms)
 add_subdirectory(db)
+add_subdirectory(programs)
 
 if(ENABLE_TEST)
     enable_testing()
