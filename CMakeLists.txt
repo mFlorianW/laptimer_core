@@ -99,7 +99,7 @@ add_subdirectory(programs)
 
 if(ENABLE_TEST)
     enable_testing()
-    add_subdirectory(test)
+    add_subdirectory(tests)
 endif(ENABLE_TEST)
 
 feature_summary(WHAT ALL)
