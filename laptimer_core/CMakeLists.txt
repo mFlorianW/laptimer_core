@@ -1,35 +1,35 @@
 idf_component_register(
 SRC_DIRS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/common/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/algorithm/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/workflow/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/command
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/view
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/viewmodel
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/storage
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/storage/private
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/system
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/system/private
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/positioning/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/rest
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/common/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/algorithm/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/workflow/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/shell/ssd1322/src/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/shell/ssd1322/src/command
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/shell/ssd1322/src/view
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/shell/ssd1322/src/viewmodel
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/storage
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/storage/private
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/system
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/system/private
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/positioning/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/rest
 PRIV_INCLUDE_DIRS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/command
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/view
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/src/viewmodel
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/shell/ssd1322/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/shell/ssd1322/src/command
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/shell/ssd1322/src/view
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/shell/ssd1322/src/viewmodel
 INCLUDE_DIRS
-    "${CMAKE_CURRENT_SOURCE_DIR}/../src/algorithm/include"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../src/common/include"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../src/positioning/include"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../src/workflow/include"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../src/shell/ssd1322/include"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../src/storage/"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../src/system/"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../src/rest"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../libs/algorithm/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../libs/common/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../libs/positioning/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../libs/workflow/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../libs/shell/ssd1322/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../libs/storage/"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../libs/system/"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../libs/rest"
 EXCLUDE_SRCS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/storage/FileSystemSessionDatabaseBackend.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/storage/FileSystemSessionDatabaseBackend.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/storage/FileSystemSessionDatabaseBackend.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../libs/storage/FileSystemSessionDatabaseBackend.hpp
 )
 
 add_custom_command(OUTPUT laptimer_core.db
