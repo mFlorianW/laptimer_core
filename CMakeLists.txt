@@ -93,7 +93,7 @@ if(HAS_WALL)
     set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -Wall")
 endif()
 
-add_subdirectory(src)
+add_subdirectory(libs)
 add_subdirectory(testprograms)
 add_subdirectory(db)
 add_subdirectory(programs)
