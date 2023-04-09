@@ -94,7 +94,6 @@ if(HAS_WALL)
 endif()
 
 add_subdirectory(libs)
-add_subdirectory(testprograms)
 add_subdirectory(db)
 add_subdirectory(programs)
 
