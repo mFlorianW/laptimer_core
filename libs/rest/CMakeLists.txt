@@ -13,6 +13,8 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/SessionEndpoint.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Path.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Path.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/RestCall.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/RestCall.hpp
 )
 
 target_link_libraries(Rest
