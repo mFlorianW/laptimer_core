@@ -114,3 +114,21 @@ SCENARIO("A path shall give the path elements addressed by the element index")
         }
     }
 }
+
+SCENARIO("The Path shall return the whole path as string")
+{
+    GIVEN("A correctly initialized path")
+    {
+        constexpr auto rawPath = "/sessions2";
+        const auto path = Path{rawPath};
+
+        WHEN("The complete path as string is requested")
+        {
+            const auto returnPath = path.getPath();
+            THEN("The correct path will be returned")
+            {
+                REQUIRE(returnPath == rawPath);
+            }
+        }
+    }
+}
