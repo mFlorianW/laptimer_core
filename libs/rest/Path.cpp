@@ -54,6 +54,11 @@ Path &Path::operator=(Path &&other)
     return *this;
 }
 
+std::string_view Path::getPath() const noexcept
+{
+    return mData->mPath;
+}
+
 std::size_t Path::getDepth() const noexcept
 {
     if (mData->mPath.empty())

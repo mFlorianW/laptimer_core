@@ -57,6 +57,12 @@ public:
     Path &operator=(Path &&other);
 
     /**
+     * Gives the whole path.
+     * @return The whole stored path.
+     */
+    std::string_view getPath() const noexcept;
+
+    /**
      * Gives the depth of the path.
      * @return The depth of the path
      */
