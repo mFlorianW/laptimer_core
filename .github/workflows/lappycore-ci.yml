@@ -44,10 +44,12 @@ jobs:
         run: |
           pip3 install pyyaml
           git diff -U0 HEAD^ | /usr/bin/clang-tidy-diff-14.py -p1 -path build/github-ci-debug -export-fixes clang-tidy-result/fixes.yml
-      - name: Run clang-tidy-pr-comments action
+      - name: Clangtidy comments
         uses: platisd/clang-tidy-pr-comments@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           clang_tidy_fixes: clang-tidy-result/fixes.yml
           request_changes: false
           suggestions_per_comment: 10 
+      - if: steps.clangtidy-comments.outputs.total_comments > 0
+        run: exit 1
