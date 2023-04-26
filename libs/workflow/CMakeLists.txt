@@ -9,7 +9,7 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/IActiveSessionWorkflow.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ActiveSessionWorkflow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ActiveSessionWorkflow.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ISessionDownload.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ISessionDownloader.hpp
 )
 
 target_include_directories(Workflow

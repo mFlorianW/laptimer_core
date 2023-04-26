@@ -16,30 +16,30 @@ enum class DownloadResult
  * The session can be downloaded in a index based manner. The first session index starts at 0 and ends at sessionCount
  * - 1.
  */
-class ISessionDownload
+class ISessionDownloader
 {
 public:
-    virtual ~ISessionDownload() noexcept = default;
+    virtual ~ISessionDownloader() noexcept = default;
 
     /**
      * Deleted copy constructor
      */
-    ISessionDownload(const ISessionDownload &) = delete;
+    ISessionDownloader(const ISessionDownloader &) = delete;
 
     /**
      * Deleted copy operator
      */
-    ISessionDownload &operator=(const ISessionDownload &) = delete;
+    ISessionDownloader &operator=(const ISessionDownloader &) = delete;
 
     /**
      * Deleted move constructor
      */
-    ISessionDownload(ISessionDownload &&) = delete;
+    ISessionDownloader(ISessionDownloader &&) = delete;
 
     /**
      * Deleted move operator
      */
-    ISessionDownload &operator=(ISessionDownload &&) = delete;
+    ISessionDownloader &operator=(ISessionDownloader &&) = delete;
 
     /**
      * Gives the number of stored sessions of the laptimer. The return value is only valid after calling
@@ -80,6 +80,6 @@ public:
     KDBindings::Signal<std::size_t, DownloadResult> sessionDownloadFinshed;
 
 protected:
-    ISessionDownload() noexcept = default;
+    ISessionDownloader() noexcept = default;
 };
 } // namespace LaptimerCore::Workflow
