@@ -60,7 +60,7 @@ public:
      * @param index The index of the session.
      * @return The session data for the passed index.
      */
-    virtual std::optional<Common::SessionData> getSession(std::size_t index) noexcept = 0;
+    virtual std::optional<Common::SessionData> getSession(std::size_t index) const noexcept = 0;
 
     /**
      * Downloads a specific session of the device.
