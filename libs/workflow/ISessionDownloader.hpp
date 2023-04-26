@@ -52,7 +52,7 @@ public:
      * Fetches the session count of a laptimer device.
      * Shall emit the signal sessionCountFetched when finshed.
      */
-    virtual void featchSessionCount() noexcept = 0;
+    virtual void fetchSessionCount() noexcept = 0;
 
     /**
      * Gives the session data for the passed index. The return is only valid when the session was previously downloaded
