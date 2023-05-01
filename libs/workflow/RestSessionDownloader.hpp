@@ -1,4 +1,5 @@
 #pragma once
+#include "IRestClient.hpp"
 #include "ISessionDownloader.hpp"
 
 namespace LaptimerCore::Workflow
@@ -6,7 +7,7 @@ namespace LaptimerCore::Workflow
 class RestSessionDownloader final : public ISessionDownloader
 {
 public:
-    RestSessionDownloader() noexcept;
+    RestSessionDownloader(Rest::IRestClient &restClient) noexcept;
 
     /**
      * Default empty destructor
@@ -54,6 +55,12 @@ public:
     void downloadSession(std::size_t index) noexcept override;
 
 private:
+    void fetchSessionCountFinished(Rest::RestCall *call) noexcept;
+
+private:
+    Rest::IRestClient &mRestClient;
+    std::size_t mSessionCount{0};
+    std::unordered_map<Rest::RestCall *, std::shared_ptr<Rest::RestCall>> mFetchCounterCache;
 };
 
 } // namespace LaptimerCore::Workflow

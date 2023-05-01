@@ -27,4 +27,5 @@ PUBLIC
     LaptimerCore::Positioning
     LaptimerCore::Algorithm
     LaptimerCore::Storage
+    LaptimerCore::Rest
 )

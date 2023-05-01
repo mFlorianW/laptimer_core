@@ -9,6 +9,7 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Sessions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Laptimer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SqliteDatabaseTestHelper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/RestSessionDownloaderClient.cpp
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Positions.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Tracks.hpp
@@ -17,6 +18,7 @@ PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Laptimer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PositionDateTimeProvider.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SqliteDatabaseTestHelper.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/RestSessionDownloaderClient.hpp
 )
 
 target_include_directories(TestHelper
@@ -31,5 +33,6 @@ PRIVATE
     LaptimerCore::Positioning
     LaptimerCore::AlgorithmObject
     LaptimerCore::Storage
+    LaptimerCore::Rest
     Catch2::Catch2
 )
