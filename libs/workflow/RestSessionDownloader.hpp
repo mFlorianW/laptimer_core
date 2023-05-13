@@ -15,11 +15,6 @@ public:
     ~RestSessionDownloader() noexcept override = default;
 
     /**
-     * Deleted copy constructor
-     */
-    RestSessionDownloader(const RestSessionDownloader &) = delete;
-
-    /**
      * Deleted copy operator
      */
     RestSessionDownloader &operator=(const RestSessionDownloader &) = delete;
