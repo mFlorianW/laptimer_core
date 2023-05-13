@@ -40,6 +40,7 @@ jobs:
         uses: ZedThree/clang-tidy-review@v0.10.1
         with:
           build_dir: build/github-ci-debug
+          clang_tidy_checks: ''
           config_file: '.clang-tidy'
       - name: publish clang-tidy results
         if: steps.review.outputs.total_comments > 0
