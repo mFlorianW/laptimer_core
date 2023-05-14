@@ -1,5 +1,5 @@
-#include "SessionDl.hpp"
 #include "CliOptions.hpp"
+#include "LappySessionDownloader.hpp"
 #include <QApplication>
 
 int main(int argc, char **argv)
@@ -12,7 +12,7 @@ int main(int argc, char **argv)
     const auto options = LaptimerCore::SessionDl::CliOptions{argc, argv};
 
     // LaptimerCore::SessionDl::CliOptions opts{argc, argv};
-    const auto sDl = LaptimerCore::SessionDl::SessionDl{options.getHostAddress(), options.getPort()};
+    const auto sDl = LaptimerCore::SessionDl::LappySessionDownloader{options.getHostAddress(), options.getPort()};
     sDl.show();
 
     return app.exec();

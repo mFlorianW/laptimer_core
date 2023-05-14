@@ -7,16 +7,14 @@ add_library(LaptimerCore::SessionDlObj ALIAS lappy_sessiondl_obj)
 
 target_sources(lappy_sessiondl_obj
 PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/SessionDl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/LappySessionDownloader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/CliOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MainWindowModel.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/RequestBuilder.cpp
 
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/CliOptions.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MainWindowModel.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/RequestBuilder.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/SessionDl.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/LappySessionDownloader.hpp
 )
 
 target_link_libraries(lappy_sessiondl_obj
@@ -26,6 +24,10 @@ PUBLIC
     Qt5::Quick
     Qt5::Network
     Qt5::Widgets
+    LaptimerCore::RestQt
+    LaptimerCore::Workflow
+    LaptimerCore::Storage
+    LaptimerCore::LibraryPath
 )
 
 target_include_directories(lappy_sessiondl_obj
@@ -42,10 +44,10 @@ qt5_add_resources(RESOURCE_FILES
 target_sources(lappy_sessiondl
 PRIVATE
     ${RESOURCE_FILES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/sessiondl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/lappy_sessiondl.cpp
 )
 
 target_link_libraries(lappy_sessiondl
 PRIVATE
-    LaptimerCore::SessionDlObj 
+    LaptimerCore::SessionDlObj
 )
