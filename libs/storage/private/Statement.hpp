@@ -2,6 +2,7 @@
 #define STATEMENT_HPP
 
 #include "Connection.hpp"
+#include <cstdint>
 #include <optional>
 #include <sqlite3.h>
 

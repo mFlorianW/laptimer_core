@@ -76,6 +76,7 @@ public:
     /**
      * This signal is emitted when a session download is finished.
      * @param std::size_t The index of the session which is finished.
+     * @param DownloadResult The result of the session download.
      */
     KDBindings::Signal<std::size_t, DownloadResult> sessionDownloadFinshed;
 

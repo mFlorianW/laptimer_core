@@ -1,6 +1,8 @@
 #include "RestSessionDownloader.hpp"
 #include <ArduinoJson.hpp>
+#include <JsonDeserializer.hpp>
 #include <iostream>
+#include <sstream>
 
 namespace LaptimerCore::Workflow
 {
@@ -22,24 +24,40 @@ void RestSessionDownloader::fetchSessionCount() noexcept
     mFetchCounterCache.insert({call.get(), call});
     if (call->isFinished())
     {
-        fetchSessionCountFinished(call.get());
+        onFetchSessionCountFinished(call.get());
     }
     else
     {
-        call->finished.connect(&RestSessionDownloader::fetchSessionCountFinished, this);
+        call->finished.connect(&RestSessionDownloader::onFetchSessionCountFinished, this);
     }
 }
 
 std::optional<Common::SessionData> RestSessionDownloader::getSession(std::size_t index) const noexcept
 {
-    return std::nullopt;
+    if (mDownloadedSessions.count(index) == 0)
+    {
+        return std::nullopt;
+    }
+    return mDownloadedSessions.at(index);
 }
 
 void RestSessionDownloader::downloadSession(std::size_t index) noexcept
 {
+    std::ostringstream outStream;
+    outStream << "/sessions/" << index;
+    auto call = mRestClient.execute(Rest::RestRequest{Rest::RequestType::Get, outStream.str()});
+    mDownloadSessionCache.insert({call.get(), {.index = index, .call = call}});
+    if (call->isFinished())
+    {
+        onSessionDownloadFinished(call.get());
+    }
+    else
+    {
+        call->finished.connect(&RestSessionDownloader::onSessionDownloadFinished, this);
+    }
 }
 
-void RestSessionDownloader::fetchSessionCountFinished(Rest::RestCall *call) noexcept
+void RestSessionDownloader::onFetchSessionCountFinished(Rest::RestCall *call) noexcept
 {
     if (mFetchCounterCache.count(call) > 0)
     {
@@ -51,11 +69,39 @@ void RestSessionDownloader::fetchSessionCountFinished(Rest::RestCall *call) noex
             const auto error = ArduinoJson::deserializeJson(jsonDoc, call->getData());
             if (error != ArduinoJson::DeserializationError::Ok)
             {
-                std::cout << "RestSessionDownloader Error: DeserializeJson failed: " << error.c_str() << "\n";
+                std::cout << "RestSessionDownloader fetchSessionCount Error: DeserializeJson failed: " << error.c_str()
+                          << "\n";
             }
             mSessionCount = jsonDoc["count"].as<std::size_t>();
         }
         sessionCountFetched.emit(dlResult);
+        mFetchCounterCache.erase(call);
     }
 }
+
+void RestSessionDownloader::onSessionDownloadFinished(Rest::RestCall *call) noexcept
+{
+    if (mDownloadSessionCache.size() > 0 && call != nullptr)
+    {
+        const auto dlResult =
+            call->getResult() == Rest::RestCallResult::Success ? DownloadResult::Ok : DownloadResult::Error;
+        const auto index = mDownloadSessionCache.at(call).index;
+        if (dlResult == DownloadResult::Ok)
+        {
+            auto session = Common::JsonDeserializer::deserializeSessionData(call->getData());
+            if (!session)
+            {
+                std::cout << "RestSessionDownloader downloadSessionError: DeserializeJson failed."
+                          << "\n";
+            }
+            else
+            {
+                mDownloadedSessions.insert({index, session.value()});
+            }
+        }
+        sessionDownloadFinshed.emit(index, dlResult);
+        mDownloadSessionCache.erase(call);
+    }
+}
+
 } // namespace LaptimerCore::Workflow

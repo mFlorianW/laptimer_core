@@ -55,12 +55,21 @@ public:
     void downloadSession(std::size_t index) noexcept override;
 
 private:
-    void fetchSessionCountFinished(Rest::RestCall *call) noexcept;
+    void onFetchSessionCountFinished(Rest::RestCall *call) noexcept;
+    void onSessionDownloadFinished(Rest::RestCall *call) noexcept;
 
 private:
+    struct SessionDownloadCacheEntry
+    {
+        std::size_t index{0};
+        std::shared_ptr<Rest::RestCall> call;
+    };
+
     Rest::IRestClient &mRestClient;
     std::size_t mSessionCount{0};
     std::unordered_map<Rest::RestCall *, std::shared_ptr<Rest::RestCall>> mFetchCounterCache;
+    std::unordered_map<Rest::RestCall *, SessionDownloadCacheEntry> mDownloadSessionCache;
+    std::unordered_map<std::size_t, Common::SessionData> mDownloadedSessions;
 };
 
 } // namespace LaptimerCore::Workflow

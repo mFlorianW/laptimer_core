@@ -1,4 +1,5 @@
 #include "RestSessionDownloaderClient.hpp"
+#include "Sessions.hpp"
 
 namespace LaptimerCore::TestHelper
 {
@@ -28,6 +29,10 @@ std::shared_ptr<Rest::RestCall> RestSessionDownloaderClient::execute(const Rest:
     if (request.getPath().getPath() == "/sessions")
     {
         call->setData({R"({"count":2})"});
+    }
+    else if (request.getPath().getPath() == "/sessions/0")
+    {
+        call->setData(TestHelper::Sessions::getTestSessionAsJson());
     }
     call->setCallResult(Rest::RestCallResult::Success);
     return call;
