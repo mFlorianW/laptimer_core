@@ -25,29 +25,23 @@ jobs:
           version: '5.15.2'
       - name: checkout
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 2
       - name: configure
         run: cmake --preset github-ci-debug
       - name: make
         run: cmake --build --preset github-ci-debug -- -j12
       - name: test
         run: ctest --preset github-test -V --output-junit test_results.xml
-      - name: Publish Test Results
+      - name: publish test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           junit_files: "build/github-ci-debug/test_results.xml"
-      - name: Create results directory
-        run: |
-          mkdir clang-tidy-result
-      - name: Analyze
-        run: |
-          pip3 install pyyaml
-          git diff -U0 HEAD^ | /usr/bin/clang-tidy-diff-14.py -p1 -path build/github-ci-debug -export-fixes clang-tidy-result/fixes.yml
-      - name: Run clang-tidy-pr-comments action
-        uses: platisd/clang-tidy-pr-comments@master
+      - name: clang-tidy
+        id: review
+        uses: ZedThree/clang-tidy-review@v0.10.1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          clang_tidy_fixes: clang-tidy-result/fixes.yml
-          request_changes: false
-          suggestions_per_comment: 10 
+          build_dir: build/github-ci-debug
+          clang_tidy_checks: ''
+          config_file: '.clang-tidy'
+      - name: publish clang-tidy results
+        if: steps.review.outputs.total_comments > 0
+        run: exit 1

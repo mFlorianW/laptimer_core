@@ -3,19 +3,20 @@ add_library(LaptimerCore::Workflow ALIAS Workflow)
 
 target_sources(Workflow
 PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/TrackDetectionWorkflow.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/ActiveSessionWorkflow.cpp
-PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/ITrackDetectionWorkflow.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/TrackDetectionWorkflow.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/IActiveSessionWorkflow.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/ActiveSessionWorkflow.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ITrackDetectionWorkflow.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TrackDetectionWorkflow.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TrackDetectionWorkflow.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/IActiveSessionWorkflow.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ActiveSessionWorkflow.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ActiveSessionWorkflow.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ISessionDownloader.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/RestSessionDownloader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/RestSessionDownloader.hpp
 )
 
 target_include_directories(Workflow
 PUBLIC
-    $<INSTALL_INTERFACE:include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
@@ -26,4 +27,5 @@ PUBLIC
     LaptimerCore::Positioning
     LaptimerCore::Algorithm
     LaptimerCore::Storage
+    LaptimerCore::Rest
 )

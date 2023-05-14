@@ -6,5 +6,9 @@ target_link_libraries(test_TrackDetectionWorkflow PRIVATE Catch2::Catch2 Laptime
 add_executable(test_ActiveSessionWorkflow test_ActiveSessionWorkflow.cpp)
 target_link_libraries(test_ActiveSessionWorkflow PRIVATE Catch2::Catch2 LaptimerCore::Workflow LaptimerCore::TestHelper)
 
+add_executable(test_RestSessionDownloader test_RestSessionDownloader.cpp)
+target_link_libraries(test_RestSessionDownloader PRIVATE Catch2::Catch2 LaptimerCore::Workflow LaptimerCore::TestHelper LaptimerCore::Rest)
+
 catch_discover_tests(test_TrackDetectionWorkflow)
 catch_discover_tests(test_ActiveSessionWorkflow)
+catch_discover_tests(test_RestSessionDownloader)

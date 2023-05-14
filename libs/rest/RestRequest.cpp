@@ -17,6 +17,11 @@ struct SharedRestRequest : public Common::SharedData
     }
 };
 
+RestRequest::RestRequest() noexcept
+    : mData{new(std::nothrow) SharedRestRequest{}}
+{
+}
+
 RestRequest::RestRequest(RequestType type, std::string requestPath, std::string requestBody) noexcept
     : mData{new(std::nothrow) SharedRestRequest{}}
 {
@@ -26,6 +31,10 @@ RestRequest::RestRequest(RequestType type, std::string requestPath, std::string 
 }
 
 RestRequest::~RestRequest() noexcept = default;
+RestRequest::RestRequest(const RestRequest &other) noexcept = default;
+RestRequest &RestRequest::operator=(const RestRequest &other) noexcept = default;
+RestRequest::RestRequest(RestRequest &&other) noexcept = default;
+RestRequest &RestRequest::operator=(RestRequest &&other) noexcept = default;
 
 RequestType RestRequest::getType() const noexcept
 {
