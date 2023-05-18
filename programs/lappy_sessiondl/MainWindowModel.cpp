@@ -40,19 +40,15 @@ MainWindowModel::MainWindowModel(Workflow::ISessionDownloader &downloader, Stora
             {
                 auto asyncResult = mSessionDatabase.storeSession(session.value());
                 auto resultHandler = [=](System::AsyncResult *result) {
-                    if (result->getResult() == System::Result::Ok)
-                    {
-                        appendToLog(QString{"Session stored %1 of %2 in database"}
-                                        .arg(QString::number(index + 1))
-                                        .arg(static_cast<qint32>(mSessionDownloader.getSessionCount())));
-                    }
-                    else if (result->getResult() == System::Result::Error)
-                    {
-                        appendToLog(QString{"Failed to store %1 of %2 in database. Error:%3"}
-                                        .arg(QString::number(index + 1))
-                                        .arg(static_cast<qint32>(mSessionDownloader.getSessionCount()))
-                                        .arg(QString::fromStdString(std::string{result->getErrorMessage()})));
-                    }
+                    auto logString = result->getResult() == System::Result::Ok
+                                         ? QString{"Session stored %1 of %2 in database"}
+                                               .arg(QString::number(index + 1))
+                                               .arg(static_cast<qint32>(mSessionDownloader.getSessionCount()))
+                                         : QString{"Failed to store %1 of %2 in database. Error:%3"}
+                                               .arg(QString::number(index + 1))
+                                               .arg(static_cast<qint32>(mSessionDownloader.getSessionCount()))
+                                               .arg(QString::fromStdString(std::string{result->getErrorMessage()}));
+                    appendToLog(logString);
                     mStorageCalls.erase(result);
                 };
                 asyncResult->done.connect(resultHandler);
