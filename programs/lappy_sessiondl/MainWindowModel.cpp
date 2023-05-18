@@ -38,11 +38,25 @@ MainWindowModel::MainWindowModel(Workflow::ISessionDownloader &downloader, Stora
             auto session = mSessionDownloader.getSession(index);
             if (session)
             {
-                // TODO handle result.
                 auto asyncResult = mSessionDatabase.storeSession(session.value());
-                appendToLog(QString{"Session stored %1 of %2 in database"}
-                                .arg(QString::number(index + 1))
-                                .arg(static_cast<qint32>(mSessionDownloader.getSessionCount())));
+                auto resultHandler = [=](System::AsyncResult *result) {
+                    if (result->getResult() == System::Result::Ok)
+                    {
+                        appendToLog(QString{"Session stored %1 of %2 in database"}
+                                        .arg(QString::number(index + 1))
+                                        .arg(static_cast<qint32>(mSessionDownloader.getSessionCount())));
+                    }
+                    else if (result->getResult() == System::Result::Error)
+                    {
+                        appendToLog(QString{"Failed to store %1 of %2 in database. Error:%3"}
+                                        .arg(QString::number(index + 1))
+                                        .arg(static_cast<qint32>(mSessionDownloader.getSessionCount()))
+                                        .arg(QString::fromStdString(std::string{result->getErrorMessage()})));
+                    }
+                    mStorageCalls.erase(result);
+                };
+                asyncResult->done.connect(resultHandler);
+                mStorageCalls.insert({asyncResult.get(), asyncResult});
             }
         }
     });

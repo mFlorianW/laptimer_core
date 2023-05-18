@@ -51,5 +51,6 @@ private:
     QString mDownloadLog;
     Workflow::ISessionDownloader &mSessionDownloader;
     Storage::ISessionDatabase &mSessionDatabase;
+    std::unordered_map<System::AsyncResult *, std::shared_ptr<System::AsyncResult>> mStorageCalls;
 };
 } // namespace LaptimerCore::SessionDl
