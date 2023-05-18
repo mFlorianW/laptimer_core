@@ -14,6 +14,14 @@ ApplicationWindow {
             title: qsTr("File")
 
             Action {
+                text: qsTr("Download Sessions")
+                icon.name: "download"
+                //shortcut: "Ctrl+q"
+                onTriggered: g_MainWindowModel.startSessionDownload()
+            }
+
+
+            Action {
                 text: qsTr("Quit")
                 icon.name: "application-exit"
                 shortcut: "Ctrl+q"
@@ -26,6 +34,15 @@ ApplicationWindow {
         RowLayout{
             spacing: 0
             
+            ToolButton{
+                icon.name: "download"
+                onClicked: g_MainWindowModel.startSessionDownload()
+
+                ToolTip{
+                    text: qsTr("Start Session Download");
+                }
+            }
+
             Label {
                 wrapMode: Label.Wrap
                 text: "Host:"
@@ -68,7 +85,7 @@ ApplicationWindow {
         anchors.fill: parent
 
         TextArea {
-            text: "sdfljsdfljsdflkjsdlfkj \n TextArea\n...\n...\n...\n...\n...\n...\n"
+            text: g_MainWindowModel.logMessage
         }
     }
 }
