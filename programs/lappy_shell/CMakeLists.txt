@@ -8,9 +8,11 @@ add_library(LaptimerCore::LappyShellObj ALIAS lappy_shell_obj)
 target_sources(lappy_shell_obj
 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationFinder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationConfig.cpp
 
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationFinder.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationConfig.hpp
 )
 
 target_link_libraries(lappy_shell_obj

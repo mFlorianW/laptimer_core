@@ -1,0 +1,6 @@
+include(Catch)
+
+add_executable(test_ApplicationVersion test_ApplicationVersion.cpp)
+target_link_libraries(test_ApplicationVersion PRIVATE Catch2::Catch2 LaptimerCore::LappyShellObj)
+
+catch_discover_tests(test_ApplicationVersion)
