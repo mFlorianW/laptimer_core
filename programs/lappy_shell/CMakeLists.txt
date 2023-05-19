@@ -9,10 +9,12 @@ target_sources(lappy_shell_obj
 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationFinder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationConfig.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationConfigReader.cpp
 
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationFinder.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationConfig.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationConfigReader.hpp
 )
 
 target_link_libraries(lappy_shell_obj
