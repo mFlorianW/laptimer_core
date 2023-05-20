@@ -36,11 +36,11 @@ jobs:
       - name: publish test results
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          junit_files: "build/github-ci-debug/test_results.xml"
+          junit_files: "build-github-ci-debug/test_results.xml"
       - name: clang-tidy-analyze
         run: |
           pip3 install pyyaml
-          git diff origin/main | /usr/bin/clang-tidy-diff-14.py -p1 -path build/github-ci-debug -export-fixes fixes.yml
+          git diff origin/main | /usr/bin/clang-tidy-diff-14.py -p1 -path build-github-ci-debug -export-fixes fixes.yml
       - name: post clang-tidy pull request comments
         id: comments
         uses: platisd/clang-tidy-pr-comments@master
