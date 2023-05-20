@@ -15,17 +15,20 @@ std::optional<ApplicationConfig> ApplicationConfigReader::readConfig(const QStri
         qCritical() << "Failed to load application config. Error: Configuration not found. File:" << configPath;
         return {};
     }
+
     auto configFile = QFile{configPath};
     if (not configFile.open(QFile::ReadOnly))
     {
         qCritical() << "Failed to load application config. Error: Configuration cannot be open. File:" << configPath;
         return {};
     }
+
     auto jsonError = QJsonParseError{};
     const auto jsonDoc = QJsonDocument::fromJson(configFile.readAll(), &jsonError);
     if (jsonError.error != QJsonParseError::NoError)
     {
         qCritical() << "Failed to load JSON document. Error:" << jsonError.error << "File:" << configPath;
+        return {};
     }
 
     if (not jsonDoc.isObject())
