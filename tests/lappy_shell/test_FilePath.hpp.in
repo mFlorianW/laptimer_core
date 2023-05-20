@@ -1,3 +1,4 @@
 #pragma once
 
 constexpr auto CONFIG_FILE_PATH = "@CONFIG_FILE_PATH@";
+constexpr auto CONFIG_APP_PATH = "@CONFIG_APP_PATH@";

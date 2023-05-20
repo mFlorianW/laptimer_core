@@ -15,11 +15,11 @@ QVector<QFileInfo> ApplicationFinder::findApplications() const noexcept
     auto applications = QVector<QFileInfo>{};
     for (const auto &appDir : mAppDirs)
     {
-        auto dirIter = QDirIterator{appDir, QDirIterator::Subdirectories};
+        auto dirIter = QDirIterator{appDir, QDirIterator::NoIteratorFlags | QDirIterator::Subdirectories};
         while (dirIter.hasNext())
         {
             dirIter.next();
-            if (dirIter.fileInfo().isFile() and dirIter.fileInfo().completeSuffix() == QStringLiteral(".json"))
+            if (dirIter.fileInfo().isFile() and dirIter.fileInfo().completeSuffix() == QStringLiteral("json"))
             {
                 applications.push_back(dirIter.filePath());
             }

@@ -29,7 +29,9 @@ private:
 class ApplicationConfig
 {
 public:
-    ApplicationConfig(QString executable, QString iconUrl, ApplicationVersion appVersion);
+    ApplicationConfig(QString name, QString executable, QString iconUrl, ApplicationVersion appVersion);
+
+    QString getName() const noexcept;
 
     QString getExecutable() const noexcept;
 
@@ -41,6 +43,7 @@ public:
     bool operator!=(const ApplicationConfig &other) const noexcept;
 
 private:
+    QString mName;
     QString mExecutable;
     QString mIconUrl;
     ApplicationVersion mVersion;

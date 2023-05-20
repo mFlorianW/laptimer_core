@@ -15,17 +15,20 @@ std::optional<ApplicationConfig> ApplicationConfigReader::readConfig(const QStri
         qCritical() << "Failed to load application config. Error: Configuration not found. File:" << configPath;
         return {};
     }
+
     auto configFile = QFile{configPath};
     if (not configFile.open(QFile::ReadOnly))
     {
         qCritical() << "Failed to load application config. Error: Configuration cannot be open. File:" << configPath;
         return {};
     }
+
     auto jsonError = QJsonParseError{};
     const auto jsonDoc = QJsonDocument::fromJson(configFile.readAll(), &jsonError);
     if (jsonError.error != QJsonParseError::NoError)
     {
         qCritical() << "Failed to load JSON document. Error:" << jsonError.error << "File:" << configPath;
+        return {};
     }
 
     if (not jsonDoc.isObject())
@@ -35,14 +38,15 @@ std::optional<ApplicationConfig> ApplicationConfigReader::readConfig(const QStri
     }
 
     const auto jsonObj = jsonDoc.object();
-    if (jsonObj.find("executable") == jsonObj.end() or jsonObj.find("iconUrl") == jsonObj.end() or
-        jsonObj.find("version") == jsonObj.end())
+    if (jsonObj.find("name") == jsonObj.end() or jsonObj.find("executable") == jsonObj.end() or
+        jsonObj.find("iconUrl") == jsonObj.end() or jsonObj.find("version") == jsonObj.end())
     {
         qCritical() << "Inavlid JSON document. Error: Required JSON keys not found. File:" << configPath;
         return {};
     }
 
-    return ApplicationConfig(jsonObj.value("executable").toString(),
+    return ApplicationConfig(jsonObj.value("name").toString(),
+                             jsonObj.value("executable").toString(),
                              jsonObj.value("iconUrl").toString(),
                              ApplicationVersion::fromString(jsonObj.value("version").toString()));
 }
