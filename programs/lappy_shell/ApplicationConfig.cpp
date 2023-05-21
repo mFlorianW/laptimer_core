@@ -64,11 +64,17 @@ ApplicationVersion ApplicationVersion::fromString(QString const &version) noexce
     return ApplicationVersion{versions[0], versions[1], versions[2]};
 }
 
-ApplicationConfig::ApplicationConfig(QString executable, QString iconUrl, ApplicationVersion appVersion)
-    : mExecutable{std::move(executable)}
+ApplicationConfig::ApplicationConfig(QString name, QString executable, QString iconUrl, ApplicationVersion appVersion)
+    : mName{std::move(name)}
+    , mExecutable{std::move(executable)}
     , mIconUrl{std::move(iconUrl)}
     , mVersion(std::move(appVersion))
 {
+}
+
+QString ApplicationConfig::getName() const noexcept
+{
+    return mName;
 }
 
 QString ApplicationConfig::getExecutable() const noexcept
@@ -88,8 +94,8 @@ ApplicationVersion ApplicationConfig::getAppVersion() const noexcept
 
 bool ApplicationConfig::operator==(const ApplicationConfig &other) const noexcept
 {
-    return (this == &other) or
-           ((mExecutable == other.mExecutable) && (mIconUrl == other.mIconUrl) && (mVersion == other.mVersion));
+    return (this == &other) or ((mName == other.mName) && (mExecutable == other.mExecutable) &&
+                                (mIconUrl == other.mIconUrl) && (mVersion == other.mVersion));
 }
 
 bool ApplicationConfig::operator!=(const ApplicationConfig &other) const noexcept

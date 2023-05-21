@@ -38,14 +38,15 @@ std::optional<ApplicationConfig> ApplicationConfigReader::readConfig(const QStri
     }
 
     const auto jsonObj = jsonDoc.object();
-    if (jsonObj.find("executable") == jsonObj.end() or jsonObj.find("iconUrl") == jsonObj.end() or
-        jsonObj.find("version") == jsonObj.end())
+    if (jsonObj.find("name") == jsonObj.end() or jsonObj.find("executable") == jsonObj.end() or
+        jsonObj.find("iconUrl") == jsonObj.end() or jsonObj.find("version") == jsonObj.end())
     {
         qCritical() << "Inavlid JSON document. Error: Required JSON keys not found. File:" << configPath;
         return {};
     }
 
-    return ApplicationConfig(jsonObj.value("executable").toString(),
+    return ApplicationConfig(jsonObj.value("name").toString(),
+                             jsonObj.value("executable").toString(),
                              jsonObj.value("iconUrl").toString(),
                              ApplicationVersion::fromString(jsonObj.value("version").toString()));
 }
