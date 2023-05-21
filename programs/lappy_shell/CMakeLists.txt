@@ -11,12 +11,14 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationConfig.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationConfigReader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationModel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationListModel.cpp
 
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationFinder.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationConfig.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationConfigReader.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationModel.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationListModel.hpp
 )
 
 target_link_libraries(lappy_shell_obj
