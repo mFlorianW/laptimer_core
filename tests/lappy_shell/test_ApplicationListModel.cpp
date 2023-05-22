@@ -14,8 +14,8 @@ SCENARIO("The ApplicationListModel shall return the correct values for the UI")
     auto modelTester = QAbstractItemModelTester{&listModel};
     WHEN("The values for the UI are requested")
     {
-        const auto appName = listModel.data(listModel.index(0), ApplicationListModel::AppName);
-        const auto iconUrl = listModel.data(listModel.index(0), ApplicationListModel::IconUrl);
+        const auto appName = listModel.data(listModel.index(0), ApplicationListModel::AppName).toString();
+        const auto iconUrl = listModel.data(listModel.index(0), ApplicationListModel::IconUrl).toString();
         const auto count = listModel.rowCount(QModelIndex{});
         THEN("The correct values shall be returned.")
         {
