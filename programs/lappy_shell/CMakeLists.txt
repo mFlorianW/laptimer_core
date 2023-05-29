@@ -1,4 +1,4 @@
-find_package(Qt5 REQUIRED COMPONENTS Core)
+find_package(Qt5 REQUIRED COMPONENTS Core Gui Quick Widgets)
 
 ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
 
@@ -12,6 +12,7 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationConfigReader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationModel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationListModel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/LappyShell.cpp
 
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationFinder.hpp
@@ -19,11 +20,15 @@ PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationConfigReader.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationModel.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationListModel.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/LappyShell.hpp
 )
 
 target_link_libraries(lappy_shell_obj
 PUBLIC
     Qt5::Core
+    Qt5::Gui
+    Qt5::Quick
+    Qt5::Widgets
 )
 
 target_include_directories(lappy_shell_obj
@@ -34,6 +39,7 @@ PUBLIC
 add_executable(lappy_shell)
 
 qt5_add_resources(RESOURCE_FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/resource.qrc
 )
 
 target_sources(lappy_shell
