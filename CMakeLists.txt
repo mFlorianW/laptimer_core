@@ -9,6 +9,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 include(FeatureSummary)
 include(CheckCCompilerFlag)
+include(GNUInstallDirs)
 include(PreCommit)
 
 option(ENABLE_TEST "Enable unit tests" OFF)
