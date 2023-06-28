@@ -52,3 +52,5 @@ target_link_libraries(lappy_shell
 PRIVATE
     LaptimerCore::LappyShellObj
 )
+
+install(TARGETS lappy_shell DESTINATION ${BINDIR})

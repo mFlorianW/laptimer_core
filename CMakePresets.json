@@ -9,7 +9,7 @@
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/$env{BUILD_DIR}/install",
                 "ENABLE_TEST": "ON",
                 "ENABLE_CATCH2_FETCH": "ON",
                 "ENABLE_KDBINDINGS_FETCH": "ON",
@@ -17,6 +17,9 @@
                 "ENABLE_LVGL_FETCH": "ON",
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "1",
                 "ENABLE_PRECOMMIT": "ON"
+            },
+            "environment": {
+                "BUILD_DIR": "build"
             }
         },
         {
