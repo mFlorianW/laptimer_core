@@ -24,6 +24,10 @@ void ApplicationModel::loadApplications() noexcept
             mApps.append(app.value());
         }
     }
+
+    std::sort(mApps.begin(), mApps.end(), [](ApplicationConfig const &a, ApplicationConfig const &b) {
+        return a.getName() < b.getName();
+    });
 }
 
 QVector<ApplicationConfig> ApplicationModel::getApplications() const noexcept
