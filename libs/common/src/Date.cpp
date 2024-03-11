@@ -15,7 +15,7 @@ public:
     std::uint8_t mMonth{0};
     std::uint8_t mDay{0};
 
-    friend bool operator==(const SharedDate &lhs, const SharedDate &rhs)
+    friend bool operator==(SharedDate const& lhs, SharedDate const& rhs)
     {
         // clang-format off
         return ((lhs.mYear == rhs.mYear) &&
@@ -30,13 +30,12 @@ Date::Date()
 {
 }
 
-Date::Date(const std::string &dateString)
+Date::Date(std::string const& dateString)
     : mData{new SharedDate}
 {
     std::istringstream input(dateString);
     std::array<std::string, 3> splittedStrings;
-    for (std::size_t i = 0; i < splittedStrings.size(); ++i)
-    {
+    for (std::size_t i = 0; i < splittedStrings.size(); ++i) {
         getline(input, splittedStrings[i], '.');
     }
 
@@ -47,24 +46,24 @@ Date::Date(const std::string &dateString)
 
 Date::~Date() = default;
 
-Date::Date(const Date &other)
+Date::Date(Date const& other)
     : mData{other.mData}
 {
 }
 
-Date &Date::operator=(const Date &other)
+Date& Date::operator=(Date const& other)
 {
     mData = other.mData;
     return *this;
 }
 
-Date::Date(Date &&other)
+Date::Date(Date&& other)
     : mData{std::move(other.mData)}
 {
     other.mData = nullptr;
 }
 
-Date &Date::operator=(Date &&other)
+Date& Date::operator=(Date&& other)
 {
     Date moved{std::move(other)};
     std::swap(mData, moved.mData);
@@ -118,7 +117,7 @@ Date Date::getSystemDate() noexcept
 {
     auto now = std::chrono::system_clock::now();
     auto timeT = std::chrono::system_clock::to_time_t(now);
-    const auto time = std::localtime(&timeT);
+    auto const time = std::localtime(&timeT);
 
     auto date = Date{};
     date.setYear(1900 + time->tm_year); // The year is relativ to 1900.
@@ -127,12 +126,12 @@ Date Date::getSystemDate() noexcept
     return date;
 }
 
-bool operator==(const Date &lhs, const Date &rhs)
+bool operator==(Date const& lhs, Date const& rhs)
 {
     return lhs.mData == rhs.mData || *(lhs.mData) == *(rhs.mData);
 }
 
-bool operator!=(const Date &lhs, const Date &rhs)
+bool operator!=(Date const& lhs, Date const& rhs)
 {
     return !(lhs == rhs);
 }

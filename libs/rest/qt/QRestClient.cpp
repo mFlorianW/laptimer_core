@@ -11,7 +11,7 @@ class QRestCall final : public QObject, public RestCall
     Q_OBJECT
     Q_DISABLE_COPY_MOVE(QRestCall)
 public:
-    QRestCall(QNetworkReply &reply)
+    QRestCall(QNetworkReply& reply)
         : mRequest{reply}
     {
         connect(&mRequest, &QNetworkReply::finished, this, &QRestCall::callFinished);
@@ -43,7 +43,7 @@ protected:
     }
 
 private:
-    QNetworkReply &mRequest;
+    QNetworkReply& mRequest;
 };
 
 struct QRestClientPrivate
@@ -68,7 +68,7 @@ QRestClient::QRestClient()
 
 QRestClient::~QRestClient() noexcept = default;
 
-void QRestClient::setServerAddress(const std::string &url) noexcept
+void QRestClient::setServerAddress(std::string const& url) noexcept
 {
     d->mServerAddress = url;
 }
@@ -78,25 +78,20 @@ void QRestClient::setServerPort(std::uint16_t port) noexcept
     d->mPort = port;
 }
 
-std::shared_ptr<RestCall> QRestClient::execute(const RestRequest &request) noexcept
+std::shared_ptr<RestCall> QRestClient::execute(RestRequest const& request) noexcept
 {
-    if (request.getType() == RequestType::Get)
-    {
+    if (request.getType() == RequestType::Get) {
         auto path = QString::fromStdString(std::string{request.getPath().getPath()});
         auto url = d->getUrl();
         url.setScheme(QStringLiteral("http"));
         url.setPath(path);
         auto networrkRequest = QNetworkRequest{};
         networrkRequest.setUrl(url);
-        const auto reply = d->mNetworkAccessManager.get(networrkRequest);
+        auto const reply = d->mNetworkAccessManager.get(networrkRequest);
         return std::make_shared<QRestCall>(*reply);
-    }
-    else if (request.getType() == RequestType::Post)
-    {
+    } else if (request.getType() == RequestType::Post) {
         qInfo() << "Not implemented REST request type post";
-    }
-    else if (request.getType() == RequestType::Delete)
-    {
+    } else if (request.getType() == RequestType::Delete) {
         qInfo() << "Not implemented REST request type delete";
     }
 

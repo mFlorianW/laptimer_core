@@ -8,13 +8,13 @@ namespace LaptimerCore::System
 
 struct SignalDispatcherContext
 {
-    SignalDispatcherContext(ISignalDispatcher *disp)
+    SignalDispatcherContext(ISignalDispatcher* disp)
         : dispatcher{disp}
     {
     }
 
-    ISignalDispatcher *dispatcher;
-    std::vector<IDispatcherObject *> objects;
+    ISignalDispatcher* dispatcher;
+    std::vector<IDispatcherObject*> objects;
 };
 
 } // namespace LaptimerCore::System

@@ -14,7 +14,7 @@ public:
      * Constructs a SessionDatabase
      * @param backend The backend that handle all storage operations. Must live as long as the SessionDatabase.
      */
-    SessionDatabase(ISessionDatabaseBackend &backend);
+    SessionDatabase(ISessionDatabaseBackend& backend);
 
     /**
      * Default Destructor
@@ -37,7 +37,7 @@ public:
     /**
      * @copydoc ISessionDatabase::storeSession(const Common::SessionData &session)
      */
-    std::shared_ptr<System::AsyncResult> storeSession(const Common::SessionData &session) override;
+    std::shared_ptr<System::AsyncResult> storeSession(Common::SessionData const& session) override;
 
     /**
      * @copydoc ISessionDatabase::deleteSession(std::size_t index)
@@ -45,7 +45,7 @@ public:
     void deleteSession(std::size_t index) override;
 
 private:
-    ISessionDatabaseBackend &mBackend;
+    ISessionDatabaseBackend& mBackend;
 };
 
 } // namespace LaptimerCore::Storage

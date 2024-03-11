@@ -3,7 +3,7 @@
 
 namespace LaptimerCore::System
 {
-ISignalDispatcher *ISignalDispatcher::getSignalDispatcher() noexcept
+ISignalDispatcher* ISignalDispatcher::getSignalDispatcher() noexcept
 {
     return SignalDispatcherRegistry::getInstance().getDispatcher(std::this_thread::get_id());
 }

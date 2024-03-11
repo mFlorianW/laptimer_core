@@ -19,59 +19,55 @@ View::~View()
     lv_obj_del(mBackScreen);
 }
 
-lv_obj_t *View::get_screen_content() const
+lv_obj_t* View::get_screen_content() const
 {
     return mScreenContent;
 }
 
 void View::handleButtonDown()
 {
-    if (mDownCommand)
-    {
+    if (mDownCommand) {
         mDownCommand->execute();
     }
 }
 
 void View::handleButtonUp()
 {
-    if (mUpCommand)
-    {
+    if (mUpCommand) {
         mUpCommand->execute();
     }
 }
 
 void View::handleEscape()
 {
-    if (mEscapeCommand)
-    {
+    if (mEscapeCommand) {
         mEscapeCommand->execute();
     }
 }
 
 void View::handleEnter()
 {
-    if (mEnterCommand)
-    {
+    if (mEnterCommand) {
         mEnterCommand->execute();
     }
 }
 
-void View::setNavigateUpCommand(ICommand *command)
+void View::setNavigateUpCommand(ICommand* command)
 {
     mUpCommand = command;
 }
 
-void View::setNavigateDownCommand(ICommand *command)
+void View::setNavigateDownCommand(ICommand* command)
 {
     mDownCommand = command;
 }
 
-void View::setOpenCommand(ICommand *command)
+void View::setOpenCommand(ICommand* command)
 {
     mEnterCommand = command;
 }
 
-void View::setCloseCommand(ICommand *command)
+void View::setCloseCommand(ICommand* command)
 {
     mEscapeCommand = command;
 }

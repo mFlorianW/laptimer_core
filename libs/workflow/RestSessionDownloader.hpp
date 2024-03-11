@@ -7,7 +7,7 @@ namespace LaptimerCore::Workflow
 class RestSessionDownloader final : public ISessionDownloader
 {
 public:
-    RestSessionDownloader(Rest::IRestClient &restClient) noexcept;
+    RestSessionDownloader(Rest::IRestClient& restClient) noexcept;
 
     /**
      * Default empty destructor
@@ -17,22 +17,22 @@ public:
     /**
      * Deleted copy constructor
      */
-    RestSessionDownloader(const RestSessionDownloader &) = delete;
+    RestSessionDownloader(RestSessionDownloader const&) = delete;
 
     /**
      * Deleted copy operator
      */
-    RestSessionDownloader &operator=(const RestSessionDownloader &) = delete;
+    RestSessionDownloader& operator=(RestSessionDownloader const&) = delete;
 
     /**
      * Deleted move constructor
      */
-    RestSessionDownloader(RestSessionDownloader &&) = delete;
+    RestSessionDownloader(RestSessionDownloader&&) = delete;
 
     /**
      * Deleted move operator
      */
-    RestSessionDownloader &operator=(RestSessionDownloader &&) = delete;
+    RestSessionDownloader& operator=(RestSessionDownloader&&) = delete;
 
     /**
      * @copydoc ISessionDownloader::getSession()
@@ -55,8 +55,8 @@ public:
     void downloadSession(std::size_t index) noexcept override;
 
 private:
-    void onFetchSessionCountFinished(Rest::RestCall *call) noexcept;
-    void onSessionDownloadFinished(Rest::RestCall *call) noexcept;
+    void onFetchSessionCountFinished(Rest::RestCall* call) noexcept;
+    void onSessionDownloadFinished(Rest::RestCall* call) noexcept;
 
 private:
     struct SessionDownloadCacheEntry
@@ -65,10 +65,10 @@ private:
         std::shared_ptr<Rest::RestCall> call;
     };
 
-    Rest::IRestClient &mRestClient;
+    Rest::IRestClient& mRestClient;
     std::size_t mSessionCount{0};
-    std::unordered_map<Rest::RestCall *, std::shared_ptr<Rest::RestCall>> mFetchCounterCache;
-    std::unordered_map<Rest::RestCall *, SessionDownloadCacheEntry> mDownloadSessionCache;
+    std::unordered_map<Rest::RestCall*, std::shared_ptr<Rest::RestCall>> mFetchCounterCache;
+    std::unordered_map<Rest::RestCall*, SessionDownloadCacheEntry> mDownloadSessionCache;
     std::unordered_map<std::size_t, Common::SessionData> mDownloadedSessions;
 };
 

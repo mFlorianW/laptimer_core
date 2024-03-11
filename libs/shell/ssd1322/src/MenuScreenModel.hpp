@@ -14,13 +14,13 @@ class ScreenModel;
 class MenuScreenModel
 {
 public:
-    MenuScreenModel(ScreenModel &screenModel, LaptimerCore::Storage::ISessionDatabase &sessionDb);
+    MenuScreenModel(ScreenModel& screenModel, LaptimerCore::Storage::ISessionDatabase& sessionDb);
 
     /**
      * Gives the view that shall be displayed.
      * @return A reference to the view, that shall be displayed.
      */
-    View &getActiveView() const;
+    View& getActiveView() const;
 
     /**
      * This signal is emitted when the menu has new view that shall be displayed.
@@ -41,7 +41,7 @@ private:
     void handleCloseEntry();
 
 private:
-    ScreenModel &mScreenModel;
+    ScreenModel& mScreenModel;
 
     // Bluetooth MenuList
     MenuEntry mRootBluetoohMenuEntry;

@@ -21,22 +21,22 @@ public:
     /**
      * Deleted copy constructor
      */
-    SignalDispatcher(const SignalDispatcher &other) = delete;
+    SignalDispatcher(SignalDispatcher const& other) = delete;
 
     /**
      * Deleted copy assignment operator
      */
-    SignalDispatcher &operator=(const SignalDispatcher &other) = delete;
+    SignalDispatcher& operator=(SignalDispatcher const& other) = delete;
 
     /**
      * Deleted move constructor
      */
-    SignalDispatcher(SignalDispatcher &&ohter) = delete;
+    SignalDispatcher(SignalDispatcher&& ohter) = delete;
 
     /**
      * Deleted move assignemnt operator
      */
-    SignalDispatcher &operator=(SignalDispatcher &&other) = delete;
+    SignalDispatcher& operator=(SignalDispatcher&& other) = delete;
 
     /**
      * @copydoc ISignalDispatcher::exec()
@@ -46,12 +46,12 @@ public:
     /**
      * @copydoc ISignalDispatcher::registerObject()
      */
-    Result registerObject(IDispatcherObject *obj, const std::thread::id &id) noexcept override;
+    Result registerObject(IDispatcherObject* obj, std::thread::id const& id) noexcept override;
 
     /**
      * @copydoc ISignalDispatcher::unregisterObject()
      */
-    Result unregisterObject(IDispatcherObject *obj, const std::thread::id &id) noexcept override;
+    Result unregisterObject(IDispatcherObject* obj, std::thread::id const& id) noexcept override;
 
 private:
     std::thread::id mThreadId;

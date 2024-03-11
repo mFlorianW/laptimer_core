@@ -9,8 +9,7 @@ MemorySessionDatabaseBackend::MemorySessionDatabaseBackend()
 
 std::size_t MemorySessionDatabaseBackend::getLastStoredIndex() const noexcept
 {
-    if (mLastStoredSession.first == mStoredSessions.cend())
-    {
+    if (mLastStoredSession.first == mStoredSessions.cend()) {
         return 0;
     }
 
@@ -20,8 +19,7 @@ std::size_t MemorySessionDatabaseBackend::getLastStoredIndex() const noexcept
 std::vector<std::size_t> MemorySessionDatabaseBackend::getIndexList() const noexcept
 {
     auto result = std::vector<std::size_t>{};
-    for (const auto &[key, rawSessioData] : mStoredSessions)
-    {
+    for (auto const& [key, rawSessioData] : mStoredSessions) {
         result.push_back(key);
     }
 
@@ -33,14 +31,11 @@ std::size_t MemorySessionDatabaseBackend::getNumberOfStoredSessions() const noex
     return mStoredSessions.size();
 }
 
-bool MemorySessionDatabaseBackend::storeSession(std::size_t index, const std::string &sessionData)
+bool MemorySessionDatabaseBackend::storeSession(std::size_t index, std::string const& sessionData)
 {
-    if (mStoredSessions.count(index))
-    {
+    if (mStoredSessions.count(index)) {
         mStoredSessions[index] = sessionData;
-    }
-    else
-    {
+    } else {
         mLastStoredSession = mStoredSessions.insert({index, sessionData});
     }
     return true;
@@ -53,8 +48,7 @@ std::string MemorySessionDatabaseBackend::loadSessionByIndex(std::size_t index)
 
 bool MemorySessionDatabaseBackend::deleteSession(std::size_t index)
 {
-    if (mStoredSessions.erase(index))
-    {
+    if (mStoredSessions.erase(index)) {
         return true;
     }
 

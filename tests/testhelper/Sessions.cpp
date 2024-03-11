@@ -124,7 +124,7 @@ SessionData getTestSession2()
     return createSession2();
 }
 
-const char *getTestSessionAsJson()
+char const* getTestSessionAsJson()
 {
     // clang-format off
     static constexpr std::array<char, 392> TestSessionAsJson = {

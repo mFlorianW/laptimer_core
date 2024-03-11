@@ -34,27 +34,27 @@ public:
      * Copy constructor for Path
      * @param ohter The object to copy from.
      */
-    Path(const Path &ohter);
+    Path(Path const& ohter);
 
     /**
      * The copy assignment operator for Path.
      * @param other The object to copy from.
      * @return Path& A reference to the copied path.
      */
-    Path &operator=(const Path &other);
+    Path& operator=(Path const& other);
 
     /**
      * Move constructor for Path
      * @param other The object to move from.
      */
-    Path(Path &&other);
+    Path(Path&& other);
 
     /**
      * The move assignment operator for the Path.
      * @param other The object to move from.
      * @return Path& A reference to the moved path.
      */
-    Path &operator=(Path &&other);
+    Path& operator=(Path&& other);
 
     /**
      * Gives the whole path.
@@ -80,14 +80,14 @@ public:
      * @return true The two objects are the same.
      * @return false The two objects are not the same.
      */
-    friend bool operator==(const Path &lhs, const Path &rhs);
+    friend bool operator==(Path const& lhs, Path const& rhs);
 
     /**
      * Not Equal operator
      * @return true The two objects are not the same.
      * @return false The two objects are the same.
      */
-    friend bool operator!=(const Path &lhs, const Path &rhs);
+    friend bool operator!=(Path const& lhs, Path const& rhs);
 
 private:
     Common::SharedDataPointer<SharedPath> mData;

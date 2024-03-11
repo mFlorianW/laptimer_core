@@ -5,7 +5,7 @@
 namespace LaptimerCore::SessionDl
 {
 
-LappySessionDownloader::LappySessionDownloader(QHostAddress const &address, quint16 port) noexcept
+LappySessionDownloader::LappySessionDownloader(QHostAddress const& address, quint16 port) noexcept
 {
     auto qmlContext = mEngine.rootContext();
     qmlContext->setContextProperty("g_MainWindowModel", &mMainWindowModel);
@@ -20,8 +20,8 @@ LappySessionDownloader::LappySessionDownloader(QHostAddress const &address, quin
 
 void LappySessionDownloader::show() const noexcept
 {
-    auto *topLevel = mEngine.rootObjects().value(0);
-    auto *window = qobject_cast<QQuickWindow *>(topLevel);
+    auto* topLevel = mEngine.rootObjects().value(0);
+    auto* window = qobject_cast<QQuickWindow*>(topLevel);
     window->show();
 }
 

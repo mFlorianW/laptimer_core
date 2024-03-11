@@ -7,12 +7,12 @@ class ScreenModel;
 class ShowMainScreenCommand : public ICommand
 {
 public:
-    ShowMainScreenCommand(ScreenModel &screenModel);
+    ShowMainScreenCommand(ScreenModel& screenModel);
 
     void execute() override;
 
 private:
-    ScreenModel &mScreenModel;
+    ScreenModel& mScreenModel;
 };
 
 #endif //!__SHOWMAINSCREENCOMMAND__H__

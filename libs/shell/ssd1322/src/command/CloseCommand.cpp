@@ -1,6 +1,6 @@
 #include "CloseCommand.hpp"
 
-CloseCommand::CloseCommand(IOpenCloseHandler &handler)
+CloseCommand::CloseCommand(IOpenCloseHandler& handler)
     : ICommand()
     , mHandler(handler)
 {

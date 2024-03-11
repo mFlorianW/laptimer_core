@@ -11,7 +11,7 @@ namespace LaptimerCore::Common
 class JsonDeserializer
 {
 public:
-    static std::optional<SessionData> deserializeSessionData(const std::string &rawData);
+    static std::optional<SessionData> deserializeSessionData(std::string const& rawData);
 };
 
 } // namespace LaptimerCore::Common

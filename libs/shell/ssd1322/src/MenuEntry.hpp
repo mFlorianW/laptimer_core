@@ -19,19 +19,19 @@ public:
     /**
      * @copydoc IMenuEntry::getMenuEntryView
      */
-    View *getMenuEntryView() const noexcept override;
+    View* getMenuEntryView() const noexcept override;
 
     /**
      * Sets the entry for the menu.
      * @param view The new view for the menu.
      */
-    void setMenuEntryView(View *view) noexcept;
+    void setMenuEntryView(View* view) noexcept;
 
     /**
      * Adds the single sub menu entry.
      * @param entry The submenu entry.
      */
-    void addMenuEntry(IMenuEntry *entry) noexcept;
+    void addMenuEntry(IMenuEntry* entry) noexcept;
 
     /**
      * @copydoc IOpenCloseHandler::open
@@ -44,9 +44,9 @@ public:
     void close() override;
 
 protected:
-    View *mEntryView{nullptr};
-    View *mActiveView{nullptr};
-    IMenuEntry *mMenuEntry{nullptr};
+    View* mEntryView{nullptr};
+    View* mActiveView{nullptr};
+    IMenuEntry* mMenuEntry{nullptr};
     OpenCommand mEnterCommand;
     CloseCommand mEscapeCommand;
 };

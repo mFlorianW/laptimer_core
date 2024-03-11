@@ -10,7 +10,7 @@ public:
     Timestamp mTime;
     Date mDate;
 
-    friend bool operator==(const SharedPositionTimeData &lhs, const SharedPositionTimeData &rhs)
+    friend bool operator==(SharedPositionTimeData const& lhs, SharedPositionTimeData const& rhs)
     {
         // clang-format off
         return ((lhs.mPosition) == (rhs.mPosition) &&
@@ -25,7 +25,7 @@ PositionDateTimeData::PositionDateTimeData()
 {
 }
 
-PositionDateTimeData::PositionDateTimeData(const PositionData &posData, const Timestamp &time, const Date &date)
+PositionDateTimeData::PositionDateTimeData(PositionData const& posData, Timestamp const& time, Date const& date)
     : mData{new SharedPositionTimeData{}}
 {
     mData->mPosition = posData;
@@ -35,24 +35,24 @@ PositionDateTimeData::PositionDateTimeData(const PositionData &posData, const Ti
 
 PositionDateTimeData::~PositionDateTimeData() = default;
 
-PositionDateTimeData::PositionDateTimeData(const PositionDateTimeData &other)
+PositionDateTimeData::PositionDateTimeData(PositionDateTimeData const& other)
     : mData(other.mData)
 {
 }
 
-PositionDateTimeData &PositionDateTimeData::operator=(const PositionDateTimeData &other)
+PositionDateTimeData& PositionDateTimeData::operator=(PositionDateTimeData const& other)
 {
     mData = other.mData;
     return *this;
 }
 
-PositionDateTimeData::PositionDateTimeData(PositionDateTimeData &&other)
+PositionDateTimeData::PositionDateTimeData(PositionDateTimeData&& other)
     : mData{std::move(other.mData)}
 {
     other.mData = nullptr;
 }
 
-PositionDateTimeData &PositionDateTimeData::operator=(PositionDateTimeData &&other)
+PositionDateTimeData& PositionDateTimeData::operator=(PositionDateTimeData&& other)
 {
     PositionDateTimeData moved{std::move(other)};
     std::swap(moved.mData, mData);
@@ -64,7 +64,7 @@ PositionData PositionDateTimeData::getPosition() const noexcept
     return mData->mPosition;
 }
 
-void PositionDateTimeData::setPosition(const PositionData &position)
+void PositionDateTimeData::setPosition(PositionData const& position)
 {
     mData->mPosition = position;
 }
@@ -74,7 +74,7 @@ Timestamp PositionDateTimeData::getTime() const noexcept
     return mData->mTime;
 }
 
-void PositionDateTimeData::setTime(const Timestamp &time)
+void PositionDateTimeData::setTime(Timestamp const& time)
 {
     mData->mTime = time;
 }
@@ -84,17 +84,17 @@ Date PositionDateTimeData::getDate() const noexcept
     return mData->mDate;
 }
 
-void PositionDateTimeData::setDate(const Date &date)
+void PositionDateTimeData::setDate(Date const& date)
 {
     mData->mDate = date;
 }
 
-bool operator==(const PositionDateTimeData &lhs, const PositionDateTimeData &rhs)
+bool operator==(PositionDateTimeData const& lhs, PositionDateTimeData const& rhs)
 {
     return lhs.mData == rhs.mData || *lhs.mData == *rhs.mData;
 }
 
-bool operator!=(const PositionDateTimeData &lhs, const PositionDateTimeData &rhs)
+bool operator!=(PositionDateTimeData const& lhs, PositionDateTimeData const& rhs)
 {
     return !(lhs == rhs);
 }

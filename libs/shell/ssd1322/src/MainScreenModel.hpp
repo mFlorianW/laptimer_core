@@ -14,11 +14,11 @@ class ScreenModel;
 class MainScreenModel
 {
 public:
-    MainScreenModel(ScreenModel &screenModel,
-                    LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider,
-                    LaptimerCore::Storage::ISessionDatabase &sessionDatabase,
-                    LaptimerCore::Storage::ITrackDatabase &trackDatabase);
-    View &getActiveView();
+    MainScreenModel(ScreenModel& screenModel,
+                    LaptimerCore::Positioning::IPositionDateTimeProvider& posDateTimeProvider,
+                    LaptimerCore::Storage::ISessionDatabase& sessionDatabase,
+                    LaptimerCore::Storage::ITrackDatabase& trackDatabase);
+    View& getActiveView();
 
 private:
     // Backends
@@ -29,7 +29,7 @@ private:
     LaptimerCore::Workflow::ActiveSessionWorkflow mActiveSessionWorkflow;
 
     // Models
-    ScreenModel &mScreenModel;
+    ScreenModel& mScreenModel;
     LaptimerCore::Workflow::TrackDetectionWorkflow mTrackDetectionWorkflow;
     ActiveSessionModel mActiveSessionModel;
 

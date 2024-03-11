@@ -22,22 +22,22 @@ public:
     /**
      * Deleted copy constructor
      */
-    ISessionDatabase(const ISessionDatabase &other) = delete;
+    ISessionDatabase(ISessionDatabase const& other) = delete;
 
     /**
      * Deleted copy assignment operator
      */
-    ISessionDatabase &operator=(const ISessionDatabase &other) = delete;
+    ISessionDatabase& operator=(ISessionDatabase const& other) = delete;
 
     /**
      * Deleted move constructor
      */
-    ISessionDatabase(ISessionDatabase &&ohter) = delete;
+    ISessionDatabase(ISessionDatabase&& ohter) = delete;
 
     /**
      * Deleted move assignemnt operator
      */
-    ISessionDatabase &operator=(ISessionDatabase &&other) = delete;
+    ISessionDatabase& operator=(ISessionDatabase&& other) = delete;
 
     /**
      * Gives the number of stored sessions and defines the width of indexs. The session
@@ -58,7 +58,7 @@ public:
      * @param session The session that shall bestored.
      * @return True session successful stored otherwise false.
      */
-    virtual std::shared_ptr<System::AsyncResult> storeSession(const Common::SessionData &session) = 0;
+    virtual std::shared_ptr<System::AsyncResult> storeSession(Common::SessionData const& session) = 0;
 
     /**
      * Deletes the session under the given index.

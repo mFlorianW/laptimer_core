@@ -1,7 +1,7 @@
 #include "NavigateDownCommand.hpp"
 #include "../../include/ScreenModel.hpp"
 
-NavigateDownCommand::NavigateDownCommand(INavigationHandler &handler)
+NavigateDownCommand::NavigateDownCommand(INavigationHandler& handler)
     : mHandler(handler)
 {
 }

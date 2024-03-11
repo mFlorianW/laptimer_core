@@ -3,15 +3,14 @@
 
 void MainScreenView::handleEnter()
 {
-    if (mNavigateMenuCommand == nullptr)
-    {
+    if (mNavigateMenuCommand == nullptr) {
         return;
     }
 
     mNavigateMenuCommand->execute();
 }
 
-void MainScreenView::setShowMenuScreenCommand(ICommand *command)
+void MainScreenView::setShowMenuScreenCommand(ICommand* command)
 {
     mNavigateMenuCommand = command;
 }

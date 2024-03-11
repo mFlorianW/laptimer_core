@@ -2,8 +2,8 @@
 
 namespace LaptimerCore::Workflow
 {
-TrackDetectionWorkflow::TrackDetectionWorkflow(Algorithm::ITrackDetection &trackDetector,
-                                               Positioning::IPositionDateTimeProvider &positionInfomationProvider)
+TrackDetectionWorkflow::TrackDetectionWorkflow(Algorithm::ITrackDetection& trackDetector,
+                                               Positioning::IPositionDateTimeProvider& positionInfomationProvider)
     : ITrackDetectionWorkflow{}
     , mTrackDetector{trackDetector}
     , mPositionInfoProvider{positionInfomationProvider}
@@ -25,7 +25,7 @@ void TrackDetectionWorkflow::stopDetection()
     mActive = false;
 }
 
-void TrackDetectionWorkflow::setTracks(const std::vector<Common::TrackData> &trackData)
+void TrackDetectionWorkflow::setTracks(std::vector<Common::TrackData> const& trackData)
 {
     mTracksToDetect = trackData;
 }
@@ -37,15 +37,12 @@ Common::TrackData TrackDetectionWorkflow::getDetectedTrack() const
 
 void TrackDetectionWorkflow::onPositionInformationReceived()
 {
-    if (!mActive)
-    {
+    if (!mActive) {
         return;
     }
 
-    for (const auto &track : mTracksToDetect)
-    {
-        if (mTrackDetector.isOnTrack(track, mPositionInfoProvider.positionTimeData.get().getPosition()))
-        {
+    for (auto const& track : mTracksToDetect) {
+        if (mTrackDetector.isOnTrack(track, mPositionInfoProvider.positionTimeData.get().getPosition())) {
             mDetectedTrack = track;
             trackDetected.emit();
             break;

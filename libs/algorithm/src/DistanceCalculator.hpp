@@ -12,7 +12,7 @@ namespace LaptimerCore::Algorithm::DistanceCalculator
  * @param pos2 The second position.
  * @return float  The distance between the to points.
  */
-float calculateDistance(const Common::PositionData &pos1, const Common::PositionData &pos2);
+float calculateDistance(Common::PositionData const& pos1, Common::PositionData const& pos2);
 }; // namespace LaptimerCore::Algorithm::DistanceCalculator
 
 #endif //!__DISTANCECALCULATOR__H__

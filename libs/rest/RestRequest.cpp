@@ -10,7 +10,7 @@ struct SharedRestRequest : public Common::SharedData
     std::string mReturnBody;
     RequestType mType{};
 
-    friend bool operator==(const SharedRestRequest &lhs, const SharedRestRequest &rhs)
+    friend bool operator==(SharedRestRequest const& lhs, SharedRestRequest const& rhs)
     {
         return (lhs.mRequestBody == rhs.mRequestBody) && (lhs.mReturnBody == rhs.mReturnBody) &&
                (lhs.mRequestPath == rhs.mRequestPath) && (lhs.mType == rhs.mType);
@@ -31,10 +31,10 @@ RestRequest::RestRequest(RequestType type, std::string requestPath, std::string 
 }
 
 RestRequest::~RestRequest() noexcept = default;
-RestRequest::RestRequest(const RestRequest &other) noexcept = default;
-RestRequest &RestRequest::operator=(const RestRequest &other) noexcept = default;
-RestRequest::RestRequest(RestRequest &&other) noexcept = default;
-RestRequest &RestRequest::operator=(RestRequest &&other) noexcept = default;
+RestRequest::RestRequest(RestRequest const& other) noexcept = default;
+RestRequest& RestRequest::operator=(RestRequest const& other) noexcept = default;
+RestRequest::RestRequest(RestRequest&& other) noexcept = default;
+RestRequest& RestRequest::operator=(RestRequest&& other) noexcept = default;
 
 RequestType RestRequest::getType() const noexcept
 {
@@ -56,17 +56,17 @@ std::string_view RestRequest::getReturnBody() const noexcept
     return mData->mReturnBody;
 }
 
-void RestRequest::setReturnBody(const std::string &returnBody) noexcept
+void RestRequest::setReturnBody(std::string const& returnBody) noexcept
 {
     mData->mReturnBody = returnBody;
 }
 
-bool operator==(const RestRequest &lhs, const RestRequest &rhs) noexcept
+bool operator==(RestRequest const& lhs, RestRequest const& rhs) noexcept
 {
     return lhs.mData == rhs.mData || *lhs.mData == *rhs.mData;
 }
 
-bool operator!=(const RestRequest &lhs, const RestRequest &rhs) noexcept
+bool operator!=(RestRequest const& lhs, RestRequest const& rhs) noexcept
 {
     return !(lhs == rhs);
 }

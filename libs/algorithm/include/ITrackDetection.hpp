@@ -19,7 +19,7 @@ public:
      * @return true The position is on the track.
      * @return false The position is not on the track.
      */
-    virtual bool isOnTrack(const Common::TrackData &track, const Common::PositionData &position) const = 0;
+    virtual bool isOnTrack(Common::TrackData const& track, Common::PositionData const& position) const = 0;
 };
 
 } // namespace LaptimerCore::Algorithm

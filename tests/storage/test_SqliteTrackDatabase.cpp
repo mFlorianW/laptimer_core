@@ -14,19 +14,18 @@ class SqliteDatabaseTestEventlistener : public Catch::TestEventListenerBase
 public:
     using Catch::TestEventListenerBase::TestEventListenerBase;
 
-    void testCaseStarting(const Catch::TestCaseInfo &testInfo) override
+    void testCaseStarting(Catch::TestCaseInfo const& testInfo) override
     {
         // For the case the test crashes.
-        if (std::filesystem::exists(getTestDatabseFolder()) == true)
-        {
+        if (std::filesystem::exists(getTestDatabseFolder()) == true) {
             std::filesystem::remove_all(getTestDatabseFolder());
         }
         REQUIRE(std::filesystem::create_directory(getTestDatabseFolder()) == true);
-        const auto cleanDbFile = getWorkingDir() + "/test_trackmanagement.db";
+        auto const cleanDbFile = getWorkingDir() + "/test_trackmanagement.db";
         REQUIRE(std::filesystem::copy_file(cleanDbFile, getTestDatabseFile()) == true);
     }
 
-    void testCaseEnded(const Catch::TestCaseStats &testCaseStats) override
+    void testCaseEnded(Catch::TestCaseStats const& testCaseStats) override
     {
         REQUIRE(std::filesystem::remove(getTestDatabseFile()) == true);
     }
@@ -55,7 +54,7 @@ TEST_CASE("The SqliteDatabaseTrackDatabase shall return all stored tracks.")
     assen.setFinishline({52.962324, 6.524115});
     assen.setSections({{52.959453, 6.525305}, {52.955628, 6.512773}});
 
-    const auto tracks = trackDb.getTracks();
+    auto const tracks = trackDb.getTracks();
 
     REQUIRE_THAT(tracks, Catch::Matchers::UnorderedEquals(std::vector<LaptimerCore::Common::TrackData>{osl, assen}));
 }
@@ -75,9 +74,9 @@ TEST_CASE("The SqliteTrackDatabase shall delete a specific track.")
     assen.setFinishline({52.962324, 6.524115});
     assen.setSections({{52.959453, 6.525305}, {52.955628, 6.512773}});
 
-    const auto deleteResult = trackDb.deleteTrack(1);
+    auto const deleteResult = trackDb.deleteTrack(1);
     REQUIRE(deleteResult == true);
 
-    const auto tracks = trackDb.getTracks();
+    auto const tracks = trackDb.getTracks();
     REQUIRE_THAT(tracks, Catch::Matchers::UnorderedEquals(std::vector<LaptimerCore::Common::TrackData>{osl}));
 }

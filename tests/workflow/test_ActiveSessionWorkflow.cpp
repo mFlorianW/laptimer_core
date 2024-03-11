@@ -78,7 +78,9 @@ TEST_CASE("The ActiveSessionWorkflow shall update the round sector time property
     auto expectedSectorTime = Timestamp{"00:00:12.123"};
     bool sectorFinishedEmitted = false;
 
-    actSessWf.sectorFinshed.connect([&sectorFinishedEmitted]() { sectorFinishedEmitted = true; });
+    actSessWf.sectorFinshed.connect([&sectorFinishedEmitted]() {
+        sectorFinishedEmitted = true;
+    });
     actSessWf.startActiveSession();
     lp.sectorTimes.push_back(Timestamp{"00:00:12.123"});
     lp.sectorFinished.emit();
@@ -98,7 +100,9 @@ TEST_CASE("The ActiveSessionWorkflow shall store the laptime when finished.")
     bool lapFinishedEmitted = false;
 
     actSessWf.startActiveSession();
-    actSessWf.lapFinished.connect([&lapFinishedEmitted]() { lapFinishedEmitted = true; });
+    actSessWf.lapFinished.connect([&lapFinishedEmitted]() {
+        lapFinishedEmitted = true;
+    });
     lp.sectorTimes.push_back(Timestamp{"00:23:13.123"});
     lp.lapFinished.emit();
 

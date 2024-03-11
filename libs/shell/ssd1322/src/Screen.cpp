@@ -27,15 +27,14 @@ Screen::~Screen()
     lv_obj_del(m_screen);
 }
 
-lv_obj_t *Screen::getScreen() const
+lv_obj_t* Screen::getScreen() const
 {
     return m_screen;
 }
 
 void Screen::open()
 {
-    if (mPopupRequest == nullptr)
-    {
+    if (mPopupRequest == nullptr) {
         return;
     }
 
@@ -44,15 +43,14 @@ void Screen::open()
 
 void Screen::close()
 {
-    if (mPopupRequest == nullptr)
-    {
+    if (mPopupRequest == nullptr) {
         return;
     }
 
     closePopup(PopupReturnType::Cancled);
 }
 
-void Screen::setScreenContent(View *content)
+void Screen::setScreenContent(View* content)
 {
     // Restore old parent otherwise the Screen may contain
     // old objects.
@@ -71,34 +69,24 @@ bool Screen::isVisible() const noexcept
     return mVisible;
 }
 
-void Screen::handleLvglEvent(lv_obj_t *obj, lv_event_t event)
+void Screen::handleLvglEvent(lv_obj_t* obj, lv_event_t event)
 {
-    if (event != LV_EVENT_KEY)
-    {
+    if (event != LV_EVENT_KEY) {
         return;
     }
 
-    auto *screen = static_cast<Screen *>(lv_obj_get_user_data(obj));
-    auto *view = screen->mPopupActive ? &screen->mPopupView : screen->mActiveView;
-    const auto *keyType = static_cast<const lv_key_t *>(lv_event_get_data());
-    if (view && *keyType == LV_KEY_ENTER)
-    {
+    auto* screen = static_cast<Screen*>(lv_obj_get_user_data(obj));
+    auto* view = screen->mPopupActive ? &screen->mPopupView : screen->mActiveView;
+    auto const* keyType = static_cast<lv_key_t const*>(lv_event_get_data());
+    if (view && *keyType == LV_KEY_ENTER) {
         view->handleEnter();
-    }
-    else if (view && *keyType == LV_KEY_ESC)
-    {
+    } else if (view && *keyType == LV_KEY_ESC) {
         view->handleEscape();
-    }
-    else if (view && *keyType == LV_KEY_UP)
-    {
+    } else if (view && *keyType == LV_KEY_UP) {
         view->handleButtonUp();
-    }
-    else if (view && *keyType == LV_KEY_DOWN)
-    {
+    } else if (view && *keyType == LV_KEY_DOWN) {
         view->handleButtonDown();
-    }
-    else
-    {
+    } else {
         printf("Unsupported key event. key type: %d", *keyType);
     }
 }
@@ -108,15 +96,14 @@ void Screen::closePopup(PopupReturnType popupReturnType)
     mPopupActive = false;
     mPopupView.setMainText("");
     mPopupView.setSecondaryText("");
-    if (mPopupView.getType() == Type::Confirmattion)
-    {
+    if (mPopupView.getType() == Type::Confirmattion) {
         mPopupRequest->confirmed.emit(popupReturnType);
     }
     mPopupView.setVisible(false);
     lv_obj_set_parent(mPopupView.get_screen_content(), mOldPopupParent);
 }
 
-void Screen::onPopupRequested(const PopupRequest &popupRequest)
+void Screen::onPopupRequested(PopupRequest const& popupRequest)
 {
     mPopupActive = true;
     mPopupRequest = &popupRequest;
@@ -124,8 +111,7 @@ void Screen::onPopupRequested(const PopupRequest &popupRequest)
     mPopupView.setMainText(mPopupRequest->getMainText());
     mPopupView.setSecondaryText(mPopupRequest->getSecondaryText());
     mPopupView.setType(mPopupRequest->getPopupType());
-    if (mPopupView.getType() == Type::NoConfirmation && mPopupRequest->isAutoClosing())
-    {
+    if (mPopupView.getType() == Type::NoConfirmation && mPopupRequest->isAutoClosing()) {
         mPopupView.setAutoClosingTimeout(popupRequest.getAutoClosingTimeout());
     }
     mPopupView.setVisible(true);
@@ -134,29 +120,23 @@ void Screen::onPopupRequested(const PopupRequest &popupRequest)
 
 void Screen::restoreParent()
 {
-    if (mActiveView != nullptr)
-    {
-        if (mOldScreenContentParent != nullptr)
-        {
+    if (mActiveView != nullptr) {
+        if (mOldScreenContentParent != nullptr) {
             lv_obj_set_parent(mActiveView->get_screen_content(), mOldScreenContentParent);
         }
         mActiveView->setVisible(false);
 
-        try
-        {
+        try {
             mActiveView->requestPopup.disconnect(mPopupRequestConnectionHandle);
-        }
-        catch (const std::out_of_range &e)
-        {
+        } catch (std::out_of_range const& e) {
         }
     }
 }
 
-void Screen::setVisible(const bool visible) noexcept
+void Screen::setVisible(bool const visible) noexcept
 {
     mVisible = visible;
-    if (!mVisible)
-    {
+    if (!mVisible) {
         restoreParent();
     }
 }

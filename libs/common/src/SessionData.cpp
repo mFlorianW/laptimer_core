@@ -12,7 +12,7 @@ public:
     TrackData mSessionTrack;
     std::vector<LapData> mLaps;
 
-    friend bool operator==(const SharedSessionData &lhs, const SharedSessionData &rhs)
+    friend bool operator==(SharedSessionData const& lhs, SharedSessionData const& rhs)
     {
         // clang-format off
         return ((lhs.mSessionDate) == (rhs.mSessionDate) &&
@@ -28,7 +28,7 @@ SessionData::SessionData()
 {
 }
 
-SessionData::SessionData(const TrackData &track, const Date &sessionDate, const Timestamp &sessionTime)
+SessionData::SessionData(TrackData const& track, Date const& sessionDate, Timestamp const& sessionTime)
     : mData{new SharedSessionData}
 {
     mData->mSessionTrack = track;
@@ -38,12 +38,12 @@ SessionData::SessionData(const TrackData &track, const Date &sessionDate, const 
 
 SessionData::~SessionData() = default;
 
-SessionData::SessionData(const SessionData &other)
+SessionData::SessionData(SessionData const& other)
     : mData(other.mData)
 {
 }
 
-SessionData &SessionData::operator=(const SessionData &other)
+SessionData& SessionData::operator=(SessionData const& other)
 {
     mData = other.mData;
     return *this;
@@ -54,12 +54,12 @@ Date SessionData::getSessionDate() const noexcept
     return mData->mSessionDate;
 }
 
-SessionData::SessionData(SessionData &&other)
+SessionData::SessionData(SessionData&& other)
     : mData{std::move(other.mData)}
 {
 }
 
-SessionData &SessionData::operator=(SessionData &&other)
+SessionData& SessionData::operator=(SessionData&& other)
 {
     SessionData moved{std::move(other)};
     std::swap(moved.mData, mData);
@@ -71,7 +71,7 @@ Timestamp SessionData::getSessionTime() const noexcept
     return mData->mSessionTime;
 }
 
-const TrackData &SessionData::getTrack() const noexcept
+TrackData const& SessionData::getTrack() const noexcept
 {
     return mData->mSessionTrack;
 }
@@ -83,38 +83,36 @@ std::size_t SessionData::getNumberOfLaps() const noexcept
 
 std::optional<LapData> SessionData::getLap(std::size_t index) const noexcept
 {
-    if (index > mData->mLaps.size())
-    {
+    if (index > mData->mLaps.size()) {
         return std::nullopt;
     }
 
     return {mData->mLaps.at(index)};
 }
 
-const std::vector<LapData> &SessionData::getLaps() const noexcept
+std::vector<LapData> const& SessionData::getLaps() const noexcept
 {
     return mData->mLaps;
 }
 
-void SessionData::addLap(const LapData &lap)
+void SessionData::addLap(LapData const& lap)
 {
     mData->mLaps.push_back(lap);
 }
 
-void SessionData::addLaps(const std::vector<LapData> &laps)
+void SessionData::addLaps(std::vector<LapData> const& laps)
 {
-    for (const auto &lap : laps)
-    {
+    for (auto const& lap : laps) {
         mData->mLaps.push_back(lap);
     }
 }
 
-bool operator==(const SessionData &lhs, const SessionData &rhs)
+bool operator==(SessionData const& lhs, SessionData const& rhs)
 {
     return lhs.mData == rhs.mData || *lhs.mData == *rhs.mData;
 }
 
-bool operator!=(const SessionData &lhs, const SessionData &rhs)
+bool operator!=(SessionData const& lhs, SessionData const& rhs)
 {
     return !(lhs == rhs);
 }

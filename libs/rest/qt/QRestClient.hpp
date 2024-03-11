@@ -15,11 +15,11 @@ public:
 
     ~QRestClient() noexcept override;
 
-    void setServerAddress(const std::string &url) noexcept override;
+    void setServerAddress(std::string const& url) noexcept override;
 
     void setServerPort(std::uint16_t port) noexcept override;
 
-    std::shared_ptr<RestCall> execute(const RestRequest &request) noexcept override;
+    std::shared_ptr<RestCall> execute(RestRequest const& request) noexcept override;
 
 private:
     std::unique_ptr<QRestClientPrivate> d;

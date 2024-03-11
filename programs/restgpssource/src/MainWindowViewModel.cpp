@@ -28,7 +28,7 @@ MainWindowViewModel::MainWindowViewModel()
 
 MainWindowViewModel::~MainWindowViewModel() = default;
 
-QAbstractItemModel *MainWindowViewModel::getPositionModel() const noexcept
+QAbstractItemModel* MainWindowViewModel::getPositionModel() const noexcept
 {
     return &d->mPositionListModel;
 }
@@ -48,12 +48,11 @@ void MainWindowViewModel::stopGpsSource()
     Q_EMIT gpsSourceActiveChanged();
 }
 
-void MainWindowViewModel::loadGpsFile(const QUrl &fileName)
+void MainWindowViewModel::loadGpsFile(QUrl const& fileName)
 {
     auto csvReader = LaptimerCore::Positioning::Qt::CsvGpsFileReader{};
     csvReader.setFileName(fileName.toLocalFile());
-    if (!csvReader.read())
-    {
+    if (!csvReader.read()) {
         qCritical() << "Failed to read GpsFile:" << fileName;
     }
 
@@ -62,7 +61,7 @@ void MainWindowViewModel::loadGpsFile(const QUrl &fileName)
 
 void MainWindowViewModel::handlePositionUpdate()
 {
-    const auto position = d->mGpsProvider.positionTimeData.get();
+    auto const position = d->mGpsProvider.positionTimeData.get();
     d->mPositionListModel.addPosition(position);
     d->mCurrentPosition = QGeoCoordinate{position.getPosition().getLatitude(), position.getPosition().getLongitude()};
     d->mRestHttpClient.sendPosition(position);
@@ -84,10 +83,9 @@ QString MainWindowViewModel::getHostAddress() const noexcept
     return d->mHostAddress;
 }
 
-void MainWindowViewModel::setHostAddress(const QString &hostAddress)
+void MainWindowViewModel::setHostAddress(QString const& hostAddress)
 {
-    if (d->mHostAddress != hostAddress)
-    {
+    if (d->mHostAddress != hostAddress) {
         d->mHostAddress = hostAddress;
         updateUrl();
         Q_EMIT hostAddressChanged();
@@ -99,10 +97,9 @@ QString MainWindowViewModel::getHostPort() const noexcept
     return d->mHostPort;
 }
 
-void MainWindowViewModel::setHostPort(const QString &hostPort)
+void MainWindowViewModel::setHostPort(QString const& hostPort)
 {
-    if (d->mHostPort != hostPort)
-    {
+    if (d->mHostPort != hostPort) {
         d->mHostPort = hostPort;
         updateUrl();
         Q_EMIT hostPortChanged();
@@ -111,6 +108,6 @@ void MainWindowViewModel::setHostPort(const QString &hostPort)
 
 void MainWindowViewModel::updateUrl()
 {
-    const auto newUrl = QString{"http://%1:%2"}.arg(d->mHostAddress, d->mHostPort);
+    auto const newUrl = QString{"http://%1:%2"}.arg(d->mHostAddress, d->mHostPort);
     d->mRestHttpClient.setUrl(newUrl);
 }

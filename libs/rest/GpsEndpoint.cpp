@@ -9,13 +9,12 @@ namespace LaptimerCore::Rest
 GpsEndpoint::GpsEndpoint() = default;
 GpsEndpoint::~GpsEndpoint() = default;
 
-RequestHandleResult GpsEndpoint::handleRestRequest(RestRequest &request) noexcept
+RequestHandleResult GpsEndpoint::handleRestRequest(RestRequest& request) noexcept
 {
     auto jsonDoc = ArduinoJson::DynamicJsonDocument{512};
     if ((ArduinoJson::deserializeJson(jsonDoc, request.getRequestBody()) != ArduinoJson::DeserializationError::Ok) &&
         jsonDoc.containsKey("date") && jsonDoc.containsKey("time") && jsonDoc.containsKey("latitude") &&
-        jsonDoc.containsKey("longitude"))
-    {
+        jsonDoc.containsKey("longitude")) {
         return RequestHandleResult::Error;
     }
     auto newPos = PositionDateTimeData{};

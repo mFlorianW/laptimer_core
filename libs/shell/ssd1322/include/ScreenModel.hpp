@@ -19,10 +19,10 @@ public:
      * @param gpsInfoProvider The GPS information provider service.
      * @param posInfoProvider  The GPS position information provider service.
      */
-    ScreenModel(LaptimerCore::Positioning::IGpsInformationProvider &gpsInfoProvider,
-                LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider,
-                LaptimerCore::Storage::ISessionDatabase &sessionDatabase,
-                LaptimerCore::Storage::ITrackDatabase &trackDatabase);
+    ScreenModel(LaptimerCore::Positioning::IGpsInformationProvider& gpsInfoProvider,
+                LaptimerCore::Positioning::IPositionDateTimeProvider& posDateTimeProvider,
+                LaptimerCore::Storage::ISessionDatabase& sessionDatabase,
+                LaptimerCore::Storage::ITrackDatabase& trackDatabase);
 
     virtual ~ScreenModel();
 

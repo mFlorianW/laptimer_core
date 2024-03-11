@@ -7,12 +7,12 @@
 class NavigateUpCommand : public ICommand
 {
 public:
-    NavigateUpCommand(INavigationHandler &screenModel);
+    NavigateUpCommand(INavigationHandler& screenModel);
 
     void execute() override;
 
 private:
-    INavigationHandler &mHandler;
+    INavigationHandler& mHandler;
 };
 
 #endif //!__NAVIGATEUPCOMMAND__H__

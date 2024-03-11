@@ -26,22 +26,22 @@ public:
     /**
      * Deleted copy constructor
      */
-    Timer(const Timer &other) = delete;
+    Timer(Timer const& other) = delete;
 
     /**
      * Deleted copy operator
      */
-    Timer &operator=(const Timer &other) = delete;
+    Timer& operator=(Timer const& other) = delete;
 
     /**
      * Deleted move constructor
      */
-    Timer(Timer &&other) = delete;
+    Timer(Timer&& other) = delete;
 
     /**
      * Deleted move operator
      */
-    Timer &operator=(Timer &&other) = delete;
+    Timer& operator=(Timer&& other) = delete;
 
     /**
      * Starts the timer. The timer sends the timeout signal when the set interval is reached.

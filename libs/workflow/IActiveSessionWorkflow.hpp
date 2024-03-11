@@ -29,7 +29,7 @@ public:
      * Sets the track that shall be used for the active session.
      * @param track The new track for the session.
      */
-    virtual void setTrack(const Common::TrackData &track) noexcept = 0;
+    virtual void setTrack(Common::TrackData const& track) noexcept = 0;
 
     /**
      * Gives the currently active session.

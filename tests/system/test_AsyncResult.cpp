@@ -12,13 +12,13 @@ class TestAsyncResult : public AsyncResult
 public:
     using AsyncResult::AsyncResult;
 
-    void setResult(Result result, const std::string &errorMessage = std::string{})
+    void setResult(Result result, std::string const& errorMessage = std::string{})
     {
         AsyncResult::setResult(result, errorMessage);
     }
 };
 
-std::shared_ptr<AsyncResult> startLongOperation(std::thread &thread)
+std::shared_ptr<AsyncResult> startLongOperation(std::thread& thread)
 {
     auto result = std::make_shared<TestAsyncResult>();
     thread = std::thread([result]() {
@@ -35,8 +35,8 @@ SCENARIO("The AsyncResult shall emit done signal when operation is finshed")
     {
         auto doneSignalEmitted = false;
         auto aResult = TestAsyncResult();
-        auto *receivedResultPointer = static_cast<AsyncResult *>(nullptr);
-        aResult.done.connect([&doneSignalEmitted, &receivedResultPointer](AsyncResult *asyncResult) {
+        auto* receivedResultPointer = static_cast<AsyncResult*>(nullptr);
+        aResult.done.connect([&doneSignalEmitted, &receivedResultPointer](AsyncResult* asyncResult) {
             receivedResultPointer = asyncResult;
             doneSignalEmitted = true;
         });

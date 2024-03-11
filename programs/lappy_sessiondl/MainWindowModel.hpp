@@ -21,15 +21,15 @@ class MainWindowModel : public QObject
 
     Q_PROPERTY(QString logMessage READ getLogMessage NOTIFY logMessageChanged)
 public:
-    MainWindowModel(Workflow::ISessionDownloader &downloader, Storage::ISessionDatabase &database) noexcept;
+    MainWindowModel(Workflow::ISessionDownloader& downloader, Storage::ISessionDatabase& database) noexcept;
     ~MainWindowModel() noexcept override;
 
     [[nodiscard]] QString getHostAddress() const noexcept;
-    void setHostAddress(const QString &hostAddress);
-    void setHostAddress(const QHostAddress &hostAddress);
+    void setHostAddress(QString const& hostAddress);
+    void setHostAddress(QHostAddress const& hostAddress);
 
     [[nodiscard]] QString getHostPort() const noexcept;
-    void setHostPort(const QString &hostPort);
+    void setHostPort(QString const& hostPort);
     void setHostPort(quint16 hostPort);
 
     Q_INVOKABLE void startSessionDownload() noexcept;
@@ -43,14 +43,14 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void clearLog() noexcept;
-    void appendToLog(const QString &message) noexcept;
+    void appendToLog(QString const& message) noexcept;
 
 private:
     QHostAddress mHostAddress;
     quint16 mHostPort{0};
     QString mDownloadLog;
-    Workflow::ISessionDownloader &mSessionDownloader;
-    Storage::ISessionDatabase &mSessionDatabase;
-    std::unordered_map<System::AsyncResult *, std::shared_ptr<System::AsyncResult>> mStorageCalls;
+    Workflow::ISessionDownloader& mSessionDownloader;
+    Storage::ISessionDatabase& mSessionDatabase;
+    std::unordered_map<System::AsyncResult*, std::shared_ptr<System::AsyncResult>> mStorageCalls;
 };
 } // namespace LaptimerCore::SessionDl

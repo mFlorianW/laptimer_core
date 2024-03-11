@@ -15,10 +15,10 @@ class SharedData
 public:
     SharedData() noexcept
         : ref{0} {};
-    SharedData(const SharedData &ohter)
+    SharedData(SharedData const& ohter)
         : ref{0} {};
 
-    SharedData &operator=(SharedData &) = delete;
+    SharedData& operator=(SharedData&) = delete;
     virtual ~SharedData() = default;
     std::atomic_uint8_t ref;
 };
@@ -48,11 +48,10 @@ public:
      * Constructs the SharedDataPointer with a shared object.
      * @param data The shared data object
      */
-    SharedDataPointer(T *data)
+    SharedDataPointer(T* data)
         : mData{data}
     {
-        if (mData != nullptr)
-        {
+        if (mData != nullptr) {
             mData->ref++;
         }
     }
@@ -63,14 +62,12 @@ public:
      */
     ~SharedDataPointer()
     {
-        if (mData == nullptr)
-        {
+        if (mData == nullptr) {
             return;
         }
 
         mData->ref--;
-        if (mData->ref == 0)
-        {
+        if (mData->ref == 0) {
             delete mData;
         }
     }
@@ -79,11 +76,10 @@ public:
      * Copy constructor
      * @param other The other shared data pointer.
      */
-    SharedDataPointer(const SharedDataPointer<T> &other)
+    SharedDataPointer(SharedDataPointer<T> const& other)
         : mData(other.mData)
     {
-        if (mData != nullptr)
-        {
+        if (mData != nullptr) {
             mData->ref++;
         }
     }
@@ -93,25 +89,21 @@ public:
      * @param other The other shared data pointer.
      * @return SharedDataPointer& The copied shared data pointer.
      */
-    SharedDataPointer &operator=(const SharedDataPointer<T> &other)
+    SharedDataPointer& operator=(SharedDataPointer<T> const& other)
     {
-        if (mData == other.mData)
-        {
+        if (mData == other.mData) {
             return *this;
         }
 
-        if (other.mData != nullptr)
-        {
+        if (other.mData != nullptr) {
             other.mData->ref++;
         }
 
-        T *oldData = mData;
+        T* oldData = mData;
         mData = other.mData;
-        if (oldData != nullptr)
-        {
+        if (oldData != nullptr) {
             oldData->ref--;
-            if (oldData->ref == 0)
-            {
+            if (oldData->ref == 0) {
                 delete oldData;
             }
         }
@@ -123,7 +115,7 @@ public:
      * Move constructor for the SharedDataPointer
      * @param other The object to move from.
      */
-    SharedDataPointer(SharedDataPointer &&other)
+    SharedDataPointer(SharedDataPointer&& other)
         : mData{std::move(other.mData)}
     {
         other.mData = nullptr;
@@ -134,7 +126,7 @@ public:
      * @param other  The object to move from.
      * @return SharedDataPointer& The moved intialized object.
      */
-    SharedDataPointer<T> &operator=(SharedDataPointer<T> &&other)
+    SharedDataPointer<T>& operator=(SharedDataPointer<T>&& other)
     {
         SharedDataPointer moved(std::move(other));
         std::swap(moved.mData, mData);
@@ -148,8 +140,7 @@ public:
      */
     std::uint8_t getRefCount() const
     {
-        if (mData == nullptr)
-        {
+        if (mData == nullptr) {
             return 0;
         }
 
@@ -160,7 +151,7 @@ public:
      * Provides constant access to the shared data object member without detach.
      * @return const T* A pointer to the shared object.
      */
-    const T *operator->() const
+    T const* operator->() const
     {
         return mData;
     }
@@ -170,7 +161,7 @@ public:
      * the shared may triggers copy of the shared data object.
      * @return T* A mutable pointer to the shared data object.
      */
-    T *operator->()
+    T* operator->()
     {
         detach();
         return mData;
@@ -180,7 +171,7 @@ public:
      * Gives a mutable reference to the shared data.
      * @return T& The mutable reference of the shared data.
      */
-    T &operator*()
+    T& operator*()
     {
         detach();
         return *mData;
@@ -190,12 +181,12 @@ public:
      * Provides constant access to the shared data object as reference without detach.
      * @return const T& A constant reference to the shared data object.
      */
-    const T &operator*() const
+    T const& operator*() const
     {
         return *mData;
     }
 
-    operator T *()
+    operator T*()
     {
         detach();
         return mData;
@@ -205,17 +196,17 @@ public:
      * Provides access to the shared data object without calling detach.
      * @return const T * The pointer to the shared object.
      */
-    operator const T *() const
+    operator T const*() const
     {
         return mData;
     }
 
-    bool operator==(const SharedDataPointer<T> &other) const
+    bool operator==(SharedDataPointer<T> const& other) const
     {
         return mData == other.mData;
     }
 
-    bool operator!=(const SharedDataPointer<T> &other) const
+    bool operator!=(SharedDataPointer<T> const& other) const
     {
         return mData != other.mData;
     }
@@ -228,18 +219,15 @@ private:
      */
     void detach()
     {
-        if (mData == nullptr)
-        {
+        if (mData == nullptr) {
             return;
         }
 
-        if (mData->ref > 1)
-        {
-            T *newData = new T(*mData);
+        if (mData->ref > 1) {
+            T* newData = new T(*mData);
             newData->ref++;
             mData->ref--;
-            if (mData->ref == 0)
-            {
+            if (mData->ref == 0) {
                 delete mData;
             }
 
@@ -248,7 +236,7 @@ private:
     }
 
 private:
-    T *mData{nullptr};
+    T* mData{nullptr};
 };
 
 } // namespace LaptimerCore::Common

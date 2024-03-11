@@ -19,6 +19,7 @@ public:
      * This property holds current PostionDateTimeData
      */
     KDBindings::Property<Common::PositionDateTimeData> positionTimeData;
+
 protected:
     /**
      * Default protected constructor.

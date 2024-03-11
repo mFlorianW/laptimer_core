@@ -19,7 +19,7 @@ public:
 
     virtual std::size_t getNumberOfStoredSessions() const noexcept = 0;
 
-    virtual bool storeSession(std::size_t index, const std::string &sessionData) = 0;
+    virtual bool storeSession(std::size_t index, std::string const& sessionData) = 0;
 
     virtual std::string loadSessionByIndex(std::size_t index) = 0;
 

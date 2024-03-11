@@ -11,16 +11,16 @@ public:
     MenuEntryView();
     ~MenuEntryView() override;
 
-    void setEntryLabel(const std::string &entryLabel);
-    void setSecondaryLabel(const std::string &entryLabel);
+    void setEntryLabel(std::string const& entryLabel);
+    void setSecondaryLabel(std::string const& entryLabel);
 
 private:
-    ICommand *mNavigationMainScreenCommand{nullptr};
+    ICommand* mNavigationMainScreenCommand{nullptr};
 
     lv_style_t mEntryLabelStyle;
-    lv_obj_t *mEntryLabel;
+    lv_obj_t* mEntryLabel;
     lv_style_t mSecondaryEntryLabelStyle;
-    lv_obj_t *mSecondaryEnrtyLabel;
+    lv_obj_t* mSecondaryEnrtyLabel;
 
     std::string mEntryLabelText;
     std::string mSecondaryEntryLabelText;

@@ -32,13 +32,13 @@ public:
      * Creates an instance of lapdata
      * @param laptime The time which is used a laptime.
      */
-    explicit LapData(const Timestamp &laptime);
+    explicit LapData(Timestamp const& laptime);
 
     /**
      * Constructs LapData instance with
      * @param sectorTimes The array of sector times.
      */
-    explicit LapData(const std::vector<Timestamp> &sectorTimes);
+    explicit LapData(std::vector<Timestamp> const& sectorTimes);
 
     /**
      * Default destructor
@@ -49,27 +49,27 @@ public:
      * Copy constructor for LapData
      * @param ohter The object to copy from.
      */
-    LapData(const LapData &ohter);
+    LapData(LapData const& ohter);
 
     /**
      * The copy assignment operator for LapData.
      * @param other The object to copy from.
      * @return LapData& A reference to the copied track.
      */
-    LapData &operator=(const LapData &other);
+    LapData& operator=(LapData const& other);
 
     /**
      * Move constructor for LapData
      * @param other The object to move from.
      */
-    LapData(LapData &&other) noexcept;
+    LapData(LapData&& other) noexcept;
 
     /**
      * The move assignment operator for the LapData.
      * @param other The object to move from.
      * @return LapData& A reference to the moved track data.
      */
-    LapData &operator=(LapData &&other) noexcept;
+    LapData& operator=(LapData&& other) noexcept;
 
     /**
      * Gives the overall laptime.
@@ -97,35 +97,35 @@ public:
      * Gives a list of all sector times.
      * @return A list with all sector times.
      */
-    [[nodiscard]] const std::vector<Timestamp> &getSectorTimes() const noexcept;
+    [[nodiscard]] std::vector<Timestamp> const& getSectorTimes() const noexcept;
 
     /**
      * Adds a new sector time to the lap.
      * The order to this function calls define the sector ordering.
      * @param sectorTime The sector that shall be added.
      */
-    void addSectorTime(const Timestamp &sectorTime);
+    void addSectorTime(Timestamp const& sectorTime);
 
     /**
      * Adds a list of sector times to the lap.
      * The order of the list defines the ordering of the sectors.
      * @param sectorTimes The list of sector times.
      */
-    void addSectorTimes(const std::vector<Timestamp> &sectorTimes);
+    void addSectorTimes(std::vector<Timestamp> const& sectorTimes);
 
     /**
      * Equal operator
      * @return true The two objects are the same.
      * @return false The two objects are not the same.
      */
-    friend bool operator==(const LapData &lhs, const LapData &rhs);
+    friend bool operator==(LapData const& lhs, LapData const& rhs);
 
     /**
      * Not Equal operator
      * @return true The two objects are not the same.
      * @return false The two objects are the same.
      */
-    friend bool operator!=(const LapData &lhs, const LapData &rhs);
+    friend bool operator!=(LapData const& lhs, LapData const& rhs);
 
 private:
     SharedDataPointer<SharedLap> mData;

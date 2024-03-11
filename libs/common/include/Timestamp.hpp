@@ -21,7 +21,7 @@ public:
      * The string must have the format of hh:mm:ss.nnn
      * @param timestampString
      */
-    Timestamp(const std::string &timestampString);
+    Timestamp(std::string const& timestampString);
 
     /**
      * Default destructor
@@ -32,27 +32,27 @@ public:
      * Copy constructor for Timestamp.
      * @param other  The object to copy from.
      */
-    Timestamp(const Timestamp &other);
+    Timestamp(Timestamp const& other);
 
     /**
      * The copy assignment operator for Timestamp.
      * @param other The object to copy from.
      * @return Timestamp& A reference to the copied Timestamp.
      */
-    Timestamp &operator=(const Timestamp &other);
+    Timestamp& operator=(Timestamp const& other);
 
     /**
      * The move constructor for Timestamp.
      * @param other The object to move from.
      */
-    Timestamp(Timestamp &&other);
+    Timestamp(Timestamp&& other);
 
     /**
      * The move assignment operator for timestamp.
      * @param other The object to move from.
      * @return Timestamp& A reference to the moved Timestamp.
      */
-    Timestamp &operator=(Timestamp &&other);
+    Timestamp& operator=(Timestamp&& other);
 
     /**
      * Gives the hour.
@@ -115,7 +115,7 @@ public:
      * @param rhs The right hand side operator of the addition.
      * @return A new Timestamp with the result of the plus operation.
      */
-    Timestamp operator+(const Timestamp &rhs) const noexcept;
+    Timestamp operator+(Timestamp const& rhs) const noexcept;
 
     /**
      * Make the subtraction of the given timestamp.
@@ -123,21 +123,21 @@ public:
      * @param rhs The right hand side operator of the subtraction.
      * @return A new Timestamp with the result of the minus operation.
      */
-    Timestamp operator-(const Timestamp &rhs) const noexcept;
+    Timestamp operator-(Timestamp const& rhs) const noexcept;
 
     /**
      * Equal operator
      * @return true The two objects are the same.
      * @return false The two objects are not the same.
      */
-    friend bool operator==(const Timestamp &lhs, const Timestamp &rhs);
+    friend bool operator==(Timestamp const& lhs, Timestamp const& rhs);
 
     /**
      * Not Equal operator
      * @return true The two objects are not the same.
      * @return false The two objects are the same.
      */
-    friend bool operator!=(const Timestamp &lhs, const Timestamp &rhs);
+    friend bool operator!=(Timestamp const& lhs, Timestamp const& rhs);
 
     /**
      * Gives the system time stamp

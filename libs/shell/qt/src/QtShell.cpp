@@ -28,7 +28,9 @@ QtShell::QtShell()
 
     // TODO: move this in somehow in the mainloop
     d->laptimerCoreTimer.setInterval(5);
-    QObject::connect(&d->laptimerCoreTimer, &QTimer::timeout, &d->laptimerCoreTimer, [=]() { d->mDispatcher.exec(); });
+    QObject::connect(&d->laptimerCoreTimer, &QTimer::timeout, &d->laptimerCoreTimer, [=]() {
+        d->mDispatcher.exec();
+    });
     d->laptimerCoreTimer.start();
 }
 
@@ -36,8 +38,8 @@ QtShell::~QtShell() = default;
 
 void QtShell::show()
 {
-    QObject *topLevel = d->engine.rootObjects().value(0);
-    auto *window = qobject_cast<QQuickWindow *>(topLevel);
+    QObject* topLevel = d->engine.rootObjects().value(0);
+    auto* window = qobject_cast<QQuickWindow*>(topLevel);
     window->show();
 }
 

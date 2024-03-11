@@ -31,22 +31,22 @@ public:
     /**
      * Deleted copy constructor.
      */
-    IRestServer(const IRestServer &other) = delete;
+    IRestServer(IRestServer const& other) = delete;
 
     /**
      * Deleted copy assignment operator
      */
-    IRestServer &operator=(const IRestServer &other) = delete;
+    IRestServer& operator=(IRestServer const& other) = delete;
 
     /**
      * Deleted move constructor
      */
-    IRestServer(IRestServer &&other) = delete;
+    IRestServer(IRestServer&& other) = delete;
 
     /**
      * Deleted move assignment operator
      */
-    IRestServer &operator=(const IRestServer &&other) = delete;
+    IRestServer& operator=(IRestServer const&& other) = delete;
 
     /**
      * Starts the REST server.
@@ -72,7 +72,7 @@ public:
      * @param type The type to register the handler.
      * @param handler The handler object that is called when the type receives a request.
      */
-    virtual void registerPostHandler(PostHandler type, IRestRequestHandler *handler) noexcept = 0;
+    virtual void registerPostHandler(PostHandler type, IRestRequestHandler* handler) noexcept = 0;
 
     /**
      * Registers a GET method handler in the server. The handler is called when a request for the registered type is
@@ -86,7 +86,7 @@ public:
      * @param type The type to register the handler.
      * @param handler The handler object that is called when the type receives a request.
      */
-    virtual void registerGetHandler(GetHandler type, IRestRequestHandler *handler) noexcept = 0;
+    virtual void registerGetHandler(GetHandler type, IRestRequestHandler* handler) noexcept = 0;
 
 protected:
     IRestServer() = default;

@@ -17,7 +17,9 @@ TEST_CASE("TrackDetectionWorkflow shall emit 'trackDetected' when successful det
     auto tdw = TrackDetectionWorkflow{trackDetector, posInfoProvider};
     bool trackDetectedEmitted{false};
 
-    tdw.trackDetected.connect([&] { trackDetectedEmitted = true; });
+    tdw.trackDetected.connect([&] {
+        trackDetectedEmitted = true;
+    });
     tdw.setTracks({Tracks::getOscherslebenTrack()});
     tdw.startDetection();
 
@@ -47,7 +49,9 @@ TEST_CASE("TrackDetectionWorkflow shall not emit 'trackDetected' when stopped.")
     auto tdw = TrackDetectionWorkflow{trackDetector, posInfoProvider};
     bool trackDetectedEmitted{false};
 
-    tdw.trackDetected.connect([&] { trackDetectedEmitted = true; });
+    tdw.trackDetected.connect([&] {
+        trackDetectedEmitted = true;
+    });
     tdw.setTracks({Tracks::getOscherslebenTrack()});
 
     tdw.startDetection();

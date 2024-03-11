@@ -17,22 +17,22 @@ public:
     /**
      * Deleted copy constructor
      */
-    ITrackDatabase(const ITrackDatabase &other) = delete;
+    ITrackDatabase(ITrackDatabase const& other) = delete;
 
     /**
      * Deleted copy assignment
      */
-    ITrackDatabase &operator=(const ITrackDatabase &other) = delete;
+    ITrackDatabase& operator=(ITrackDatabase const& other) = delete;
 
     /**
      * Deleted move constructor
      */
-    ITrackDatabase(ITrackDatabase &&other) = delete;
+    ITrackDatabase(ITrackDatabase&& other) = delete;
 
     /**
      * Deleted move assignment
      */
-    ITrackDatabase &operator=(ITrackDatabase &&other) = delete;
+    ITrackDatabase& operator=(ITrackDatabase&& other) = delete;
 
     /**
      * Gives the number of stored tracks in the database. The number from 0...[TrackCount-1] is the valid index range
@@ -54,7 +54,7 @@ public:
      * @return true Track data is successfull saved.
      * @return false The track data couldn't be saved.
      */
-    virtual bool saveTrack(const std::vector<Common::TrackData> &tracks) = 0;
+    virtual bool saveTrack(std::vector<Common::TrackData> const& tracks) = 0;
 
     /**
      * Deletes all track data.

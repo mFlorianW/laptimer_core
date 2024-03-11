@@ -5,9 +5,9 @@ using namespace LaptimerCore::Common;
 namespace LaptimerCore::Workflow
 {
 
-ActiveSessionWorkflow::ActiveSessionWorkflow(Positioning::IPositionDateTimeProvider &positionDateTimeProvider,
-                                             Algorithm::ILaptimer &laptimer,
-                                             Storage::ISessionDatabase &database)
+ActiveSessionWorkflow::ActiveSessionWorkflow(Positioning::IPositionDateTimeProvider& positionDateTimeProvider,
+                                             Algorithm::ILaptimer& laptimer,
+                                             Storage::ISessionDatabase& database)
     : mDateTimeProvider{positionDateTimeProvider}
     , mLaptimer{laptimer}
     , mDatabase{database}
@@ -22,8 +22,9 @@ void ActiveSessionWorkflow::startActiveSession() noexcept
     mLaptimer.currentSectorTime.valueChanged().connect(&ActiveSessionWorkflow::onCurrentSectorTimeChanged, this);
     mLaptimer.setTrack(mTrack);
 
-    mPositionDateTimeUpdateHandle = mDateTimeProvider.positionTimeData.valueChanged().connect(
-        [=]() { mLaptimer.updatePositionAndTime(mDateTimeProvider.positionTimeData.get()); });
+    mPositionDateTimeUpdateHandle = mDateTimeProvider.positionTimeData.valueChanged().connect([=]() {
+        mLaptimer.updatePositionAndTime(mDateTimeProvider.positionTimeData.get());
+    });
 
     auto dateTime = mDateTimeProvider.positionTimeData.get();
     mSession = Common::SessionData{mTrack, dateTime.getDate(), dateTime.getTime()};
@@ -37,7 +38,7 @@ void ActiveSessionWorkflow::stopActiveSession() noexcept
     mSession = std::nullopt;
 }
 
-void ActiveSessionWorkflow::setTrack(const Common::TrackData &track) noexcept
+void ActiveSessionWorkflow::setTrack(Common::TrackData const& track) noexcept
 {
     mTrack = track;
 }
@@ -49,7 +50,7 @@ std::optional<Common::SessionData> ActiveSessionWorkflow::getSession() const noe
 
 void LaptimerCore::Workflow::ActiveSessionWorkflow::addSectorTime()
 {
-    const auto sectorTime = mLaptimer.getLastSectorTime();
+    auto const sectorTime = mLaptimer.getLastSectorTime();
     lastSectorTime.set(sectorTime);
     mCurrentLap.addSectorTime(sectorTime);
 }
@@ -57,8 +58,7 @@ void LaptimerCore::Workflow::ActiveSessionWorkflow::addSectorTime()
 void ActiveSessionWorkflow::onLapFinished()
 {
     // Session not started immediately return.
-    if (!mSession)
-    {
+    if (!mSession) {
         return;
     }
 
@@ -69,7 +69,7 @@ void ActiveSessionWorkflow::onLapFinished()
     lastLaptime.set(mCurrentLap.getLaptime());
     mCurrentLap = Common::LapData{};
 
-    const auto newLapCount = lapCount.get() + 1;
+    auto const newLapCount = lapCount.get() + 1;
     lapCount.set(newLapCount);
     lapFinished.emit();
 }

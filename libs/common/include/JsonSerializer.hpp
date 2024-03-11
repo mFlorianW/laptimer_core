@@ -18,7 +18,7 @@ public:
      * @param jsonObject The target object of the serialized track data.
      * @return True succuessful serialized otherwise false.
      */
-    static bool serializeTrackData(const TrackData &trackData, ArduinoJson::JsonObject &jsonObject);
+    static bool serializeTrackData(TrackData const& trackData, ArduinoJson::JsonObject& jsonObject);
 
     /**
      * Serialize the lap data into the given JSON object.
@@ -26,7 +26,7 @@ public:
      * @param jsonObject The target object of the serialized track data.
      * @return True succuessful serialized otherwise false.
      */
-    static bool serializeLapData(const LapData &lapData, ArduinoJson::JsonObject &jsonObject);
+    static bool serializeLapData(LapData const& lapData, ArduinoJson::JsonObject& jsonObject);
 
     /**
      * Serialize the position data into the given JSON object.
@@ -34,7 +34,7 @@ public:
      * @param jsonObject The target object of the serialized track data.
      * @return True succuessful serialized otherwise false.
      */
-    static bool serializePositionData(const PositionData &posData, ArduinoJson::JsonObject &jsonObject);
+    static bool serializePositionData(PositionData const& posData, ArduinoJson::JsonObject& jsonObject);
 
     /**
      * Serialize the session data into the given JSON object.
@@ -42,7 +42,7 @@ public:
      * @param jsonObject The target object of the serialized track data.
      * @return True succuessful serialized otherwise false.
      */
-    static bool serializeSessionData(const SessionData &sessionData, ArduinoJson::JsonObject &jsonObject);
+    static bool serializeSessionData(SessionData const& sessionData, ArduinoJson::JsonObject& jsonObject);
 };
 
 } // namespace LaptimerCore::Common

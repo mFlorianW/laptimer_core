@@ -7,14 +7,14 @@
 class StatusBarModel
 {
 public:
-    explicit StatusBarModel(LaptimerCore::Positioning::IGpsInformationProvider &gpsInfoProvider);
+    explicit StatusBarModel(LaptimerCore::Positioning::IGpsInformationProvider& gpsInfoProvider);
 
     std::uint8_t getNumberOfStatellites() const;
 
     KDBindings::Signal<> numberOfSatellitesChanged;
 
 private:
-    LaptimerCore::Positioning::IGpsInformationProvider &mGpsInfoProvider;
+    LaptimerCore::Positioning::IGpsInformationProvider& mGpsInfoProvider;
 };
 
 #endif //!__STATUSBARMODEL__H__

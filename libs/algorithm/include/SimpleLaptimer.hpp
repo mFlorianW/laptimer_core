@@ -23,12 +23,12 @@ public:
     /**
      * @copydoc ILaptimer::setTrack(const Common::TrackData &track)
      */
-    void setTrack(const Common::TrackData &track) override;
+    void setTrack(Common::TrackData const& track) override;
 
     /**
      * @copydoc updatePositionAndTime(const Common::PositionDateTimeData &data)
      */
-    void updatePositionAndTime(const Common::PositionDateTimeData &data) override;
+    void updatePositionAndTime(Common::PositionDateTimeData const& data) override;
 
     /**
      * @copydoc ILaptimer::getLastLaptime()
@@ -46,7 +46,7 @@ private:
      * @param point The point the shall be checked against the last 4 known positions.
      * @return True if the point specified was passed, False otherwise.
      */
-    bool passedPoint(const Common::PositionData &point) const;
+    bool passedPoint(Common::PositionData const& point) const;
 
 private:
     Common::TrackData mTrackData;

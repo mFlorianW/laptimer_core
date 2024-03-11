@@ -13,7 +13,7 @@ public:
     std::uint8_t second{0};
     std::uint16_t fractionalOfSecond{0};
 
-    friend bool operator==(const SharedTimestamp &lhs, const SharedTimestamp &rhs)
+    friend bool operator==(SharedTimestamp const& lhs, SharedTimestamp const& rhs)
     {
         // clang-format off
         return ((lhs.hour) == (rhs.hour) &&
@@ -29,7 +29,7 @@ Timestamp::Timestamp()
 {
 }
 
-Timestamp::Timestamp(const std::string &timestampString)
+Timestamp::Timestamp(std::string const& timestampString)
     : mData{new SharedTimestamp{}}
 {
     std::istringstream input(timestampString);
@@ -50,23 +50,23 @@ Timestamp::Timestamp(const std::string &timestampString)
 
 Timestamp::~Timestamp() = default;
 
-Timestamp::Timestamp(const Timestamp &other)
+Timestamp::Timestamp(Timestamp const& other)
     : mData{other.mData}
 {
 }
 
-Timestamp &Timestamp::operator=(const Timestamp &other)
+Timestamp& Timestamp::operator=(Timestamp const& other)
 {
     mData = other.mData;
     return *this;
 }
 
-Timestamp::Timestamp(Timestamp &&other)
+Timestamp::Timestamp(Timestamp&& other)
     : mData{std::move(other.mData)}
 {
 }
 
-Timestamp &Timestamp::operator=(Timestamp &&other)
+Timestamp& Timestamp::operator=(Timestamp&& other)
 {
     Timestamp moved{std::move(other)};
     std::swap(moved.mData, mData);
@@ -127,7 +127,7 @@ std::string Timestamp::asString() const noexcept
     return timeAsString.str();
 }
 
-Timestamp Timestamp::operator+(const Timestamp &rhs) const noexcept
+Timestamp Timestamp::operator+(Timestamp const& rhs) const noexcept
 {
     std::int32_t time1Msecs = convertToMilliSeconds();
     std::int32_t time2Msecs = rhs.convertToMilliSeconds();
@@ -147,7 +147,7 @@ Timestamp Timestamp::operator+(const Timestamp &rhs) const noexcept
     return ts;
 }
 
-Timestamp Timestamp::operator-(const Timestamp &rhs) const noexcept
+Timestamp Timestamp::operator-(Timestamp const& rhs) const noexcept
 {
     std::int32_t time1Msecs = convertToMilliSeconds();
     std::int32_t time2Msecs = rhs.convertToMilliSeconds();
@@ -168,9 +168,9 @@ Timestamp Timestamp::operator-(const Timestamp &rhs) const noexcept
 
 Timestamp Timestamp::getSystemTimestamp()
 {
-    const auto timeNow = std::chrono::system_clock::now();
-    const auto timeT = std::chrono::system_clock::to_time_t(timeNow);
-    const auto time = std::localtime(&timeT);
+    auto const timeNow = std::chrono::system_clock::now();
+    auto const timeT = std::chrono::system_clock::to_time_t(timeNow);
+    auto const time = std::localtime(&timeT);
     auto seconds = std::chrono::time_point_cast<std::chrono::seconds>(timeNow);
     auto fraction = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - seconds);
 
@@ -188,12 +188,12 @@ int32_t Timestamp::convertToMilliSeconds() const
     return (getHour() * 3.6e6) + (getMinute() * 6.0e4) + (getSecond() * 1e3) + getFractionalOfSecond();
 }
 
-bool operator==(const Timestamp &lhs, const Timestamp &rhs)
+bool operator==(Timestamp const& lhs, Timestamp const& rhs)
 {
     return lhs.mData == rhs.mData || *(lhs.mData) == *(rhs.mData);
 }
 
-bool operator!=(const Timestamp &lhs, const Timestamp &rhs)
+bool operator!=(Timestamp const& lhs, Timestamp const& rhs)
 {
     return !(lhs == rhs);
 }

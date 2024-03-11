@@ -25,45 +25,45 @@ public:
     /**
      * Deleted Copy Constructor
      */
-    PopupRequest(const PopupRequest &other) = delete;
+    PopupRequest(PopupRequest const& other) = delete;
 
     /**
      * Deleted Copy assignment operator
      */
-    PopupRequest &operator=(const PopupRequest &other) = delete;
+    PopupRequest& operator=(PopupRequest const& other) = delete;
 
     /**
      * Default move constructor.
      */
-    PopupRequest(PopupRequest &&other) = default;
+    PopupRequest(PopupRequest&& other) = default;
 
     /**
      * Default move assignment operator
      */
-    PopupRequest &operator=(PopupRequest &&other) = default;
+    PopupRequest& operator=(PopupRequest&& other) = default;
 
     /**
      * Gives the main text for the popup dialog
      * @return const std::string& The main text for the popup.
      */
-    const std::string &getMainText() const noexcept;
+    std::string const& getMainText() const noexcept;
 
     /**
      * Sets the main text for the popup
      * @param mainText The main text of the popup.
      */
-    void setMainText(const std::string &mainText) noexcept;
+    void setMainText(std::string const& mainText) noexcept;
 
     /**
      * Gives the secondary text of the popup.
      * @return const std::string& The secondary text for the popup.
      */
-    const std::string &getSecondaryText() const noexcept;
+    std::string const& getSecondaryText() const noexcept;
 
     /**
      * Sets the secondary text of the popup.
      */
-    void setSecondaryText(const std::string &secondaryText) noexcept;
+    void setSecondaryText(std::string const& secondaryText) noexcept;
 
     /**
      * Gives the status about the auto closing popup. On default autoclosing is false.
@@ -88,7 +88,7 @@ public:
      * Gives the auto closing timeout.
      * @return The auto closing timout in seconds.
      */
-    const std::chrono::seconds &getAutoClosingTimeout() const noexcept;
+    std::chrono::seconds const& getAutoClosingTimeout() const noexcept;
 
     /**
      * This signal is emitted when popup is confirmed or canceld.

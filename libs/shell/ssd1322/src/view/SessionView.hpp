@@ -8,7 +8,7 @@ class SessionViewModel;
 class SessionView final : public View
 {
 public:
-    SessionView(SessionViewModel &sessionViewModel);
+    SessionView(SessionViewModel& sessionViewModel);
     ~SessionView();
 
     void handleButtonDown() override;
@@ -27,14 +27,14 @@ private:
 
 private:
     lv_style_t mLabelStyle;
-    lv_obj_t *mSessionLabel;
-    lv_obj_t *mSessionIndicatorLabel;
-    lv_obj_t *mTrackNameLabel;
-    lv_obj_t *mDateLabel;
-    lv_obj_t *mLapLabel;
-    lv_obj_t *mTimeLabel;
-    lv_obj_t *mBestLapLabel;
-    SessionViewModel &mSessionViewModel;
+    lv_obj_t* mSessionLabel;
+    lv_obj_t* mSessionIndicatorLabel;
+    lv_obj_t* mTrackNameLabel;
+    lv_obj_t* mDateLabel;
+    lv_obj_t* mLapLabel;
+    lv_obj_t* mTimeLabel;
+    lv_obj_t* mBestLapLabel;
+    SessionViewModel& mSessionViewModel;
 };
 
 #endif // SESSIONVIEW_HPP

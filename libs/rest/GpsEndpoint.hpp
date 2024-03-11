@@ -22,26 +22,26 @@ public:
     /**
      * Deleted copy constructor.
      */
-    GpsEndpoint(const GpsEndpoint &other) = delete;
+    GpsEndpoint(GpsEndpoint const& other) = delete;
 
     /**
      * Deleted copy assignment operator
      */
-    GpsEndpoint &operator=(const GpsEndpoint &other) = delete;
+    GpsEndpoint& operator=(GpsEndpoint const& other) = delete;
 
     /**
      * Deleted move constructor
      */
-    GpsEndpoint(GpsEndpoint &&other) = delete;
+    GpsEndpoint(GpsEndpoint&& other) = delete;
 
     /**
      * Deleted move assignment operator
      */
-    GpsEndpoint &operator=(const GpsEndpoint &&other) = delete;
+    GpsEndpoint& operator=(GpsEndpoint const&& other) = delete;
 
     /**
      * @copydoc IRestRequestHandler::handleRestRequest(const RestRequest &request)
      */
-    RequestHandleResult handleRestRequest(RestRequest &request) noexcept override;
+    RequestHandleResult handleRestRequest(RestRequest& request) noexcept override;
 };
 } // namespace LaptimerCore::Rest

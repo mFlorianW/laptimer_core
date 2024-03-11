@@ -47,13 +47,11 @@ PopupView::~PopupView()
 void PopupView::handleEnter()
 {
     // If the popup doesn't a confirmation we directly call handle escape.
-    if (mType == Type::NoConfirmation)
-    {
+    if (mType == Type::NoConfirmation) {
         handleEscape();
     }
 
-    if (mEscapeCommand == nullptr)
-    {
+    if (mEscapeCommand == nullptr) {
         return;
     }
 
@@ -62,19 +60,17 @@ void PopupView::handleEnter()
 
 void PopupView::handleEscape()
 {
-    if (mEscapeCommand == nullptr)
-    {
+    if (mEscapeCommand == nullptr) {
         return;
     }
 
-    if (mAutoClosingTimer.isRunning())
-    {
+    if (mAutoClosingTimer.isRunning()) {
         mAutoClosingTimer.stop();
     }
     mEscapeCommand->execute();
 }
 
-void PopupView::setMainText(const std::string &mainText)
+void PopupView::setMainText(std::string const& mainText)
 {
     // TODO:
     // This is maybe a problem when the popup is reused with different text.
@@ -86,7 +82,7 @@ void PopupView::setMainText(const std::string &mainText)
     lv_obj_align(mMainText, nullptr, LV_ALIGN_IN_TOP_MID, lv_obj_get_width(mCancelLabel), 5);
 }
 
-void PopupView::setSecondaryText(const std::string &secondaryText)
+void PopupView::setSecondaryText(std::string const& secondaryText)
 {
     // TODO:
     // This is maybe a problem when the popup is reused with different text.
@@ -102,8 +98,7 @@ void PopupView::setType(Type type)
 {
     mType = type;
     bool hide = false;
-    if (mType == Type::NoConfirmation)
-    {
+    if (mType == Type::NoConfirmation) {
         hide = true;
     }
 
@@ -112,8 +107,7 @@ void PopupView::setType(Type type)
 
 void PopupView::setAutoClosingTimeout(std::chrono::seconds timeout)
 {
-    if (mType == Type::Confirmattion)
-    {
+    if (mType == Type::Confirmattion) {
         return;
     }
 

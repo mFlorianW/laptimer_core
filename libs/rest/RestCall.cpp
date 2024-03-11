@@ -18,7 +18,7 @@ std::string RestCall::getData() const noexcept
     return mRawData;
 }
 
-void RestCall::setData(const std::string &data) noexcept
+void RestCall::setData(std::string const& data) noexcept
 {
     mRawData = data;
 }

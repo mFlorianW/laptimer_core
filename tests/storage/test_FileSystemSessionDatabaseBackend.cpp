@@ -15,9 +15,8 @@ std::string getTestDatabseFolder()
 {
     std::array<char, 512> buffer{};
 
-    auto *bufferPtr = getcwd(&buffer.at(0), buffer.size());
-    if (bufferPtr == nullptr)
-    {
+    auto* bufferPtr = getcwd(&buffer.at(0), buffer.size());
+    if (bufferPtr == nullptr) {
         FAIL("Unable to get the database folder.");
     }
 
@@ -31,20 +30,19 @@ class FileSystemTestEventListener : public Catch::TestEventListenerBase
 public:
     using Catch::TestEventListenerBase::TestEventListenerBase;
 
-    void testCaseStarting(const Catch::TestCaseInfo &testInfo) override
+    void testCaseStarting(Catch::TestCaseInfo const& testInfo) override
     {
         auto dbFolder = getTestDatabseFolder();
 
         // For the case the test crashes.
-        if (std::filesystem::exists(dbFolder))
-        {
+        if (std::filesystem::exists(dbFolder)) {
             std::filesystem::remove_all(dbFolder);
         }
 
         std::filesystem::create_directory(dbFolder);
     }
 
-    void testCaseEnded(const Catch::TestCaseStats &testCaseStats) override
+    void testCaseEnded(Catch::TestCaseStats const& testCaseStats) override
     {
         auto dbFolder = getTestDatabseFolder();
         std::filesystem::remove_all(dbFolder);

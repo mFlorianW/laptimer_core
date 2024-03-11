@@ -10,7 +10,7 @@ namespace LaptimerCore::QtShell
 class Utils
 {
 public:
-    static QString convertLaptimeToString(const Common::Timestamp &stamp);
+    static QString convertLaptimeToString(Common::Timestamp const& stamp);
 };
 
 } // namespace LaptimerCore::QtShell

@@ -3,7 +3,7 @@
 namespace LaptimerCore::QtShell
 {
 
-QString Utils::convertLaptimeToString(const Common::Timestamp &stamp)
+QString Utils::convertLaptimeToString(Common::Timestamp const& stamp)
 {
     auto convertedLaptime = QString{"%1:%2:%3.%4"}
                                 .arg(stamp.getHour(), 2, 10, QChar{'0'})

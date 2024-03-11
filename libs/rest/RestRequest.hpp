@@ -39,27 +39,27 @@ public:
      * Copy constructor for RestRequest.
      * @param other The object to copy from.
      */
-    RestRequest(const RestRequest &other) noexcept;
+    RestRequest(RestRequest const& other) noexcept;
 
     /**
      * Copy assignment operator for RestRequest.
      * @param other The object to copy from.
      * @return RestRequest& A reference to the copied instance.
      */
-    RestRequest &operator=(const RestRequest &other) noexcept;
+    RestRequest& operator=(RestRequest const& other) noexcept;
 
     /**
      * The move constructor for RestRequest.
      * @param other The object to move from.
      */
-    RestRequest(RestRequest &&other) noexcept;
+    RestRequest(RestRequest&& other) noexcept;
 
     /**
      * The move assignment operator for RestRequest.
      * @param other The object to move from.
      * @return RestRequest& A reference of the moved instance.
      */
-    RestRequest &operator=(RestRequest &&other) noexcept;
+    RestRequest& operator=(RestRequest&& other) noexcept;
 
     /**
      * Gives the type of the request.
@@ -92,21 +92,21 @@ public:
      * request handler.
      * @param returnBody The return body for the caller.
      */
-    void setReturnBody(const std::string &returnBody) noexcept;
+    void setReturnBody(std::string const& returnBody) noexcept;
 
     /**
      * Equal operator
      * @return true The two objects are the same.
      * @return false The two objects are not the same.
      */
-    friend bool operator==(const RestRequest &lhs, const RestRequest &rhs) noexcept;
+    friend bool operator==(RestRequest const& lhs, RestRequest const& rhs) noexcept;
 
     /**
      * Not Equal operator
      * @return true The two objects are not the same.
      * @return false The two objects are the same.
      */
-    friend bool operator!=(const RestRequest &lhs, const RestRequest &rhs) noexcept;
+    friend bool operator!=(RestRequest const& lhs, RestRequest const& rhs) noexcept;
 
 private:
     Common::SharedDataPointer<SharedRestRequest> mData;

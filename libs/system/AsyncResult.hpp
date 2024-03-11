@@ -27,22 +27,22 @@ public:
     /**
      * Deleted copy constructor
      */
-    AsyncResult(const AsyncResult &other) = delete;
+    AsyncResult(AsyncResult const& other) = delete;
 
     /**
      * Deleted copy assignment operator
      */
-    AsyncResult &operator=(const AsyncResult &other) = delete;
+    AsyncResult& operator=(AsyncResult const& other) = delete;
 
     /**
      * Move constructor
      */
-    AsyncResult(AsyncResult &&ohter) noexcept;
+    AsyncResult(AsyncResult&& ohter) noexcept;
 
     /**
      * Move assignemnt operator
      */
-    AsyncResult &operator=(AsyncResult &&other) noexcept;
+    AsyncResult& operator=(AsyncResult&& other) noexcept;
 
     /**
      * Gives the result. The result is not valid (@Result::NotFinshed) as long as the or the
@@ -69,7 +69,7 @@ public:
      * @param The signal contains a pointer to Async instance for directly requesting the
      * result in the slot.
      */
-    KDBindings::Signal<AsyncResult *> done;
+    KDBindings::Signal<AsyncResult*> done;
 
 protected:
     /**
@@ -77,7 +77,7 @@ protected:
      * @result The result state of the AsyncResult
      * @errorMessage Sets an optional error message
      */
-    void setResult(Result result, const std::string &errorMessage = {}) noexcept;
+    void setResult(Result result, std::string const& errorMessage = {}) noexcept;
 
 private:
     Result mResult{Result::NotFinished};

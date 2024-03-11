@@ -7,12 +7,12 @@
 class CloseCommand : public ICommand
 {
 public:
-    CloseCommand(IOpenCloseHandler &handler);
+    CloseCommand(IOpenCloseHandler& handler);
 
     void execute() override;
 
 private:
-    IOpenCloseHandler &mHandler;
+    IOpenCloseHandler& mHandler;
 };
 
 #endif //!__CLOSECOMMAND__H__

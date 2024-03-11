@@ -11,12 +11,12 @@ public:
      *
      * @param handler
      */
-    OpenCommand(IOpenCloseHandler &handler);
+    OpenCommand(IOpenCloseHandler& handler);
 
     void execute() override;
 
 private:
-    IOpenCloseHandler &mHandler;
+    IOpenCloseHandler& mHandler;
 };
 
 #endif //!__OPENCOMMAND__H__

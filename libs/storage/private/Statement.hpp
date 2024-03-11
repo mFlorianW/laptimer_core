@@ -56,7 +56,7 @@ public:
      * @param connection The db connection that shall be used to communicate with database. The connection must live as
      * long as the statment class.
      */
-    Statement(const Connection &dbConnection);
+    Statement(Connection const& dbConnection);
 
     /**
      * Default destructor finialize the statement if necessary.
@@ -66,22 +66,22 @@ public:
     /**
      * Deleted copy constructor
      */
-    Statement(const Statement &other) = delete;
+    Statement(Statement const& other) = delete;
 
     /**
      * Deleted copy assignment operator
      */
-    Statement &operator=(const Statement &other) = delete;
+    Statement& operator=(Statement const& other) = delete;
 
     /**
      * Deleted move constructor
      */
-    Statement(Statement &&ohter) = delete;
+    Statement(Statement&& ohter) = delete;
 
     /**
      * Deleted move assignemnt operator
      */
-    Statement &operator=(Statement &&other) = delete;
+    Statement& operator=(Statement&& other) = delete;
 
     /**
      * Prepares the statment for furhter use.
@@ -90,7 +90,7 @@ public:
      * @return "Ok" Everything went fine and the statement is ready for further use.
      * @return "Error" In case of error. Check the DB connection error message.
      */
-    PrepareResult prepare(const char *statement) noexcept;
+    PrepareResult prepare(char const* statement) noexcept;
 
     /**
      * Excutes the statement. Import is that the statement is prepared before calling execute.
@@ -124,7 +124,7 @@ public:
      * @return "InvalidIndex" The index of the value is not valid.
      * @return "Error" for any other error. Check the error message of the connection.
      */
-    BindResult bindStringValue(std::size_t index, const std::string &value);
+    BindResult bindStringValue(std::size_t index, std::string const& value);
 
     /**
      * Gives the number of columns of the result. The value is zero when the statement doesn't select anything from the
@@ -168,8 +168,8 @@ public:
     std::optional<std::string> getStringColumn(std::size_t index) const noexcept;
 
 private:
-    sqlite3_stmt *mStatement{nullptr};
-    const Connection &mDbConnection;
+    sqlite3_stmt* mStatement{nullptr};
+    Connection const& mDbConnection;
 };
 
 } // namespace LaptimerCore::Storage::Private

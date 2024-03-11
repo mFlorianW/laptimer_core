@@ -23,14 +23,14 @@ public:
      * The track information is needed to calculate the section and laptime.
      * @param track The new track that is used by the laptimer.
      */
-    virtual void setTrack(const Common::TrackData &track) = 0;
+    virtual void setTrack(Common::TrackData const& track) = 0;
 
     /**
      * Update the position in the laptimer.
      * The Position is used in the laptimer to calculate the section and laptime.
      * @param data The new position.
      */
-    virtual void updatePositionAndTime(const Common::PositionDateTimeData &data) = 0;
+    virtual void updatePositionAndTime(Common::PositionDateTimeData const& data) = 0;
 
     /**
      * @return Common::Timestamp Gives the last laptime.

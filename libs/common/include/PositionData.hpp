@@ -32,27 +32,27 @@ public:
      * Copy constructor for PositionData.
      * @param other The object to copy from.
      */
-    PositionData(const PositionData &other);
+    PositionData(PositionData const& other);
 
     /**
      * Copy assignment operator for PositionData.
      * @param other The object to copy from.
      * @return PositionData& A reference to the copied instance.
      */
-    PositionData &operator=(const PositionData &other);
+    PositionData& operator=(PositionData const& other);
 
     /**
      * The move constructor for PositionData.
      * @param other The object to move from.
      */
-    PositionData(PositionData &&other);
+    PositionData(PositionData&& other);
 
     /**
      * The move assignment operator for PositionData.
      * @param other The object to move from.
      * @return PositionData& A reference of the moved instance.
      */
-    PositionData &operator=(PositionData &&other);
+    PositionData& operator=(PositionData&& other);
 
     /**
      * Gives the latitude.
@@ -83,14 +83,14 @@ public:
      * @return true The two objects are the same.
      * @return false The two objects are not the same.
      */
-    friend bool operator==(const PositionData &lhs, const PositionData &rhs);
+    friend bool operator==(PositionData const& lhs, PositionData const& rhs);
 
     /**
      * Not Equal operator
      * @return true The two objects are not the same.
      * @return false The two objects are the same.
      */
-    friend bool operator!=(const PositionData &lhs, const PositionData &rhs);
+    friend bool operator!=(PositionData const& lhs, PositionData const& rhs);
 
 private:
     SharedDataPointer<SharedPositionData> mData;

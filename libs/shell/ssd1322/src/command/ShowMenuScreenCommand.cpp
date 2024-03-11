@@ -1,7 +1,7 @@
 #include "ShowMenuScreenCommand.hpp"
 #include "../../include/ScreenModel.hpp"
 
-ShowMenuScreenCommand::ShowMenuScreenCommand(ScreenModel &screenModel)
+ShowMenuScreenCommand::ShowMenuScreenCommand(ScreenModel& screenModel)
     : mScreenModel(screenModel)
 {
 }

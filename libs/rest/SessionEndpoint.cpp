@@ -12,51 +12,41 @@ namespace
 std::optional<std::size_t> getSessionIndex(std::string_view index) noexcept;
 }
 
-SessionEndpoint::SessionEndpoint(Storage::ISessionDatabase &database) noexcept
+SessionEndpoint::SessionEndpoint(Storage::ISessionDatabase& database) noexcept
     : mDb{database}
 {
 }
 
-RequestHandleResult SessionEndpoint::handleRestRequest(RestRequest &request) noexcept
+RequestHandleResult SessionEndpoint::handleRestRequest(RestRequest& request) noexcept
 {
-    if ((request.getPath().getDepth() < 1) || (request.getPath().getEntry(0) != endpointIdentifier))
-    {
+    if ((request.getPath().getDepth() < 1) || (request.getPath().getEntry(0) != endpointIdentifier)) {
         return RequestHandleResult::Error;
-    }
-    else if (request.getType() == RequestType::Get)
-    {
+    } else if (request.getType() == RequestType::Get) {
         return handleGetRequest(request);
-    }
-    else if (request.getType() == RequestType::Delete)
-    {
+    } else if (request.getType() == RequestType::Delete) {
         return handleDeleteRequest(request);
     }
 
     return RequestHandleResult::Error;
 }
 
-RequestHandleResult SessionEndpoint::handleGetRequest(RestRequest &request) noexcept
+RequestHandleResult SessionEndpoint::handleGetRequest(RestRequest& request) noexcept
 {
-    if (request.getPath().getDepth() == 1)
-    {
+    if (request.getPath().getDepth() == 1) {
         auto responsebody = ArduinoJson::DynamicJsonDocument{64};
         responsebody["count"] = mDb.getSessionCount();
         auto rawBody = std::string{};
         ArduinoJson::serializeJson(responsebody, rawBody);
         request.setReturnBody(rawBody);
         return RequestHandleResult::Ok;
-    }
-    else if (request.getPath().getDepth() == 2)
-    {
+    } else if (request.getPath().getDepth() == 2) {
         auto sessionId = getSessionIndex(request.getPath().getEntry(1).value_or(""));
-        if (!sessionId.has_value())
-        {
+        if (!sessionId.has_value()) {
             return RequestHandleResult::Error;
         }
 
-        const auto session = mDb.getSessionByIndex(sessionId.value());
-        if (!session.has_value())
-        {
+        auto const session = mDb.getSessionByIndex(sessionId.value());
+        if (!session.has_value()) {
             return RequestHandleResult::Error;
         }
 
@@ -72,13 +62,11 @@ RequestHandleResult SessionEndpoint::handleGetRequest(RestRequest &request) noex
     return RequestHandleResult::Error;
 }
 
-RequestHandleResult SessionEndpoint::handleDeleteRequest(RestRequest &request) noexcept
+RequestHandleResult SessionEndpoint::handleDeleteRequest(RestRequest& request) noexcept
 {
-    if (request.getPath().getDepth() == 2)
-    {
-        const auto sessionId = getSessionIndex(request.getPath().getEntry(1).value_or(""));
-        if (!sessionId.has_value())
-        {
+    if (request.getPath().getDepth() == 2) {
+        auto const sessionId = getSessionIndex(request.getPath().getEntry(1).value_or(""));
+        if (!sessionId.has_value()) {
             return RequestHandleResult::Error;
         }
         mDb.deleteSession(sessionId.value());
@@ -92,9 +80,8 @@ namespace
 std::optional<std::size_t> getSessionIndex(std::string_view index) noexcept
 {
     auto sessionIndex = std::size_t{0};
-    const auto result = std::from_chars(index.cbegin(), index.cend(), sessionIndex);
-    if (result.ec == std::errc::invalid_argument)
-    {
+    auto const result = std::from_chars(index.cbegin(), index.cend(), sessionIndex);
+    if (result.ec == std::errc::invalid_argument) {
         return std::nullopt;
     }
     return sessionIndex;

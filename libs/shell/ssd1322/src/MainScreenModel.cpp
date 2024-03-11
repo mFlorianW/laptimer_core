@@ -2,10 +2,10 @@
 
 // Setup ActiveSessionView
 
-MainScreenModel::MainScreenModel(ScreenModel &screenModel,
-                                 LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider,
-                                 LaptimerCore::Storage::ISessionDatabase &sessionDatabase,
-                                 LaptimerCore::Storage::ITrackDatabase &trackDatabase)
+MainScreenModel::MainScreenModel(ScreenModel& screenModel,
+                                 LaptimerCore::Positioning::IPositionDateTimeProvider& posDateTimeProvider,
+                                 LaptimerCore::Storage::ISessionDatabase& sessionDatabase,
+                                 LaptimerCore::Storage::ITrackDatabase& trackDatabase)
     : mActiveSessionWorkflow{posDateTimeProvider, mLapTimer, sessionDatabase}
     , mScreenModel{screenModel}
     , mTrackDetectionWorkflow{mTrackDetector, posDateTimeProvider}
@@ -16,7 +16,7 @@ MainScreenModel::MainScreenModel(ScreenModel &screenModel,
     mActiveSessionView.setShowMenuScreenCommand(&mShowMenuScreenCommand);
 }
 
-View &MainScreenModel::getActiveView()
+View& MainScreenModel::getActiveView()
 {
     return mActiveSessionView;
 }

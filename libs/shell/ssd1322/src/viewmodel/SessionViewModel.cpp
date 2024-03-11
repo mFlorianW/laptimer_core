@@ -1,7 +1,7 @@
 #include "SessionViewModel.hpp"
 #include <sstream>
 
-SessionViewModel::SessionViewModel(LaptimerCore::Storage::ISessionDatabase &sessionDb)
+SessionViewModel::SessionViewModel(LaptimerCore::Storage::ISessionDatabase& sessionDb)
     : MenuEntry()
     , NavigatableModel{0}
     , mSessionDb{sessionDb}
@@ -13,8 +13,7 @@ SessionViewModel::SessionViewModel(LaptimerCore::Storage::ISessionDatabase &sess
     mLapView.setCloseCommand(&mLapViewCloseCommand);
 
     // display initial session
-    if (mSessionDb.getSessionCount() != 0)
-    {
+    if (mSessionDb.getSessionCount() != 0) {
         setSize(mSessionDb.getSessionCount());
         displaySession(mSessionDb.getSessionCount() - 1);
     }
@@ -48,9 +47,8 @@ void SessionViewModel::close()
 
 void SessionViewModel::displaySession(std::size_t index)
 {
-    const auto session = mSessionDb.getSessionByIndex(index);
-    if (!session.has_value())
-    {
+    auto const session = mSessionDb.getSessionByIndex(index);
+    if (!session.has_value()) {
         return;
     }
 
@@ -65,13 +63,12 @@ void SessionViewModel::displaySession(std::size_t index)
 
 void SessionViewModel::onSessionAdded()
 {
-    const auto oldIndex = getIndex();
+    auto const oldIndex = getIndex();
     setSize(mSessionDb.getSessionCount());
 
     // If the view is on the top off all session we have to switch to the new session
     // and if the view is not on the top position we just stay at that position.
-    if (oldIndex == 0)
-    {
+    if (oldIndex == 0) {
         displaySession(mSessionDb.getSessionCount() - 1);
     }
 }
@@ -81,8 +78,7 @@ void SessionViewModel::onSessionUpdated(std::size_t index)
     // The ordering of the session in the oppsite to the index of the elements in the view
     // index = 0 is equal session index = max. That the reason for subtraction. If
     // the index is the same then session is displayed to the user and must be updated.
-    if (index == (getSize() - 1) - getIndex())
-    {
+    if (index == (getSize() - 1) - getIndex()) {
         displaySession(index);
     }
 }

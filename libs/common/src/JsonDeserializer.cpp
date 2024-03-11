@@ -5,14 +5,13 @@ namespace LaptimerCore::Common
 
 namespace
 {
-std::optional<TrackData> deserializeTrackData(const ArduinoJson::JsonObject &object)
+std::optional<TrackData> deserializeTrackData(ArduinoJson::JsonObject const& object)
 {
     TrackData trackData;
     auto trackName = object["name"].as<std::string>();
     trackData.setTrackName(trackName);
 
-    try
-    {
+    try {
         auto startlineObj = object["startline"];
         auto startlinelong = std::stof(startlineObj["longitude"].as<std::string>());
         auto startlineLat = std::stof(startlineObj["latitude"].as<std::string>());
@@ -34,8 +33,7 @@ std::optional<TrackData> deserializeTrackData(const ArduinoJson::JsonObject &obj
         auto sectorsArray = object["sectors"].as<ArduinoJson::JsonArray>();
         std::vector<PositionData> sectors;
         sectors.reserve(sectorsArray.size());
-        for (const ArduinoJson::JsonVariant &v : sectorsArray)
-        {
+        for (ArduinoJson::JsonVariant const& v : sectorsArray) {
             auto sectorObj = v.as<ArduinoJson::JsonObject>();
             auto sectorLong = std::stof(sectorObj["longitude"].as<std::string>());
             auto sectorLatitude = std::stof(sectorObj["latitude"].as<std::string>());
@@ -46,26 +44,20 @@ std::optional<TrackData> deserializeTrackData(const ArduinoJson::JsonObject &obj
             sectors.push_back(sector);
         }
         trackData.setSections(sectors);
-    }
-    catch (std::invalid_argument &e)
-    {
-    }
-    catch (std::out_of_range &e)
-    {
+    } catch (std::invalid_argument& e) {
+    } catch (std::out_of_range& e) {
     }
 
     return trackData;
 }
 
-std::vector<LapData> deserializeLapData(const ArduinoJson::JsonArray &lapArray)
+std::vector<LapData> deserializeLapData(ArduinoJson::JsonArray const& lapArray)
 {
     std::vector<LapData> laps;
-    for (const ArduinoJson::JsonVariant &v : lapArray)
-    {
+    for (ArduinoJson::JsonVariant const& v : lapArray) {
         LapData lap;
         auto lapTimeArray = v["sectors"].as<ArduinoJson::JsonArray>();
-        for (const ArduinoJson::JsonVariant &rawLapData : lapTimeArray)
-        {
+        for (ArduinoJson::JsonVariant const& rawLapData : lapTimeArray) {
             auto time = Timestamp(rawLapData.as<std::string>());
             lap.addSectorTime(time);
         }
@@ -78,7 +70,7 @@ std::vector<LapData> deserializeLapData(const ArduinoJson::JsonArray &lapArray)
 
 } // namespace
 
-std::optional<SessionData> JsonDeserializer::deserializeSessionData(const std::string &rawData)
+std::optional<SessionData> JsonDeserializer::deserializeSessionData(std::string const& rawData)
 {
     //    auto jsonDoc = ArduinoJson::DynamicJsonDocument{rawData.capacity()};
     auto jsonDoc = ArduinoJson::StaticJsonDocument<8192>{};
@@ -89,8 +81,7 @@ std::optional<SessionData> JsonDeserializer::deserializeSessionData(const std::s
     auto laps = deserializeLapData(jsonDoc["laps"]);
 
     auto session = SessionData{trackData, sessionDate, sessionTime};
-    for (const auto &lap : laps)
-    {
+    for (auto const& lap : laps) {
         session.addLap(lap);
     }
 

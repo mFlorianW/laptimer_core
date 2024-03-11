@@ -12,7 +12,7 @@ TrackDetection::TrackDetection(std::uint16_t detectRadiusInMeter)
 {
 }
 
-bool TrackDetection::isOnTrack(const TrackData &track, const PositionData &position) const
+bool TrackDetection::isOnTrack(TrackData const& track, PositionData const& position) const
 {
     auto distance = static_cast<std::uint16_t>(DistanceCalculator::calculateDistance(track.getFinishline(), position));
     return distance <= mDetectionRadius;

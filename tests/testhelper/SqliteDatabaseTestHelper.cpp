@@ -6,9 +6,8 @@ namespace LaptimerCore::TestHelper::SqliteDatabaseTestHelper
 std::string getWorkingDir()
 {
     auto buffer = std::array<char, 512>{0};
-    auto *bufferPtr = getcwd(&buffer.at(0), buffer.size());
-    if (bufferPtr == nullptr)
-    {
+    auto* bufferPtr = getcwd(&buffer.at(0), buffer.size());
+    if (bufferPtr == nullptr) {
         FAIL("Unable to get the database folder.");
     }
 
@@ -20,7 +19,7 @@ std::string getTestDatabseFolder()
     return getWorkingDir() + "/database";
 }
 
-std::string getTestDatabseFile(const std::string &dbFile)
+std::string getTestDatabseFile(std::string const& dbFile)
 {
     return getTestDatabseFolder() + "/" + dbFile;
 }

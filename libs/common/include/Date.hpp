@@ -21,7 +21,7 @@ public:
      * The string must have the format dd.MM.YYYY
      * @param dateString
      */
-    Date(const std::string &dateString);
+    Date(std::string const& dateString);
 
     /**
      * Default destructor
@@ -32,27 +32,27 @@ public:
      * Copy constructor for Date
      * @param ohter The object to copy from.
      */
-    Date(const Date &ohter);
+    Date(Date const& ohter);
 
     /**
      * The copy assignment operator for Date.
      * @param other The object to copy from.
      * @return TrackData& A reference to the copied track.
      */
-    Date &operator=(const Date &other);
+    Date& operator=(Date const& other);
 
     /**
      * Move constructor for Date
      * @param other The object to move from.
      */
-    Date(Date &&other);
+    Date(Date&& other);
 
     /**
      * The move assignment operator for the Date.
      * @param other The object to move from.
      * @return TrackData& A reference to the moved date.
      */
-    Date &operator=(Date &&other);
+    Date& operator=(Date&& other);
 
     /**
      * Gives the year.
@@ -101,14 +101,14 @@ public:
      * @return true The two objects are the same.
      * @return false The two objects are not the same.
      */
-    friend bool operator==(const Date &lhs, const Date &rhs);
+    friend bool operator==(Date const& lhs, Date const& rhs);
 
     /**
      * Not Equal operator
      * @return true The two objects are not the same.
      * @return false The two objects are the same.
      */
-    friend bool operator!=(const Date &lhs, const Date &rhs);
+    friend bool operator!=(Date const& lhs, Date const& rhs);
 
     /**
      * Gives you the date of the system

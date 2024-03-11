@@ -15,28 +15,28 @@ namespace LaptimerCore::Storage
 class FileSystemSessionDatabaseBackend final : public ISessionDatabaseBackend
 {
 public:
-    FileSystemSessionDatabaseBackend(const std::string &databaseFolder);
+    FileSystemSessionDatabaseBackend(std::string const& databaseFolder);
     ~FileSystemSessionDatabaseBackend() override = default;
 
     /**
      * Deleted copy constructor
      */
-    FileSystemSessionDatabaseBackend(const FileSystemSessionDatabaseBackend &other) = delete;
+    FileSystemSessionDatabaseBackend(FileSystemSessionDatabaseBackend const& other) = delete;
 
     /**
      * Deleted copy assignment operator
      */
-    FileSystemSessionDatabaseBackend &operator=(const FileSystemSessionDatabaseBackend &other) = delete;
+    FileSystemSessionDatabaseBackend& operator=(FileSystemSessionDatabaseBackend const& other) = delete;
 
     /**
      * Deleted move constructor
      */
-    FileSystemSessionDatabaseBackend(FileSystemSessionDatabaseBackend &&ohter) = delete;
+    FileSystemSessionDatabaseBackend(FileSystemSessionDatabaseBackend&& ohter) = delete;
 
     /**
      * Deleted move assignemnt operator
      */
-    FileSystemSessionDatabaseBackend &operator=(FileSystemSessionDatabaseBackend &&other) = delete;
+    FileSystemSessionDatabaseBackend& operator=(FileSystemSessionDatabaseBackend&& other) = delete;
 
     /**
      * @copydoc ISessionDatabaseBackend::getLastStoredIndex()
@@ -56,7 +56,7 @@ public:
     /**
      * @copydoc ISessionDatabaseBackend::storeSession
      */
-    bool storeSession(std::size_t index, const std::string &sessionData) override;
+    bool storeSession(std::size_t index, std::string const& sessionData) override;
 
     /**
      * @copydoc ISessionDatabaseBackend::loadSessionByIndex

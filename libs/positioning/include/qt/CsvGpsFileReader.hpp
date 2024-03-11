@@ -18,7 +18,7 @@ public:
      * Sets a new file name to read the the positions data from. The filename can be a path as well.
      * @param fileName The new filename.
      */
-    void setFileName(const QString &fileName);
+    void setFileName(QString const& fileName);
 
     /**
      * Reads the positions from the file.

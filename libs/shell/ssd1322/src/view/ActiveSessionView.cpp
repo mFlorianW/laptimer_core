@@ -1,6 +1,6 @@
 #include "ActiveSessionView.hpp"
 
-ActiveSessionView::ActiveSessionView(ActiveSessionModel &model)
+ActiveSessionView::ActiveSessionView(ActiveSessionModel& model)
     : MainScreenView{}
     , mActiveSessionModel{model}
 {
@@ -79,8 +79,9 @@ ActiveSessionView::ActiveSessionView(ActiveSessionModel &model)
                               timeStamp.getFractionalOfSecond());
     });
 
-    mActiveSessionModel.lapCount.valueChanged().connect(
-        [=]() { lv_label_set_text_fmt(mLapCountLabel, "Lap: %03d", mActiveSessionModel.lapCount.get()); });
+    mActiveSessionModel.lapCount.valueChanged().connect([=]() {
+        lv_label_set_text_fmt(mLapCountLabel, "Lap: %03d", mActiveSessionModel.lapCount.get());
+    });
 
     mActiveSessionModel.lapFinished.connect(&ActiveSessionView::onLapFinished, this);
     mActiveSessionModel.sectorFinished.connect(&ActiveSessionView::onSectorFinshed, this);

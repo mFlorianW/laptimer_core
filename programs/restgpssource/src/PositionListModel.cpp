@@ -21,26 +21,22 @@ PositionListModel::PositionListModel()
 
 PositionListModel::~PositionListModel() = default;
 
-qint32 PositionListModel::rowCount(const QModelIndex &index) const
+qint32 PositionListModel::rowCount(QModelIndex const& index) const
 {
     Q_UNUSED(index);
     return d->mBufferFull ? static_cast<qint32>(d->mPositions.size()) : d->mWriteIndex;
 }
 
-QVariant PositionListModel::data(const QModelIndex &index, qint32 role) const
+QVariant PositionListModel::data(QModelIndex const& index, qint32 role) const
 {
-    if (!checkIndex(index, CheckIndexOption::IndexIsValid))
-    {
+    if (!checkIndex(index, CheckIndexOption::IndexIsValid)) {
         return {};
     }
 
-    const auto position = d->mPositions.cbegin() + index.row();
-    if (role == PositionRole::Latitude)
-    {
+    auto const position = d->mPositions.cbegin() + index.row();
+    if (role == PositionRole::Latitude) {
         return QString::number(position->getPosition().getLatitude());
-    }
-    else if (role == PositionRole::Longitude)
-    {
+    } else if (role == PositionRole::Longitude) {
         return QString::number(position->getPosition().getLongitude());
     }
 
@@ -54,26 +50,22 @@ QHash<qint32, QByteArray> PositionListModel::roleNames() const
     return roles;
 }
 
-void PositionListModel::addPosition(const LaptimerCore::Common::PositionDateTimeData &position)
+void PositionListModel::addPosition(LaptimerCore::Common::PositionDateTimeData const& position)
 {
-    const auto writeIndex = d->mWriteIndex;
+    auto const writeIndex = d->mWriteIndex;
     d->mWriteIndex = d->mWriteIndex + 1;
     d->mWriteIndex %= POSITION_BUFFER_SIZE;
     d->mPositions[writeIndex] = position;
 
-    if (!d->mBufferFull)
-    {
+    if (!d->mBufferFull) {
         beginInsertRows({}, writeIndex, writeIndex);
         endInsertRows();
-    }
-    else
-    {
+    } else {
         Q_EMIT dataChanged(index(writeIndex), index(writeIndex), {PositionRole::Latitude, PositionRole::Longitude});
     }
 
     // After the first time is buffer is filled we only need to updated the UI.
-    if (writeIndex == POSITION_BUFFER_SIZE - 1)
-    {
+    if (writeIndex == POSITION_BUFFER_SIZE - 1) {
         d->mBufferFull = true;
     }
 }

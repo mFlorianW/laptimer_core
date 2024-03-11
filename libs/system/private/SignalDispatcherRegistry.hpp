@@ -12,17 +12,17 @@ namespace LaptimerCore::System
 class SignalDispatcherRegistry
 {
 public:
-    static SignalDispatcherRegistry &getInstance() noexcept;
+    static SignalDispatcherRegistry& getInstance() noexcept;
 
-    Result registerDispatcher(ISignalDispatcher *dispatcher, const std::thread::id &id) noexcept;
+    Result registerDispatcher(ISignalDispatcher* dispatcher, std::thread::id const& id) noexcept;
 
-    SignalDispatcherContext *getContext(const std::thread::id &id) noexcept;
+    SignalDispatcherContext* getContext(std::thread::id const& id) noexcept;
 
-    ISignalDispatcher *getDispatcher(const std::thread::id &id) noexcept;
+    ISignalDispatcher* getDispatcher(std::thread::id const& id) noexcept;
 
-    void registerObject(IDispatcherObject *obj, const std::thread::id &id) noexcept;
+    void registerObject(IDispatcherObject* obj, std::thread::id const& id) noexcept;
 
-    void unregisterObject(IDispatcherObject *obj, const std::thread::id &id) noexcept;
+    void unregisterObject(IDispatcherObject* obj, std::thread::id const& id) noexcept;
 
 private:
     std::unordered_map<std::thread::id, std::unique_ptr<SignalDispatcherContext>> mContexts{};

@@ -1,21 +1,21 @@
 #include "PopupRequest.hpp"
 
-const std::string &PopupRequest::getMainText() const noexcept
+std::string const& PopupRequest::getMainText() const noexcept
 {
     return mMainText;
 }
 
-void PopupRequest::setMainText(const std::string &mainText) noexcept
+void PopupRequest::setMainText(std::string const& mainText) noexcept
 {
     mMainText = mainText;
 }
 
-const std::string &PopupRequest::getSecondaryText() const noexcept
+std::string const& PopupRequest::getSecondaryText() const noexcept
 {
     return mSecondaryText;
 }
 
-void PopupRequest::setSecondaryText(const std::string &secondaryText) noexcept
+void PopupRequest::setSecondaryText(std::string const& secondaryText) noexcept
 {
     mSecondaryText = secondaryText;
 }
@@ -35,7 +35,7 @@ bool PopupRequest::isAutoClosing() const noexcept
     return mAutoClosing;
 }
 
-const std::chrono::seconds &PopupRequest::getAutoClosingTimeout() const noexcept
+std::chrono::seconds const& PopupRequest::getAutoClosingTimeout() const noexcept
 {
     return mAutoClosingTimeout;
 }

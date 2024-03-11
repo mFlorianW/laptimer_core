@@ -9,8 +9,7 @@ ListView::~ListView() = default;
 
 void ListView::NavigateDown()
 {
-    if (mActiveRow == 0)
-    {
+    if (mActiveRow == 0) {
         return;
     }
 
@@ -20,8 +19,7 @@ void ListView::NavigateDown()
 
 void ListView::NavigateUp()
 {
-    if (mActiveRow == mRowCount - 1)
-    {
+    if (mActiveRow == mRowCount - 1) {
         return;
     }
 

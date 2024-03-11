@@ -28,13 +28,13 @@ MenuEntryView::MenuEntryView()
     lv_obj_set_y(mSecondaryEnrtyLabel, 34);
 }
 
-void MenuEntryView::setEntryLabel(const std::string &entryLabel)
+void MenuEntryView::setEntryLabel(std::string const& entryLabel)
 {
     mEntryLabelText = entryLabel;
     lv_label_set_text(mEntryLabel, mEntryLabelText.c_str());
 }
 
-void MenuEntryView::setSecondaryLabel(const std::string &secondaryLabel)
+void MenuEntryView::setSecondaryLabel(std::string const& secondaryLabel)
 {
     mSecondaryEntryLabelText = secondaryLabel;
     lv_label_set_text(mSecondaryEnrtyLabel, mSecondaryEntryLabelText.c_str());

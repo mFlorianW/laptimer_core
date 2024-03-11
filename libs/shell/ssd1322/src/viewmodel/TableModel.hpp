@@ -20,22 +20,22 @@ public:
     /**
      * Disable copy constructor.
      */
-    TableModel(const TableModel &other) = delete;
+    TableModel(TableModel const& other) = delete;
 
     /**
      * Disable copy assignment.
      */
-    TableModel &operator=(const TableModel &other) = delete;
+    TableModel& operator=(TableModel const& other) = delete;
 
     /**
      * Disable move constructor.
      */
-    TableModel(TableModel &&other) = delete;
+    TableModel(TableModel&& other) = delete;
 
     /**
      * Disable move assignment.
      */
-    TableModel &operator=(TableModel &&other) = delete;
+    TableModel& operator=(TableModel&& other) = delete;
 
     /**
      * Request the data for the given row and column.

@@ -14,7 +14,7 @@ public:
     }
 };
 
-void RestSessionDownloaderClient::setServerAddress(const std::string &address) noexcept
+void RestSessionDownloaderClient::setServerAddress(std::string const& address) noexcept
 {
 }
 
@@ -22,16 +22,13 @@ void RestSessionDownloaderClient::setServerPort(std::uint16_t port) noexcept
 {
 }
 
-std::shared_ptr<Rest::RestCall> RestSessionDownloaderClient::execute(const Rest::RestRequest &request) noexcept
+std::shared_ptr<Rest::RestCall> RestSessionDownloaderClient::execute(Rest::RestRequest const& request) noexcept
 {
     mLastRequest = request;
     auto call = std::make_shared<TestRestCall>();
-    if (request.getPath().getPath() == "/sessions")
-    {
+    if (request.getPath().getPath() == "/sessions") {
         call->setData({R"({"count":2})"});
-    }
-    else if (request.getPath().getPath() == "/sessions/0")
-    {
+    } else if (request.getPath().getPath() == "/sessions/0") {
         call->setData(TestHelper::Sessions::getTestSessionAsJson());
     }
     call->setCallResult(Rest::RestCallResult::Success);

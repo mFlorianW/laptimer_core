@@ -22,22 +22,22 @@ public:
     /**
      * Deleted copy constructor
      */
-    PopupView(const PopupView &other) = delete;
+    PopupView(PopupView const& other) = delete;
 
     /**
      * Deleted copy assignment operator
      */
-    PopupView &operator=(const PopupView &other) = delete;
+    PopupView& operator=(PopupView const& other) = delete;
 
     /**
      * Deleted move operator
      */
-    PopupView(PopupView &&other) = delete;
+    PopupView(PopupView&& other) = delete;
 
     /**
      * Deleted move assignment operator
      */
-    PopupView &operator=(PopupView &&other) = delete;
+    PopupView& operator=(PopupView&& other) = delete;
 
     /**
      * Handles the enter key press sets the return type of the popup if it's modal.
@@ -53,13 +53,13 @@ public:
      * Sets the main text in popup.
      * @param mainText The text that is displayed in the upper line.
      */
-    void setMainText(const std::string &mainText);
+    void setMainText(std::string const& mainText);
 
     /**
      * Sets the secondary text in the popup. This text should be used to display addiontial information.
      * @param secondaryText The text that is display below the main text in smaller font size.
      */
-    void setSecondaryText(const std::string &secondaryText);
+    void setSecondaryText(std::string const& secondaryText);
 
     /**
      * Gives the type of the popup.
@@ -83,11 +83,11 @@ public:
 private:
     Type mType = Type::Confirmattion;
     lv_style_t mLabelStyle{};
-    lv_obj_t *mConfirmLabel{nullptr};
-    lv_obj_t *mCancelLabel{nullptr};
+    lv_obj_t* mConfirmLabel{nullptr};
+    lv_obj_t* mCancelLabel{nullptr};
 
-    lv_obj_t *mMainText{nullptr};
-    lv_obj_t *mSecondaryText{nullptr};
+    lv_obj_t* mMainText{nullptr};
+    lv_obj_t* mSecondaryText{nullptr};
     LaptimerCore::System::Timer mAutoClosingTimer;
 };
 

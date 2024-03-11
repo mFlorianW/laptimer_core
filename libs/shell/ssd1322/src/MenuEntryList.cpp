@@ -9,10 +9,9 @@ MenuEntryList::MenuEntryList()
 {
 }
 
-void MenuEntryList::addMenuEntry(IMenuEntry *menuEntry) noexcept
+void MenuEntryList::addMenuEntry(IMenuEntry* menuEntry) noexcept
 {
-    if (menuEntry == nullptr)
-    {
+    if (menuEntry == nullptr) {
         return;
     }
 
@@ -22,8 +21,12 @@ void MenuEntryList::addMenuEntry(IMenuEntry *menuEntry) noexcept
     menuEntry->getMenuEntryView()->setCloseCommand(&mEscapeCommand);
 
     // Connect to the signals of the menu entry. This handles the sub menu entries.
-    menuEntry->viewChanged.connect([=]() { handleSubMenuUpdate(); });
-    menuEntry->closeEntry.connect([=]() { handleSubMenuUpdate(); });
+    menuEntry->viewChanged.connect([=]() {
+        handleSubMenuUpdate();
+    });
+    menuEntry->closeEntry.connect([=]() {
+        handleSubMenuUpdate();
+    });
 
     mMenuEntries.push_back(menuEntry);
     setSize(mMenuEntries.size());
@@ -58,7 +61,7 @@ void MenuEntryList::handleSubMenuUpdate()
     viewChanged.emit();
 }
 
-View *MenuEntryList::getMenuEntryView() const noexcept
+View* MenuEntryList::getMenuEntryView() const noexcept
 {
     assert(mMenuEntries.empty() == false);
     return mMenuEntries[getIndex()]->getMenuEntryView();

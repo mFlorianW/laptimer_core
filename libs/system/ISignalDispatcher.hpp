@@ -21,22 +21,22 @@ public:
     /**
      * Deleted copy constructor
      */
-    ISignalDispatcher(const ISignalDispatcher &other) = delete;
+    ISignalDispatcher(ISignalDispatcher const& other) = delete;
 
     /**
      * Deleted copy assignment operator
      */
-    ISignalDispatcher &operator=(const ISignalDispatcher &other) = delete;
+    ISignalDispatcher& operator=(ISignalDispatcher const& other) = delete;
 
     /**
      * Deleted move constructor
      */
-    ISignalDispatcher(ISignalDispatcher &&ohter) = delete;
+    ISignalDispatcher(ISignalDispatcher&& ohter) = delete;
 
     /**
      * Deleted move assignemnt operator
      */
-    ISignalDispatcher &operator=(ISignalDispatcher &&other) = delete;
+    ISignalDispatcher& operator=(ISignalDispatcher&& other) = delete;
 
     /**
      * This function must be called periodically in the main loop or thread to dispatch the signals.
@@ -47,13 +47,13 @@ public:
      * Register an object for signal dispatching.
      * @param timer that shall be registered.
      */
-    virtual Result registerObject(IDispatcherObject *obj, const std::thread::id &id) noexcept = 0;
+    virtual Result registerObject(IDispatcherObject* obj, std::thread::id const& id) noexcept = 0;
 
     /**
      * Unregister an object from signal dispatching.
      * @param timer that shall be unregistered.
      */
-    virtual Result unregisterObject(IDispatcherObject *obj, const std::thread::id &id) noexcept = 0;
+    virtual Result unregisterObject(IDispatcherObject* obj, std::thread::id const& id) noexcept = 0;
 
     /**
      * Gives the SignalDispatcher for the thread if the functions returns a nullptr, that means that there
@@ -64,7 +64,7 @@ public:
      * @return A SignalDispatcher for the thread.
      * @return A nullptr when no SignalDispatcher is present for the thread.
      */
-    static ISignalDispatcher *getSignalDispatcher() noexcept;
+    static ISignalDispatcher* getSignalDispatcher() noexcept;
 
 protected:
     /**

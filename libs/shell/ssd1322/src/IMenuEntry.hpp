@@ -20,7 +20,7 @@ public:
      * Returns the view for the menu entry.
      * @return A View refernce to display the menu entry.
      */
-    virtual View *getMenuEntryView() const noexcept = 0;
+    virtual View* getMenuEntryView() const noexcept = 0;
 
     /**
      * This signal is emitted when the entry shall be closed and the upper entry shall be displayed.

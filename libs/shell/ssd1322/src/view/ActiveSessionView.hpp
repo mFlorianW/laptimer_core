@@ -13,7 +13,7 @@ public:
      * Creates an instance of the ActiveSessionView
      * @param model The view model with the data and data updates.
      */
-    ActiveSessionView(ActiveSessionModel &model);
+    ActiveSessionView(ActiveSessionModel& model);
 
     /**
      * Default desctructor cleans all UI elements.
@@ -23,22 +23,22 @@ public:
     /**
      * Deleted copy Constructor
      */
-    ActiveSessionView(const ActiveSessionView &view) = delete;
+    ActiveSessionView(ActiveSessionView const& view) = delete;
 
     /**
      * Deleted copy Assignment Constructor
      */
-    ActiveSessionView &operator=(const ActiveSessionView &view) = delete;
+    ActiveSessionView& operator=(ActiveSessionView const& view) = delete;
 
     /**
      * Deleted move Constructor
      */
-    ActiveSessionView(ActiveSessionView &&view);
+    ActiveSessionView(ActiveSessionView&& view);
 
     /**
      * Deleted move assignment operator
      */
-    ActiveSessionView &operator=(ActiveSessionView &&view) = delete;
+    ActiveSessionView& operator=(ActiveSessionView&& view) = delete;
 
 private:
     void onTrackDetected();
@@ -49,25 +49,25 @@ private:
 private:
     // Laptime objects
     lv_style_t mLaptimeContainerStyle{};
-    lv_obj_t *mLaptimeContainer{nullptr};
+    lv_obj_t* mLaptimeContainer{nullptr};
     lv_style_t mLaptimeLabelStyle{};
-    lv_obj_t *mLaptimeLabel{nullptr};
+    lv_obj_t* mLaptimeLabel{nullptr};
 
     // Sector time objects
     lv_style_t mSectorTimeContainerStyle{};
-    lv_obj_t *mSectorTimeContainer{nullptr};
+    lv_obj_t* mSectorTimeContainer{nullptr};
     lv_style_t mSectorTimeLabelStyle{};
-    lv_obj_t *mSectorTimeLabel{nullptr};
+    lv_obj_t* mSectorTimeLabel{nullptr};
 
     // Lap objects
-    lv_obj_t *mLapCountLabel{nullptr};
+    lv_obj_t* mLapCountLabel{nullptr};
 
     // Popup Request
     PopupRequest mPopupRequest;
     PopupRequest mLaptimePopupRequest;
 
     // model
-    ActiveSessionModel &mActiveSessionModel;
+    ActiveSessionModel& mActiveSessionModel;
 };
 
 #endif //! ACTIVESESSIONVIEW_HPP

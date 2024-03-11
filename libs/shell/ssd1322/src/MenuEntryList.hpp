@@ -21,12 +21,12 @@ public:
     /**
      * @copydoc IMenuEntry::getMenuEntryView
      */
-    View *getMenuEntryView() const noexcept override;
+    View* getMenuEntryView() const noexcept override;
 
     /**
      * @copydoc IMenuEntry::getMenuEntryView
      */
-    void addMenuEntry(IMenuEntry *entry) noexcept;
+    void addMenuEntry(IMenuEntry* entry) noexcept;
 
     /**
      * @copydoc INavigationHandler::navigateUp()
@@ -52,8 +52,8 @@ private:
     void handleSubMenuUpdate();
 
 private:
-    View *mActiveView{nullptr};
-    std::vector<IMenuEntry *> mMenuEntries;
+    View* mActiveView{nullptr};
+    std::vector<IMenuEntry*> mMenuEntries;
     NavigateUpCommand mUpCommand;
     NavigateDownCommand mDownCommand;
     CloseCommand mEscapeCommand;

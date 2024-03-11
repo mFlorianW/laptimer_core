@@ -18,24 +18,24 @@ public:
     /**
      * Deleted copy constructor
      */
-    AsyncResultDb(const AsyncResultDb &other) = delete;
+    AsyncResultDb(AsyncResultDb const& other) = delete;
 
     /**
      * Deleted copy assignment operator
      */
-    AsyncResultDb &operator=(const AsyncResultDb &other) = delete;
+    AsyncResultDb& operator=(AsyncResultDb const& other) = delete;
 
     /**
      * Move constructor
      */
-    AsyncResultDb(AsyncResultDb &&ohter) noexcept;
+    AsyncResultDb(AsyncResultDb&& ohter) noexcept;
 
     /**
      * Move assignemnt operator
      */
-    AsyncResultDb &operator=(AsyncResultDb &&other) noexcept;
+    AsyncResultDb& operator=(AsyncResultDb&& other) noexcept;
 
-    void setDbResult(System::Result result, const std::string &errMsg = "") noexcept;
+    void setDbResult(System::Result result, std::string const& errMsg = "") noexcept;
 };
 
 } // namespace LaptimerCore::Storage

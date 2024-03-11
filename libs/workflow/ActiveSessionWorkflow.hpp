@@ -17,9 +17,9 @@ public:
      * @param laptimer The laptimer that is used to get notified about new laps and sectors.
      * @param database The session database that shall be used to store the data.
      */
-    ActiveSessionWorkflow(Positioning::IPositionDateTimeProvider &positionDateTimeProvider,
-                          Algorithm::ILaptimer &laptimer,
-                          Storage::ISessionDatabase &database);
+    ActiveSessionWorkflow(Positioning::IPositionDateTimeProvider& positionDateTimeProvider,
+                          Algorithm::ILaptimer& laptimer,
+                          Storage::ISessionDatabase& database);
 
     /**
      * @copydoc IActiveSessionWorkflow::startActiveSession()
@@ -34,7 +34,7 @@ public:
     /**
      * @copydoc IActiveSessionWorkflow::setTrack()
      */
-    void setTrack(const Common::TrackData &track) noexcept override;
+    void setTrack(Common::TrackData const& track) noexcept override;
 
     /**
      * @copydoc IActiveSessionWorkflow::getActiveSession()
@@ -65,9 +65,9 @@ private:
 private:
     void addSectorTime();
 
-    Positioning::IPositionDateTimeProvider &mDateTimeProvider;
-    Algorithm::ILaptimer &mLaptimer;
-    Storage::ISessionDatabase &mDatabase;
+    Positioning::IPositionDateTimeProvider& mDateTimeProvider;
+    Algorithm::ILaptimer& mLaptimer;
+    Storage::ISessionDatabase& mDatabase;
     std::optional<Common::SessionData> mSession;
     Common::TrackData mTrack;
     Common::LapData mCurrentLap;

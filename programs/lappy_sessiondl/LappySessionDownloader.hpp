@@ -13,7 +13,7 @@ namespace LaptimerCore::SessionDl
 class LappySessionDownloader final
 {
 public:
-    LappySessionDownloader(QHostAddress const &dlAddress, quint16 port) noexcept;
+    LappySessionDownloader(QHostAddress const& dlAddress, quint16 port) noexcept;
 
     void show() const noexcept;
 

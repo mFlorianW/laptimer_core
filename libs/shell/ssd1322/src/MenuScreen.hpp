@@ -14,8 +14,8 @@ public:
 private:
     // button indicator
     lv_style_t mButtonIndicatorStyle;
-    lv_obj_t *mButtonUpIndicator;
-    lv_obj_t *mButtonDownIndicator;
+    lv_obj_t* mButtonUpIndicator;
+    lv_obj_t* mButtonDownIndicator;
 };
 
 #endif //!__MENUSCREEN__H__

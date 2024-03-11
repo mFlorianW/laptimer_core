@@ -8,7 +8,7 @@
 class MainScreen : public Screen
 {
 public:
-    explicit MainScreen(LaptimerCore::Positioning::IGpsInformationProvider &gpsInfoProvider);
+    explicit MainScreen(LaptimerCore::Positioning::IGpsInformationProvider& gpsInfoProvider);
     ~MainScreen() override;
 
 private:
@@ -17,13 +17,13 @@ private:
 private:
     // indication bar container
     lv_style_t mMainScreenContainerStyle;
-    lv_obj_t *mIndicationBarContainer;
-    lv_obj_t *mSatelliteLabel;
+    lv_obj_t* mIndicationBarContainer;
+    lv_obj_t* mSatelliteLabel;
 
     // main screen separator
     lv_point_t mSeparatorPoints[2]{{0, 15}, {256, 15}};
     lv_style_t mSeparatorStyle;
-    lv_obj_t *m_separator_line;
+    lv_obj_t* m_separator_line;
 
     StatusBarModel mStatusBarModel;
 };

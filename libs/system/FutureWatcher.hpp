@@ -11,7 +11,7 @@
 namespace LaptimerCore::System
 {
 
-template<class T>
+template <class T>
 class FutureWatcher : public IDispatcherObject
 {
 public:
@@ -34,8 +34,7 @@ public:
      */
     ~FutureWatcher() noexcept override
     {
-        if (mFutureObserver.joinable())
-        {
+        if (mFutureObserver.joinable()) {
             mFutureObserver.join();
         }
 
@@ -45,22 +44,22 @@ public:
     /**
      * Deleted copy constructor
      */
-    FutureWatcher(const FutureWatcher &other) = delete;
+    FutureWatcher(FutureWatcher const& other) = delete;
 
     /**
      * Deleted copy assignment operator
      */
-    FutureWatcher &operator=(const FutureWatcher &other) = delete;
+    FutureWatcher& operator=(FutureWatcher const& other) = delete;
 
     /**
      * Deleted move constructor
      */
-    FutureWatcher(FutureWatcher &&ohter) = delete;
+    FutureWatcher(FutureWatcher&& ohter) = delete;
 
     /**
      * Deleted move assignemnt operator
      */
-    FutureWatcher &operator=(FutureWatcher &&other) = delete;
+    FutureWatcher& operator=(FutureWatcher&& other) = delete;
 
     /**
      * Sets a future and starts observing the future.
@@ -70,15 +69,12 @@ public:
     {
         mFuture = std::move(future);
         SignalDispatcher{}.registerObject(this, std::this_thread::get_id());
-        try
-        {
+        try {
             mFutureObserver = std::thread{[this]() {
                 mFuture.wait();
                 mFinished = true;
             }};
-        }
-        catch (std::system_error &e)
-        {
+        } catch (std::system_error& e) {
             std::cout << "Failed to create future observer error:" << e.what() << std::endl;
         }
     }
@@ -90,13 +86,10 @@ public:
      */
     [[nodiscard]] T getResult() noexcept
     {
-        try
-        {
+        try {
             mFinished = false;
             return mFuture.get();
-        }
-        catch (std::exception &e)
-        {
+        } catch (std::exception& e) {
             std::cout << e.what() << std::endl;
             return T{};
         }
@@ -110,8 +103,7 @@ public:
 protected:
     void dispatch() override
     {
-        if (mFinished)
-        {
+        if (mFinished) {
             finished.emit();
         }
     }

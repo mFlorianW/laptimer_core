@@ -18,8 +18,8 @@ public:
      * @param trackDetector The algorithm that shall be used for the track detection.
      * @param positionInfomationProvider The position information provider that shall be used for the track detection.
      */
-    TrackDetectionWorkflow(Algorithm::ITrackDetection &trackDetector,
-                           Positioning::IPositionDateTimeProvider &positionInfomationProvider);
+    TrackDetectionWorkflow(Algorithm::ITrackDetection& trackDetector,
+                           Positioning::IPositionDateTimeProvider& positionInfomationProvider);
 
     ~TrackDetectionWorkflow();
 
@@ -36,7 +36,7 @@ public:
     /**
      * @copydoc ITrackDetectionWorkflow::setTracks(const std::vector<TrackData> &trackData)
      */
-    void setTracks(const std::vector<Common::TrackData> &trackData) override;
+    void setTracks(std::vector<Common::TrackData> const& trackData) override;
 
     /**
      * @copydoc ITrackDetectionWorkflow::getDetectedTrack()
@@ -50,8 +50,8 @@ private:
     bool mActive{false};
     Common::TrackData mDetectedTrack;
     std::vector<Common::TrackData> mTracksToDetect;
-    Algorithm::ITrackDetection &mTrackDetector;
-    Positioning::IPositionDateTimeProvider &mPositionInfoProvider;
+    Algorithm::ITrackDetection& mTrackDetector;
+    Positioning::IPositionDateTimeProvider& mPositionInfoProvider;
 };
 
 } // namespace LaptimerCore::Workflow

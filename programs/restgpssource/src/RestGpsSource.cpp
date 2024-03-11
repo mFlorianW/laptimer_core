@@ -33,7 +33,7 @@ RestGpsSource::~RestGpsSource() = default;
 
 void RestGpsSource::show()
 {
-    auto *topLevel = d->mEngine.rootObjects().value(0);
-    auto *window = qobject_cast<QQuickWindow *>(topLevel);
+    auto* topLevel = d->mEngine.rootObjects().value(0);
+    auto* window = qobject_cast<QQuickWindow*>(topLevel);
     window->show();
 }

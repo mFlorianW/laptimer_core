@@ -20,7 +20,7 @@ public:
      * Constructs a TableView.
      * @param model The model with the data for the view.
      */
-    TableView(TableModel &model);
+    TableView(TableModel& model);
 
     /**
      * Cleans all lvgl labels of the view.
@@ -62,8 +62,8 @@ private:
     static constexpr std::size_t sPageOffset{3};
     static constexpr std::size_t sColumnPageOffset{3};
     lv_style_t mFontStyle;
-    std::array<std::array<lv_obj_t *, sColumns>, sRows> mLabels;
-    TableModel &mModel;
+    std::array<std::array<lv_obj_t*, sColumns>, sRows> mLabels;
+    TableModel& mModel;
     std::size_t mSidePages{0};
     std::size_t mActiveSidePage{0};
     std::size_t mActivePage{0};

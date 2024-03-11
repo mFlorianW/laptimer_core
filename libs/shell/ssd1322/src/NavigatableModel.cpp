@@ -22,24 +22,18 @@ std::size_t NavigatableModel::getIndex() const
 
 void NavigatableModel::incrementIndex()
 {
-    if ((mIndex + 1) >= mSize)
-    {
+    if ((mIndex + 1) >= mSize) {
         mIndex = 0;
-    }
-    else
-    {
+    } else {
         ++mIndex;
     }
 }
 
 void NavigatableModel::decrementIndex()
 {
-    if (mIndex == 0)
-    {
+    if (mIndex == 0) {
         mIndex = mSize - 1;
-    }
-    else
-    {
+    } else {
         --mIndex;
     }
 }

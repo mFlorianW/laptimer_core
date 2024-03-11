@@ -11,9 +11,9 @@ class Laptimer final : public Algorithm::ILaptimer
 public:
     Laptimer();
 
-    void setTrack(const Common::TrackData &track) override;
+    void setTrack(Common::TrackData const& track) override;
 
-    void updatePositionAndTime(const Common::PositionDateTimeData &data) override;
+    void updatePositionAndTime(Common::PositionDateTimeData const& data) override;
 
     Common::Timestamp getLastLaptime() const override;
 

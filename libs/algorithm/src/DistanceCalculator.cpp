@@ -4,7 +4,7 @@
 namespace LaptimerCore::Algorithm::DistanceCalculator
 {
 
-float calculateDistance(const Common::PositionData &pos1, const Common::PositionData &pos2)
+float calculateDistance(Common::PositionData const& pos1, Common::PositionData const& pos2)
 {
     float lat = (pos1.getLatitude() + pos2.getLatitude()) / 2 * 0.01745f;
     float dx = 111300 * cos(lat) * (pos1.getLongitude() - pos2.getLongitude());

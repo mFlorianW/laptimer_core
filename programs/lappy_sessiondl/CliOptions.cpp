@@ -6,15 +6,15 @@
 namespace LaptimerCore::SessionDl
 {
 
-CliOptions::CliOptions(int argc, char **argv) noexcept
+CliOptions::CliOptions(int argc, char** argv) noexcept
 {
-    const auto ipOption = QCommandLineOption{{QStringLiteral("i"), QStringLiteral("ip")},
+    auto const ipOption = QCommandLineOption{{QStringLiteral("i"), QStringLiteral("ip")},
                                              QStringLiteral("IP address of the laptimer."),
                                              QStringLiteral("ip")};
-    const auto portOption = QCommandLineOption{{QStringLiteral("p"), QStringLiteral("port")},
+    auto const portOption = QCommandLineOption{{QStringLiteral("p"), QStringLiteral("port")},
                                                QStringLiteral("Port number of the laptimer."),
                                                QStringLiteral("port")};
-    const auto deleteOption = QCommandLineOption{{QStringLiteral("d"), QStringLiteral("delete")},
+    auto const deleteOption = QCommandLineOption{{QStringLiteral("d"), QStringLiteral("delete")},
                                                  QStringLiteral("Delete the sessions after download.")};
 
     auto parser = QCommandLineParser{};
@@ -29,37 +29,28 @@ CliOptions::CliOptions(int argc, char **argv) noexcept
 
     parser.process(*QCoreApplication::instance());
 
-    if (parser.isSet(ipOption))
-    {
+    if (parser.isSet(ipOption)) {
         mHost = QHostAddress(parser.value(ipOption));
-        if (mHost.isNull())
-        {
+        if (mHost.isNull()) {
             qInfo() << "Invalid IP Address passed.";
             parser.showHelp(255);
         }
-    }
-    else
-    {
+    } else {
         mHost = QHostAddress{"192.168.4.1"};
     }
 
-    if (parser.isSet(portOption))
-    {
+    if (parser.isSet(portOption)) {
         bool ok = false;
         mPort = parser.value(portOption).toUInt(&ok);
-        if (!ok)
-        {
+        if (!ok) {
             qInfo() << "Invalid port number passed.";
             parser.showHelp(255);
         }
-    }
-    else
-    {
+    } else {
         mPort = 80;
     }
 
-    if (parser.isSet(deleteOption))
-    {
+    if (parser.isSet(deleteOption)) {
         mDeleteSessions = true;
     }
 }

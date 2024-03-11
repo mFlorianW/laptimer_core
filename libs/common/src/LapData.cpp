@@ -10,7 +10,7 @@ class SharedLap : public SharedData
 public:
     std::vector<Timestamp> mSectorTimes;
 
-    friend bool operator==(const SharedLap &lhs, const SharedLap &rhs)
+    friend bool operator==(SharedLap const& lhs, SharedLap const& rhs)
     {
         return (lhs.mSectorTimes) == (rhs.mSectorTimes);
     }
@@ -21,13 +21,13 @@ LapData::LapData()
 {
 }
 
-LapData::LapData(const Timestamp &laptime)
+LapData::LapData(Timestamp const& laptime)
     : mData{new SharedLap}
 {
     mData->mSectorTimes.push_back(laptime);
 }
 
-LapData::LapData(const std::vector<Timestamp> &sectorTimes)
+LapData::LapData(std::vector<Timestamp> const& sectorTimes)
     : mData{new SharedLap}
 {
     mData->mSectorTimes = sectorTimes;
@@ -35,17 +35,17 @@ LapData::LapData(const std::vector<Timestamp> &sectorTimes)
 
 LapData::~LapData() = default;
 
-LapData::LapData(const LapData &other) = default;
+LapData::LapData(LapData const& other) = default;
 
-LapData &LapData::operator=(const LapData &other) = default;
+LapData& LapData::operator=(LapData const& other) = default;
 
-LapData::LapData(LapData &&other) noexcept
+LapData::LapData(LapData&& other) noexcept
     : mData{std::move(other.mData)}
 {
     other.mData = nullptr;
 }
 
-LapData &LapData::operator=(LapData &&other) noexcept
+LapData& LapData::operator=(LapData&& other) noexcept
 {
     LapData moved{std::move(other)};
     std::swap(mData, moved.mData);
@@ -55,8 +55,7 @@ LapData &LapData::operator=(LapData &&other) noexcept
 Timestamp LapData::getLaptime() const noexcept
 {
     auto laptime = Timestamp{};
-    for (const auto &sectorTime : std::as_const(getSectorTimes()))
-    {
+    for (auto const& sectorTime : std::as_const(getSectorTimes())) {
         laptime = laptime + sectorTime;
     }
 
@@ -70,35 +69,34 @@ std::size_t LapData::getSectorTimeCount() const noexcept
 
 std::optional<Timestamp> LapData::getSectorTime(std::size_t index) const noexcept
 {
-    if (index > mData->mSectorTimes.size())
-    {
+    if (index > mData->mSectorTimes.size()) {
         return std::nullopt;
     }
 
     return std::optional<Timestamp>{mData->mSectorTimes[index]};
 }
 
-const std::vector<Timestamp> &LapData::getSectorTimes() const noexcept
+std::vector<Timestamp> const& LapData::getSectorTimes() const noexcept
 {
     return mData->mSectorTimes;
 }
 
-void LapData::addSectorTime(const Timestamp &sectorTime)
+void LapData::addSectorTime(Timestamp const& sectorTime)
 {
     mData->mSectorTimes.push_back(sectorTime);
 }
 
-void LapData::addSectorTimes(const std::vector<Timestamp> &sectorTimes)
+void LapData::addSectorTimes(std::vector<Timestamp> const& sectorTimes)
 {
     mData->mSectorTimes = sectorTimes;
 }
 
-bool operator==(const LapData &lhs, const LapData &rhs)
+bool operator==(LapData const& lhs, LapData const& rhs)
 {
     return lhs.mData == rhs.mData || *lhs.mData == *rhs.mData;
 }
 
-bool operator!=(const LapData &lhs, const LapData &rhs)
+bool operator!=(LapData const& lhs, LapData const& rhs)
 {
     return !(lhs == rhs);
 }

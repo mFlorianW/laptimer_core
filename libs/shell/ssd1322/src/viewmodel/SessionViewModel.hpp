@@ -12,7 +12,7 @@
 class SessionViewModel final : public MenuEntry, public NavigatableModel
 {
 public:
-    SessionViewModel(LaptimerCore::Storage::ISessionDatabase &sessionDb);
+    SessionViewModel(LaptimerCore::Storage::ISessionDatabase& sessionDb);
     ~SessionViewModel();
 
     /**
@@ -72,7 +72,7 @@ private:
     void onSessionUpdated(std::size_t index);
 
 private:
-    LaptimerCore::Storage::ISessionDatabase &mSessionDb;
+    LaptimerCore::Storage::ISessionDatabase& mSessionDb;
     LapModel mLapModel;
     TableView mLapView;
     CloseCommand mLapViewCloseCommand;

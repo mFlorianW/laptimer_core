@@ -33,7 +33,7 @@ public:
      * Sets a list that shall be used for the track detection.
      * @param trackDatas A list of tracks which is used during the track detection.
      */
-    virtual void setTracks(const std::vector<Common::TrackData> &trackData) = 0;
+    virtual void setTracks(std::vector<Common::TrackData> const& trackData) = 0;
 
     /**
      * Gives the detected Track.

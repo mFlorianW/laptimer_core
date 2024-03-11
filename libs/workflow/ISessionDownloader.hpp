@@ -24,22 +24,22 @@ public:
     /**
      * Deleted copy constructor
      */
-    ISessionDownloader(const ISessionDownloader &) = delete;
+    ISessionDownloader(ISessionDownloader const&) = delete;
 
     /**
      * Deleted copy operator
      */
-    ISessionDownloader &operator=(const ISessionDownloader &) = delete;
+    ISessionDownloader& operator=(ISessionDownloader const&) = delete;
 
     /**
      * Deleted move constructor
      */
-    ISessionDownloader(ISessionDownloader &&) = delete;
+    ISessionDownloader(ISessionDownloader&&) = delete;
 
     /**
      * Deleted move operator
      */
-    ISessionDownloader &operator=(ISessionDownloader &&) = delete;
+    ISessionDownloader& operator=(ISessionDownloader&&) = delete;
 
     /**
      * Gives the number of stored sessions of the laptimer. The return value is only valid after calling

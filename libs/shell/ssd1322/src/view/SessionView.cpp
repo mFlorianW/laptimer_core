@@ -1,7 +1,7 @@
 #include "SessionView.hpp"
 #include "SessionViewModel.hpp"
 
-SessionView::SessionView(SessionViewModel &sessionViewModel)
+SessionView::SessionView(SessionViewModel& sessionViewModel)
     : mSessionViewModel(sessionViewModel)
 {
     // Setup View Container
@@ -26,7 +26,9 @@ SessionView::SessionView(SessionViewModel &sessionViewModel)
     lv_obj_set_size(mSessionIndicatorLabel, lv_obj_get_width(mScreenContent), 12);
     lv_obj_set_x(mSessionIndicatorLabel, 128);
     lv_obj_set_y(mSessionIndicatorLabel, 0);
-    mSessionViewModel.sessionIndicator.valueChanged().connect([=]() { setSessionIndicator(); });
+    mSessionViewModel.sessionIndicator.valueChanged().connect([=]() {
+        setSessionIndicator();
+    });
 
     // Setup track name label
     mTrackNameLabel = lv_label_create(mScreenContent, nullptr);
@@ -34,7 +36,9 @@ SessionView::SessionView(SessionViewModel &sessionViewModel)
     lv_obj_set_size(mTrackNameLabel, lv_obj_get_width(mScreenContent), 16);
     lv_obj_set_x(mTrackNameLabel, 0);
     lv_obj_set_y(mTrackNameLabel, 14);
-    mSessionViewModel.trackName.valueChanged().connect([=]() { setTrackName(); });
+    mSessionViewModel.trackName.valueChanged().connect([=]() {
+        setTrackName();
+    });
 
     // Setup date label
     mDateLabel = lv_label_create(mScreenContent, nullptr);
@@ -42,7 +46,9 @@ SessionView::SessionView(SessionViewModel &sessionViewModel)
     lv_obj_set_size(mDateLabel, lv_obj_get_width(mScreenContent), 16);
     lv_obj_set_x(mDateLabel, 0);
     lv_obj_set_y(mDateLabel, 28);
-    mSessionViewModel.date.valueChanged().connect([=]() { setDate(); });
+    mSessionViewModel.date.valueChanged().connect([=]() {
+        setDate();
+    });
 
     // Setup time label
     mTimeLabel = lv_label_create(mScreenContent, nullptr);
@@ -50,7 +56,9 @@ SessionView::SessionView(SessionViewModel &sessionViewModel)
     lv_obj_set_size(mTimeLabel, lv_obj_get_width(mScreenContent), 12);
     lv_obj_set_x(mTimeLabel, 128);
     lv_obj_set_y(mTimeLabel, 28);
-    mSessionViewModel.time.valueChanged().connect([=]() { setTime(); });
+    mSessionViewModel.time.valueChanged().connect([=]() {
+        setTime();
+    });
 
     // Setup lap label
     mLapLabel = lv_label_create(mScreenContent, nullptr);
@@ -58,7 +66,9 @@ SessionView::SessionView(SessionViewModel &sessionViewModel)
     lv_obj_set_size(mLapLabel, lv_obj_get_width(mScreenContent), 12);
     lv_obj_set_x(mLapLabel, 0);
     lv_obj_set_y(mLapLabel, 42);
-    mSessionViewModel.laps.valueChanged().connect([=]() { setLaps(); });
+    mSessionViewModel.laps.valueChanged().connect([=]() {
+        setLaps();
+    });
 
     // Setup best lap time label
     mBestLapLabel = lv_label_create(mScreenContent, nullptr);
@@ -66,7 +76,9 @@ SessionView::SessionView(SessionViewModel &sessionViewModel)
     lv_obj_set_size(mBestLapLabel, lv_obj_get_width(mScreenContent), 12);
     lv_obj_set_x(mBestLapLabel, 128);
     lv_obj_set_y(mBestLapLabel, 42);
-    mSessionViewModel.bestlap.valueChanged().connect([=]() { setBestLap(); });
+    mSessionViewModel.bestlap.valueChanged().connect([=]() {
+        setBestLap();
+    });
 
     // Load initial values of model.
     setSessionIndicator();

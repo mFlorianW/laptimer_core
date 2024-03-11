@@ -7,7 +7,7 @@
 namespace LaptimerCore::Workflow
 {
 
-RestSessionDownloader::RestSessionDownloader(Rest::IRestClient &restClient) noexcept
+RestSessionDownloader::RestSessionDownloader(Rest::IRestClient& restClient) noexcept
     : ISessionDownloader()
     , mRestClient{restClient}
 {
@@ -22,20 +22,16 @@ void RestSessionDownloader::fetchSessionCount() noexcept
 {
     auto call = mRestClient.execute(Rest::RestRequest{Rest::RequestType::Get, "/sessions"});
     mFetchCounterCache.insert({call.get(), call});
-    if (call->isFinished())
-    {
+    if (call->isFinished()) {
         onFetchSessionCountFinished(call.get());
-    }
-    else
-    {
+    } else {
         call->finished.connect(&RestSessionDownloader::onFetchSessionCountFinished, this);
     }
 }
 
 std::optional<Common::SessionData> RestSessionDownloader::getSession(std::size_t index) const noexcept
 {
-    if (mDownloadedSessions.count(index) == 0)
-    {
+    if (mDownloadedSessions.count(index) == 0) {
         return std::nullopt;
     }
     return mDownloadedSessions.at(index);
@@ -47,28 +43,22 @@ void RestSessionDownloader::downloadSession(std::size_t index) noexcept
     outStream << "/sessions/" << index;
     auto call = mRestClient.execute(Rest::RestRequest{Rest::RequestType::Get, outStream.str()});
     mDownloadSessionCache.insert({call.get(), {.index = index, .call = call}});
-    if (call->isFinished())
-    {
+    if (call->isFinished()) {
         onSessionDownloadFinished(call.get());
-    }
-    else
-    {
+    } else {
         call->finished.connect(&RestSessionDownloader::onSessionDownloadFinished, this);
     }
 }
 
-void RestSessionDownloader::onFetchSessionCountFinished(Rest::RestCall *call) noexcept
+void RestSessionDownloader::onFetchSessionCountFinished(Rest::RestCall* call) noexcept
 {
-    if (mFetchCounterCache.count(call) > 0)
-    {
-        const auto dlResult =
+    if (mFetchCounterCache.count(call) > 0) {
+        auto const dlResult =
             call->getResult() == Rest::RestCallResult::Success ? DownloadResult::Ok : DownloadResult::Error;
-        if (dlResult == DownloadResult::Ok)
-        {
+        if (dlResult == DownloadResult::Ok) {
             auto jsonDoc = ArduinoJson::DynamicJsonDocument{256};
-            const auto error = ArduinoJson::deserializeJson(jsonDoc, call->getData());
-            if (error != ArduinoJson::DeserializationError::Ok)
-            {
+            auto const error = ArduinoJson::deserializeJson(jsonDoc, call->getData());
+            if (error != ArduinoJson::DeserializationError::Ok) {
                 std::cout << "RestSessionDownloader fetchSessionCount Error: DeserializeJson failed: " << error.c_str()
                           << "\n";
             }
@@ -79,23 +69,18 @@ void RestSessionDownloader::onFetchSessionCountFinished(Rest::RestCall *call) no
     }
 }
 
-void RestSessionDownloader::onSessionDownloadFinished(Rest::RestCall *call) noexcept
+void RestSessionDownloader::onSessionDownloadFinished(Rest::RestCall* call) noexcept
 {
-    if (mDownloadSessionCache.size() > 0 && call != nullptr)
-    {
-        const auto dlResult =
+    if (mDownloadSessionCache.size() > 0 && call != nullptr) {
+        auto const dlResult =
             call->getResult() == Rest::RestCallResult::Success ? DownloadResult::Ok : DownloadResult::Error;
-        const auto index = mDownloadSessionCache.at(call).index;
-        if (dlResult == DownloadResult::Ok)
-        {
+        auto const index = mDownloadSessionCache.at(call).index;
+        if (dlResult == DownloadResult::Ok) {
             auto session = Common::JsonDeserializer::deserializeSessionData(call->getData());
-            if (!session)
-            {
+            if (!session) {
                 std::cout << "RestSessionDownloader downloadSessionError: DeserializeJson failed."
                           << "\n";
-            }
-            else
-            {
+            } else {
                 mDownloadedSessions.insert({index, session.value()});
             }
         }

@@ -7,7 +7,7 @@
 #include <lv_label.h>
 #include <lv_obj.h>
 
-TableView::TableView(TableModel &model)
+TableView::TableView(TableModel& model)
     : View{}
     , mModel{model}
 {
@@ -17,10 +17,8 @@ TableView::TableView(TableModel &model)
 
     lv_style_init(&mFontStyle);
     lv_style_set_text_font(&mFontStyle, LV_STATE_DEFAULT, &lv_font_montserrat_12);
-    for (std::size_t i = 0; i < sRows; ++i)
-    {
-        for (std::size_t j = 0; j < sColumns; ++j)
-        {
+    for (std::size_t i = 0; i < sRows; ++i) {
+        for (std::size_t j = 0; j < sColumns; ++j) {
             mLabels[i][j] = lv_label_create(mScreenContent, nullptr);
             lv_label_set_long_mode(mLabels[i][j], LV_LABEL_LONG_DOT);
             lv_obj_set_size(mLabels[i][j], 76, 16);
@@ -41,10 +39,8 @@ TableView::TableView(TableModel &model)
 
 TableView::~TableView()
 {
-    for (std::size_t i = 0; i < sRows; ++i)
-    {
-        for (std::size_t j = 0; j < sColumns; ++j)
-        {
+    for (std::size_t i = 0; i < sRows; ++i) {
+        for (std::size_t j = 0; j < sColumns; ++j) {
             lv_obj_del(mLabels[i].at(j));
         }
     }
@@ -52,8 +48,7 @@ TableView::~TableView()
 
 void TableView::handleButtonDown()
 {
-    if ((mActivePage + 1) >= mPages)
-    {
+    if ((mActivePage + 1) >= mPages) {
         return;
     }
 
@@ -63,8 +58,7 @@ void TableView::handleButtonDown()
 
 void TableView::handleButtonUp()
 {
-    if (mActivePage == 0)
-    {
+    if (mActivePage == 0) {
         return;
     }
 
@@ -74,14 +68,12 @@ void TableView::handleButtonUp()
 
 void TableView::handleEscape()
 {
-    if (mActiveSidePage == 0 && mEscapeCommand != nullptr)
-    {
+    if (mActiveSidePage == 0 && mEscapeCommand != nullptr) {
         mEscapeCommand->execute();
     }
 
     // For the case when no close command is set.
-    if (mActiveSidePage == 0)
-    {
+    if (mActiveSidePage == 0) {
         return;
     }
 
@@ -92,8 +84,7 @@ void TableView::handleEscape()
 
 void TableView::handleEnter()
 {
-    if ((mActiveSidePage + 1) >= mSidePages)
-    {
+    if ((mActiveSidePage + 1) >= mSidePages) {
         return;
     }
 
@@ -127,11 +118,9 @@ void TableView::requestData() noexcept
     std::size_t rowIndex = mActivePage * sPageOffset;
     constexpr std::size_t skipHeaderBar = 1;
     // Request new Data
-    for (std::size_t i = 0; rowIndex < mModel.getRowCount() && i + skipHeaderBar < sRows; ++i, ++rowIndex)
-    {
+    for (std::size_t i = 0; rowIndex < mModel.getRowCount() && i + skipHeaderBar < sRows; ++i, ++rowIndex) {
         std::size_t columnIndex = mActiveSidePage * sColumnPageOffset;
-        for (std::size_t j = 0; columnIndex < mModel.getColumnCount() && j < sColumns; ++j, ++columnIndex)
-        {
+        for (std::size_t j = 0; columnIndex < mModel.getColumnCount() && j < sColumns; ++j, ++columnIndex) {
             lv_label_set_text(mLabels[i + skipHeaderBar][j], mModel.data(rowIndex, columnIndex).c_str());
         }
     }
@@ -143,8 +132,7 @@ void TableView::requestHeaderData() noexcept
     clearHeaderRow();
 
     std::size_t columnIndex = mActiveSidePage * sColumnPageOffset;
-    for (std::size_t i = 0; i < mModel.getColumnCount() && i < sColumns; ++i, ++columnIndex)
-    {
+    for (std::size_t i = 0; i < mModel.getColumnCount() && i < sColumns; ++i, ++columnIndex) {
         lv_label_set_text(mLabels[0][i], mModel.headerData(columnIndex).c_str());
     }
 }
@@ -152,10 +140,8 @@ void TableView::requestHeaderData() noexcept
 void TableView::clearDataRows() noexcept
 {
     constexpr std::size_t skipHeaderBar = 1;
-    for (std::size_t i = 0; i + skipHeaderBar < sRows; ++i)
-    {
-        for (std::size_t j = 0; j < mModel.getColumnCount() && j < sColumns; ++j)
-        {
+    for (std::size_t i = 0; i + skipHeaderBar < sRows; ++i) {
+        for (std::size_t j = 0; j < mModel.getColumnCount() && j < sColumns; ++j) {
             lv_label_set_text(mLabels[i + skipHeaderBar][j], "");
         }
     }
@@ -163,8 +149,7 @@ void TableView::clearDataRows() noexcept
 
 void TableView::clearHeaderRow() noexcept
 {
-    for (std::size_t i = 0; i < sColumns; ++i)
-    {
+    for (std::size_t i = 0; i < sColumns; ++i) {
         lv_label_set_text(mLabels[0][i], "");
     }
 }

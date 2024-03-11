@@ -6,39 +6,33 @@ using namespace LaptimerCore::Common;
 namespace LaptimerCore::Algorithm
 {
 
-void SimpleLaptimer::setTrack(const Common::TrackData &track)
+void SimpleLaptimer::setTrack(Common::TrackData const& track)
 {
     mTrackData = track;
 }
 
-void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &data)
+void SimpleLaptimer::updatePositionAndTime(Common::PositionDateTimeData const& data)
 {
     mCurrentPoints.push_front(data.getPosition());
-    if (mCurrentPoints.size() > 4)
-    {
+    if (mCurrentPoints.size() > 4) {
         mCurrentPoints.pop_back();
-    }
-    else if (mCurrentPoints.size() < 4)
-    {
+    } else if (mCurrentPoints.size() < 4) {
         return;
     }
 
     // Update currentLaptime
-    if (mLapState != LapState::WaitingForFirstStart)
-    {
-        const auto lapTime = data.getTime() - mLapStartedTimestamp;
+    if (mLapState != LapState::WaitingForFirstStart) {
+        auto const lapTime = data.getTime() - mLapStartedTimestamp;
         currentLaptime.set(lapTime);
 
-        const auto sectorTime = data.getTime() - mSectorStartedTimestamp;
+        auto const sectorTime = data.getTime() - mSectorStartedTimestamp;
         currentSectorTime.set(sectorTime);
     }
 
-    if (mLapState == LapState::WaitingForFirstStart)
-    {
-        const auto useFinishLineAsStartline = mTrackData.getStartline() == Common::PositionData{};
-        const auto startLine = useFinishLineAsStartline ? mTrackData.getFinishline() : mTrackData.getStartline();
-        if (passedPoint(startLine))
-        {
+    if (mLapState == LapState::WaitingForFirstStart) {
+        auto const useFinishLineAsStartline = mTrackData.getStartline() == Common::PositionData{};
+        auto const startLine = useFinishLineAsStartline ? mTrackData.getFinishline() : mTrackData.getStartline();
+        if (passedPoint(startLine)) {
             mLapState =
                 (mTrackData.getNumberOfSections() > 0) ? LapState::IteratingTrackPoints : LapState::WaitingForFinish;
             mCurrentTrackPoint = 0;
@@ -48,14 +42,10 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
             mSectorStartedTimestamp = data.getTime();
             lapStarted.emit();
         }
-    }
-    else if (mLapState == LapState::IteratingTrackPoints)
-    {
-        if (passedPoint(mTrackData.getSection(mCurrentTrackPoint)))
-        {
+    } else if (mLapState == LapState::IteratingTrackPoints) {
+        if (passedPoint(mTrackData.getSection(mCurrentTrackPoint))) {
             ++mCurrentTrackPoint;
-            if (mCurrentTrackPoint >= mTrackData.getNumberOfSections())
-            {
+            if (mCurrentTrackPoint >= mTrackData.getNumberOfSections()) {
                 mLapState = LapState::WaitingForFinish;
             }
             mLastSectorTime = currentSectorTime.get();
@@ -63,12 +53,9 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
             currentSectorTime.set(Timestamp{"00:00:00.000"});
             sectorFinished.emit();
         }
-    }
-    else if (mLapState == LapState::WaitingForFinish)
-    {
-        const auto finishLine = mTrackData.getFinishline();
-        if (passedPoint(finishLine))
-        {
+    } else if (mLapState == LapState::WaitingForFinish) {
+        auto const finishLine = mTrackData.getFinishline();
+        if (passedPoint(finishLine)) {
             mLastLapTime = currentLaptime.get();
             mLastSectorTime = currentSectorTime.get();
             mLapStartedTimestamp = data.getTime();
@@ -78,13 +65,10 @@ void SimpleLaptimer::updatePositionAndTime(const Common::PositionDateTimeData &d
 
             // TODO: Only works with with a circuit. Additional check is needed in the future when the finish line
             // and start line is not the same.
-            if (mTrackData.getNumberOfSections() > 0)
-            {
+            if (mTrackData.getNumberOfSections() > 0) {
                 mCurrentTrackPoint = 0;
                 mLapState = LapState::IteratingTrackPoints;
-            }
-            else
-            {
+            } else {
                 mCurrentPoints.clear();
             }
 
@@ -104,30 +88,25 @@ Common::Timestamp SimpleLaptimer::getLastSectorTime() const
     return mLastSectorTime;
 }
 
-bool SimpleLaptimer::passedPoint(const Common::PositionData &point) const
+bool SimpleLaptimer::passedPoint(Common::PositionData const& point) const
 {
     constexpr std::uint8_t range = 50;
     bool pointsInRange = std::all_of(mCurrentPoints.cbegin(), mCurrentPoints.cend(), [=](Common::PositionData pos) {
         return DistanceCalculator::calculateDistance(pos, point) <= range;
     });
 
-    if (!pointsInRange)
-    {
+    if (!pointsInRange) {
         return false;
     }
 
     std::array<float, 4> distances;
-    for (size_t i = 0; i < 4; ++i)
-    {
+    for (size_t i = 0; i < 4; ++i) {
         distances[i] = DistanceCalculator::calculateDistance(mCurrentPoints[i], point);
     }
 
-    if ((distances[0] > distances[1]) && (distances[1] < distances[2]) && (distances[2] < distances[3]))
-    {
+    if ((distances[0] > distances[1]) && (distances[1] < distances[2]) && (distances[2] < distances[3])) {
         return true;
-    }
-    else if ((distances[0] > distances[1]) && (distances[1] > distances[2]) && (distances[2] < distances[3]))
-    {
+    } else if ((distances[0] > distances[1]) && (distances[1] > distances[2]) && (distances[2] < distances[3])) {
         return true;
     }
 

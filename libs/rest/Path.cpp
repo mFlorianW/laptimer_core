@@ -11,7 +11,7 @@ public:
     std::string mPath;
     std::vector<std::size_t> mPositions{};
 
-    friend bool operator==(const SharedPath &lhs, const SharedPath &rhs)
+    friend bool operator==(SharedPath const& lhs, SharedPath const& rhs)
     {
         return (lhs.mPositions == rhs.mPositions) && (lhs.mPath == rhs.mPath);
     }
@@ -27,10 +27,8 @@ Path::Path(std::string path) noexcept
 {
     mData->mPath = std::move(path);
     mData->mPositions.reserve(getDepth());
-    for (auto i = std::size_t{0}; i < mData->mPath.size(); ++i)
-    {
-        if (mData->mPath.at(i) == '/')
-        {
+    for (auto i = std::size_t{0}; i < mData->mPath.size(); ++i) {
+        if (mData->mPath.at(i) == '/') {
             mData->mPositions.emplace_back(i);
         }
     }
@@ -38,16 +36,16 @@ Path::Path(std::string path) noexcept
 
 Path::~Path() noexcept = default;
 
-Path::Path(const Path &other) = default;
-Path &Path::operator=(const Path &other) = default;
+Path::Path(Path const& other) = default;
+Path& Path::operator=(Path const& other) = default;
 
-Path::Path(Path &&other)
+Path::Path(Path&& other)
     : mData{std::move(other.mData)}
 {
     other.mData = nullptr;
 }
 
-Path &Path::operator=(Path &&other)
+Path& Path::operator=(Path&& other)
 {
     Path moved{std::move(other)};
     std::swap(mData, moved.mData);
@@ -61,35 +59,33 @@ std::string_view Path::getPath() const noexcept
 
 std::size_t Path::getDepth() const noexcept
 {
-    if (mData->mPath.empty())
-    {
+    if (mData->mPath.empty()) {
         return 0;
     }
 
-    const auto count = std::count(mData->mPath.cbegin(), mData->mPath.cend(), '/');
+    auto const count = std::count(mData->mPath.cbegin(), mData->mPath.cend(), '/');
     return count;
 }
 
 std::optional<std::string_view> Path::getEntry(std::size_t index) const noexcept
 {
-    if (mData->mPath.empty() || index > mData->mPositions.size())
-    {
+    if (mData->mPath.empty() || index > mData->mPositions.size()) {
         return std::nullopt;
     }
 
     constexpr auto pathDelimiterSize = std::size_t{1};
-    const auto entryBegin = mData->mPositions.at(index) + pathDelimiterSize;
-    const auto entryEnd = index + 1 >= mData->mPositions.size() ? mData->mPath.size() : mData->mPositions.at(index + 1);
-    const auto entry = std::string_view{mData->mPath.data() + entryBegin, entryEnd - entryBegin};
+    auto const entryBegin = mData->mPositions.at(index) + pathDelimiterSize;
+    auto const entryEnd = index + 1 >= mData->mPositions.size() ? mData->mPath.size() : mData->mPositions.at(index + 1);
+    auto const entry = std::string_view{mData->mPath.data() + entryBegin, entryEnd - entryBegin};
     return entry;
 }
 
-bool operator==(const Path &lhs, const Path &rhs)
+bool operator==(Path const& lhs, Path const& rhs)
 {
     return lhs.mData == rhs.mData || *lhs.mData == *rhs.mData;
 }
 
-bool operator!=(const Path &lhs, const Path &rhs)
+bool operator!=(Path const& lhs, Path const& rhs)
 {
     return !(lhs == rhs);
 }

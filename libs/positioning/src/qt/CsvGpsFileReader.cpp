@@ -5,46 +5,40 @@
 namespace LaptimerCore::Positioning::Qt
 {
 
-void CsvGpsFileReader::setFileName(const QString &fileName)
+void CsvGpsFileReader::setFileName(QString const& fileName)
 {
     mFileName = fileName;
 }
 
 bool CsvGpsFileReader::read()
 {
-    if (!QFile::exists(mFileName))
-    {
+    if (!QFile::exists(mFileName)) {
         qWarning() << "File doesn't exists:" << mFileName;
         return false;
     }
 
     auto file = QFile{mFileName};
-    if (!file.open(QFile::Text | QFile::ReadOnly))
-    {
+    if (!file.open(QFile::Text | QFile::ReadOnly)) {
         qWarning() << "File can't be opended:" << mFileName;
         return false;
     }
 
     QTextStream in(&file);
-    while (!in.atEnd())
-    {
+    while (!in.atEnd()) {
         auto line = in.readLine();
         auto splitted = line.split(",");
-        if (splitted.size() < 2)
-        {
+        if (splitted.size() < 2) {
             return false;
         }
         bool ok = false;
         float lon = splitted[0].toFloat(&ok);
-        if (!ok)
-        {
+        if (!ok) {
             return false;
         }
 
         ok = false;
         float lat = splitted[1].toFloat(&ok);
-        if (!ok)
-        {
+        if (!ok) {
             return false;
         }
 

@@ -16,18 +16,17 @@
 #include <pwd.h>
 #include <unistd.h>
 
-[[noreturn]] static int tick_thread(void *data)
+[[noreturn]] static int tick_thread(void* data)
 {
     (void)data;
 
-    while (true)
-    {
+    while (true) {
         SDL_Delay(5); /*Sleep for 5 millisecond*/
         lv_tick_inc(5); /*Tell LittelvGL that 5 milliseconds were elapsed*/
     }
 }
 
-static void memory_monitor(lv_task_t *param)
+static void memory_monitor(lv_task_t* param)
 {
     (void)param; /*Unused*/
     lv_mem_monitor_t mon;
@@ -73,18 +72,16 @@ static void hal_init()
     lv_task_create(memory_monitor, 5000, LV_TASK_PRIO_MID, nullptr);
 }
 
-std::vector<LaptimerCore::Common::PositionData> loadPositions(const std::string filePath)
+std::vector<LaptimerCore::Common::PositionData> loadPositions(std::string const filePath)
 {
     auto positions = std::vector<LaptimerCore::Common::PositionData>{};
     auto file = std::fstream(filePath);
     auto line = std::string{};
 
-    while (std::getline(file, line))
-    {
+    while (std::getline(file, line)) {
         std::istringstream input(line);
         std::array<std::string, 2> splittedLine;
-        for (std::size_t i = 0; i < splittedLine.size(); ++i)
-        {
+        for (std::size_t i = 0; i < splittedLine.size(); ++i) {
             getline(input, splittedLine[i], ',');
         }
 
@@ -97,7 +94,7 @@ std::vector<LaptimerCore::Common::PositionData> loadPositions(const std::string 
     return positions;
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     (void)argc;
     (void)argv;
@@ -110,8 +107,7 @@ int main(int argc, char *argv[])
 
     // get home folder for the session database backend.
     auto databaseFolder = std::string{getpwuid(getuid())->pw_dir} + "/.local/share/laptimer/session";
-    if (!std::filesystem::exists(databaseFolder))
-    {
+    if (!std::filesystem::exists(databaseFolder)) {
         std::cout << "Laptimer data folder doesn't exists. Creating:" << databaseFolder;
         std::filesystem::create_directories(databaseFolder);
     }
@@ -132,8 +128,7 @@ int main(int argc, char *argv[])
     posDateTimeProvider.setVelocityInMeterPerSecond(80.6667);
     posDateTimeProvider.start();
 
-    while (true)
-    {
+    while (true) {
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
         lv_task_handler();

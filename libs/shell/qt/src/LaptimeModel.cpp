@@ -16,7 +16,7 @@ LaptimeModel::LaptimeModel()
 {
 }
 
-void LaptimeModel::addLap(const Common::LapData &lap)
+void LaptimeModel::addLap(Common::LapData const& lap)
 {
     beginInsertRows(index(d->laps.size()), d->laps.size(), d->laps.size() + 1);
     d->laps.push_back(lap);
@@ -25,22 +25,20 @@ void LaptimeModel::addLap(const Common::LapData &lap)
 
 LaptimeModel::~LaptimeModel() = default;
 
-int LaptimeModel::rowCount(const QModelIndex &parent) const
+int LaptimeModel::rowCount(QModelIndex const& parent) const
 {
     Q_UNUSED(parent)
     return d->laps.size();
 }
 
-QVariant LaptimeModel::data(const QModelIndex &index, int role) const
+QVariant LaptimeModel::data(QModelIndex const& index, int role) const
 {
-    if (!index.isValid())
-    {
+    if (!index.isValid()) {
         return {};
     }
 
     auto lapIter = d->laps.cbegin() + index.row();
-    if (role == Roles::laptime)
-    {
+    if (role == Roles::laptime) {
         return Utils::convertLaptimeToString(lapIter->getLaptime());
     }
     return {};

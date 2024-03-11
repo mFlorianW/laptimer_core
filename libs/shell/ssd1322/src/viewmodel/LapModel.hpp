@@ -11,13 +11,13 @@ public:
     LapModel();
     ~LapModel();
 
-    LapModel(const LapModel &ohter) = delete;
-    LapModel &operator=(const LapModel &other) = delete;
+    LapModel(LapModel const& ohter) = delete;
+    LapModel& operator=(LapModel const& other) = delete;
 
-    LapModel(LapModel &&model) = delete;
-    LapModel &operator=(LapModel &&model) = delete;
+    LapModel(LapModel&& model) = delete;
+    LapModel& operator=(LapModel&& model) = delete;
 
-    void setSessionData(const LaptimerCore::Common::SessionData session) noexcept;
+    void setSessionData(LaptimerCore::Common::SessionData const session) noexcept;
 
     std::string data(std::size_t row, std::size_t column) const noexcept override;
 

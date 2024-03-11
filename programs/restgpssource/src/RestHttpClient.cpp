@@ -22,13 +22,13 @@ RestHttpClient::RestHttpClient()
 
 RestHttpClient::~RestHttpClient() = default;
 
-void RestHttpClient::setUrl(const QString &url)
+void RestHttpClient::setUrl(QString const& url)
 {
     d->mServerUrl = QString{url}.append("/position");
     qInfo() << "New Server URL:" << d->mServerUrl;
 }
 
-void RestHttpClient::sendPosition(const LaptimerCore::Common::PositionDateTimeData &position)
+void RestHttpClient::sendPosition(LaptimerCore::Common::PositionDateTimeData const& position)
 {
     auto request = QNetworkRequest{d->mServerUrl};
     request.setHeader(QNetworkRequest::ContentTypeHeader, "Content-Type: application/json");
@@ -39,10 +39,9 @@ void RestHttpClient::sendPosition(const LaptimerCore::Common::PositionDateTimeDa
                                       {"time", {QString::fromStdString(position.getTime().asString())}}};
     auto body = QJsonDocument{positionObject};
 
-    auto *reply = d->mNetworkAccessManager.post(request, body.toJson());
-    connect(&d->mNetworkAccessManager, &QNetworkAccessManager::finished, reply, [](QNetworkReply *reply) {
-        if (reply->isFinished() && reply->error() != QNetworkReply::NoError)
-        {
+    auto* reply = d->mNetworkAccessManager.post(request, body.toJson());
+    connect(&d->mNetworkAccessManager, &QNetworkAccessManager::finished, reply, [](QNetworkReply* reply) {
+        if (reply->isFinished() && reply->error() != QNetworkReply::NoError) {
             qCritical() << "Updating position failed with an error:" << reply->error();
         }
     });

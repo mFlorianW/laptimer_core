@@ -13,12 +13,14 @@ TEST_CASE("The ConstantVelocityPositionDateTimeProvider shall interpolate the po
           "point data is insufficent.")
 {
     auto dispatcher = SignalDispatcher{};
-    const auto timeToSleep = std::chrono::milliseconds(100);
+    auto const timeToSleep = std::chrono::milliseconds(100);
     auto positions = std::vector<PositionData>{{52.026649, 11.282535}, {52.026751, 11.282047}, {52.026807, 11.281746}};
     auto lastPosition = PositionDateTimeData{};
 
     auto source = ConstantVelocityPositionDateTimeProvider{positions};
-    source.positionTimeData.valueChanged().connect([&]() { lastPosition = source.positionTimeData.get(); });
+    source.positionTimeData.valueChanged().connect([&]() {
+        lastPosition = source.positionTimeData.get();
+    });
     source.setVelocityInMeterPerSecond(2.77778);
     source.start();
 
@@ -38,12 +40,14 @@ TEST_CASE("The ConstantVelocityPositionDateTimeProvider shall interpolate the po
 TEST_CASE("The ConstantVelocityPositionDateTimeProvider shall provide every 100ms a new position.")
 {
     auto dispatcher = SignalDispatcher{};
-    const auto timeToSleep = std::chrono::milliseconds(100);
+    auto const timeToSleep = std::chrono::milliseconds(100);
     std::uint8_t updateCounter = 0;
     auto positions = std::vector<PositionData>{{52.026649, 11.282535}, {52.026751, 11.282047}, {52.026807, 11.281746}};
     auto source = ConstantVelocityPositionDateTimeProvider{positions};
     source.setVelocityInMeterPerSecond(2.77778);
-    source.positionTimeData.valueChanged().connect([&]() { ++updateCounter; });
+    source.positionTimeData.valueChanged().connect([&]() {
+        ++updateCounter;
+    });
     source.start();
 
     std::this_thread::sleep_for(timeToSleep);

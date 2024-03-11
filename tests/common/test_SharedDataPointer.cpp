@@ -11,7 +11,7 @@ class TestData : public SharedData
 {
 public:
     TestData() = default;
-    TestData(bool *descrutorCalledFlag)
+    TestData(bool* descrutorCalledFlag)
         : SharedData()
         , dtorCalledFlag(descrutorCalledFlag)
     {
@@ -19,13 +19,12 @@ public:
 
     ~TestData()
     {
-        if (dtorCalledFlag != nullptr)
-        {
+        if (dtorCalledFlag != nullptr) {
             *dtorCalledFlag = true;
         }
     }
 
-    bool *dtorCalledFlag{nullptr};
+    bool* dtorCalledFlag{nullptr};
     std::uint8_t dummyInt;
 };
 } // namespace
@@ -33,9 +32,9 @@ public:
 TEST_CASE("SharedDataPointer shall free stored data on destruction when reference count is 0")
 {
     auto dtorFlag = false;
-    auto *testData = new TestData{&dtorFlag};
+    auto* testData = new TestData{&dtorFlag};
     {
-        const auto pointer = SharedDataPointer{testData};
+        auto const pointer = SharedDataPointer{testData};
     }
 
     REQUIRE(dtorFlag == true);
@@ -44,9 +43,9 @@ TEST_CASE("SharedDataPointer shall free stored data on destruction when referenc
 TEST_CASE("SharedDataPointer shall read only access to the object with operator ->.")
 {
     auto testData = new TestData{};
-    const auto pointer = SharedDataPointer<TestData>{testData};
+    auto const pointer = SharedDataPointer<TestData>{testData};
 
-    const auto value = pointer->dummyInt;
+    auto const value = pointer->dummyInt;
 
     REQUIRE(testData->ref == 1);
 }
@@ -54,9 +53,9 @@ TEST_CASE("SharedDataPointer shall read only access to the object with operator 
 TEST_CASE("SharedDataPointer shall return an immutable reference to the shared data object.")
 {
     auto testData = new TestData{};
-    const auto pointer = SharedDataPointer<TestData>{testData};
+    auto const pointer = SharedDataPointer<TestData>{testData};
 
-    const auto &immutableRef = *pointer;
+    auto const& immutableRef = *pointer;
 
     REQUIRE(testData->ref == 1);
     REQUIRE(&immutableRef == &(*testData));
@@ -65,9 +64,9 @@ TEST_CASE("SharedDataPointer shall return an immutable reference to the shared d
 TEST_CASE("SharedDataPointer shall return an immutable pointer to the shared data object.")
 {
     auto testData = new TestData{};
-    const auto pointer = SharedDataPointer<TestData>{testData};
+    auto const pointer = SharedDataPointer<TestData>{testData};
 
-    const TestData *immutablePtr = pointer;
+    TestData const* immutablePtr = pointer;
 
     REQUIRE(testData->ref == 1);
     REQUIRE(immutablePtr == testData);
@@ -118,7 +117,7 @@ TEST_CASE(
     auto pointer = SharedDataPointer<TestData>{testData};
     auto pointer2 = SharedDataPointer<TestData>{testData};
 
-    auto &testDataRef = *pointer;
+    auto& testDataRef = *pointer;
 
     REQUIRE(pointer.getRefCount() == 1);
     REQUIRE(pointer2.getRefCount() == 1);
@@ -132,7 +131,7 @@ TEST_CASE(
     auto pointer = SharedDataPointer<TestData>{testData};
     auto pointer2 = SharedDataPointer<TestData>{testData};
 
-    TestData *testDataPointer = pointer;
+    TestData* testDataPointer = pointer;
 
     REQUIRE(pointer.getRefCount() == 1);
     REQUIRE(pointer2.getRefCount() == 1);

@@ -39,7 +39,7 @@
 namespace UTM
 {
 // Grid granularity for rounding UTM coordinates to generate MapXY.
-const double grid_size = 100000.0; ///< 100 km grid
+double const grid_size = 100000.0; ///< 100 km grid
 
 // WGS84 Parameters
 #define WGS84_A 6378137.0 ///< major axis
@@ -125,7 +125,7 @@ static inline char UTMLetterDesignator(double Lat)
  *
  * Written by Chuck Gantz- chuck.gantz@globalstar.com
  */
-static inline void LLtoUTM(const double Lat, const double Long, double &UTMNorthing, double &UTMEasting, char *UTMZone)
+static inline void LLtoUTM(double const Lat, double const Long, double& UTMNorthing, double& UTMEasting, char* UTMZone)
 {
     double a = WGS84_A;
     double eccSquared = UTM_E2;
@@ -149,8 +149,7 @@ static inline void LLtoUTM(const double Lat, const double Long, double &UTMNorth
         ZoneNumber = 32;
 
     // Special zones for Svalbard
-    if (Lat >= 72.0 && Lat < 84.0)
-    {
+    if (Lat >= 72.0 && Lat < 84.0) {
         if (LongTemp >= 0.0 && LongTemp < 9.0)
             ZoneNumber = 31;
         else if (LongTemp >= 9.0 && LongTemp < 21.0)
@@ -193,8 +192,7 @@ static inline void LLtoUTM(const double Lat, const double Long, double &UTMNorth
                           (A * A / 2 + (5 - T + 9 * C + 4 * C * C) * A * A * A * A / 24 +
                            (61 - 58 * T + T * T + 600 * C - 330 * eccPrimeSquared) * A * A * A * A * A * A / 720)));
 
-    if (Lat < 0)
-    {
+    if (Lat < 0) {
         // 10000000 meter offset for southern hemisphere
         UTMNorthing += 10000000.0;
     }
@@ -209,11 +207,11 @@ static inline void LLtoUTM(const double Lat, const double Long, double &UTMNorth
  *
  * Written by Chuck Gantz- chuck.gantz@globalstar.com
  */
-static inline void UTMtoLL(const double UTMNorthing,
-                           const double UTMEasting,
-                           const char *UTMZone,
-                           double &Lat,
-                           double &Long)
+static inline void UTMtoLL(double const UTMNorthing,
+                           double const UTMEasting,
+                           char const* UTMZone,
+                           double& Lat,
+                           double& Long)
 {
     double k0 = UTM_K0;
     double a = WGS84_A;
@@ -225,14 +223,13 @@ static inline void UTMtoLL(const double UTMNorthing,
     double mu, phi1Rad;
     double x, y;
     int ZoneNumber;
-    char *ZoneLetter;
+    char* ZoneLetter;
 
     x = UTMEasting - 500000.0; // remove 500,000 meter offset for longitude
     y = UTMNorthing;
 
     ZoneNumber = strtoul(UTMZone, &ZoneLetter, 10);
-    if ((*ZoneLetter - 'N') < 0)
-    {
+    if ((*ZoneLetter - 'N') < 0) {
         // remove 10,000,000 meter offset used for southern hemisphere
         y -= 10000000.0;
     }

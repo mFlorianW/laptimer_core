@@ -9,10 +9,10 @@ class MainScreenView : public View
 public:
     void handleEnter() final;
 
-    void setShowMenuScreenCommand(ICommand *command);
+    void setShowMenuScreenCommand(ICommand* command);
 
 protected:
-    ICommand *mNavigateMenuCommand;
+    ICommand* mNavigateMenuCommand;
 };
 
 #endif //!__MAINSCREENVIEW__H__

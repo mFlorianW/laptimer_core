@@ -1,7 +1,7 @@
 #include "MainScreen.hpp"
 #include <stdio.h>
 
-MainScreen::MainScreen(LaptimerCore::Positioning::IGpsInformationProvider &gpsInfoProvider)
+MainScreen::MainScreen(LaptimerCore::Positioning::IGpsInformationProvider& gpsInfoProvider)
     : Screen{}
     , mIndicationBarContainer{lv_cont_create(m_screen, nullptr)}
     , mStatusBarModel{gpsInfoProvider}

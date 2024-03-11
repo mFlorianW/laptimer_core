@@ -7,11 +7,11 @@
 
 struct ScreenModelPrivate
 {
-    explicit ScreenModelPrivate(ScreenModel &screenModel,
-                                LaptimerCore::Positioning::IGpsInformationProvider &gpsInfoProvider,
-                                LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider,
-                                LaptimerCore::Storage::ISessionDatabase &sessionDatabase,
-                                LaptimerCore::Storage::ITrackDatabase &trackDatabase)
+    explicit ScreenModelPrivate(ScreenModel& screenModel,
+                                LaptimerCore::Positioning::IGpsInformationProvider& gpsInfoProvider,
+                                LaptimerCore::Positioning::IPositionDateTimeProvider& posDateTimeProvider,
+                                LaptimerCore::Storage::ISessionDatabase& sessionDatabase,
+                                LaptimerCore::Storage::ITrackDatabase& trackDatabase)
         : mMainScreen{gpsInfoProvider}
         , mMenuModel{screenModel, sessionDatabase}
         , mMainScreenModel{screenModel, posDateTimeProvider, sessionDatabase, trackDatabase}
@@ -27,10 +27,10 @@ struct ScreenModelPrivate
     MainScreenModel mMainScreenModel;
 };
 
-ScreenModel::ScreenModel(LaptimerCore::Positioning::IGpsInformationProvider &gpsInfoProvider,
-                         LaptimerCore::Positioning::IPositionDateTimeProvider &posDateTimeProvider,
-                         LaptimerCore::Storage::ISessionDatabase &sessionDatabase,
-                         LaptimerCore::Storage::ITrackDatabase &trackDatabase)
+ScreenModel::ScreenModel(LaptimerCore::Positioning::IGpsInformationProvider& gpsInfoProvider,
+                         LaptimerCore::Positioning::IPositionDateTimeProvider& posDateTimeProvider,
+                         LaptimerCore::Storage::ISessionDatabase& sessionDatabase,
+                         LaptimerCore::Storage::ITrackDatabase& trackDatabase)
     : mD{std::make_unique<ScreenModelPrivate>(*this,
                                               gpsInfoProvider,
                                               posDateTimeProvider,
@@ -47,7 +47,7 @@ ScreenModel::~ScreenModel() = default;
 void ScreenModel::activateMainScreen()
 {
     mD->mMenuScreen.setVisible(false);
-    auto &mainScreenView = mD->mMainScreenModel.getActiveView();
+    auto& mainScreenView = mD->mMainScreenModel.getActiveView();
     mD->mMainScreen.setScreenContent(&mainScreenView);
     lv_scr_load(mD->mMainScreen.getScreen());
     mD->mMainScreen.setVisible(true);
@@ -56,7 +56,7 @@ void ScreenModel::activateMainScreen()
 void ScreenModel::activateMenuScreen()
 {
     mD->mMainScreen.setVisible(false);
-    auto &menuView = mD->mMenuModel.getActiveView();
+    auto& menuView = mD->mMenuModel.getActiveView();
     mD->mMenuScreen.setScreenContent(&menuView);
     lv_scr_load(mD->mMenuScreen.getScreen());
     mD->mMenuScreen.setVisible(true);

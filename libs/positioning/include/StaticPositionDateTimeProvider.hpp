@@ -12,7 +12,8 @@ class StaticPositionDateTimeProvider final : public IPositionDateTimeProvider
 public:
     StaticPositionDateTimeProvider()
     {
-        positionTimeData.set(Common::PositionDateTimeData{{52.0270889, 11.2803483}, Common::Timestamp{"15:05:10.234"}, {}});
+        positionTimeData.set(
+            Common::PositionDateTimeData{{52.0270889, 11.2803483}, Common::Timestamp{"15:05:10.234"}, {}});
     }
 
     ~StaticPositionDateTimeProvider()

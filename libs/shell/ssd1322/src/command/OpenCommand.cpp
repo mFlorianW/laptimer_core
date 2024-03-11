@@ -1,6 +1,6 @@
 #include "OpenCommand.hpp"
 
-OpenCommand::OpenCommand(IOpenCloseHandler &handler)
+OpenCommand::OpenCommand(IOpenCloseHandler& handler)
     : ICommand()
     , mHandler(handler)
 {

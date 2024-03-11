@@ -33,11 +33,11 @@ public:
     LaptimeModel();
     ~LaptimeModel();
 
-    void addLap(const Common::LapData &lap);
+    void addLap(Common::LapData const& lap);
 
-    int rowCount(const QModelIndex &parent) const override;
+    int rowCount(QModelIndex const& parent) const override;
 
-    QVariant data(const QModelIndex &index, int role) const override;
+    QVariant data(QModelIndex const& index, int role) const override;
 
     quint32 getSectors() const noexcept;
 

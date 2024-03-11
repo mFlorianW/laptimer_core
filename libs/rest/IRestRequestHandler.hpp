@@ -21,22 +21,22 @@ public:
     /**
      * Deleted copy constructor.
      */
-    IRestRequestHandler(const IRestRequestHandler &other) = delete;
+    IRestRequestHandler(IRestRequestHandler const& other) = delete;
 
     /**
      * Deleted copy assignment operator
      */
-    IRestRequestHandler &operator=(const IRestRequestHandler &other) = delete;
+    IRestRequestHandler& operator=(IRestRequestHandler const& other) = delete;
 
     /**
      * Deleted move constructor
      */
-    IRestRequestHandler(IRestRequestHandler &&other) = delete;
+    IRestRequestHandler(IRestRequestHandler&& other) = delete;
 
     /**
      * Deleted move assignment operator
      */
-    IRestRequestHandler &operator=(const IRestRequestHandler &&other) = delete;
+    IRestRequestHandler& operator=(IRestRequestHandler const&& other) = delete;
 
     /**
      * Function that is called when the handler is registered in the RestServer. The reqeust handler shall
@@ -45,7 +45,7 @@ public:
      * @return RequestHandleResult::Ok The Request is correctly handled.
      * @return RequestHandleResult::Error The Request couldn't be handled.
      */
-    virtual RequestHandleResult handleRestRequest(RestRequest &request) noexcept = 0;
+    virtual RequestHandleResult handleRestRequest(RestRequest& request) noexcept = 0;
 
 protected:
     IRestRequestHandler() = default;

@@ -4,14 +4,14 @@
 
 using namespace LaptimerCore::Common;
 
-ActiveSessionModel::ActiveSessionModel(LaptimerCore::Workflow::ITrackDetectionWorkflow &trackDetector,
-                                       LaptimerCore::Workflow::IActiveSessionWorkflow &activeWorkSessionFlow,
-                                       LaptimerCore::Storage::ITrackDatabase &trackDatabase)
+ActiveSessionModel::ActiveSessionModel(LaptimerCore::Workflow::ITrackDetectionWorkflow& trackDetector,
+                                       LaptimerCore::Workflow::IActiveSessionWorkflow& activeWorkSessionFlow,
+                                       LaptimerCore::Storage::ITrackDatabase& trackDatabase)
     : mTrackDetector{trackDetector}
     , mActiveSessionWorkFlow{activeWorkSessionFlow}
     , mTrackDatabase{trackDatabase}
 {
-    const auto tracks = mTrackDatabase.getTracks();
+    auto const tracks = mTrackDatabase.getTracks();
     mTrackDetector.setTracks({tracks});
     mTrackDetector.startDetection();
 
@@ -22,24 +22,30 @@ ActiveSessionModel::ActiveSessionModel(LaptimerCore::Workflow::ITrackDetectionWo
     });
 
     // TODO: provide these as string so we the UI doesn't to do any formatting
-    mActiveSessionWorkFlow.currentLaptime.valueChanged().connect(
-        [=]() { currentLaptime.set(mActiveSessionWorkFlow.currentLaptime.get()); });
+    mActiveSessionWorkFlow.currentLaptime.valueChanged().connect([=]() {
+        currentLaptime.set(mActiveSessionWorkFlow.currentLaptime.get());
+    });
 
     // TODO: provide these as string so we the UI doesn't to do any formatting
-    mActiveSessionWorkFlow.currentSectorTime.valueChanged().connect(
-        [=]() { currentSectorTime.set(mActiveSessionWorkFlow.currentSectorTime.get()); });
+    mActiveSessionWorkFlow.currentSectorTime.valueChanged().connect([=]() {
+        currentSectorTime.set(mActiveSessionWorkFlow.currentSectorTime.get());
+    });
 
-    mActiveSessionWorkFlow.lapCount.valueChanged().connect(
-        [=]() { lapCount.set(mActiveSessionWorkFlow.lapCount.get()); });
+    mActiveSessionWorkFlow.lapCount.valueChanged().connect([=]() {
+        lapCount.set(mActiveSessionWorkFlow.lapCount.get());
+    });
 
-    mActiveSessionWorkFlow.lapFinished.connect([=]() { lapFinished.emit(); });
-    mActiveSessionWorkFlow.sectorFinshed.connect([=]() { sectorFinished.emit(); });
+    mActiveSessionWorkFlow.lapFinished.connect([=]() {
+        lapFinished.emit();
+    });
+    mActiveSessionWorkFlow.sectorFinshed.connect([=]() {
+        sectorFinished.emit();
+    });
 }
 
 std::string ActiveSessionModel::getLastLapTime() const noexcept
 {
-    if (mActiveSessionWorkFlow.lastLaptime.get().asString().empty())
-    {
+    if (mActiveSessionWorkFlow.lastLaptime.get().asString().empty()) {
         return {"00:00:000"};
     }
 
@@ -48,8 +54,7 @@ std::string ActiveSessionModel::getLastLapTime() const noexcept
 
 std::string ActiveSessionModel::getLastSector() const noexcept
 {
-    if (mActiveSessionWorkFlow.lastSectorTime.get().asString().empty())
-    {
+    if (mActiveSessionWorkFlow.lastSectorTime.get().asString().empty()) {
         return {"00:00:000"};
     }
 
@@ -59,8 +64,7 @@ std::string ActiveSessionModel::getLastSector() const noexcept
 void ActiveSessionModel::confirmTrackDetection(bool confirmed)
 {
     // track is not confirmed by the user so we start the track detection again.
-    if (!confirmed)
-    {
+    if (!confirmed) {
         mTrackDetector.stopDetection();
         return;
     }

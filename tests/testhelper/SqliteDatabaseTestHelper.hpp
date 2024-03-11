@@ -11,7 +11,7 @@ std::string getWorkingDir();
 
 std::string getTestDatabseFolder();
 
-std::string getTestDatabseFile(const std::string &dbFile = "trackmanagement_test.db");
+std::string getTestDatabseFile(std::string const& dbFile = "trackmanagement_test.db");
 
 } // namespace LaptimerCore::TestHelper::SqliteDatabaseTestHelper
 

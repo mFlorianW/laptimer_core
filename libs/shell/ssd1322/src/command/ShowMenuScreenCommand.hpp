@@ -7,13 +7,13 @@ class ScreenModel;
 class ShowMenuScreenCommand : public ICommand
 {
 public:
-    ShowMenuScreenCommand(ScreenModel &screenModel);
+    ShowMenuScreenCommand(ScreenModel& screenModel);
     ~ShowMenuScreenCommand() override = default;
 
     void execute() override;
 
 private:
-    ScreenModel &mScreenModel;
+    ScreenModel& mScreenModel;
 };
 
 #endif //!__SHOWMENUSCREENCOMMAND__H__

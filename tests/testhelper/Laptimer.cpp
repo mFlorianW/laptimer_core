@@ -7,11 +7,11 @@ Laptimer::Laptimer()
 {
 }
 
-void Laptimer::setTrack(const Common::TrackData &track)
+void Laptimer::setTrack(Common::TrackData const& track)
 {
 }
 
-void Laptimer::updatePositionAndTime(const Common::PositionDateTimeData &data)
+void Laptimer::updatePositionAndTime(Common::PositionDateTimeData const& data)
 {
     lastPostionDateTime = data;
 }
@@ -23,8 +23,7 @@ Common::Timestamp Laptimer::getLastLaptime() const
 
 Common::Timestamp Laptimer::getLastSectorTime() const
 {
-    if (sectorTimes.empty())
-    {
+    if (sectorTimes.empty()) {
         return Common::Timestamp{};
     }
     return sectorTimes.back();

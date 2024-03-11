@@ -8,7 +8,7 @@ namespace LaptimerCore::SessionDl
 class CliOptions
 {
 public:
-    CliOptions(int argc, char **argv) noexcept;
+    CliOptions(int argc, char** argv) noexcept;
 
     QHostAddress getHostAddress() const noexcept;
 

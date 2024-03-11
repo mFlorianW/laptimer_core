@@ -1,7 +1,7 @@
 #include "MenuScreenModel.hpp"
 #include "../include/ScreenModel.hpp"
 
-MenuScreenModel::MenuScreenModel(ScreenModel &screenModel, LaptimerCore::Storage::ISessionDatabase &sessionDb)
+MenuScreenModel::MenuScreenModel(ScreenModel& screenModel, LaptimerCore::Storage::ISessionDatabase& sessionDb)
     : mScreenModel(screenModel)
     , mSessionViewModelEntry{sessionDb}
     , mSessionView{mSessionViewModelEntry}
@@ -12,7 +12,7 @@ MenuScreenModel::MenuScreenModel(ScreenModel &screenModel, LaptimerCore::Storage
     setupRootMenu();
 }
 
-View &MenuScreenModel::getActiveView() const
+View& MenuScreenModel::getActiveView() const
 {
     return *mRootMenu.getMenuEntryView();
 }

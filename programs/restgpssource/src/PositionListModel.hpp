@@ -25,13 +25,13 @@ public:
     PositionListModel();
     ~PositionListModel() override;
 
-    qint32 rowCount(const QModelIndex &index) const override;
+    qint32 rowCount(QModelIndex const& index) const override;
 
-    QVariant data(const QModelIndex &index, qint32 role) const override;
+    QVariant data(QModelIndex const& index, qint32 role) const override;
 
     QHash<qint32, QByteArray> roleNames() const override;
 
-    void addPosition(const LaptimerCore::Common::PositionDateTimeData &position);
+    void addPosition(LaptimerCore::Common::PositionDateTimeData const& position);
 
     void clear();
 

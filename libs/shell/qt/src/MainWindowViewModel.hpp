@@ -18,7 +18,7 @@ class MainWindowViewModel : public QObject
     Q_PROPERTY(QGeoCoordinate currentPosition READ getCurrentPosition NOTIFY currentPositionChanged)
     Q_PROPERTY(bool gpsSourceActive READ isGpsSourceActive NOTIFY gpsSourceActiveChanged)
     Q_PROPERTY(QString currentLaptime READ getCurrentLaptime NOTIFY currentLaptimeChanged)
-    Q_PROPERTY(QAbstractItemModel *laptimeModel READ getLaptimeModel NOTIFY laptimeModelChanged)
+    Q_PROPERTY(QAbstractItemModel* laptimeModel READ getLaptimeModel NOTIFY laptimeModelChanged)
 public:
     MainWindowViewModel();
 
@@ -28,7 +28,7 @@ public:
 
     Q_INVOKABLE void stopGpsSource();
 
-    Q_INVOKABLE void loadGpsFile(const QUrl &fileName);
+    Q_INVOKABLE void loadGpsFile(QUrl const& fileName);
 
     QGeoCoordinate getCurrentPosition() const noexcept;
 
@@ -36,7 +36,7 @@ public:
 
     QString getCurrentLaptime() const noexcept;
 
-    QAbstractItemModel *getLaptimeModel() const noexcept;
+    QAbstractItemModel* getLaptimeModel() const noexcept;
 
 Q_SIGNALS:
     void currentPositionChanged();

@@ -28,7 +28,9 @@ SCENARIO("The SignalDispatcher shall dispatch signal of registered DispatcherObj
         auto signalDispatcher = SignalDispatcher{};
         signalDispatcher.registerObject(&testDispatcherObject, std::this_thread::get_id());
         auto signalEmitted = false;
-        testDispatcherObject.signal.connect([&]() { signalEmitted = true; });
+        testDispatcherObject.signal.connect([&]() {
+            signalEmitted = true;
+        });
 
         WHEN("SignalDispatcher is exec is called the signal shall be dispatched")
         {
@@ -50,7 +52,9 @@ SCENARIO("The SignalDispatcher shall ignore exec calls from threads other than t
         auto signalDispatcher = SignalDispatcher{};
         signalDispatcher.registerObject(&testDispatcherObject, std::this_thread::get_id());
         auto signalEmitted = false;
-        testDispatcherObject.signal.connect([&]() { signalEmitted = true; });
+        testDispatcherObject.signal.connect([&]() {
+            signalEmitted = true;
+        });
 
         WHEN("SignalDispatcher exec called from other thread")
         {
@@ -75,7 +79,7 @@ SCENARIO("The SignalDispatcher shall only register objects from the same thread"
         WHEN("Register object from the same thread")
         {
             auto testDispatcherObject = TestDispatcherObject{};
-            const auto registerResult =
+            auto const registerResult =
                 signalDispatcher.registerObject(&testDispatcherObject, std::this_thread::get_id());
 
             THEN("The registration should be successful")
@@ -114,7 +118,7 @@ SCENARIO("The SignalDispatcher shall only unregister objects from the same threa
         {
             auto testDispatcherObject = TestDispatcherObject{};
             signalDispatcher.registerObject(&testDispatcherObject, std::this_thread::get_id());
-            const auto unregisterResult =
+            auto const unregisterResult =
                 signalDispatcher.unregisterObject(&testDispatcherObject, std::this_thread::get_id());
 
             THEN("The uregistration should be successful")

@@ -19,7 +19,7 @@ public:
     /**
      * @copydoc ITrackDataDetection::isOnTrack()
      */
-    bool isOnTrack(const Common::TrackData &track, const Common::PositionData &position) const override;
+    bool isOnTrack(Common::TrackData const& track, Common::PositionData const& position) const override;
 
 private:
     std::uint16_t mDetectionRadius;

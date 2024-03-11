@@ -12,8 +12,7 @@ Timer::Timer()
 
 Timer::~Timer()
 {
-    if (mRunning)
-    {
+    if (mRunning) {
         stop();
     }
 
@@ -22,8 +21,7 @@ Timer::~Timer()
 
 void Timer::start()
 {
-    if (mRunning || (mInterval == std::chrono::milliseconds(0)))
-    {
+    if (mRunning || (mInterval == std::chrono::milliseconds(0))) {
         return;
     }
 
@@ -39,8 +37,7 @@ void Timer::stop()
 void Timer::setInterval(std::chrono::milliseconds interval)
 {
     mInterval = interval;
-    if (mRunning)
-    {
+    if (mRunning) {
         stop();
         start();
     }
@@ -58,13 +55,11 @@ bool Timer::isRunning()
 
 void Timer::dispatch()
 {
-    if (mRunning)
-    {
-        const auto elapsedTime =
+    if (mRunning) {
+        auto const elapsedTime =
             std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - mStartTime)
                 .count();
-        if (elapsedTime >= mInterval.count())
-        {
+        if (elapsedTime >= mInterval.count()) {
             mStartTime = std::chrono::steady_clock::now();
             timeout.emit();
         }

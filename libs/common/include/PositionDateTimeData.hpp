@@ -24,7 +24,7 @@ public:
      * @param time The time data for the instance.
      * @param date The date data for the instance.
      */
-    PositionDateTimeData(const PositionData &posData, const Timestamp &time, const Date &date);
+    PositionDateTimeData(PositionData const& posData, Timestamp const& time, Date const& date);
 
     /**
      * Default destructor
@@ -35,27 +35,27 @@ public:
      * Copy constructor for PositionDateTimeData.
      * @param other The object to copy from.
      */
-    PositionDateTimeData(const PositionDateTimeData &other);
+    PositionDateTimeData(PositionDateTimeData const& other);
 
     /**
      * Copy assignment operator for PositionDateTimeData.
      * @param other The object to copy from.
      * @return PositionData& A reference to the copied instance.
      */
-    PositionDateTimeData &operator=(const PositionDateTimeData &other);
+    PositionDateTimeData& operator=(PositionDateTimeData const& other);
 
     /**
      * The move constructor for PositionDateTimeData.
      * @param other The object to move from.
      */
-    PositionDateTimeData(PositionDateTimeData &&other);
+    PositionDateTimeData(PositionDateTimeData&& other);
 
     /**
      * The move assignment operator for PositionDateTimeData.
      * @param other The object to move from.
      * @return PositionData& A reference of the moved instance.
      */
-    PositionDateTimeData &operator=(PositionDateTimeData &&other);
+    PositionDateTimeData& operator=(PositionDateTimeData&& other);
 
     /**
      * @return The current position
@@ -66,7 +66,7 @@ public:
      * Sets a new position.
      * @param position The new position.
      */
-    void setPosition(const PositionData &position);
+    void setPosition(PositionData const& position);
 
     /**
      * @return The current time
@@ -77,7 +77,7 @@ public:
      * Sets a new time.
      * @param time The new time.
      */
-    void setTime(const Timestamp &time);
+    void setTime(Timestamp const& time);
 
     /**
      * @return The current date.
@@ -88,21 +88,21 @@ public:
      * Sets a new date.
      * @param date The new date.
      */
-    void setDate(const Date &date);
+    void setDate(Date const& date);
 
     /**
      * Equal operator
      * @return true The two objects are the same.
      * @return false The two objects are not the same.
      */
-    friend bool operator==(const PositionDateTimeData &lhs, const PositionDateTimeData &rhs);
+    friend bool operator==(PositionDateTimeData const& lhs, PositionDateTimeData const& rhs);
 
     /**
      * Not Equal operator
      * @return true The two objects are not the same.
      * @return false The two objects are the same.
      */
-    friend bool operator!=(const PositionDateTimeData &lhs, const PositionDateTimeData &rhs);
+    friend bool operator!=(PositionDateTimeData const& lhs, PositionDateTimeData const& rhs);
 
 private:
     SharedDataPointer<SharedPositionTimeData> mData;

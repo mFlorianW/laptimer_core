@@ -19,8 +19,8 @@ public:
     RestHttpClient();
     ~RestHttpClient() override;
 
-    void setUrl(const QString &url);
-    void sendPosition(const LaptimerCore::Common::PositionDateTimeData &position);
+    void setUrl(QString const& url);
+    void sendPosition(LaptimerCore::Common::PositionDateTimeData const& position);
 
 private:
     std::unique_ptr<RestHttpClientPrivate> d;

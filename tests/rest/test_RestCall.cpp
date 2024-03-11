@@ -25,7 +25,9 @@ SCENARIO("A RestCall shall return the result of the call, emit the finished sign
         WHEN("The data and the result are set.")
         {
             REQUIRE(call.getResult() == RestCallResult::Unknown);
-            call.finished.connect([&](RestCall *) { finishedSignalEmitted = true; });
+            call.finished.connect([&](RestCall*) {
+                finishedSignalEmitted = true;
+            });
             call.setData(returnData);
             call.setCallResult(RestCallResult::Success);
 

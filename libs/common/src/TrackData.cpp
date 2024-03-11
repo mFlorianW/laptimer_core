@@ -11,7 +11,7 @@ public:
     PositionData mStartline;
     std::vector<PositionData> mSections;
 
-    friend bool operator==(const SharedTrackData &lhs, const SharedTrackData &rhs)
+    friend bool operator==(SharedTrackData const& lhs, SharedTrackData const& rhs)
     {
         // clang-format off
         return ((lhs.mTrackName) == (rhs.mTrackName) &&
@@ -29,56 +29,56 @@ TrackData::TrackData()
 
 TrackData::~TrackData() = default;
 
-TrackData::TrackData(const TrackData &ohter)
+TrackData::TrackData(TrackData const& ohter)
     : mData(ohter.mData)
 {
 }
 
-TrackData &TrackData::operator=(const TrackData &other)
+TrackData& TrackData::operator=(TrackData const& other)
 {
     mData = other.mData;
     return *this;
 }
 
-TrackData::TrackData(TrackData &&other)
+TrackData::TrackData(TrackData&& other)
     : mData{std::move(other.mData)}
 {
     other.mData = nullptr;
 }
 
-TrackData &TrackData::operator=(TrackData &&other)
+TrackData& TrackData::operator=(TrackData&& other)
 {
     TrackData moved{std::move(other)};
     std::swap(mData, moved.mData);
     return *this;
 }
 
-const std::string &TrackData::getTrackName() const
+std::string const& TrackData::getTrackName() const
 {
     return mData->mTrackName;
 }
 
-void TrackData::setTrackName(const std::string &name)
+void TrackData::setTrackName(std::string const& name)
 {
     mData->mTrackName = name;
 }
 
-const PositionData &TrackData::getStartline() const
+PositionData const& TrackData::getStartline() const
 {
     return mData->mStartline;
 }
 
-void TrackData::setStartline(const PositionData &startline)
+void TrackData::setStartline(PositionData const& startline)
 {
     mData->mStartline = startline;
 }
 
-const PositionData &TrackData::getFinishline() const
+PositionData const& TrackData::getFinishline() const
 {
     return mData->mFinishline;
 }
 
-void TrackData::setFinishline(const PositionData &finishline)
+void TrackData::setFinishline(PositionData const& finishline)
 {
     mData->mFinishline = finishline;
 }
@@ -88,27 +88,27 @@ size_t TrackData::getNumberOfSections() const
     return mData->mSections.size();
 }
 
-const PositionData &TrackData::getSection(size_t sectionIndex) const
+PositionData const& TrackData::getSection(size_t sectionIndex) const
 {
     return mData->mSections.at(sectionIndex);
 }
 
-const std::vector<PositionData> &TrackData::getSections() const
+std::vector<PositionData> const& TrackData::getSections() const
 {
     return mData->mSections;
 }
 
-void TrackData::setSections(const std::vector<PositionData> &sections)
+void TrackData::setSections(std::vector<PositionData> const& sections)
 {
     mData->mSections = sections;
 }
 
-bool operator==(const TrackData &lhs, const TrackData &rhs)
+bool operator==(TrackData const& lhs, TrackData const& rhs)
 {
     return lhs.mData == rhs.mData || *lhs.mData == *rhs.mData;
 }
 
-bool operator!=(const TrackData &lhs, const TrackData &rhs)
+bool operator!=(TrackData const& lhs, TrackData const& rhs)
 {
     return !(lhs == rhs);
 }

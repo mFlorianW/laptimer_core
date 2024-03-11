@@ -19,7 +19,7 @@ public:
      * Creates an instance of the FileBasedPositionDateTimeProvider.
      * @param gpsPositions The GPS position list that is used for the replay.
      */
-    explicit ConstantVelocityPositionDateTimeProvider(const std::vector<Common::PositionData> &gpsPositions = {});
+    explicit ConstantVelocityPositionDateTimeProvider(std::vector<Common::PositionData> const& gpsPositions = {});
 
     /**
      * Empty default destructor
@@ -30,7 +30,7 @@ public:
      * Overwrites the GPS positions for playback.
      * @param gpsPositions The GPS position list that is used for the replay.
      */
-    void setGpsPositions(const std::vector<Common::PositionData> &gpsPositions);
+    void setGpsPositions(std::vector<Common::PositionData> const& gpsPositions);
 
     /**
      * Sets the speed for the GPS position updates.
@@ -50,7 +50,7 @@ public:
     void stop();
 
 private:
-    void convertTrackPoints(const std::vector<Common::PositionData> &gpsPositions);
+    void convertTrackPoints(std::vector<Common::PositionData> const& gpsPositions);
     void handleGPSPositionTick();
 
 private:

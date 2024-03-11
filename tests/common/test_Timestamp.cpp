@@ -13,7 +13,7 @@ TEST_CASE("A Timestamp shall be able to convert the time into a string.")
     timestamp.setSecond(35);
     timestamp.setFractionalOfSecond(123);
 
-    const auto result = timestamp.asString();
+    auto const result = timestamp.asString();
 
     REQUIRE(result == expectedResult);
 }

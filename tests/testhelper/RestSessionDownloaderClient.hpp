@@ -6,11 +6,11 @@ namespace LaptimerCore::TestHelper
 {
 class RestSessionDownloaderClient : public Rest::IRestClient
 {
-    void setServerAddress(const std::string &address) noexcept override;
+    void setServerAddress(std::string const& address) noexcept override;
 
     void setServerPort(std::uint16_t port) noexcept override;
 
-    std::shared_ptr<Rest::RestCall> execute(const Rest::RestRequest &request) noexcept override;
+    std::shared_ptr<Rest::RestCall> execute(Rest::RestRequest const& request) noexcept override;
 
     Rest::RestRequest mLastRequest;
 };

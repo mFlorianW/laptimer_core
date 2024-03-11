@@ -31,22 +31,22 @@ public:
     /**
      * Disabled copy constructor
      */
-    RestCall(const RestCall &other) = delete;
+    RestCall(RestCall const& other) = delete;
 
     /**
      * Disabled copy assignment operator
      */
-    RestCall &operator=(const RestCall &other) = delete;
+    RestCall& operator=(RestCall const& other) = delete;
 
     /**
      * Disabled copy assignment operator
      */
-    RestCall(RestCall &&) = delete;
+    RestCall(RestCall&&) = delete;
 
     /**
      * Disabled move assignment
      */
-    RestCall &operator=(RestCall &&other) = delete;
+    RestCall& operator=(RestCall&& other) = delete;
 
     /**
      * Gives the status of the call.
@@ -71,12 +71,12 @@ public:
      * Set the call data of the call.
      * @param data The data of the call.
      */
-    void setData(const std::string &data) noexcept;
+    void setData(std::string const& data) noexcept;
 
     /**
      * This sinal is emitted when the RestCall finished.
      */
-    KDBindings::Signal<RestCall *> finished;
+    KDBindings::Signal<RestCall*> finished;
 
 protected:
     /**

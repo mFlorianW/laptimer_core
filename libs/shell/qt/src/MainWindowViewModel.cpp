@@ -56,12 +56,11 @@ void MainWindowViewModel::stopGpsSource()
     Q_EMIT gpsSourceActiveChanged();
 }
 
-void MainWindowViewModel::loadGpsFile(const QUrl &fileName)
+void MainWindowViewModel::loadGpsFile(QUrl const& fileName)
 {
     auto fileReader = LaptimerCore::Positioning::Qt::CsvGpsFileReader{};
     fileReader.setFileName(fileName.toLocalFile());
-    if (!fileReader.read())
-    {
+    if (!fileReader.read()) {
         qWarning() << "Failed to read GPS positions of file:" << fileName;
     }
 
@@ -83,7 +82,7 @@ QString MainWindowViewModel::getCurrentLaptime() const noexcept
     return d->currentLaptime;
 }
 
-QAbstractItemModel *MainWindowViewModel::getLaptimeModel() const noexcept
+QAbstractItemModel* MainWindowViewModel::getLaptimeModel() const noexcept
 {
     return &d->laptimeModel;
 }

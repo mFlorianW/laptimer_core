@@ -60,45 +60,41 @@ Controls::~Controls()
     lv_obj_del(mDownButtonLabel);
 }
 
-void Controls::xButtonPressed(lv_obj_t *obj, lv_event_t event)
+void Controls::xButtonPressed(lv_obj_t* obj, lv_event_t event)
 {
-    if (event != LV_EVENT_CLICKED)
-    {
+    if (event != LV_EVENT_CLICKED) {
         return;
     }
 
     lv_key_t keyType = LV_KEY_ESC;
-    lv_event_send(lv_scr_act(), LV_EVENT_KEY, static_cast<const void *>(&keyType));
+    lv_event_send(lv_scr_act(), LV_EVENT_KEY, static_cast<void const*>(&keyType));
 }
 
-void Controls::oButtonPressed(lv_obj_t *obj, lv_event_t event)
+void Controls::oButtonPressed(lv_obj_t* obj, lv_event_t event)
 {
-    if (event != LV_EVENT_CLICKED)
-    {
+    if (event != LV_EVENT_CLICKED) {
         return;
     }
 
     lv_key_t keyType = LV_KEY_ENTER;
-    lv_event_send(lv_scr_act(), LV_EVENT_KEY, static_cast<const void *>(&keyType));
+    lv_event_send(lv_scr_act(), LV_EVENT_KEY, static_cast<void const*>(&keyType));
 }
-void Controls::upButtonPressed(lv_obj_t *obj, lv_event_t event)
+void Controls::upButtonPressed(lv_obj_t* obj, lv_event_t event)
 {
-    if (event != LV_EVENT_CLICKED)
-    {
+    if (event != LV_EVENT_CLICKED) {
         return;
     }
 
     lv_key_t keyType = LV_KEY_UP;
-    lv_event_send(lv_scr_act(), LV_EVENT_KEY, static_cast<const void *>(&keyType));
+    lv_event_send(lv_scr_act(), LV_EVENT_KEY, static_cast<void const*>(&keyType));
 }
 
-void Controls::downButtonPressed(lv_obj_t *obj, lv_event_t event)
+void Controls::downButtonPressed(lv_obj_t* obj, lv_event_t event)
 {
-    if (event != LV_EVENT_CLICKED)
-    {
+    if (event != LV_EVENT_CLICKED) {
         return;
     }
 
     lv_key_t keyType = LV_KEY_DOWN;
-    lv_event_send(lv_scr_act(), LV_EVENT_KEY, static_cast<const void *>(&keyType));
+    lv_event_send(lv_scr_act(), LV_EVENT_KEY, static_cast<void const*>(&keyType));
 }

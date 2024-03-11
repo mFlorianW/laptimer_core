@@ -18,22 +18,22 @@ public:
     /**
      * Deleted copy constructor
      */
-    IDispatcherObject(const IDispatcherObject &other) = delete;
+    IDispatcherObject(IDispatcherObject const& other) = delete;
 
     /**
      * Deleted copy assignment operator
      */
-    IDispatcherObject &operator=(const IDispatcherObject &other) = delete;
+    IDispatcherObject& operator=(IDispatcherObject const& other) = delete;
 
     /**
      * Default move constructor
      */
-    IDispatcherObject(IDispatcherObject &&ohter) = default;
+    IDispatcherObject(IDispatcherObject&& ohter) = default;
 
     /**
      * Default move assignemnt operator
      */
-    IDispatcherObject &operator=(IDispatcherObject &&other) = default;
+    IDispatcherObject& operator=(IDispatcherObject&& other) = default;
 
     /**
      * This function is called by the @ref SignalDispatcherRegistry to trigger

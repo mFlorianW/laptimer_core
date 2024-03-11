@@ -17,8 +17,7 @@ std::size_t TableModel::getColumnCount() const noexcept
 
 void TableModel::setRowCount(std::size_t newRowCount) noexcept
 {
-    if (mRows == newRowCount)
-    {
+    if (mRows == newRowCount) {
         return;
     }
 
@@ -28,8 +27,7 @@ void TableModel::setRowCount(std::size_t newRowCount) noexcept
 
 void TableModel::setColumnCont(std::size_t newColumnCount) noexcept
 {
-    if (mColumns == newColumnCount)
-    {
+    if (mColumns == newColumnCount) {
         return;
     }
 

@@ -16,26 +16,22 @@ SignalDispatcher::~SignalDispatcher() = default;
 
 void SignalDispatcher::exec() noexcept
 {
-    if (mThreadId != std::this_thread::get_id())
-    {
+    if (mThreadId != std::this_thread::get_id()) {
         std::cerr << "exec can only be called from the SignalDispatcher creation thread.\n";
         return;
     }
 
-    auto &context = SignalDispatcherRegistry::getInstance().getContext(mThreadId)->objects;
-    for (auto &obj : context)
-    {
-        if (!context.empty())
-        {
+    auto& context = SignalDispatcherRegistry::getInstance().getContext(mThreadId)->objects;
+    for (auto& obj : context) {
+        if (!context.empty()) {
             obj->dispatch();
         }
     }
 }
 
-Result SignalDispatcher::registerObject(IDispatcherObject *obj, const std::thread::id &id) noexcept
+Result SignalDispatcher::registerObject(IDispatcherObject* obj, std::thread::id const& id) noexcept
 {
-    if ((obj != nullptr) && (mThreadId == id))
-    {
+    if ((obj != nullptr) && (mThreadId == id)) {
         SignalDispatcherRegistry::getInstance().registerObject(obj, mThreadId);
         return Result::Ok;
     }
@@ -43,10 +39,9 @@ Result SignalDispatcher::registerObject(IDispatcherObject *obj, const std::threa
     return Result::Error;
 }
 
-Result SignalDispatcher::unregisterObject(IDispatcherObject *obj, const std::thread::id &id) noexcept
+Result SignalDispatcher::unregisterObject(IDispatcherObject* obj, std::thread::id const& id) noexcept
 {
-    if ((obj != nullptr) && (mThreadId == id))
-    {
+    if ((obj != nullptr) && (mThreadId == id)) {
         SignalDispatcherRegistry::getInstance().unregisterObject(obj, id);
         return Result::Ok;
     }

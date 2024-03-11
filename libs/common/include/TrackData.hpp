@@ -37,63 +37,63 @@ public:
      * Copy constructor for TrackData
      * @param ohter The object to copy from.
      */
-    TrackData(const TrackData &ohter);
+    TrackData(TrackData const& ohter);
 
     /**
      * The copy assignment operator for TrackData.
      * @param other The object to copy from.
      * @return TrackData& A reference to the copied track.
      */
-    TrackData &operator=(const TrackData &other);
+    TrackData& operator=(TrackData const& other);
 
     /**
      * Move constructor for TrackData
      * @param other The object to move from.
      */
-    TrackData(TrackData &&other);
+    TrackData(TrackData&& other);
 
     /**
      * The move assignment operator for the TrackData.
      * @param other The object to move from.
      * @return TrackData& A reference to the moved track data.
      */
-    TrackData &operator=(TrackData &&other);
+    TrackData& operator=(TrackData&& other);
 
     /**
      * Gives the track name.
      * @return const std::string& The track name.
      */
-    const std::string &getTrackName() const;
+    std::string const& getTrackName() const;
 
     /**
      * Sets the new track name.
      * @param name The new name of the track.
      */
-    void setTrackName(const std::string &name);
+    void setTrackName(std::string const& name);
 
     /**
      * Gives the position data of the start line.
      * @return const PositionData& The position of the start line.
      */
-    const PositionData &getStartline() const;
+    PositionData const& getStartline() const;
 
     /**
      * Set a new position for the start line.
      * @param startLine The new position for the start line.
      */
-    void setStartline(const PositionData &startLine);
+    void setStartline(PositionData const& startLine);
 
     /**
      * Gives the position of the finish line.
      * @return const PositionData&
      */
-    const PositionData &getFinishline() const;
+    PositionData const& getFinishline() const;
 
     /**
      * Sets a new position for the finish line.
      * @param finishLine The new position of the finish line.
      */
-    void setFinishline(const PositionData &finishline);
+    void setFinishline(PositionData const& finishline);
 
     /**
      * Gives the number of sections of the race track.
@@ -107,34 +107,34 @@ public:
      * @param sectionIndex The section index.
      * @return const PositionData& The position data of the section.
      */
-    const PositionData &getSection(size_t sectionIndex) const;
+    PositionData const& getSection(size_t sectionIndex) const;
 
     /**
      * Gives a list of all sections of the track.
      * @return const std::vector<PositionData>& A list with all sections of the track.
      */
-    const std::vector<PositionData> &getSections() const;
+    std::vector<PositionData> const& getSections() const;
 
     /**
      * Sets the sections for the race track.
      * The sections are consumed and the passed vector is not longer available after it.
      * @param sections The new sections of the track.
      */
-    void setSections(const std::vector<PositionData> &sections);
+    void setSections(std::vector<PositionData> const& sections);
 
     /**
      * Equal operator
      * @return true The two objects are the same.
      * @return false The two objects are not the same.
      */
-    friend bool operator==(const TrackData &lhs, const TrackData &rhs);
+    friend bool operator==(TrackData const& lhs, TrackData const& rhs);
 
     /**
      * Not Equal operator
      * @return true The two objects are not the same.
      * @return false The two objects are the same.
      */
-    friend bool operator!=(const TrackData &lhs, const TrackData &rhs);
+    friend bool operator!=(TrackData const& lhs, TrackData const& rhs);
 
 private:
     SharedDataPointer<SharedTrackData> mData;

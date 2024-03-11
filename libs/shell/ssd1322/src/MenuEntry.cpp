@@ -9,15 +9,14 @@ MenuEntry::MenuEntry()
 {
 }
 
-View *MenuEntry::getMenuEntryView() const noexcept
+View* MenuEntry::getMenuEntryView() const noexcept
 {
     return mActiveView;
 }
 
-void MenuEntry::setMenuEntryView(View *view) noexcept
+void MenuEntry::setMenuEntryView(View* view) noexcept
 {
-    if (view == nullptr)
-    {
+    if (view == nullptr) {
         return;
     }
 
@@ -27,10 +26,9 @@ void MenuEntry::setMenuEntryView(View *view) noexcept
     mActiveView = view;
 }
 
-void MenuEntry::addMenuEntry(IMenuEntry *entry) noexcept
+void MenuEntry::addMenuEntry(IMenuEntry* entry) noexcept
 {
-    if (entry == nullptr)
-    {
+    if (entry == nullptr) {
         return;
     }
 
@@ -43,8 +41,7 @@ void MenuEntry::addMenuEntry(IMenuEntry *entry) noexcept
 
 void MenuEntry::open()
 {
-    if (mMenuEntry == nullptr)
-    {
+    if (mMenuEntry == nullptr) {
         return;
     }
 

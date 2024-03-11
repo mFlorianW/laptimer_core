@@ -7,12 +7,12 @@
 class NavigateDownCommand : public ICommand
 {
 public:
-    NavigateDownCommand(INavigationHandler &handler);
+    NavigateDownCommand(INavigationHandler& handler);
 
     void execute() override;
 
 private:
-    INavigationHandler &mHandler;
+    INavigationHandler& mHandler;
 };
 
 #endif //!__NAVIGATEDOWNCOMMAND__H__
