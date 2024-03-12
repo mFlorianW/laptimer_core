@@ -25,7 +25,7 @@ ApplicationWindow {
             }
         }
 
-        Menu{
+        Menu {
             title: qsTr("Edit")
 
             Action {
