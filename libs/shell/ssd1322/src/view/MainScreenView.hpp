@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 All contributors
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 #ifndef __MAINSCREENVIEW__H__
 #define __MAINSCREENVIEW__H__
 

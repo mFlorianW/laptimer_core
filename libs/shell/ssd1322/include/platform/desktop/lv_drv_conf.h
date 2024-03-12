@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 All contributors
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 /*
  * COPY THIS FILE AS lv_drv_conf.h
  */

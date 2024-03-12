@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 All contributors
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 #ifndef SIMPLELAPTIMER_HPP
 #define SIMPLELAPTIMER_HPP
 

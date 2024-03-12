@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 All contributors
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 #ifndef ACTIVESESSIONWORKFLOW_HPP
 #define ACTIVESESSIONWORKFLOW_HPP
 

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 All contributors
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 /* -*- mode: C++ -*-
  *
  *  Conversions between Latitude/Longitude and UTM

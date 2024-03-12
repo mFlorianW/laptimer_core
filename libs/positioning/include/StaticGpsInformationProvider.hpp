@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 All contributors
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 #ifndef LAPTIMERCORE_STATICGPSINFORMATIONPROVIDER_HPP
 #define LAPTIMERCORE_STATICGPSINFORMATIONPROVIDER_HPP
 

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 All contributors
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 #include "SqliteSessionDatabase.hpp"
 #include "private/AsyncResultDb.hpp"
 #include "private/Statement.hpp"

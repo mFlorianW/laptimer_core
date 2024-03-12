@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 All contributors
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 #ifndef STATICPOSITIONDATETIMEPROVIDER_HPP
 #define STATICPOSITIONDATETIMEPROVIDER_HPP
 
