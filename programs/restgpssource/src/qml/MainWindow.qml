@@ -51,29 +51,27 @@ ApplicationWindow {
     }
 
     header: ToolBar {
-        RowLayout{
+        RowLayout {
             spacing: 0
 
-            ToolButton{
+            ToolButton {
                 icon.name: "document-open"
                 onClicked: fileDialog.open()
 
-                ToolTip{
-                    text: qsTr("Open GPS position file");
+                ToolTip {
+                    text: qsTr("Open GPS position file")
                 }
             }
 
             ToolButton {
                 id: toolButtonGpsSource
-                onClicked: !g_MainWindowViewModel.gpsSourceActive ? g_MainWindowViewModel.startGpsSource()
-                                                                  : g_MainWindowViewModel.stopGpsSource()
+                onClicked: !g_MainWindowViewModel.gpsSourceActive ? g_MainWindowViewModel.startGpsSource() : g_MainWindowViewModel.stopGpsSource()
 
-                ToolTip{
-                    text: qsTr("Start GPS source");
+                ToolTip {
+                    text: qsTr("Start GPS source")
                 }
             }
-            
-            
+
             Label {
                 wrapMode: Label.Wrap
                 text: "Host:"
@@ -83,11 +81,11 @@ ApplicationWindow {
             TextField {
                 id: serverIpInput
                 implicitWidth: 150
-                text: g_MainWindowViewModel.hostAddress 
+                text: g_MainWindowViewModel.hostAddress
                 Layout.leftMargin: 5
 
                 onEditingFinished: {
-                    g_MainWindowViewModel.hostAddress = serverIpInput.text 
+                    g_MainWindowViewModel.hostAddress = serverIpInput.text;
                 }
             }
 
@@ -101,11 +99,11 @@ ApplicationWindow {
             TextField {
                 id: serverPortInput
                 implicitWidth: 50
-                text: g_MainWindowViewModel.hostPort 
+                text: g_MainWindowViewModel.hostPort
                 Layout.leftMargin: 5
 
                 onEditingFinished: {
-                    g_MainWindowViewModel.hostPort = serverPortInput.text
+                    g_MainWindowViewModel.hostPort = serverPortInput.text;
                 }
             }
         }
@@ -113,9 +111,9 @@ ApplicationWindow {
 
     SplitView {
         id: splitView
-        anchors.fill:parent
+        anchors.fill: parent
         orientation: Qt.Vertical
-         
+
         ListView {
             id: gpsPositionsView
             implicitHeight: 400
@@ -127,7 +125,7 @@ ApplicationWindow {
                 active: true
             }
 
-            header:  Rectangle {
+            header: Rectangle {
                 height: 40
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -146,9 +144,9 @@ ApplicationWindow {
 
                     Text {
                         Layout.alignment: Qt.AlignHCenter
-                            //                            width: parent.width / 4.5
-                            text: qsTr("Latitude")
-                            color: "white"
+                        //                            width: parent.width / 4.5
+                        text: qsTr("Latitude")
+                        color: "white"
                     }
 
                     Text {
@@ -183,9 +181,7 @@ ApplicationWindow {
                     }
                 }
             }
-
         }
-
 
         Map {
             id: map
@@ -210,7 +206,7 @@ ApplicationWindow {
     footer: ToolBar {
         RowLayout {
             anchors.fill: parent
-            Label { 
+            Label {
                 id: statusFooterLabel
             }
         }
@@ -227,9 +223,11 @@ ApplicationWindow {
         }
     }
 
-    Connections{
+    Connections {
         target: g_MainWindowViewModel
-        function onCurrentPositionChanged(){ currentPostion.center = g_MainWindowViewModel.currentPosition }
+        function onCurrentPositionChanged() {
+            currentPostion.center = g_MainWindowViewModel.currentPosition;
+        }
     }
 
     Item {
@@ -246,7 +244,7 @@ ApplicationWindow {
                     target: toolButtonGpsSource
                     icon.name: "media-playback-stop"
                 }
-                PropertyChanges{
+                PropertyChanges {
                     target: statusFooterLabel
                     text: "Running"
                 }
@@ -262,7 +260,7 @@ ApplicationWindow {
                     target: toolButtonGpsSource
                     icon.name: "media-playback-start"
                 }
-                PropertyChanges{
+                PropertyChanges {
                     target: statusFooterLabel
                     text: "Not Running"
                 }

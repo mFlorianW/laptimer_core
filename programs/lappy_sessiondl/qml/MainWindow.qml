@@ -24,7 +24,6 @@ ApplicationWindow {
                 onTriggered: g_MainWindowModel.startSessionDownload()
             }
 
-
             Action {
                 text: qsTr("Quit")
                 icon.name: "application-exit"
@@ -35,15 +34,15 @@ ApplicationWindow {
     }
 
     header: ToolBar {
-        RowLayout{
+        RowLayout {
             spacing: 0
-            
-            ToolButton{
+
+            ToolButton {
                 icon.name: "download"
                 onClicked: g_MainWindowModel.startSessionDownload()
 
-                ToolTip{
-                    text: qsTr("Start Session Download");
+                ToolTip {
+                    text: qsTr("Start Session Download")
                 }
             }
 
@@ -56,11 +55,11 @@ ApplicationWindow {
             TextField {
                 id: serverIpInput
                 implicitWidth: 150
-                text: g_MainWindowModel.hostAddress 
+                text: g_MainWindowModel.hostAddress
                 Layout.leftMargin: 5
 
                 onEditingFinished: {
-                    g_MainWindowModel.hostAddress = serverIpInput.text 
+                    g_MainWindowModel.hostAddress = serverIpInput.text;
                 }
             }
 
@@ -74,11 +73,11 @@ ApplicationWindow {
             TextField {
                 id: serverPortInput
                 implicitWidth: 50
-                text: g_MainWindowModel.hostPort 
+                text: g_MainWindowModel.hostPort
                 Layout.leftMargin: 5
 
                 onEditingFinished: {
-                    g_MainWindowModel.hostPort = serverPortInput.text
+                    g_MainWindowModel.hostPort = serverPortInput.text;
                 }
             }
         }
@@ -93,4 +92,3 @@ ApplicationWindow {
         }
     }
 }
-

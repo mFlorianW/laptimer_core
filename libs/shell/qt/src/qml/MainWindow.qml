@@ -30,8 +30,7 @@ ApplicationWindow {
             Action {
                 id: actionGpsSource
                 text: qsTr("Start GPS source")
-                onTriggered: !g_MainWindowViewModel.gpsSourceActive ? g_MainWindowViewModel.startGpsSource()
-                                                                    : g_MainWindowViewModel.stopGpsSource()
+                onTriggered: !g_MainWindowViewModel.gpsSourceActive ? g_MainWindowViewModel.startGpsSource() : g_MainWindowViewModel.stopGpsSource()
             }
 
             MenuSeparator {
@@ -46,7 +45,7 @@ ApplicationWindow {
         Menu {
             title: qsTr("Track")
 
-            ActionGroup{
+            ActionGroup {
                 id: trackChooseGroup
                 exclusive: true
             }
@@ -78,31 +77,30 @@ ApplicationWindow {
     }
 
     header: ToolBar {
-        RowLayout{
+        RowLayout {
             anchors.fill: parent
             spacing: 0
 
-            ToolButton{
+            ToolButton {
                 icon.name: "document-open"
                 onClicked: fileDialog.open()
                 Layout.alignment: Qt.AlignLeft
 
-                ToolTip{
-                    text: qsTr("Open GPS position file");
+                ToolTip {
+                    text: qsTr("Open GPS position file")
                 }
             }
 
             ToolButton {
                 id: toolButtonGpsSource
-                onClicked: !g_MainWindowViewModel.gpsSourceActive ? g_MainWindowViewModel.startGpsSource()
-                                                                  : g_MainWindowViewModel.stopGpsSource()
+                onClicked: !g_MainWindowViewModel.gpsSourceActive ? g_MainWindowViewModel.startGpsSource() : g_MainWindowViewModel.stopGpsSource()
                 Layout.alignment: Qt.AlignLeft
-                ToolTip{
-                    text: qsTr("Start GPS source");
+                ToolTip {
+                    text: qsTr("Start GPS source")
                 }
             }
 
-            Label{
+            Label {
                 id: activeLaptime
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
@@ -116,20 +114,20 @@ ApplicationWindow {
                 to: 300
                 value: 10
                 enabled: true
-                ToolTip{
+                ToolTip {
                     text: qsTr("Velocity GPS source")
                 }
             }
         }
     }
 
-    SplitView{
+    SplitView {
         anchors.fill: parent
         orientation: Qt.Vertical
         SplitView.maximumWidth: 500
         SplitView.minimumHeight: applicationWindow.height - lowerSplitView.minimumHeight
 
-        ListView{
+        ListView {
             id: lapView
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -139,12 +137,12 @@ ApplicationWindow {
             model: g_MainWindowViewModel.laptimeModel
 
             delegate: Text {
-                width: lapView.width;
-                text: "Lap "+ index + ": " + laptime
+                width: lapView.width
+                text: "Lap " + index + ": " + laptime
             }
         }
 
-        SplitView{
+        SplitView {
             id: lowerSplitView
             SplitView.minimumHeight: 200
 
@@ -154,7 +152,7 @@ ApplicationWindow {
                 implicitWidth: 400
                 boundsBehavior: ListView.StopAtBounds
 
-                header:  Rectangle {
+                header: Rectangle {
                     height: 40
                     anchors.left: parent.left
                     anchors.right: parent.right
@@ -187,7 +185,7 @@ ApplicationWindow {
                 }
             }
 
-            Map{
+            Map {
                 id: map
                 plugin: Plugin {
                     id: mapPlugin
@@ -218,9 +216,11 @@ ApplicationWindow {
         }
     }
 
-    Connections{
+    Connections {
         target: g_MainWindowViewModel
-        function onCurrentPositionChanged(){ currentPostion.center = g_MainWindowViewModel.currentPosition }
+        function onCurrentPositionChanged() {
+            currentPostion.center = g_MainWindowViewModel.currentPosition;
+        }
     }
 
     Item {
