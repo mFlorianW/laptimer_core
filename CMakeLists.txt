@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 project(LaptimerCore)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/configuration/cmake/")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -9,6 +10,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 include(FetchContent)
 include(FeatureSummary)
 include(CheckCCompilerFlag)
+include(PreCommit)
 
 option(ENABLE_TEST "Enable unit tests" OFF)
 option(ENABLE_CATCH2_FETCH "This option enables that catch2 is fetched in configuration" OFF)
@@ -16,7 +18,13 @@ option(ENABLE_KDBINDINGS_FETCH "This option enables that KDBindings is fetched i
 option(ENABLE_ARDUINOJSON_FETCH "This option enables that ARDUIONJSON is fetched in configuration" ON)
 option(ENABLE_LVGL_FETCH "This option enables that LVGL is fetched in configuration" ON)
 option(ENABLE_QT "This option enables QT implementations" ON)
+option(ENABLE_PRECOMMIT "Enables automatic pre-commit install." OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+add_feature_info(PreCommit ENABLE_PRECOMMIT "Automatic install of the Python pre-commit tool.")
+
+if(ENABLE_PRECOMMIT)
+    setup_precommit()
+endif()
 
 
 if(ENABLE_KDBINDINGS_FETCH)

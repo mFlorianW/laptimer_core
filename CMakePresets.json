@@ -15,7 +15,8 @@
                 "ENABLE_KDBINDINGS_FETCH": "ON",
                 "ENABLE_ARDUINOJSON_FETCH": "ON",
                 "ENABLE_LVGL_FETCH": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "1"
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "1",
+                "ENABLE_PRECOMMIT": "ON"
             }
         },
         {
