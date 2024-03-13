@@ -68,7 +68,7 @@
             "configurePreset": "debug"
         },
         {
-            "name": "github-test",
+            "name": "github-ci-test",
             "configurePreset": "github-ci-debug"
         }
     ]
