@@ -1,0 +1,68 @@
+# SPDX-FileCopyrightText: 2023 Florian Weßel <florianwessel@gmx.net>
+#
+# SPDX-License-Identifier: GPL-2.0-or-later
+name: Clang-Tidy
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  Clang-Tidy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '5.15.*'
+        cache: 'true'
+    - name: WORKAROUND FOR https://github.com/actions/runner-images/issues/8659
+      run: |
+        echo "TEMPORARY WORKAROUND FOR GITHUB RUNNER BUG #8659\n\nRemoving GCC 13 as it breaks Clang14"
+        sudo rm -f /etc/apt/sources.list.d/ubuntu-toolchain-r-ubuntu-test-jammy.list
+        sudo apt-get update
+        sudo apt-get install -y --allow-downgrades libc6=2.35-* libc6-dev=2.35-* libstdc++6=12.3.0-* libgcc-s1=12.3.0-*
+    - name: Install Dependencies
+      run: |
+        sudo apt update && sudo apt install clang-tidy-14 doxygen libsdl2-dev
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+          fetch-depth: 0
+    - name: Generate Compile Commands and Build
+      run: |
+        cmake --preset github-ci-debug
+        cmake --build --preset github-ci-debug --target all -- -j
+    - name: Static Code Analysis
+      run: |
+        files=$(git diff  --diff-filter=ACMR --name-status --dirstat=files origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | awk -F'\t' '{ if(NF==3){ print $3; }else{print $2; }}'| grep -E "(.*)\.(h|cpp|hpp)$") || true
+        if [[ ! -z ${files} ]]; then
+          clang-tidy -p build-github-ci-debug --export-fixes=clang-tidy-fixes.yml ${files}
+        else
+          echo "No file for checking create empty fix file."
+          touch clang-tidy-fixes.yml
+        fi
+    - name: Publish Static Code Results
+      uses: platisd/clang-tidy-pr-comments@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        clang_tidy_fixes: clang-tidy-fixes.yml
+        request_changes: true
+    - name: Publish Static Code Results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: clang-tidy-results@${{ github.sha }}.yml
+        path: clang-tidy-fixes.yml
+    - name: Check Clang-Tidy Warnings
+      if: always()
+      run: |
+        if [ -e clang-tidy-fixes.yml ]; then
+          filesize=$(stat -c '%s' clang-tidy-fixes.yml)
+          if [ $filesize -gt 0 ]; then
+            echo "clang-tidy warnings found."
+            exit 1
+          else
+            exit 0
+          fi
+        fi
