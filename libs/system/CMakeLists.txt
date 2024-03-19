@@ -16,6 +16,8 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/FutureWatcher.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DispatcherTypes.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SystemTypes.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Event.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Event.hpp
 )
 
 target_link_libraries(System
