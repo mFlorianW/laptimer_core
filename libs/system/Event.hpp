@@ -20,6 +20,7 @@ public:
     enum class Type : std::uint16_t
     {
         Unknown,
+        QuitEvent,
     };
 
     /**

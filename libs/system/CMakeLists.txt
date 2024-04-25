@@ -18,6 +18,9 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/SystemTypes.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Event.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Event.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/EventLoop.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/EventLoop.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/EventReceiver.hpp
 )
 
 target_link_libraries(System
