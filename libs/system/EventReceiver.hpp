@@ -13,6 +13,13 @@ class EventReceiver
 {
 public:
     virtual ~EventReceiver() = default;
+
+    EventReceiver(EventReceiver const&) = delete;
+    EventReceiver& operator=(EventReceiver const&) = delete;
+
+    EventReceiver(EventReceiver&&) noexcept = default;
+    EventReceiver& operator=(EventReceiver&&) noexcept = default;
+
     virtual bool handleEvent(Event* event) = 0;
     std::thread::id getThreadId() const noexcept
     {
