@@ -5,6 +5,7 @@
 #include "SqliteSessionDatabase.hpp"
 #include "private/AsyncResultDb.hpp"
 #include "private/Statement.hpp"
+#include <algorithm>
 #include <cstring>
 #include <iostream>
 
