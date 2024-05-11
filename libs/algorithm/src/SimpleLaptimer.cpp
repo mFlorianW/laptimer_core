@@ -4,6 +4,7 @@
 
 #include "SimpleLaptimer.hpp"
 #include "DistanceCalculator.hpp"
+#include <algorithm>
 
 using namespace LaptimerCore::Common;
 
