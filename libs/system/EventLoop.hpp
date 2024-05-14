@@ -52,6 +52,12 @@ public:
     void postEvent(EventReceiver* receiver, std::unique_ptr<Event> event);
 
     /**
+     * Checks if for an existing event of @ref Event::Type type in the event loop
+     * @return true Event is present, otherwise false.
+     */
+    bool isEventQueued(EventReceiver* receiver, Event::Type type) const noexcept;
+
+    /**
      * Process all queue events and then returns
      */
     void processEvents();

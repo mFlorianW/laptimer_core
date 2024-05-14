@@ -72,6 +72,16 @@ public:
         mBlocker.notify_one();
     }
 
+    bool isEventQueued(EventReceiver* receiver, Event::Type type) const noexcept
+    {
+        for (auto const& entry : mEventQueue) {
+            if (entry.receiver == receiver and entry.event->getEventType() == type) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 private:
     struct EventQueueEntry
     {
