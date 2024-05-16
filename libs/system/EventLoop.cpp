@@ -28,19 +28,23 @@ public:
 
     void postEvent(EventReceiver* receiver, std::unique_ptr<Event> event, std::thread::id const& tid)
     {
-        std::lock_guard<std::mutex> guard{mMutex};
+
         if (tid != receiver->getThreadId()) {
             std::cerr
                 << "The event receiver has a different thread affinity. Event posted to wrong event loop instance.";
             return;
         }
-        mEventQueue.push_back(EventQueueEntry{.receiver = receiver, .event = std::move(event)});
-        mBlocker.notify_one();
+        if (event->getEventType() == Event::Type::QuitEvent) {
+            stopEventLoop();
+        } else {
+            std::lock_guard<std::mutex> guard{mMutex};
+            mEventQueue.push_back(EventQueueEntry{.receiver = receiver, .event = std::move(event)});
+            mBlocker.notify_all();
+        }
     }
 
     void processEvents()
     {
-        std::lock_guard<std::mutex> guard{mMutex};
         auto iter = mEventQueue.begin();
         while (iter != mEventQueue.end()) {
             iter->receiver->handleEvent(iter->event.get());
@@ -50,6 +54,7 @@ public:
 
     void exec()
     {
+        mRunning = true;
         while (mRunning) {
             std::unique_lock uLock{mMutex};
             mBlocker.wait(uLock);
@@ -67,7 +72,10 @@ public:
 
     void stopEventLoop()
     {
-        mRunning = false;
+        {
+            std::lock_guard<std::mutex> guard{mMutex};
+            mRunning = false;
+        }
         mEventQueue.clear();
         mBlocker.notify_one();
     }
@@ -94,45 +102,61 @@ private:
     bool mRunning = false;
 };
 
+std::unordered_map<std::thread::id, std::atomic_uint32_t>
+    EventLoop::EventLoop::mInstances = // NOLINT cppcoreguidelines-avoid-non-const-global-variables
+    std::unordered_map<std::thread::id, std::atomic_uint32_t>{};
+
 EventLoop::EventLoop()
-    : mOwingThread{std::this_thread::get_id()}
+    : mOwningThread{std::this_thread::get_id()}
 {
+    if (mInstances.count(mOwningThread) == 0) {
+        mInstances.emplace(mOwningThread, 1);
+    } else {
+        mInstances[mOwningThread]++;
+    }
 }
 
 EventLoop::~EventLoop()
 {
-    EventQueue::getInstance(mOwingThread).clearQueue();
+    mInstances[mOwningThread]--;
+    if (mInstances[mOwningThread] == 0) {
+        EventQueue::getInstance(mOwningThread).clearQueue();
+    }
 }
 
 void EventLoop::postEvent(EventReceiver* receiver, std::unique_ptr<Event> event)
 {
-    EventQueue::getInstance(mOwingThread).postEvent(receiver, std::move(event), receiver->getThreadId());
+    EventQueue::getInstance(mOwningThread).postEvent(receiver, std::move(event), receiver->getThreadId());
+}
+
+bool EventLoop::isEventQueued(EventReceiver* receiver, Event::Type type) const noexcept
+{
+    return EventQueue::getInstance(mOwningThread).isEventQueued(receiver, type);
 }
 
 void EventLoop::processEvents()
 {
-    if (std::this_thread::get_id() != mOwingThread) {
+    if (std::this_thread::get_id() != mOwningThread) {
         std::cerr << "Events can only be processed from the EventLoop owning thread.\n";
-        std::cerr << "Owning thread: " << mOwingThread << " Calling thread: " << std::this_thread::get_id() << "\n";
+        std::cerr << "Owning thread: " << mOwningThread << " Calling thread: " << std::this_thread::get_id() << "\n";
         return;
     }
-
-    EventQueue::getInstance(mOwingThread).processEvents();
+    EventQueue::getInstance(mOwningThread).processEvents();
 }
 
 void EventLoop::exec()
 {
-    if (std::this_thread::get_id() != mOwingThread) {
+    if (std::this_thread::get_id() != mOwningThread) {
         std::cerr << "Exec can only be called from the Eventloop owning thread.\n";
-        std::cerr << "Owning thread: " << mOwingThread << " Calling thread: " << std::this_thread::get_id() << "\n";
+        std::cerr << "Owning thread: " << mOwningThread << " Calling thread: " << std::this_thread::get_id() << "\n";
     }
-    EventQueue::getInstance(mOwingThread).exec();
+    EventQueue::getInstance(mOwningThread).exec();
 }
 
 bool EventLoop::handleEvent(Event* event)
 {
     if (event->getEventType() == Event::Type::QuitEvent) {
-        EventQueue::getInstance(mOwingThread).stopEventLoop();
+        EventQueue::getInstance(mOwningThread).stopEventLoop();
         return true;
     }
     return false;

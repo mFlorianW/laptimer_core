@@ -149,3 +149,22 @@ SCENARIO("An Eventloop shall block the running thread until the quit event occur
         }
     }
 }
+
+SCENARIO("An Eventloop shall be possible to check if a certian event is in the evenloop")
+{
+
+    GIVEN("An EventLoop")
+    {
+        auto eventLoop = EventLoop{};
+        auto eventReceiver = TestEventReceiver{};
+
+        WHEN("A event is posted for a receiver")
+        {
+            eventLoop.postEvent(&eventReceiver, std::make_unique<Event>(Event::Type::Unknown));
+            THEN("The check for the event is present shall be true")
+            {
+                REQUIRE(eventLoop.isEventQueued(&eventReceiver, Event::Type::Unknown));
+            }
+        }
+    }
+}
