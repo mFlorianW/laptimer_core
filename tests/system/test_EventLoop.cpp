@@ -94,33 +94,39 @@ SCENARIO("Every thread shall have it's own event loop and events for a specific 
     {
         auto tid1 = std::thread::id{0};
         auto tid11 = std::thread::id{0};
-        auto thread1 = std::thread{[&tid1]() {
+        auto thread1 = std::thread{[&tid1, &tid11]() {
             auto eventLoop = EventLoop{};
-            auto eventReceiver = TestEventReceiver{};
+            auto eventReceiver = TestEventReceiver();
             eventLoop.postEvent(&eventReceiver, std::make_unique<Event>());
-            std::this_thread::sleep_for(std::chrono::milliseconds{3});
             eventLoop.processEvents();
             tid1 = eventReceiver.tid;
+            tid11 = std::this_thread::get_id();
         }};
-        tid11 = thread1.get_id();
+        if (thread1.joinable()) {
+            thread1.join();
+        } else {
+            FAIL("Thread1 is not joinable.");
+        }
 
         auto tid2 = std::thread::id{0};
         auto tid22 = std::thread::id{0};
-        auto thread2 = std::thread{[&tid2]() {
+        auto thread2 = std::thread{[&tid2, &tid22]() {
             auto eventLoop = EventLoop{};
-            auto eventReceiver = TestEventReceiver{};
+            auto eventReceiver = TestEventReceiver();
             eventLoop.postEvent(&eventReceiver, std::make_unique<Event>());
-            std::this_thread::sleep_for(std::chrono::milliseconds{1});
             eventLoop.processEvents();
             tid2 = eventReceiver.tid;
+            tid22 = std::this_thread::get_id();
         }};
-        tid22 = thread2.get_id();
+        if (thread2.joinable()) {
+            thread2.join();
+        } else {
+            FAIL("Thread2 is not joinable");
+        }
 
         WHEN("The threads are done")
         {
-            thread1.join();
-            thread2.join();
-            THEN("Only the events should only be called once. In each thread.")
+            THEN("The event recievers id and the thread id should be the same.")
             {
                 REQUIRE(tid11 == tid1);
                 REQUIRE(tid22 == tid2);

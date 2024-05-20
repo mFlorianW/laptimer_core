@@ -19,8 +19,10 @@ public:
 
     static EventQueue& getInstance(std::thread::id const& tid)
     {
+        static std::mutex mutex;
         static std::unordered_map<std::thread::id, std::unique_ptr<EventQueue>> eventQueues;
         if (eventQueues.count(tid) == 0) {
+            std::lock_guard<std::mutex> guard{mutex};
             eventQueues.emplace(tid, std::make_unique<EventQueue>());
         }
         return *eventQueues[tid];
@@ -126,7 +128,7 @@ EventLoop::~EventLoop()
 
 void EventLoop::postEvent(EventReceiver* receiver, std::unique_ptr<Event> event)
 {
-    EventQueue::getInstance(mOwningThread).postEvent(receiver, std::move(event), receiver->getThreadId());
+    EventQueue::getInstance(receiver->getThreadId()).postEvent(receiver, std::move(event), receiver->getThreadId());
 }
 
 bool EventLoop::isEventQueued(EventReceiver* receiver, Event::Type type) const noexcept
