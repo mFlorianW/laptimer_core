@@ -5,17 +5,20 @@
 #ifndef TIMER_HPP
 #define TIMER_HPP
 
-#include "IDispatcherObject.hpp"
+#include "EventReceiver.hpp"
 #include <chrono>
 #include <kdbindings/signal.h>
 
 namespace LaptimerCore::System
 {
 
-class Timer final : public IDispatcherObject
+namespace Private
 {
-    friend struct TimerRegister;
+class TimerImpl;
+}
 
+class Timer final : public EventReceiver
+{
 public:
     /**
      * Creates an instance of the Timer.
@@ -76,17 +79,19 @@ public:
     bool isRunning();
 
     /**
+     * @copydoc EventReceiver::handleEvent
+     */
+    bool handleEvent(Event* event) override;
+
+    /**
      * This signal is emitted when the timer reaches it's intervall.
      */
     KDBindings::Signal<> timeout;
 
-protected:
-    void dispatch() override;
-
 private:
     std::chrono::milliseconds mInterval{0};
-    std::chrono::time_point<std::chrono::steady_clock> mStartTime;
     bool mRunning{false};
+    std::unique_ptr<Private::TimerImpl> mTimer;
 };
 
 } // namespace LaptimerCore::System

@@ -4,6 +4,7 @@
 
 #include "SimpleLaptimer.hpp"
 #include "DistanceCalculator.hpp"
+#include <algorithm>
 
 using namespace LaptimerCore::Common;
 
@@ -103,14 +104,14 @@ bool SimpleLaptimer::passedPoint(Common::PositionData const& point) const
         return false;
     }
 
-    std::array<float, 4> distances;
+    std::array<float, 4> distances{};
     for (size_t i = 0; i < 4; ++i) {
         distances[i] = DistanceCalculator::calculateDistance(mCurrentPoints[i], point);
     }
 
-    if ((distances[0] > distances[1]) && (distances[1] < distances[2]) && (distances[2] < distances[3])) {
-        return true;
-    } else if ((distances[0] > distances[1]) && (distances[1] > distances[2]) && (distances[2] < distances[3])) {
+    bool lastDistance = distances[2] < distances[3];
+    bool firstDistance = distances[0] > distances[1];
+    if (firstDistance and lastDistance and ((distances[1] < distances[2]) or (distances[1] > distances[2]))) {
         return true;
     }
 

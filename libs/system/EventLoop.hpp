@@ -6,8 +6,10 @@
 
 #include "Event.hpp"
 #include "EventReceiver.hpp"
+#include <atomic>
 #include <memory>
 #include <thread>
+#include <unordered_map>
 
 namespace LaptimerCore::System
 {
@@ -52,6 +54,12 @@ public:
     void postEvent(EventReceiver* receiver, std::unique_ptr<Event> event);
 
     /**
+     * Checks if for an existing event of @ref Event::Type type in the event loop
+     * @return true Event is present, otherwise false.
+     */
+    bool isEventQueued(EventReceiver* receiver, Event::Type type) const noexcept;
+
+    /**
      * Process all queue events and then returns
      */
     void processEvents();
@@ -68,7 +76,9 @@ public:
     bool handleEvent(Event* event) override;
 
 private:
-    std::thread::id mOwingThread = std::thread::id{0};
+    static std::unordered_map<std::thread::id, std::atomic_uint32_t>
+        mInstances; // NOLINT cppcoreguidelines-avoid-non-const-global-variables
+    std::thread::id mOwningThread;
 };
 
 } // namespace LaptimerCore::System

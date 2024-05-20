@@ -3,48 +3,41 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "Timer.hpp"
-#include "SignalDispatcher.hpp"
-#include <unordered_set>
+#include <iostream>
+#ifdef __linux__
+#include "private/PosixTimer.hpp"
+#endif
 
 namespace LaptimerCore::System
 {
 
 Timer::Timer()
 {
-    SignalDispatcher{}.registerObject(this, std::this_thread::get_id());
-}
+    mTimer = std::make_unique<Private::TimerImpl>(*this);
+};
 
 Timer::~Timer()
 {
     if (mRunning) {
         stop();
     }
-
-    SignalDispatcher{}.unregisterObject(this, std::this_thread::get_id());
 }
 
 void Timer::start()
 {
-    if (mRunning || (mInterval == std::chrono::milliseconds(0))) {
-        return;
-    }
-
-    mStartTime = std::chrono::steady_clock::now();
+    mTimer->setTimerInterval(std::chrono::duration_cast<std::chrono::nanoseconds>(mInterval));
     mRunning = true;
 }
 
 void Timer::stop()
 {
+    mTimer->setTimerInterval(std::chrono::nanoseconds(0));
     mRunning = false;
 }
 
 void Timer::setInterval(std::chrono::milliseconds interval)
 {
     mInterval = interval;
-    if (mRunning) {
-        stop();
-        start();
-    }
 }
 
 std::chrono::milliseconds Timer::getInterval()
@@ -57,17 +50,14 @@ bool Timer::isRunning()
     return mRunning;
 }
 
-void Timer::dispatch()
+bool Timer::handleEvent(Event* event)
 {
-    if (mRunning) {
-        auto const elapsedTime =
-            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - mStartTime)
-                .count();
-        if (elapsedTime >= mInterval.count()) {
-            mStartTime = std::chrono::steady_clock::now();
-            timeout.emit();
-        }
+    if (mRunning and event->getEventType() == Event::Type::Timeout) {
+        std::cerr << "timeout \n";
+        timeout.emit();
+        return true;
     }
+    return false;
 }
 
 } // namespace LaptimerCore::System

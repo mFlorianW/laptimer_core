@@ -19,6 +19,7 @@ PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/PositionDateTimeProvider.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SqliteDatabaseTestHelper.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RestSessionDownloaderClient.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/CompareHelper.hpp
 )
 
 target_include_directories(TestHelper

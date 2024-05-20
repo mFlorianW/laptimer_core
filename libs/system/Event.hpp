@@ -21,6 +21,7 @@ public:
     {
         Unknown,
         QuitEvent,
+        Timeout,
     };
 
     /**
