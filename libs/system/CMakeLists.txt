@@ -5,6 +5,8 @@ target_sources(System
 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/private/SignalDispatcherRegistry.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/private/SignalDispatcherRegistry.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/private/PosixTimer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/private/PosixTimer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Timer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Timer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ISignalDispatcher.cpp

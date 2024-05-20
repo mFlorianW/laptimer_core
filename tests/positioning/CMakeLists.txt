@@ -1,6 +1,6 @@
 include(Catch)
 
 add_executable(test_ConstantVelocityPostionDateTimeProvider test_ConstantVelocityPostionDateTimeProvider.cpp)
-target_link_libraries(test_ConstantVelocityPostionDateTimeProvider PRIVATE Catch2::Catch2 LaptimerCore::Positioning)
+target_link_libraries(test_ConstantVelocityPostionDateTimeProvider PRIVATE Catch2::Catch2 LaptimerCore::Positioning LaptimerCore::TestHelper)
 
 catch_discover_tests(test_ConstantVelocityPostionDateTimeProvider)
