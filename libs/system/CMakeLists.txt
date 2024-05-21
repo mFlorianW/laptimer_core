@@ -22,7 +22,8 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Event.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/EventLoop.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/EventLoop.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/EventReceiver.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/EventHandler.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/EventHandler.hpp
 )
 
 target_link_libraries(System
