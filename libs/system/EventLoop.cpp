@@ -28,7 +28,7 @@ public:
         return *eventQueues[tid];
     }
 
-    void postEvent(EventReceiver* receiver, std::unique_ptr<Event> event, std::thread::id const& tid)
+    void postEvent(EventHandler* receiver, std::unique_ptr<Event> event, std::thread::id const& tid)
     {
 
         if (tid != receiver->getThreadId()) {
@@ -81,7 +81,7 @@ public:
         mBlocker.notify_one();
     }
 
-    bool isEventQueued(EventReceiver* receiver, Event::Type type) const noexcept
+    bool isEventQueued(EventHandler* receiver, Event::Type type) const noexcept
     {
         for (auto const& entry : mEventQueue) {
             if (entry.receiver == receiver and entry.event->getEventType() == type) {
@@ -94,7 +94,7 @@ public:
 private:
     struct EventQueueEntry
     {
-        EventReceiver* receiver;
+        EventHandler* receiver;
         std::unique_ptr<Event> event;
     };
     std::deque<EventQueueEntry> mEventQueue;
@@ -110,12 +110,12 @@ EventLoop::EventLoop()
 
 EventLoop::~EventLoop() = default;
 
-void EventLoop::postEvent(EventReceiver* receiver, std::unique_ptr<Event> event)
+void EventLoop::postEvent(EventHandler* receiver, std::unique_ptr<Event> event)
 {
     EventQueue::getInstance(receiver->getThreadId()).postEvent(receiver, std::move(event), receiver->getThreadId());
 }
 
-bool EventLoop::isEventQueued(EventReceiver* receiver, Event::Type type) const noexcept
+bool EventLoop::isEventQueued(EventHandler* receiver, Event::Type type) const noexcept
 {
     return EventQueue::getInstance(mOwningThread).isEventQueued(receiver, type);
 }

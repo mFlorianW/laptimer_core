@@ -4,8 +4,8 @@
 
 #pragma once
 
+#include "EventHandler.hpp"
 #include "EventLoop.hpp"
-#include "EventReceiver.hpp"
 #include <future>
 #include <iostream>
 #include <kdbindings/signal.h>
@@ -14,7 +14,7 @@ namespace LaptimerCore::System
 {
 
 template <class T>
-class FutureWatcher : public EventReceiver
+class FutureWatcher : public EventHandler
 {
 public:
     /**

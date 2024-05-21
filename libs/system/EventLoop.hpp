@@ -5,7 +5,7 @@
 #pragma once
 
 #include "Event.hpp"
-#include "EventReceiver.hpp"
+#include "EventHandler.hpp"
 #include <atomic>
 #include <memory>
 #include <thread>
@@ -17,7 +17,7 @@ namespace LaptimerCore::System
 /**
  * Provides functions to post, process events and can start an event loop.
  */
-class EventLoop : public EventReceiver
+class EventLoop : public EventHandler
 {
 public:
     /**
@@ -51,13 +51,13 @@ public:
      * Post an event for the receiver
      * @param receiver The receiver that shall receive the event.
      */
-    void postEvent(EventReceiver* receiver, std::unique_ptr<Event> event);
+    void postEvent(EventHandler* receiver, std::unique_ptr<Event> event);
 
     /**
      * Checks if for an existing event of @ref Event::Type type in the event loop
      * @return true Event is present, otherwise false.
      */
-    bool isEventQueued(EventReceiver* receiver, Event::Type type) const noexcept;
+    bool isEventQueued(EventHandler* receiver, Event::Type type) const noexcept;
 
     /**
      * Process all queue events and then returns

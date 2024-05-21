@@ -10,7 +10,7 @@
 
 using namespace LaptimerCore::System;
 
-class TestEventReceiver : public EventReceiver
+class TestEventReceiver : public EventHandler
 {
 
 public:

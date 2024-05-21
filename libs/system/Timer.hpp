@@ -5,7 +5,7 @@
 #ifndef TIMER_HPP
 #define TIMER_HPP
 
-#include "EventReceiver.hpp"
+#include "EventHandler.hpp"
 #include <chrono>
 #include <kdbindings/signal.h>
 
@@ -17,7 +17,7 @@ namespace Private
 class TimerImpl;
 }
 
-class Timer final : public EventReceiver
+class Timer final : public EventHandler
 {
 public:
     /**
