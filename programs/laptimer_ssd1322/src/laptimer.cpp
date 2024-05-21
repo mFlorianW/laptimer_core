@@ -7,13 +7,13 @@
 #include <LibraryPath.hpp>
 #include <SDL2/SDL.h>
 #include <ScreenModel.hpp>
+#include <SignalDispatcher.hpp>
 #include <SqliteSessionDatabase.hpp>
 #include <SqliteTrackDatabase.hpp>
 #include <StaticGpsInformationProvider.hpp>
 #include <StaticPositionDateTimeProvider.hpp>
 #include <filesystem>
 #include <fstream>
-#include <iomanip>
 #include <iostream>
 #include <monitor.h>
 #include <mouse.h>
@@ -44,8 +44,8 @@ static void hal_init()
 
     /*Create a display buffer*/
     static lv_disp_buf_t disp_buf1;
-    static lv_color_t buf1_1[LV_HOR_RES_MAX * 120];
-    lv_disp_buf_init(&disp_buf1, buf1_1, nullptr, LV_HOR_RES_MAX * 120);
+    static lv_color_t buf1_1[LV_HOR_RES_MAX * 120]; // NOLINT modernize-avoid-c-arrays
+    lv_disp_buf_init(&disp_buf1, &buf1_1[0], nullptr, LV_HOR_RES_MAX * 120);
 
     /*Create a display*/
     lv_disp_drv_t disp_drv;
@@ -85,14 +85,14 @@ std::vector<LaptimerCore::Common::PositionData> loadPositions(std::string const 
     while (std::getline(file, line)) {
         std::istringstream input(line);
         std::array<std::string, 2> splittedLine;
-        for (std::size_t i = 0; i < splittedLine.size(); ++i) {
-            getline(input, splittedLine[i], ',');
+        for (auto& i : splittedLine) {
+            getline(input, i, ',');
         }
 
         auto longitude = std::stof(splittedLine[0]);
         auto latitude = std::stof(splittedLine[1]);
 
-        positions.emplace_back(LaptimerCore::Common::PositionData{latitude, longitude});
+        positions.emplace_back(latitude, longitude);
     }
 
     return positions;

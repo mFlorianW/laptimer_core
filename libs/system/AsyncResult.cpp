@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "AsyncResult.hpp"
+#include "EventLoop.hpp"
 #include "SignalDispatcher.hpp"
 
 namespace LaptimerCore::System
@@ -29,10 +30,8 @@ void AsyncResult::waitForFinished() noexcept
         return;
     }
 
-    auto disp = SignalDispatcher{};
     while (mResult == Result::NotFinished) {
-        disp.exec();
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        EventLoop{}.processEvents();
     }
 }
 
