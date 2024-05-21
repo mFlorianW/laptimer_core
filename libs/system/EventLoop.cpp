@@ -58,11 +58,11 @@ public:
     {
         mRunning = true;
         while (mRunning) {
-            std::unique_lock uLock{mMutex};
-            mBlocker.wait(uLock);
             if (not mRunning) {
                 break;
             }
+            std::unique_lock uLock{mMutex};
+            mBlocker.wait(uLock);
             processEvents();
         }
     }
@@ -78,7 +78,6 @@ public:
             std::lock_guard<std::mutex> guard{mMutex};
             mRunning = false;
         }
-        mEventQueue.clear();
         mBlocker.notify_one();
     }
 
@@ -104,27 +103,12 @@ private:
     bool mRunning = false;
 };
 
-std::unordered_map<std::thread::id, std::atomic_uint32_t>
-    EventLoop::EventLoop::mInstances = // NOLINT cppcoreguidelines-avoid-non-const-global-variables
-    std::unordered_map<std::thread::id, std::atomic_uint32_t>{};
-
 EventLoop::EventLoop()
     : mOwningThread{std::this_thread::get_id()}
 {
-    if (mInstances.count(mOwningThread) == 0) {
-        mInstances.emplace(mOwningThread, 1);
-    } else {
-        mInstances[mOwningThread]++;
-    }
 }
 
-EventLoop::~EventLoop()
-{
-    mInstances[mOwningThread]--;
-    if (mInstances[mOwningThread] == 0) {
-        EventQueue::getInstance(mOwningThread).clearQueue();
-    }
-}
+EventLoop::~EventLoop() = default;
 
 void EventLoop::postEvent(EventReceiver* receiver, std::unique_ptr<Event> event)
 {

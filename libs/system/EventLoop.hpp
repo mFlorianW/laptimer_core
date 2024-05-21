@@ -76,8 +76,6 @@ public:
     bool handleEvent(Event* event) override;
 
 private:
-    static std::unordered_map<std::thread::id, std::atomic_uint32_t>
-        mInstances; // NOLINT cppcoreguidelines-avoid-non-const-global-variables
     std::thread::id mOwningThread;
 };
 
