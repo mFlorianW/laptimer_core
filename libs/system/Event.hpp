@@ -22,6 +22,7 @@ public:
         Unknown,
         QuitEvent,
         Timeout,
+        ThreadFinished,
     };
 
     /**

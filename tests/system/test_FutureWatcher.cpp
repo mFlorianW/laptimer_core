@@ -3,11 +3,15 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #define CATCH_CONFIG_MAIN
+#include "CompareHelper.hpp"
 #include "FutureWatcher.hpp"
 #include <catch2/catch.hpp>
 #include <thread>
 
 using namespace LaptimerCore::System;
+
+namespace
+{
 
 void sleepy(std::promise<void> promise)
 {
@@ -20,6 +24,8 @@ void returny(std::promise<bool> promise)
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
     promise.set_value(true);
 }
+
+} // namespace
 
 SCENARIO("The FutureWatcher shall emit the finish signal when the future finishes.", "[FutureWatcher]")
 {
@@ -39,8 +45,7 @@ SCENARIO("The FutureWatcher shall emit the finish signal when the future finishe
 
             THEN("The finished signal should be emitted")
             {
-                SignalDispatcher{}.exec();
-                REQUIRE(finishSignalEmitted == true);
+                REQUIRE_COMPARE_WITH_TIMEOUT(finishSignalEmitted, true, std::chrono::milliseconds{1000});
             }
         }
     }
@@ -60,7 +65,6 @@ SCENARIO("The FutureWatcher shall be to return the result of the observed future
 
             THEN("The correct value of the future shall be returned")
             {
-                SignalDispatcher{}.exec();
                 REQUIRE(futureWatcher.getResult() == true);
             }
         }

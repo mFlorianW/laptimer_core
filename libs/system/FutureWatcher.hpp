@@ -4,19 +4,17 @@
 
 #pragma once
 
-#include "IDispatcherObject.hpp"
-#include "SignalDispatcher.hpp"
+#include "EventLoop.hpp"
+#include "EventReceiver.hpp"
 #include <future>
 #include <iostream>
 #include <kdbindings/signal.h>
-#include <set>
-#include <unordered_set>
 
 namespace LaptimerCore::System
 {
 
 template <class T>
-class FutureWatcher : public IDispatcherObject
+class FutureWatcher : public EventReceiver
 {
 public:
     /**
@@ -41,8 +39,6 @@ public:
         if (mFutureObserver.joinable()) {
             mFutureObserver.join();
         }
-
-        SignalDispatcher{}.unregisterObject(this, std::this_thread::get_id());
     }
 
     /**
@@ -72,14 +68,14 @@ public:
     void setFuture(std::future<T> future) noexcept
     {
         mFuture = std::move(future);
-        SignalDispatcher{}.registerObject(this, std::this_thread::get_id());
         try {
             mFutureObserver = std::thread{[this]() {
                 mFuture.wait();
+                EventLoop{}.postEvent(this, std::make_unique<Event>(Event::Type::ThreadFinished));
                 mFinished = true;
             }};
         } catch (std::system_error& e) {
-            std::cout << "Failed to create future observer error:" << e.what() << std::endl;
+            std::cerr << "Failed to create future observer error:" << e.what() << std::endl;
         }
     }
 
@@ -100,17 +96,21 @@ public:
     }
 
     /**
+     * @copydoc EventReceiver::handleEvent
+     */
+    bool handleEvent(Event* event) noexcept override
+    {
+        if (event->getEventType() == Event::Type::ThreadFinished) {
+            finished.emit();
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * This signal is emitted when the observed future execution is finished.
      */
     KDBindings::Signal<> finished;
-
-protected:
-    void dispatch() override
-    {
-        if (mFinished) {
-            finished.emit();
-        }
-    }
 
 private:
     void futureWatcher() const noexcept
