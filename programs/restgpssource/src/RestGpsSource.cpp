@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "RestGpsSource.hpp"
+#include "EventLoop.hpp"
 #include "MainWindowViewModel.hpp"
-#include "SignalDispatcher.hpp"
 #include <QQmlContext>
 #include <QQuickWindow>
 #include <QTimer>
@@ -15,8 +15,9 @@ struct RestGpsSourcePrivate
     QQmlApplicationEngine mEngine;
     MainWindowViewModel mMainWindowViewModel;
     QTimer mLaptimerCoreTimer;
-    LaptimerCore::System::SignalDispatcher mDispatcher;
+    LaptimerCore::System::EventLoop mEventLoop;
 };
+
 RestGpsSource::RestGpsSource()
     : d{std::make_unique<RestGpsSourcePrivate>()}
 {
@@ -26,9 +27,9 @@ RestGpsSource::RestGpsSource()
     d->mEngine.load(QUrl{"qrc:/qml/MainWindow.qml"});
 
     // TODO: move this in somehow in the mainloop
-    d->mLaptimerCoreTimer.setInterval(std::chrono::milliseconds(5));
+    d->mLaptimerCoreTimer.setInterval(std::chrono::milliseconds(1));
     QObject::connect(&d->mLaptimerCoreTimer, &QTimer::timeout, &d->mLaptimerCoreTimer, [=]() {
-        d->mDispatcher.exec();
+        d->mEventLoop.processEvents();
     });
     d->mLaptimerCoreTimer.start();
 }
