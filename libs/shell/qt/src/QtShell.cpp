@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "QtShell.hpp"
+#include "EventLoop.hpp"
 #include "MainWindowViewModel.hpp"
-#include "SignalDispatcher.hpp"
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickView>
@@ -19,7 +19,7 @@ struct QtShellPrivate
     QQmlApplicationEngine engine;
     MainWindowViewModel mMainWindowViewModel;
     QTimer laptimerCoreTimer;
-    System::SignalDispatcher mDispatcher;
+    System::EventLoop mEventLoop;
 };
 
 QtShell::QtShell()
@@ -33,7 +33,7 @@ QtShell::QtShell()
     // TODO: move this in somehow in the mainloop
     d->laptimerCoreTimer.setInterval(5);
     QObject::connect(&d->laptimerCoreTimer, &QTimer::timeout, &d->laptimerCoreTimer, [=]() {
-        d->mDispatcher.exec();
+        d->mEventLoop.exec();
     });
     d->laptimerCoreTimer.start();
 }

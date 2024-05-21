@@ -4,9 +4,9 @@
 
 #include "CliOptions.hpp"
 #include "LappySessionDownloader.hpp"
+#include <EventLoop.hpp>
 #include <QApplication>
 #include <QTimer>
-#include <SignalDispatcher.hpp>
 
 int main(int argc, char** argv)
 {
@@ -21,13 +21,13 @@ int main(int argc, char** argv)
     auto const sDl = LaptimerCore::SessionDl::LappySessionDownloader{options.getHostAddress(), options.getPort()};
     sDl.show();
 
-    auto lappyCoreSignalDispatcher = LaptimerCore::System::SignalDispatcher{};
-    auto lappyCoreSignaldispatcherTimer = QTimer{};
-    lappyCoreSignaldispatcherTimer.setInterval(std::chrono::milliseconds(1));
-    QObject::connect(&lappyCoreSignaldispatcherTimer, &QTimer::timeout, &lappyCoreSignaldispatcherTimer, [&] {
-        lappyCoreSignalDispatcher.exec();
+    auto eventLoop = LaptimerCore::System::EventLoop{};
+    auto eventLoopTrigger = QTimer{};
+    eventLoopTrigger.setInterval(std::chrono::milliseconds(1));
+    QObject::connect(&eventLoopTrigger, &QTimer::timeout, &eventLoopTrigger, [&] {
+        eventLoop.processEvents();
     });
-    lappyCoreSignaldispatcherTimer.start();
+    eventLoopTrigger.start();
 
     return app.exec();
 }

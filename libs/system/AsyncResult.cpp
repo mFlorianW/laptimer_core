@@ -4,7 +4,6 @@
 
 #include "AsyncResult.hpp"
 #include "EventLoop.hpp"
-#include "SignalDispatcher.hpp"
 
 namespace LaptimerCore::System
 {

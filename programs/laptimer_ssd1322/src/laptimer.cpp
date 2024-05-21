@@ -7,7 +7,6 @@
 #include <LibraryPath.hpp>
 #include <SDL2/SDL.h>
 #include <ScreenModel.hpp>
-#include <SignalDispatcher.hpp>
 #include <SqliteSessionDatabase.hpp>
 #include <SqliteTrackDatabase.hpp>
 #include <StaticGpsInformationProvider.hpp>
@@ -122,7 +121,7 @@ int main(int argc, char* argv[])
     // Load GPS position file
     auto positions = loadPositions("/home/florian/Coding/laptimer_core/laps/Oschersleben.csv");
 
-    auto dispatcher = LaptimerCore::System::SignalDispatcher{};
+    auto eventLoop = LaptimerCore::System::EventLoop{};
     auto gpsInfoProvider = LaptimerCore::Positioning::StaticGpsInformationProvider{};
     auto posDateTimeProvider = LaptimerCore::Positioning::ConstantVelocityPositionDateTimeProvider{positions};
     auto sessionDatabase = LaptimerCore::Storage::SqliteSessionDatabase{LIBRARY_FILE};
@@ -136,7 +135,7 @@ int main(int argc, char* argv[])
         /* Periodically call the lv_task handler.
          * It could be done in a timer interrupt or an OS task too.*/
         lv_task_handler();
-        dispatcher.exec();
-        usleep(5 * 1000);
+        eventLoop.processEvents();
+        usleep(1 * 1000);
     }
 }
