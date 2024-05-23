@@ -13,4 +13,5 @@ PRIVATE
 target_link_libraries(lappy_headless
 PRIVATE
     LaptimerCore::LibraryPath
+    LaptimerCore::System
 )
