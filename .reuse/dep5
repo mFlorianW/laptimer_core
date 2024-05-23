@@ -1,8 +1,8 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Blabby
+Upstream-Name: laptimer_core
 Upstream-Contact: Florian Weßel <florianwessel@gmx.net>
 Source: https://github.com/mFlorianW/blabby
 
-Files: .gitignore doc/ db/ *.sql *.json *.qrc *.md .github/* .pre-commit-config.yaml *CMakeLists.txt *.cmake.in CMakePresets.json .clang-format .clang-tidy *.svg docs/*.in format.sh configuration/*.cmake configuration/*.sh docs/style/README.md
+Files: laps/* .gitignore doc/ db/ *.sql *.json *.qrc *.md .github/* .pre-commit-config.yaml *CMakeLists.txt *.cmake.in CMakePresets.json .clang-format .clang-tidy *.svg docs/*.in format.sh configuration/*.cmake configuration/*.sh docs/style/README.md
 Copyright: 2020 - 2024 All contributors
 License: GPL-2.0-or-later
