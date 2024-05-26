@@ -7,6 +7,7 @@
 #include <LibraryPath.hpp>
 #include <PositionData.hpp>
 #include <SqliteSessionDatabase.hpp>
+#include <SqliteTrackDatabase.hpp>
 #include <array>
 #include <csignal>
 #include <fstream>
@@ -70,6 +71,9 @@ int main(int argc, char** argv)
 
     // Setup session database
     auto sessionDatabase = SqliteSessionDatabase{LIBRARY_FILE};
+
+    // Setup track database
+    auto trackDatabase = SqliteTrackDatabase{LIBRARY_FILE};
 
     eventLoop.exec();
     return 0;

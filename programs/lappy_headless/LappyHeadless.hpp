@@ -6,6 +6,7 @@
 
 #include <IPositionDateTimeProvider.hpp>
 #include <ISessionDatabase.hpp>
+#include <ITrackDatabase.hpp>
 
 namespace LaptimerCore::LappyHeadless
 {
@@ -14,11 +15,13 @@ class LappyHeadless
 {
 public:
     LappyHeadless(LaptimerCore::Positioning::IPositionDateTimeProvider& posProvider,
-                  LaptimerCore::Storage::ISessionDatabase& sessionDatabase);
+                  LaptimerCore::Storage::ISessionDatabase& sessionDatabase,
+                  LaptimerCore::Storage::ITrackDatabase& trackDatabase);
 
 private:
     LaptimerCore::Positioning::IPositionDateTimeProvider& mPositionProvider;
     LaptimerCore::Storage::ISessionDatabase& mSessionDatabase;
+    LaptimerCore::Storage::ITrackDatabase& mTrackDatabase;
 };
 
 } // namespace LaptimerCore::LappyHeadless
