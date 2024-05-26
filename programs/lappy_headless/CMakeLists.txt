@@ -17,4 +17,5 @@ PRIVATE
     LaptimerCore::LibraryPath
     LaptimerCore::System
     LaptimerCore::Positioning
+    LaptimerCore::Storage
 )

@@ -7,8 +7,11 @@
 namespace LaptimerCore::LappyHeadless
 {
 
-LappyHeadless::LappyHeadless(LaptimerCore::Positioning::IPositionDateTimeProvider& posProvider)
+LappyHeadless::LappyHeadless(LaptimerCore::Positioning::IPositionDateTimeProvider& posProvider,
+
+                             LaptimerCore::Storage::ISessionDatabase& sessionDatabase)
     : mPositionProvider{posProvider}
+    , mSessionDatabase{sessionDatabase}
 {
 }
 

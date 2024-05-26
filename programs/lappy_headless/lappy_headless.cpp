@@ -4,19 +4,25 @@
 
 #include <ConstantVelocityPositionDateTimeProvider.hpp>
 #include <EventLoop.hpp>
+#include <LibraryPath.hpp>
 #include <PositionData.hpp>
+#include <SqliteSessionDatabase.hpp>
 #include <array>
 #include <csignal>
 #include <fstream>
+#include <pwd.h>
 #include <sstream>
 #include <string>
+#include <unistd.h>
 #include <vector>
 
 using namespace LaptimerCore::System;
 using namespace LaptimerCore::Positioning;
+using namespace LaptimerCore::Storage;
 
 namespace
 {
+
 void signalHandler(int)
 {
     auto el = EventLoop{};
@@ -60,9 +66,10 @@ int main(int argc, char** argv)
 
     // Load GPS position file
     auto positions = loadCsvPositions("/home/florian/Coding/laptimer_core/laps/Oschersleben.csv");
-
     auto positionProvider = ConstantVelocityPositionDateTimeProvider{positions};
 
+    // Setup session database
+    auto sessionDatabase = SqliteSessionDatabase{LIBRARY_FILE};
 
     eventLoop.exec();
     return 0;

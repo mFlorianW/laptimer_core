@@ -5,6 +5,7 @@
 #pragma once
 
 #include <IPositionDateTimeProvider.hpp>
+#include <ISessionDatabase.hpp>
 
 namespace LaptimerCore::LappyHeadless
 {
@@ -12,10 +13,12 @@ namespace LaptimerCore::LappyHeadless
 class LappyHeadless
 {
 public:
-    LappyHeadless(LaptimerCore::Positioning::IPositionDateTimeProvider& posProvider);
+    LappyHeadless(LaptimerCore::Positioning::IPositionDateTimeProvider& posProvider,
+                  LaptimerCore::Storage::ISessionDatabase& sessionDatabase);
 
 private:
     LaptimerCore::Positioning::IPositionDateTimeProvider& mPositionProvider;
+    LaptimerCore::Storage::ISessionDatabase& mSessionDatabase;
 };
 
 } // namespace LaptimerCore::LappyHeadless
