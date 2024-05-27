@@ -7,6 +7,8 @@
 #include <IPositionDateTimeProvider.hpp>
 #include <ISessionDatabase.hpp>
 #include <ITrackDatabase.hpp>
+#include <TrackDetection.hpp>
+#include <TrackDetectionWorkflow.hpp>
 
 namespace LaptimerCore::LappyHeadless
 {
@@ -22,6 +24,8 @@ private:
     LaptimerCore::Positioning::IPositionDateTimeProvider& mPositionProvider;
     LaptimerCore::Storage::ISessionDatabase& mSessionDatabase;
     LaptimerCore::Storage::ITrackDatabase& mTrackDatabase;
+    LaptimerCore::Algorithm::TrackDetection mTrackDetection{500};
+    LaptimerCore::Workflow::TrackDetectionWorkflow mTrackDetectionWorkflow{mTrackDetection, mPositionProvider};
 };
 
 } // namespace LaptimerCore::LappyHeadless

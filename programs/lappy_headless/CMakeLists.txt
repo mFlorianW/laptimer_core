@@ -18,4 +18,5 @@ PRIVATE
     LaptimerCore::System
     LaptimerCore::Positioning
     LaptimerCore::Storage
+    LaptimerCore::Workflow
 )
