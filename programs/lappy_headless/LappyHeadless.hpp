@@ -4,9 +4,11 @@
 
 #pragma once
 
+#include <ActiveSessionWorkflow.hpp>
 #include <IPositionDateTimeProvider.hpp>
 #include <ISessionDatabase.hpp>
 #include <ITrackDatabase.hpp>
+#include <SimpleLaptimer.hpp>
 #include <TrackDetection.hpp>
 #include <TrackDetectionWorkflow.hpp>
 
@@ -26,6 +28,10 @@ private:
     LaptimerCore::Storage::ITrackDatabase& mTrackDatabase;
     LaptimerCore::Algorithm::TrackDetection mTrackDetection{500};
     LaptimerCore::Workflow::TrackDetectionWorkflow mTrackDetectionWorkflow{mTrackDetection, mPositionProvider};
+    LaptimerCore::Algorithm::SimpleLaptimer mSimpleLaptimer{};
+    LaptimerCore::Workflow::ActiveSessionWorkflow mActiveSessionWorkflow{mPositionProvider,
+                                                                         mSimpleLaptimer,
+                                                                         mSessionDatabase};
 };
 
 } // namespace LaptimerCore::LappyHeadless

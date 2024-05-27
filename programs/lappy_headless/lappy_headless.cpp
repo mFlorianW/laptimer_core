@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+#include "LappyHeadless.hpp"
 #include <ConstantVelocityPositionDateTimeProvider.hpp>
 #include <EventLoop.hpp>
 #include <LibraryPath.hpp>
@@ -20,6 +21,7 @@
 using namespace LaptimerCore::System;
 using namespace LaptimerCore::Positioning;
 using namespace LaptimerCore::Storage;
+using namespace LaptimerCore::LappyHeadless;
 
 namespace
 {
@@ -68,12 +70,17 @@ int main(int argc, char** argv)
     // Load GPS position file
     auto positions = loadCsvPositions("/home/florian/Coding/laptimer_core/laps/Oschersleben.csv");
     auto positionProvider = ConstantVelocityPositionDateTimeProvider{positions};
+    positionProvider.setVelocityInMeterPerSecond(80.3333);
+    positionProvider.start();
 
     // Setup session database
     auto sessionDatabase = SqliteSessionDatabase{LIBRARY_FILE};
 
     // Setup track database
     auto trackDatabase = SqliteTrackDatabase{LIBRARY_FILE};
+
+    // Setup headless laptimer
+    auto laptimer = LappyHeadless{positionProvider, sessionDatabase, trackDatabase};
 
     eventLoop.exec();
     return 0;

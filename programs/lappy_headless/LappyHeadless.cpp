@@ -14,6 +14,24 @@ LappyHeadless::LappyHeadless(LaptimerCore::Positioning::IPositionDateTimeProvide
     , mSessionDatabase{sessionDatabase}
     , mTrackDatabase{trackDatabase}
 {
+    mTrackDetectionWorkflow.trackDetected.connect([this] {
+        const auto track = mTrackDetectionWorkflow.getDetectedTrack();
+        std::cout << "Track detected:" << track.getTrackName() << "\n";
+        mTrackDetectionWorkflow.stopDetection();
+        mActiveSessionWorkflow.setTrack(track);
+        mActiveSessionWorkflow.startActiveSession();
+    });
+
+    mActiveSessionWorkflow.lapFinished.connect([this] {
+        std::cout << "Lap finished:" << mActiveSessionWorkflow.lastLaptime.get().asString() << "\n";
+    });
+
+    mActiveSessionWorkflow.currentLaptime.valueChanged().connect([](auto const& laptime) {
+        std::cout << "current laptime:" << laptime.asString() << "\n";
+    });
+
+    mTrackDetectionWorkflow.setTracks(mTrackDatabase.getTracks());
+    mTrackDetectionWorkflow.startDetection();
 }
 
 } // namespace LaptimerCore::LappyHeadless
