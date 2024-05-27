@@ -53,7 +53,6 @@ bool Timer::isRunning()
 bool Timer::handleEvent(Event* event)
 {
     if (mRunning and event->getEventType() == Event::Type::Timeout) {
-        std::cerr << "timeout \n";
         timeout.emit();
         return true;
     }
