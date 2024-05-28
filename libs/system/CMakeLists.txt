@@ -3,8 +3,6 @@ add_library(LaptimerCore::System ALIAS System)
 
 target_sources(System
 PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/private/PosixTimer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/private/PosixTimer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Timer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Timer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/AsyncResult.cpp
@@ -17,6 +15,14 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/EventHandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/EventHandler.hpp
 )
+
+if(UNIX)
+    target_sources(System
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/private/PosixTimer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/private/PosixTimer.hpp
+    )
+endif()
 
 target_link_libraries(System
 PUBLIC
