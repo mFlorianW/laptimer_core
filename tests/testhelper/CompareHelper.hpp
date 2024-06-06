@@ -60,7 +60,7 @@ IsBetweenMatcher<T> IsBetween(T begin, T end)
     for (std::chrono::milliseconds i(0); i < (timeout); i += std::chrono::milliseconds(testSteps)) { \
         thread = std::thread([&eventLoop] { \
             std::this_thread::sleep_for(std::chrono::milliseconds(10)); \
-            eventLoop.postEvent(&eventLoop, std::make_unique<Event>(Event::Type::QuitEvent)); \
+            eventLoop.quit(); \
         }); \
         eventLoop.exec(); \
         thread.join(); \

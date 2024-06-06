@@ -17,8 +17,7 @@ namespace
 void handler(sigval_t val)
 {
     auto timer = static_cast<Timer*>(val.sival_ptr);
-    auto loop = EventLoop{};
-    loop.postEvent(timer, std::make_unique<Event>(Event::Type::Timeout));
+    EventLoop::postEvent(timer, std::make_unique<Event>(Event::Type::Timeout));
 }
 
 } // namespace

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "EventHandler.hpp"
+#include "EventLoop.hpp"
 
 namespace LaptimerCore::System
 {
@@ -12,7 +13,10 @@ EventHandler::EventHandler()
 {
 }
 
-EventHandler::~EventHandler() noexcept = default;
+EventHandler::~EventHandler() noexcept
+{
+    EventLoop::clearEvents(this);
+}
 
 std::thread::id EventHandler::getThreadId() const noexcept
 {

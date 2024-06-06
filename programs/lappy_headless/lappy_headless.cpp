@@ -28,8 +28,7 @@ namespace
 
 void signalHandler(int)
 {
-    auto el = EventLoop{};
-    el.postEvent(&el, std::make_unique<Event>(Event::Type::QuitEvent));
+    EventLoop{}.quit();
 }
 
 std::vector<LaptimerCore::Common::PositionData> loadCsvPositions(std::string const filePath)

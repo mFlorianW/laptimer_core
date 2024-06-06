@@ -36,21 +36,20 @@ public:
                 << "The event receiver has a different thread affinity. Event posted to wrong event loop instance.";
             return;
         }
-        if (event->getEventType() == Event::Type::QuitEvent) {
-            stopEventLoop();
-        } else {
-            std::lock_guard<std::mutex> guard{mMutex};
-            mEventQueue.push_back(EventQueueEntry{.receiver = receiver, .event = std::move(event)});
-            mBlocker.notify_all();
-        }
+
+        std::lock_guard<std::mutex> guard{mMutex};
+        mEventQueue.push_back(EventQueueEntry{.receiver = receiver, .event = std::move(event)});
+        mBlocker.notify_all();
     }
 
     void processEvents()
     {
         auto iter = mEventQueue.begin();
         while (iter != mEventQueue.end()) {
-            iter->receiver->handleEvent(iter->event.get());
+            auto event = std::move(iter->event);
+            auto* receiver = iter->receiver;
             iter = mEventQueue.erase(iter);
+            receiver->handleEvent(event.get());
         }
     }
 
@@ -89,6 +88,19 @@ public:
             }
         }
         return false;
+    }
+
+    void clearEvents(EventHandler* eventHandler)
+    {
+        auto iter = mEventQueue.begin();
+        while (iter != mEventQueue.end()) {
+            if (iter->receiver == eventHandler) {
+                std::lock_guard<std::mutex> guard{mMutex};
+                iter = mEventQueue.erase(iter);
+            } else {
+                ++iter;
+            }
+        }
     }
 
 private:
@@ -139,13 +151,14 @@ void EventLoop::exec()
     EventQueue::getInstance(mOwningThread).exec();
 }
 
-bool EventLoop::handleEvent(Event* event)
+void EventLoop::quit() noexcept
 {
-    if (event->getEventType() == Event::Type::QuitEvent) {
-        EventQueue::getInstance(mOwningThread).stopEventLoop();
-        return true;
-    }
-    return false;
+    EventQueue::getInstance(mOwningThread).stopEventLoop();
+}
+
+void EventLoop::clearEvents(EventHandler* eventHandler) noexcept
+{
+    EventQueue::getInstance(eventHandler->getThreadId()).clearEvents(eventHandler);
 }
 
 } // namespace LaptimerCore::System
