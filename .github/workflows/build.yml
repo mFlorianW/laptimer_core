@@ -19,7 +19,7 @@ jobs:
         cache: 'true'
     - name: Install Dependencies
       run: |
-        sudo apt update && sudo apt install doxygen libsdl2-dev
+        sudo apt update && sudo apt install doxygen libsdl2-dev libboost-all-dev
     - name: checkout
       uses: actions/checkout@v4
     - name: build and test

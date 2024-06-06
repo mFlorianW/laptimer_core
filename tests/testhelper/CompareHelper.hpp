@@ -56,6 +56,7 @@ IsBetweenMatcher<T> IsBetween(T begin, T end)
     } \
     \
     auto thread = std::thread{}; \
+    bool success = false; \
     \
     for (std::chrono::milliseconds i(0); i < (timeout); i += std::chrono::milliseconds(testSteps)) { \
         thread = std::thread([&eventLoop] { \
@@ -65,11 +66,12 @@ IsBetweenMatcher<T> IsBetween(T begin, T end)
         eventLoop.exec(); \
         thread.join(); \
         if ((value) == (expected)) { \
+            success = true; \
             break; \
         } \
     } \
     \
-    REQUIRE((value) == (expected)); \
+    REQUIRE(success); \
 }
 
 //clang-fomrat on

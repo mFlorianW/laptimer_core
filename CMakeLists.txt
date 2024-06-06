@@ -19,6 +19,7 @@ option(ENABLE_ARDUINOJSON_FETCH "This option enables that ARDUIONJSON is fetched
 option(ENABLE_LVGL_FETCH "This option enables that LVGL is fetched in configuration" ON)
 option(ENABLE_QT "This option enables QT implementations" ON)
 option(ENABLE_PRECOMMIT "Enables automatic pre-commit install." OFF)
+option(ENABLE_BOOST "Enables the boost support" OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_feature_info(PreCommit ENABLE_PRECOMMIT "Automatic install of the Python pre-commit tool.")
 
@@ -96,6 +97,9 @@ if (ENABLE_LVGL_FETCH)
 endif(ENABLE_LVGL_FETCH)
 
 find_package(SQLite3 REQUIRED)
+if(ENABLE_BOOST)
+    find_package(Boost CONFIG)
+endif()
 
 check_c_compiler_flag(-Wall HAS_WALL)
 if(HAS_WALL)

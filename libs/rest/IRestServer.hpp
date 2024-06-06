@@ -65,32 +65,32 @@ public:
     virtual void stop() noexcept = 0;
 
     /**
-     * Registers a POST method handler in the server. The handler is called when a request for the registered type is
-     * received. The server can only have one handle for each type at the time. The last set handle for a type is called
-     * by the server.
-     *
-     * @note
-     * The Server doesn't take any ownership about the handler object. The caller must guarantee that object lives as
-     * long as the server.
-     *
-     * @param type The type to register the handler.
-     * @param handler The handler object that is called when the type receives a request.
-     */
-    virtual void registerPostHandler(PostHandler type, IRestRequestHandler* handler) noexcept = 0;
-
-    /**
-     * Registers a GET method handler in the server. The handler is called when a request for the registered type is
-     * received. The Server can only have on handler for each type at the time. The last set handler for a type is
+     * Registers a POST method handler in the server. The handler is called when a request for the registered root is
+     * received. The server can only have one handle for one route at the time. The last set handle for the route is
      * called by the server.
      *
      * @note
      * The Server doesn't take any ownership about the handler object. The caller must guarantee that object lives as
      * long as the server.
      *
-     * @param type The type to register the handler.
+     * @param root The root route for the request handler.
      * @param handler The handler object that is called when the type receives a request.
      */
-    virtual void registerGetHandler(GetHandler type, IRestRequestHandler* handler) noexcept = 0;
+    virtual void registerPostHandler(std::string const& root, IRestRequestHandler* handler) noexcept = 0;
+
+    /**
+     * Registers a GET method handler in the server. The handler is called when a request for the registered root is
+     * received. The Server can only have on handler for each route at the time. The last set handler for a route is
+     * called by the server.
+     *
+     * @note
+     * The Server doesn't take any ownership about the handler object. The caller must guarantee that object lives as
+     * long as the server.
+     *
+     * @param type The root route for the to register the handler.
+     * @param handler The handler object that is called when the type receives a request.
+     */
+    virtual void registerGetHandler(std::string const& root, IRestRequestHandler* handler) noexcept = 0;
 
 protected:
     IRestServer() = default;
