@@ -6,10 +6,8 @@
 
 #include "Event.hpp"
 #include "EventHandler.hpp"
-#include <atomic>
 #include <memory>
 #include <thread>
-#include <unordered_map>
 
 namespace LaptimerCore::System
 {
@@ -17,7 +15,7 @@ namespace LaptimerCore::System
 /**
  * Provides functions to post, process events and can start an event loop.
  */
-class EventLoop : public EventHandler
+class EventLoop final
 {
 public:
     /**
@@ -28,7 +26,7 @@ public:
     /**
      * Default destructor
      */
-    ~EventLoop() override;
+    ~EventLoop();
 
     /**
      * Disabled copy consturctor
@@ -40,6 +38,9 @@ public:
      */
     EventLoop(EventLoop&&) noexcept = delete;
 
+    /**
+     * Disabled move operator
+     */
     EventLoop& operator=(EventLoop const&) = delete;
 
     /**
@@ -51,7 +52,7 @@ public:
      * Post an event for the receiver
      * @param receiver The receiver that shall receive the event.
      */
-    void postEvent(EventHandler* receiver, std::unique_ptr<Event> event);
+    static void postEvent(EventHandler* receiver, std::unique_ptr<Event> event);
 
     /**
      * Checks if for an existing event of @ref Event::Type type in the event loop
@@ -70,12 +71,17 @@ public:
     void exec();
 
     /**
-     * Handle events for the Eventloop.
-     * This is basically only the quit event.
+     * Stops and quits an endless running eventloop
      */
-    bool handleEvent(Event* event) override;
+    void quit() noexcept;
 
 private:
+    friend class LaptimerCore::System::EventHandler;
+    /**
+     * Clear all events for a specific event handler
+     */
+    static void clearEvents(EventHandler* eventHandler) noexcept;
+
     std::thread::id mOwningThread;
 };
 

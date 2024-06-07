@@ -71,7 +71,7 @@ public:
         try {
             mFutureObserver = std::thread{[this]() {
                 mFuture.wait();
-                EventLoop{}.postEvent(this, std::make_unique<Event>(Event::Type::ThreadFinished));
+                EventLoop::postEvent(this, std::make_unique<Event>(Event::Type::ThreadFinished));
                 mFinished = true;
             }};
         } catch (std::system_error& e) {

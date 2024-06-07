@@ -144,7 +144,7 @@ SCENARIO("An Eventloop shall block the running thread until the quit event occur
         {
             auto thread = std::thread([&eventloop] {
                 std::this_thread::sleep_for(std::chrono::milliseconds{1});
-                eventloop.postEvent(&eventloop, std::make_unique<Event>(Event::Type::QuitEvent));
+                eventloop.quit();
             });
             eventloop.exec();
             THEN("The EventLoop exit")
