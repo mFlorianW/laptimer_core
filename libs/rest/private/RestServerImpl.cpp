@@ -30,7 +30,11 @@ public:
 
     ~ClientConnection()
     {
-        mSocket.close();
+        try {
+            mSocket.close();
+        } catch (boost::system::system_error& e) {
+            std::cerr << "Socket closing throws an error. Error:" << e.what() << "\n";
+        }
     }
 
     ClientConnection(ClientConnection const&) = delete;
