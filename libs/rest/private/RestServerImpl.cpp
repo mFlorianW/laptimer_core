@@ -223,7 +223,11 @@ bool RestServerImpl::handleEvent(System::Event* event) noexcept
             auto request = std::get<1>(nextRequest);
             if (request.getType() == Rest::RequestType::Get) {
                 auto result = handleGetRequest(request);
-                conn->sendResponse(result, std::string{request.getReturnBody()});
+                try {
+                    conn->sendResponse(result, std::string{request.getReturnBody()});
+                } catch (...) {
+                    std::cerr << "Failed to send!\n";
+                }
             }
         }
         return true;
