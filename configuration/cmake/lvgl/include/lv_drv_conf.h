@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+// NOLINTBEGIN
+
 /*
  * COPY THIS FILE AS lv_drv_conf.h
  */
@@ -326,8 +328,9 @@
 #endif
 
 #if USE_EVDEV
-#define EVDEV_NAME "/dev/input/event0" /*You can use the "evtest" Linux tool to get the list of devices and test \
-                                          them*/
+#define EVDEV_NAME \
+    "/dev/input/event0" /*You can use the "evtest" Linux tool to get the list of devices and test \
+                           them*/
 #define EVDEV_SWAP_AXES 0 /*Swap the x and y axes of the touchscreen*/
 
 #define EVDEV_SCALE 0 /* Scale input, e.g. if touchscreen resolution does not match display resolution */
@@ -367,3 +370,5 @@
 #endif /*LV_DRV_CONF_H*/
 
 #endif /*End of "Content enable"*/
+
+// NOLINTEND

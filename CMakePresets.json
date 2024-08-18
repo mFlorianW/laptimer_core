@@ -2,51 +2,96 @@
     "version": 2,
     "configurePresets": [
         {
-            "name": "debug",
-            "displayName": "debug configure preset",
-            "description": "Sets Ninja generator, build and install directory",
+            "name": "base",
             "generator": "Ninja",
+            "hidden": true,
             "binaryDir": "${sourceDir}/build/${presetName}",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
-                "ENABLE_TEST": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "1",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}"
+            }
+        },
+        {
+            "name": "base-default",
+            "inherits": "base",
+            "cacheVariables": {
                 "ENABLE_CATCH2_FETCH": "ON",
                 "ENABLE_KDBINDINGS_FETCH": "ON",
                 "ENABLE_ARDUINOJSON_FETCH": "ON",
                 "ENABLE_LVGL_FETCH": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "1",
                 "ENABLE_PRECOMMIT": "ON",
                 "ENABLE_BOOST": "ON"
             }
         },
         {
-            "name": "github-ci-debug",
-            "displayName": "Github CI configure preset",
-            "description": "Sets Make generator, build and install directory",
-            "generator": "Unix Makefiles",
-            "binaryDir": "${sourceDir}/build/${presetName}",
+            "name": "base-debug",
+            "inherits": "base-default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
-                "ENABLE_TEST": "ON",
-                "ENABLE_CATCH2_FETCH": "ON",
-                "ENABLE_KDBINDINGS_FETCH": "ON",
-                "ENABLE_ARDUINOJSON_FETCH": "ON",
-                "ENABLE_LVGL_FETCH": "ON",
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "1",
-                "ENABLE_BOOST": "ON"
+                "ENABLE_TEST": "ON"
             }
         },
         {
-            "name": "release",
-            "displayName": "Relase configure preset",
-            "description": "Sets Ninja generator, build and install directory",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "name": "base-vcpkg",
+            "inherits": "base",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
+                "ENABLE_KDBINDINGS_FETCH": "OFF",
+                "ENABLE_ARDUINOJSON_FETCH": "OFF",
+                "ENABLE_LVGL_FETCH": "OFF",
+                "ENABLE_BOOST": "ON",
+                "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+            }
+        },
+        {
+            "name": "base-debug-vcpkg",
+            "inherits": "base-vcpkg",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "ENABLE_TEST": "ON"
+            }
+        },
+        {
+            "name": "debug-vcpkg",
+            "inherits": "base-debug-vcpkg",
+            "displayName": "debug configure preset",
+            "description": "Debug build"
+        },
+        {
+            "name": "debug",
+            "inherits": "base-debug",
+            "displayName": "debug configure preset",
+            "description": "Debug build"
+        },
+        {
+            "name": "github-ci-debug",
+            "inherits": "base-debug",
+            "displayName": "Github CI configure preset",
+            "description": "Debug build for the Github CI",
+            "generator": "Unix Makefiles"
+        },
+        {
+            "name": "github-ci-debug-vcpkg",
+            "inherits": "base-debug-vcpkg",
+            "displayName": "Github CI configure preset",
+            "description": "Debug build for the Github CI",
+            "generator": "Unix Makefiles"
+        },
+        {
+            "name": "release",
+            "inherits": "base-default",
+            "displayName": "Relase configure preset",
+            "description": "Release Build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "release-vcpkg",
+            "inherits": "base-vcpkg",
+            "displayName": "Relase configure preset",
+            "description": "Release Build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
             }
         }
     ],
@@ -56,12 +101,24 @@
             "configurePreset": "debug"
         },
         {
+            "name": "debug-vcpkg",
+            "configurePreset": "debug-vcpkg"
+        },
+        {
             "name": "github-ci-debug",
             "configurePreset": "github-ci-debug"
         },
         {
+            "name": "github-ci-debug-vcpkg",
+            "configurePreset": "github-ci-debug-vcpkg"
+        },
+        {
             "name": "release",
             "configurePreset": "release"
+        },
+        {
+            "name": "release-vcpkg",
+            "configurePreset": "release-vcpkg"
         }
     ],
     "testPresets": [
@@ -70,8 +127,16 @@
             "configurePreset": "debug"
         },
         {
+            "name": "test-vcpkg",
+            "configurePreset": "debug-vcpkg"
+        },
+        {
             "name": "github-ci-test",
             "configurePreset": "github-ci-debug"
+        },
+        {
+            "name": "github-ci-test-vcpkg",
+            "configurePreset": "github-ci-debug-vcpkg"
         }
     ]
 }

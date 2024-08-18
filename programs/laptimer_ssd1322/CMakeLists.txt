@@ -16,6 +16,7 @@ PRIVATE
 
 target_link_libraries(laptimer_ssd1322
 PRIVATE
+    lvgl-ssd1322-drivers::lvgl-ssd1322-drivers
     LaptimerCore::Ssd1322Shell
     LaptimerCore::LibraryPath
 )

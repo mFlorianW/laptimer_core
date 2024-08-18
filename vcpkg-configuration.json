@@ -1,0 +1,21 @@
+{
+  "default-registry": {
+    "kind": "git",
+    "baseline": "73964f854d0d6424f335e9515b61b3a2dad5e15b",
+    "repository": "https://github.com/microsoft/vcpkg"
+  },
+  "registries": [
+    {
+      "kind": "artifact",
+      "location": "https://github.com/microsoft/vcpkg-ce-catalog/archive/refs/heads/main.zip",
+      "name": "microsoft"
+    },
+    {
+        "kind": "git",
+        "baseline": "34a208248829d3e65df73582c3ed537dd27fb723",
+        "repository": "https://github.com/mflorianw/mflorianw-vcpkg-registry",
+        "reference": "main",
+        "packages": [ "arduinojson", "lvgl-ssd1322", "lvgl-ssd1322-drivers" ]
+    }
+  ]
+}
