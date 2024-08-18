@@ -21,10 +21,13 @@ That folder contains specific files for the github.
 There two configure and build presets for CMake. 
 Call one the in the project root directory to build the LaptimerCore.
 
+[VCPKG](https://vcpkg.io/en/) is used for the dependency handling, so vcpkg must be installed and configured.
+Before calling the presets the environment variable "VCPKG_ROOT" must be set.
+
 ### Debug 
 #### Configure
 ```console
-cmake --build --preset debug
+cmake --preset debug
 ```
 
 #### Build
