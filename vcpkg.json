@@ -1,0 +1,18 @@
+{
+  "dependencies": [
+    "arduinojson",
+    "lvgl-ssd1322",
+    "lvgl-ssd1322-drivers",
+    "kdbindings",
+    {
+      "name": "catch2",
+      "version>=": "2.13.7"
+    }
+  ],
+  "overrides": [
+    {
+      "name": "catch2",
+      "version": "2.13.7"
+    }
+  ]
+}
