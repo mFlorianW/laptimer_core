@@ -16,7 +16,17 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/RestCall.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RestCall.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/IRestClient.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/RestServer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/RestServer.hpp
 )
+
+if(ENABLE_BOOST)
+    target_sources(Rest
+        PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}/private/RestServerImpl.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/private/RestServerImpl.hpp
+    )
+endif()
 
 target_link_libraries(Rest
 PUBLIC

@@ -12,7 +12,11 @@ target_link_libraries(test_SessionEndpoint PRIVATE Catch2::Catch2 LaptimerCore::
 add_executable(test_RestCall test_RestCall.cpp)
 target_link_libraries(test_RestCall PRIVATE Catch2::Catch2 LaptimerCore::Rest)
 
+add_executable(test_RestServer test_RestServer.cpp)
+target_link_libraries(test_RestServer PRIVATE Catch2::Catch2 LaptimerCore::Rest LaptimerCore::TestHelper)
+
 catch_discover_tests(test_GpsEndpoint)
 catch_discover_tests(test_Path)
 catch_discover_tests(test_SessionEndpoint)
 catch_discover_tests(test_RestCall)
+catch_discover_tests(test_RestServer)
