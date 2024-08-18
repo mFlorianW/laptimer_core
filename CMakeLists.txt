@@ -29,16 +29,12 @@ endif()
 
 
 if(ENABLE_KDBINDINGS_FETCH)
-    FetchContent_Declare(
-        KDBindings
-        GIT_REPOSITORY https://github.com/KDAB/KDBindings.git
-        GIT_TAG        37a49b3eaa64861464da8bc506dccecf7516101f
-    )
-    FetchContent_MakeAvailable(KDBindings)
-    list(APPEND CMAKE_MODULE_PATH ${kdbindings_BUILD_DIR})
+    include(KDBindingsFetch)
+    fetch_kdbindings()
 else()
-find_package(KDBindings CONFIG REQUIRED)
+    find_package(KDBindings REQUIRED)
 endif()
+
 
 if(ENABLE_ARDUINOJSON_FETCH)
     FetchContent_Declare(
