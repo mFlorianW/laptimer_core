@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+// NOLINTBEGIN
+
 /*
  * COPY THIS FILE AS `lv_conf.h` NEXT TO the `lvgl` FOLDER
  */
@@ -693,3 +695,5 @@ typedef void * lv_obj_user_data_t;
 #endif /*LV_CONF_H*/
 
 #endif /*End of "Content enable"*/
+
+// NOLINTEND

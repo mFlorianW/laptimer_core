@@ -48,7 +48,7 @@ macro(fetch_lvgl)
 
     add_library(lvgl-ssd1322 STATIC ${LVGL_SOURCES})
     add_library(lvgl-ssd1322::lvgl-ssd1322 ALIAS lvgl-ssd1322)
-    target_include_directories(lvgl-ssd1322
+    target_include_directories(lvgl-ssd1322 SYSTEM
         PUBLIC
             $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/configuration/cmake/lvgl/include>
     )
@@ -57,7 +57,7 @@ macro(fetch_lvgl)
 
     add_library(lvgl-ssd1322-drivers STATIC ${LVGL_SOURCES_DISPLAY})
     add_library(lvgl-ssd1322-drivers::lvgl-ssd1322-drivers ALIAS lvgl-ssd1322-drivers)
-    target_include_directories(lvgl-ssd1322-drivers
+    target_include_directories(lvgl-ssd1322-drivers SYSTEM
         PUBLIC
             $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/configuration/cmake/lvgl/include>
     )
