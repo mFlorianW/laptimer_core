@@ -47,14 +47,16 @@ jobs:
       uses: actions/checkout@v4
       with:
           fetch-depth: 0
+    - name: Setup vcpkg
+      uses: lukka/run-vcpkg@v11
     - name: Build
       run: |
         echo "###############################################################"
         echo "# Start Build Commit ${{ matrix.commits }}"
         echo "###############################################################"
         git checkout ${{ matrix.commits }}
-        cmake --preset github-ci-debug -DENABLE_WARNING_AS_ERROR=ON
-        cmake --build --preset github-ci-debug -- -j
+        cmake --preset github-ci-debug-vcpkg -DENABLE_WARNING_AS_ERROR=ON
+        cmake --build --preset github-ci-debug-vcpkg -- -j
         echo "###############################################################"
         echo "# Finished Build Commit ${{ matrix.commits }}"
         echo "###############################################################"

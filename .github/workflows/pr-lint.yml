@@ -29,10 +29,12 @@ jobs:
       uses: actions/checkout@v4
       with:
           fetch-depth: 0
+    - name: Setup vcpkg
+      uses: lukka/run-vcpkg@v11
     - name: Generate Compile Commands and Build
       run: |
-        cmake --preset github-ci-debug
-        cmake --build --preset github-ci-debug --target all -- -j
+        cmake --preset github-ci-debug-vcpkg
+        cmake --build --preset github-ci-debug-vcpkg --target all -- -j
     - name: Static Code Analysis
       run: |
         files=$(git diff  --diff-filter=ACMR --name-status --dirstat=files origin/${{ github.base_ref }}..origin/${{ github.head_ref }} | awk -F'\t' '{ if(NF==3){ print $3; }else{print $2; }}'| grep -E "(.*)\.(h|cpp|hpp)$") || true
