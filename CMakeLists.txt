@@ -50,50 +50,13 @@ if(ENABLE_ARDUINOJSON_FETCH)
     include_directories(SYSTEM ${arduinojson_SOURCE_DIR}/src)
 endif()
 
+find_package(SDL2 REQUIRED)
 if (ENABLE_LVGL_FETCH)
-    FetchContent_Declare(
-        Lvgl
-        GIT_REPOSITORY https://github.com/lvgl/lvgl.git
-        GIT_TAG c5bacff2faff0df248410aec6ba53f39582af13d
-    )
-    FetchContent_MakeAvailable(Lvgl)
-
-    FetchContent_Declare(
-            LvglDrivers
-            GIT_REPOSITORY https://github.com/lvgl/lv_drivers.git
-            GIT_TAG 8de9b6749c0c86c998ac6ca50797f0a54744d360
-    )
-    FetchContent_MakeAvailable(LvglDrivers)
-
-    include_directories(SYSTEM
-        "${lvgl_SOURCE_DIR}"
-        "${lvgl_SOURCE_DIR}/src"
-        "${lvgl_SOURCE_DIR}/src/lv_core/"
-        "${lvgl_SOURCE_DIR}/src/lv_draw"
-        "${lvgl_SOURCE_DIR}/src/lv_font"
-        "${lvgl_SOURCE_DIR}/src/lv_gpu"
-        "${lvgl_SOURCE_DIR}/src/lv_hal"
-        "${lvgl_SOURCE_DIR}/src/lv_misc"
-        "${lvgl_SOURCE_DIR}/src/lv_themes"
-        "${lvgl_SOURCE_DIR}/src/lv_widgets"
-        "${lvgldrivers_SOURCE_DIR}/display"
-        "${lvgldrivers_SOURCE_DIR}/indev"
-    )
-
-    file(GLOB_RECURSE LVGL_SOURCES
-        "${lvgl_SOURCE_DIR}/src/lv_core/*.c"
-        "${lvgl_SOURCE_DIR}/src/lv_draw/*.c"
-        "${lvgl_SOURCE_DIR}/src/lv_font/*.c"
-        "${lvgl_SOURCE_DIR}/src/lv_gpu/*.c"
-        "${lvgl_SOURCE_DIR}/src/lv_hal/*.c"
-        "${lvgl_SOURCE_DIR}/src/lv_misc/*.c"
-        "${lvgl_SOURCE_DIR}/src/lv_themes/*.c"
-        "${lvgl_SOURCE_DIR}/src/lv_widgets/*.c"
-        "${lvgldrivers_SOURCE_DIR}/display/*.c"
-        "${lvgldrivers_SOURCE_DIR}/indev/*.c"
-    )
-
-    find_package(SDL2 REQUIRED)
+    include(LvglFetch)
+    fetch_lvgl()
+else()
+    find_package(lvgl-ssd1322 REQUIRED)
+    find_package(lvgl-ssd1322-drivers REQUIRED)
 endif(ENABLE_LVGL_FETCH)
 
 find_package(SQLite3 REQUIRED)
