@@ -6,6 +6,10 @@ name: Clang-Tidy
 on:
   pull_request:
     branches: [ main ]
+  workflow_run:
+    workflows: ["VCPKG-Cache"]
+    types:
+      - completed
 
 jobs:
   Clang-Tidy:
