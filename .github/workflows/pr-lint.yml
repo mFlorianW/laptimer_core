@@ -4,12 +4,7 @@
 name: Clang-Tidy
 
 on:
-  pull_request:
-    branches: [ main ]
-  workflow_run:
-    workflows: ["VCPKG-Cache"]
-    types:
-      - completed
+  workflow_call:
 
 jobs:
   Clang-Tidy:

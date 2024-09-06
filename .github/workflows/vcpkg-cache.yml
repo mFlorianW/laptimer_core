@@ -1,12 +1,10 @@
 # SPDX-FileCopyrightText: 2024 Florian Weßel <florianwessel@gmx.net>
 #
 # SPDX-License-Identifier: GPL-2.0-or-later
-name: VCPKG-Cache
+name: Generate VCPKG Cache
 
 on:
-  pull_request:
-    paths:
-      - '**vcpkg.json'
+  workflow_call:
   schedule:
     - cron: "0 0 * * *"
 

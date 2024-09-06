@@ -1,15 +1,10 @@
-# SPDX-FileCopyrightText: 2023 Florian Weßel <florianwessel@gmx.net>
+# SPDX-FileCopyrightText: 2024 Florian Weßel <florianwessel@gmx.net>
 #
 # SPDX-License-Identifier: GPL-2.0-or-later
-name: Build And Test
+name: Pullrequest Build And Test
 
 on:
-  pull_request:
-    branches: [ main ]
-  workflow_run:
-    workflows: ["VCPKG-Cache"]
-    types:
-      - completed
+  workflow_call:
 
 jobs:
   Generate_Build_Jobs:
