@@ -72,6 +72,8 @@ int main(int argc, char** argv)
     positionProvider.setVelocityInMeterPerSecond(80.3333);
     positionProvider.start();
 
+
+
     // Setup session database
     auto sessionDatabase = SqliteSessionDatabase{LIBRARY_FILE};
 
