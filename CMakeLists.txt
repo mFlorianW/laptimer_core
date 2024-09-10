@@ -31,6 +31,7 @@ find_package(lvgl-ssd1322-drivers REQUIRED)
 find_package(SQLite3 REQUIRED)
 if(ENABLE_BOOST)
     find_package(Boost CONFIG REQUIRED)
+    add_definitions(-DWITH_BOOST)
 endif()
 
 check_c_compiler_flag(-Wall HAS_WALL)

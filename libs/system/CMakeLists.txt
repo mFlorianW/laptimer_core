@@ -16,11 +16,17 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/EventHandler.hpp
 )
 
-if(UNIX)
+if(UNIX AND NOT ENABLE_BOOST)
     target_sources(System
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/private/PosixTimer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/private/PosixTimer.hpp
+    )
+else()
+    target_sources(System
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/private/BoostTimer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/private/BoostTimer.hpp
     )
 endif()
 
