@@ -3,8 +3,9 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "Timer.hpp"
-#include <iostream>
-#ifdef __linux__
+#ifdef WITH_BOOST
+#include "private/BoostTimer.hpp"
+#else
 #include "private/PosixTimer.hpp"
 #endif
 
@@ -12,9 +13,9 @@ namespace LaptimerCore::System
 {
 
 Timer::Timer()
+    : mTimer{std::make_unique<Private::TimerImpl>(*this)}
 {
-    mTimer = std::make_unique<Private::TimerImpl>(*this);
-};
+}
 
 Timer::~Timer()
 {
