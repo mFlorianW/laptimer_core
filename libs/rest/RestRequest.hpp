@@ -18,6 +18,12 @@ enum class RequestType
     Delete,
 };
 
+enum class RequestReturnType
+{
+    Txt,
+    Json
+};
+
 struct SharedRestRequest;
 class RestRequest
 {
@@ -99,6 +105,21 @@ public:
     void setReturnBody(std::string const& returnBody) noexcept;
 
     /**
+     * Gives the return type of the return body.
+     * This can be used to set the correct mime type in the HTTP response.
+     * The default value is simple text.
+     * @return RequestReturnType The format of the request return body.
+     */
+    RequestReturnType getReturnType() const noexcept;
+
+    /**
+     * Sets the type of the of the return body.
+     * The @ref RequestReturnType can be used to set the mime in the HTTP response.
+     * @param returnType The @ref RequestReturnType of the format of the return body.
+     */
+    void setReturnType(RequestReturnType const& returnType) noexcept;
+
+    /**
      * Equal operator
      * @return true The two objects are the same.
      * @return false The two objects are not the same.
@@ -115,4 +136,5 @@ public:
 private:
     Common::SharedDataPointer<SharedRestRequest> mData;
 };
+
 } // namespace LaptimerCore::Rest

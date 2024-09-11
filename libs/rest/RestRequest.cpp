@@ -13,6 +13,7 @@ struct SharedRestRequest : public Common::SharedData
     std::string mRequestBody;
     std::string mReturnBody;
     RequestType mType{};
+    RequestReturnType mReturnType{RequestReturnType::Txt};
 
     friend bool operator==(SharedRestRequest const& lhs, SharedRestRequest const& rhs)
     {
@@ -63,6 +64,16 @@ std::string_view RestRequest::getReturnBody() const noexcept
 void RestRequest::setReturnBody(std::string const& returnBody) noexcept
 {
     mData->mReturnBody = returnBody;
+}
+
+RequestReturnType RestRequest::getReturnType() const noexcept
+{
+    return mData->mReturnType;
+}
+
+void RestRequest::setReturnType(RequestReturnType const& returnType) noexcept
+{
+    mData->mReturnType = returnType;
 }
 
 bool operator==(RestRequest const& lhs, RestRequest const& rhs) noexcept
