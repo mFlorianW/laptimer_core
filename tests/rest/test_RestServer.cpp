@@ -70,12 +70,18 @@ public:
 
     std::optional<Http::response<Http::string_body>> read()
     {
+        if (mResponseRead) {
+            return mResponse;
+        }
+
         auto resp = Http::response<Http::string_body>{};
         try {
             auto bytes = Http::read(mTcpStream, mReceiveBuffer, resp);
             if (bytes == 0) {
                 return std::nullopt;
             }
+            mResponseRead = true;
+            mResponse = resp;
             return resp;
         } catch (boost::system::system_error const& error) {
             std::cerr << "Failed to read connection. Error: " << error.what() << error.code() << "\n";
@@ -92,6 +98,8 @@ private:
     Beast::tcp_stream mTcpStream = Beast::tcp_stream{*mIoContext};
     Beast::flat_buffer mReceiveBuffer;
     Http::verb mVerb = Http::verb::get;
+    bool mResponseRead = false;
+    std::optional<Http::response<Http::string_body>> mResponse;
 };
 
 class TestRequestHandler : public IRestRequestHandler
@@ -100,6 +108,8 @@ public:
     RequestHandleResult handleRestRequest(RestRequest& request) noexcept override
     {
         mHandlerCalled = true;
+        request.setReturnBody(mBody);
+        request.setReturnType(mReturnType);
         return RequestHandleResult::Ok;
     }
 
@@ -108,8 +118,20 @@ public:
         return mHandlerCalled;
     }
 
+    void setReturnBody(std::string const& body) noexcept
+    {
+        mBody = body;
+    }
+
+    void setRequestReturnType(RequestReturnType returnType) noexcept
+    {
+        mReturnType = returnType;
+    }
+
 private:
     bool mHandlerCalled = false;
+    std::string mBody;
+    RequestReturnType mReturnType = RequestReturnType::Txt;
 };
 
 } // namespace
@@ -192,7 +214,64 @@ SCENARIO("The running server shall forward HTTP GET request to the suitable requ
 
             THEN("The RequestHandler shall be called.")
             {
-                REQUIRE_COMPARE_WITH_TIMEOUT(handler.isHandlerCalled(), true, std::chrono::milliseconds{100});
+                REQUIRE_COMPARE_WITH_TIMEOUT(handler.isHandlerCalled(), true, timeout);
+            }
+        }
+    }
+}
+
+SCENARIO("The running server shall send the HTTP TXT response body for a valid request.")
+{
+    GIVEN("A running RestServer")
+    {
+        auto const expBody = std::string{"Hello World!"};
+        auto handler = TestRequestHandler{};
+        handler.setReturnBody(expBody);
+        auto restServer = RestServer{};
+        restServer.registerGetHandler("/test", &handler);
+        auto result = restServer.start();
+        REQUIRE(result == ServerStartResult::Ok);
+        WHEN("The GET HTTP request is sent to the server")
+        {
+            auto request = Request{"localhost", "27018"};
+            request.setVerb(Http::verb::get);
+            request.connect();
+            request.send();
+
+            THEN("The RequestHandler shall be called.")
+            {
+                REQUIRE_COMPARE_WITH_TIMEOUT(request.read().has_value(), true, timeout);
+                REQUIRE(request.read().value()[Http::field::content_type] == "text/plain");
+                REQUIRE(request.read().value().body() == expBody);
+            }
+        }
+    }
+}
+
+SCENARIO("The running server shall send the HTTP JSON response body for a valid request.")
+{
+    GIVEN("A running RestServer")
+    {
+        auto const expBody = std::string{"{}"};
+        auto handler = TestRequestHandler{};
+        handler.setReturnBody(expBody);
+        handler.setRequestReturnType(RequestReturnType::Json);
+        auto restServer = RestServer{};
+        restServer.registerGetHandler("/test", &handler);
+        auto result = restServer.start();
+        REQUIRE(result == ServerStartResult::Ok);
+        WHEN("The GET HTTP request is sent to the server")
+        {
+            auto request = Request{"localhost", "27018"};
+            request.setVerb(Http::verb::get);
+            request.connect();
+            request.send();
+
+            THEN("The RequestHandler shall be called.")
+            {
+                REQUIRE_COMPARE_WITH_TIMEOUT(request.read().has_value(), true, timeout);
+                REQUIRE(request.read().value()[Http::field::content_type] == "application/json");
+                REQUIRE(request.read().value().body() == expBody);
             }
         }
     }

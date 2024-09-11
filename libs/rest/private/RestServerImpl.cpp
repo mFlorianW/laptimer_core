@@ -20,6 +20,14 @@ namespace LaptimerCore::Rest::Private
 namespace
 {
 
+std::string getReturnType(RestRequest const& request)
+{
+    if (request.getReturnType() == RequestReturnType::Json) {
+        return std::string{"application/json"};
+    }
+    return std::string{"text/plain"};
+}
+
 class ClientConnection
 {
 public:
@@ -60,7 +68,7 @@ public:
         return mRestRequest;
     }
 
-    void sendResponse(RequestHandleResult result, std::string const& body)
+    void sendResponse(RequestHandleResult result, std::string const& body, std::string const& bodyType)
     {
         auto status = result == RequestHandleResult::Ok ? Http::status::ok : Http::status::bad_request;
         mResponse.set(Http::field::host, "lappy.org");
@@ -71,7 +79,7 @@ public:
 
         if (not body.empty()) {
             mResponse.body() = body;
-            mResponse.set(Http::field::content_type, "text/plain");
+            mResponse.set(Http::field::content_type, bodyType);
             mResponse.content_length(mResponse.body().size());
         }
         Http::async_write(mSocket, mResponse, [this](Beast::error_code errorCode, std::size_t) {
@@ -224,7 +232,7 @@ bool RestServerImpl::handleEvent(System::Event* event) noexcept
             if (request.getType() == Rest::RequestType::Get) {
                 auto result = handleGetRequest(request);
                 try {
-                    conn->sendResponse(result, std::string{request.getReturnBody()});
+                    conn->sendResponse(result, std::string{request.getReturnBody()}, getReturnType(request));
                 } catch (...) {
                     std::cerr << "Failed to send!\n";
                 }
