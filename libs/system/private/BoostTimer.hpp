@@ -32,6 +32,7 @@ private:
     Timer& mTimer;
     std::thread mTimerThread;
     std::chrono::nanoseconds mInterval{0};
+    bool mTimerActive = false;
 };
 
 } // namespace LaptimerCore::System::Private

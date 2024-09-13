@@ -4,6 +4,8 @@
 
 #include "BoostTimer.hpp"
 #include "EventLoop.hpp"
+#include <iostream>
+#include <memory>
 
 namespace LaptimerCore::System::Private
 {
@@ -22,10 +24,24 @@ void TimerImpl::setTimerInterval(std::chrono::nanoseconds interval) noexcept
 {
     mInterval = interval;
     if (interval.count() > 0) {
-        mTimerThread = std::thread{[this]() {
+        mTimerActive = true;
+        try {
             setupTimer();
-        }};
+            mTimerThread = std::thread{[this]() {
+                while (mTimerActive) {
+                    mIoContext.run();
+                }
+            }};
+        } catch (std::system_error const& e) {
+            std::cerr << "Failed to created timer thread for timer: " << std::addressof(mTimer) << " Error:" << e.what()
+                      << "\n";
+            return;
+        } catch (boost::system::system_error const& e) {
+            std::cerr << "Failed to setup timer for timer: " << std::addressof(mTimer) << " Error:" << e.what() << "\n";
+            return;
+        }
     } else {
+        mTimerActive = false;
         mIoContext.stop();
     }
 }
@@ -46,7 +62,6 @@ void TimerImpl::setupTimer()
     mBoostTimer.async_wait([this](boost::system::error_code const& errorCode) {
         onTimeout(errorCode);
     });
-    mIoContext.run();
 }
 
 } // namespace LaptimerCore::System::Private

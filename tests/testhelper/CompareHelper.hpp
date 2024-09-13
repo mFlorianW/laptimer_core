@@ -59,8 +59,8 @@ IsBetweenMatcher<T> IsBetween(T begin, T end)
     bool success = false; \
     \
     for (std::chrono::milliseconds i(0); i < (timeout); i += std::chrono::milliseconds(testSteps)) { \
-        thread = std::thread([&eventLoop] { \
-            std::this_thread::sleep_for(std::chrono::milliseconds(10)); \
+        thread = std::thread([&eventLoop,&testSteps] { \
+            std::this_thread::sleep_for(std::chrono::milliseconds(testSteps)); \
             eventLoop.quit(); \
         }); \
         eventLoop.exec(); \
