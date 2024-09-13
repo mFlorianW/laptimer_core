@@ -40,7 +40,7 @@ CliOptions::CliOptions(int argc, char** argv) noexcept
             parser.showHelp(255);
         }
     } else {
-        mHost = QHostAddress{"192.168.4.1"};
+        mHost = QHostAddress{"192.168.0.116"};
     }
 
     if (parser.isSet(portOption)) {
@@ -51,7 +51,7 @@ CliOptions::CliOptions(int argc, char** argv) noexcept
             parser.showHelp(255);
         }
     } else {
-        mPort = 80;
+        mPort = 27018;
     }
 
     if (parser.isSet(deleteOption)) {

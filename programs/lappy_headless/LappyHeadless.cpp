@@ -23,12 +23,15 @@ LappyHeadless::LappyHeadless(LaptimerCore::Positioning::IPositionDateTimeProvide
     });
 
     mActiveSessionWorkflow.lapFinished.connect([this] {
-        std::cout << "Lap" << mActiveSessionWorkflow.lapCount.get()
-                  << " finished:" << mActiveSessionWorkflow.lastLaptime.get().asString() << "\n";
+        std::cout << "Lap finished:" << mActiveSessionWorkflow.lastLaptime.get().asString() << "\n";
+        std::cout << "Lap count:" << mActiveSessionWorkflow.lapCount.get() << "\n";
     });
 
     mTrackDetectionWorkflow.setTracks(mTrackDatabase.getTracks());
     mTrackDetectionWorkflow.startDetection();
+
+    mRestServer.registerGetHandler(std::string{"/sessions"}, &mSessionEndpoint);
+    (void)mRestServer.start();
 }
 
 } // namespace LaptimerCore::LappyHeadless
