@@ -25,6 +25,7 @@ PUBLIC
     Qt5::Network
     Qt5::Widgets
     LaptimerCore::RestQt
+    LaptimerCore::SystemQt
     LaptimerCore::Workflow
     LaptimerCore::Storage
     LaptimerCore::LibraryPath

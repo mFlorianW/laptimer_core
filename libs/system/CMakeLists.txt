@@ -39,3 +39,9 @@ target_include_directories(System
 PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
+
+if(ENABLE_QT)
+    set(CMAKE_AUTOMOC ON)
+    set(CMAKE_AUTORCC ON)
+    add_subdirectory(qt)
+endif()

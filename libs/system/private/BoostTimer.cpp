@@ -17,7 +17,10 @@ TimerImpl::TimerImpl(Timer& timer)
 
 TimerImpl::~TimerImpl() noexcept
 {
-    mTimerThread.join();
+    mTimerActive = false;
+    if (mTimerThread.joinable()) {
+        mTimerThread.join();
+    }
 }
 
 void TimerImpl::setTimerInterval(std::chrono::nanoseconds interval) noexcept
