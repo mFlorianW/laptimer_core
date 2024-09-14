@@ -4,10 +4,12 @@
 
 #pragma once
 
+#include "SessionEndpoint.hpp"
 #include <ActiveSessionWorkflow.hpp>
 #include <IPositionDateTimeProvider.hpp>
 #include <ISessionDatabase.hpp>
 #include <ITrackDatabase.hpp>
+#include <RestServer.hpp>
 #include <SimpleLaptimer.hpp>
 #include <TrackDetection.hpp>
 #include <TrackDetectionWorkflow.hpp>
@@ -32,6 +34,8 @@ private:
     LaptimerCore::Workflow::ActiveSessionWorkflow mActiveSessionWorkflow{mPositionProvider,
                                                                          mSimpleLaptimer,
                                                                          mSessionDatabase};
+    LaptimerCore::Rest::SessionEndpoint mSessionEndpoint{mSessionDatabase};
+    LaptimerCore::Rest::RestServer mRestServer;
 };
 
 } // namespace LaptimerCore::LappyHeadless
