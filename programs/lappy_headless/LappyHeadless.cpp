@@ -15,7 +15,7 @@ LappyHeadless::LappyHeadless(LaptimerCore::Positioning::IPositionDateTimeProvide
     , mTrackDatabase{trackDatabase}
 {
     mTrackDetectionWorkflow.trackDetected.connect([this] {
-        const auto track = mTrackDetectionWorkflow.getDetectedTrack();
+        auto const track = mTrackDetectionWorkflow.getDetectedTrack();
         std::cout << "Track detected:" << track.getTrackName() << "\n";
         mTrackDetectionWorkflow.stopDetection();
         mActiveSessionWorkflow.setTrack(track);
@@ -23,11 +23,8 @@ LappyHeadless::LappyHeadless(LaptimerCore::Positioning::IPositionDateTimeProvide
     });
 
     mActiveSessionWorkflow.lapFinished.connect([this] {
-        std::cout << "Lap finished:" << mActiveSessionWorkflow.lastLaptime.get().asString() << "\n";
-    });
-
-    mActiveSessionWorkflow.currentLaptime.valueChanged().connect([](auto const& laptime) {
-        std::cout << "current laptime:" << laptime.asString() << "\n";
+        std::cout << "Lap" << mActiveSessionWorkflow.lapCount.get()
+                  << " finished:" << mActiveSessionWorkflow.lastLaptime.get().asString() << "\n";
     });
 
     mTrackDetectionWorkflow.setTracks(mTrackDatabase.getTracks());
