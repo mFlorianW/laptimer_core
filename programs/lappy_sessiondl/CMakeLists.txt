@@ -52,3 +52,10 @@ target_link_libraries(lappy_sessiondl
 PRIVATE
     LaptimerCore::SessionDlObj
 )
+
+set(TEST ${CMAKE_INSTALL_FULL_BINDIR})
+set(APP_CONFIG ${CMAKE_CURRENT_BINARY_DIR}/lappy_sessiondl.json)
+configure_file(lappy_sessiondl.json.in ${APP_CONFIG})
+
+install(TARGETS lappy_sessiondl DESTINATION ${BINDIR})
+install(FILES ${APP_CONFIG} DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/lappy_sessiondl)
