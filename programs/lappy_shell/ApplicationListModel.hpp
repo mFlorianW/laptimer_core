@@ -21,14 +21,14 @@ public:
     };
     Q_ENUM(DisplayRole)
 
-    ApplicationListModel(ApplicationModel &appModel) noexcept;
+    ApplicationListModel(ApplicationModel& appModel) noexcept;
     ~ApplicationListModel() noexcept override = default;
 
-    qint32 rowCount(QModelIndex const &parent) const noexcept override;
-    QVariant data(QModelIndex const &index, qint32 displayRole) const noexcept override;
+    qint32 rowCount(QModelIndex const& parent) const noexcept override;
+    QVariant data(QModelIndex const& index, qint32 displayRole) const noexcept override;
     QHash<qint32, QByteArray> roleNames() const noexcept override;
 
 private:
-    ApplicationModel &mAppModel;
+    ApplicationModel& mAppModel;
 };
 } // namespace LaptimerCore::LappyShell

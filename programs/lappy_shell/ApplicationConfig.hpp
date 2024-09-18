@@ -19,10 +19,10 @@ public:
 
     qint32 getPatch() const noexcept;
 
-    bool operator==(const ApplicationVersion &other) const noexcept;
-    bool operator!=(const ApplicationVersion &other) const noexcept;
+    bool operator==(ApplicationVersion const& other) const noexcept;
+    bool operator!=(ApplicationVersion const& other) const noexcept;
 
-    static ApplicationVersion fromString(QString const &version) noexcept;
+    static ApplicationVersion fromString(QString const& version) noexcept;
 
 private:
     qint32 mMajor{0};
@@ -43,8 +43,8 @@ public:
 
     ApplicationVersion getAppVersion() const noexcept;
 
-    bool operator==(const ApplicationConfig &other) const noexcept;
-    bool operator!=(const ApplicationConfig &other) const noexcept;
+    bool operator==(ApplicationConfig const& other) const noexcept;
+    bool operator!=(ApplicationConfig const& other) const noexcept;
 
 private:
     QString mName;

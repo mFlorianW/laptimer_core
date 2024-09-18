@@ -15,10 +15,10 @@ SCENARIO("The application config reader shall read in a valid configuration")
 
     WHEN("Reading a valid configuration")
     {
-        const auto appConfig = appCfgReader.readConfig(QString{"%1/%2"}.arg(CONFIG_FILE_PATH, "ValidAppConfig.json"));
+        auto const appConfig = appCfgReader.readConfig(QString{"%1/%2"}.arg(CONFIG_FILE_PATH, "ValidAppConfig.json"));
         THEN("The correct application config shall be returned")
         {
-            const auto expectedConfig = ApplicationConfig{QString{"Testapp"},
+            auto const expectedConfig = ApplicationConfig{QString{"Testapp"},
                                                           QString{"/usr/bin/test"},
                                                           QString{"/usr/share/lappy/test/icon.png"},
                                                           {1, 0, 9}};

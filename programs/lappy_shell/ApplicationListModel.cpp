@@ -7,31 +7,27 @@
 namespace LaptimerCore::LappyShell
 {
 
-ApplicationListModel::ApplicationListModel(ApplicationModel &appModel) noexcept
+ApplicationListModel::ApplicationListModel(ApplicationModel& appModel) noexcept
     : QAbstractListModel{}
     , mAppModel{appModel}
 {
 }
 
-qint32 ApplicationListModel::rowCount(const QModelIndex &parent) const noexcept
+qint32 ApplicationListModel::rowCount(QModelIndex const& parent) const noexcept
 {
     return mAppModel.getApplications().size();
 }
 
-QVariant ApplicationListModel::data(const QModelIndex &index, qint32 displayRole) const noexcept
+QVariant ApplicationListModel::data(QModelIndex const& index, qint32 displayRole) const noexcept
 {
-    const auto apps = mAppModel.getApplications();
-    if (!index.isValid() or index.row() > apps.size())
-    {
+    auto const apps = mAppModel.getApplications();
+    if (!index.isValid() or index.row() > apps.size()) {
         return {};
     }
 
-    if (displayRole == DisplayRole::AppName)
-    {
+    if (displayRole == DisplayRole::AppName) {
         return apps.at(index.row()).getName();
-    }
-    else if (displayRole == DisplayRole::IconUrl)
-    {
+    } else if (displayRole == DisplayRole::IconUrl) {
         return apps.at(index.row()).getIconUrl();
     }
     return {};

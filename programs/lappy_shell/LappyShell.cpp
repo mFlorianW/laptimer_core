@@ -8,6 +8,7 @@
 
 namespace LaptimerCore::LappyShell
 {
+
 LappyShell::LappyShell()
 {
     // auto qmlContext = mEngine.rootContext();
@@ -17,8 +18,8 @@ LappyShell::LappyShell()
 
 void LappyShell::show() const noexcept
 {
-    auto *topLevel = mEngine.rootObjects().value(0);
-    auto *window = qobject_cast<QQuickWindow *>(topLevel);
+    auto* topLevel = mEngine.rootObjects().value(0);
+    auto* window = qobject_cast<QQuickWindow*>(topLevel);
     window->show();
 }
 
