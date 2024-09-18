@@ -30,37 +30,32 @@ qint32 ApplicationVersion::getPatch() const noexcept
     return mMajor;
 }
 
-bool ApplicationVersion::operator==(const ApplicationVersion &other) const noexcept
+bool ApplicationVersion::operator==(ApplicationVersion const& other) const noexcept
 {
     return (this == &other) or ((mMajor == other.mMajor) && (mMinor == other.mMinor) && (mPatch == other.mPatch));
 }
 
-bool ApplicationVersion::operator!=(const ApplicationVersion &other) const noexcept
+bool ApplicationVersion::operator!=(ApplicationVersion const& other) const noexcept
 {
     return !(*this == other);
 }
 
-ApplicationVersion ApplicationVersion::fromString(QString const &version) noexcept
+ApplicationVersion ApplicationVersion::fromString(QString const& version) noexcept
 {
-    const auto splitedComponents = version.split(".");
-    if (splitedComponents.size() < 3)
-    {
+    auto const splitedComponents = version.split(".");
+    if (splitedComponents.size() < 3) {
         qCritical() << "Invalid version string passed. Error: string can't be splitted." << version;
         return ApplicationVersion{};
     }
 
     auto versions = std::array<qint32, 3>{};
-    for (auto i = std::size_t{0}; i < versions.size(); ++i)
-    {
+    for (auto i = std::size_t{0}; i < versions.size(); ++i) {
         bool conversionSuccess = false;
         qint32 versionPart = splitedComponents.at(static_cast<qint32>(i)).toInt(&conversionSuccess);
-        if (not conversionSuccess)
-        {
+        if (not conversionSuccess) {
             qCritical() << "Failed to convert version part " << i << "Error: conversion from string to int failed.";
             return ApplicationVersion{};
-        }
-        else
-        {
+        } else {
             versions[i] = versionPart;
         }
     }
@@ -96,13 +91,13 @@ ApplicationVersion ApplicationConfig::getAppVersion() const noexcept
     return mVersion;
 }
 
-bool ApplicationConfig::operator==(const ApplicationConfig &other) const noexcept
+bool ApplicationConfig::operator==(ApplicationConfig const& other) const noexcept
 {
     return (this == &other) or ((mName == other.mName) && (mExecutable == other.mExecutable) &&
                                 (mIconUrl == other.mIconUrl) && (mVersion == other.mVersion));
 }
 
-bool ApplicationConfig::operator!=(const ApplicationConfig &other) const noexcept
+bool ApplicationConfig::operator!=(ApplicationConfig const& other) const noexcept
 {
     return !(*this == other);
 }

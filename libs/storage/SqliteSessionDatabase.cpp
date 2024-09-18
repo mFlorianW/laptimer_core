@@ -109,7 +109,7 @@ std::shared_ptr<System::AsyncResult> SqliteSessionDatabase::storeSession(Common:
     if (sessionId.has_value()) {
         storageContext->mStorageThread = std::thread{&SqliteSessionDatabase::updateSession, this, storageContext.get()};
         storageContext->done.connect([&](StorageContext* ctx) {
-            const auto updateResult = ctx->mStorageResult.getResult() ? System::Result::Ok : System::Result::Error;
+            auto const updateResult = ctx->mStorageResult.getResult() ? System::Result::Ok : System::Result::Error;
             ctx->mResult->setDbResult(updateResult);
             if (updateResult == System::Result::Ok) {
                 sessionUpdated.emit(getIndexOfSessionId(ctx->mSessionId).value_or(0));
@@ -121,7 +121,7 @@ std::shared_ptr<System::AsyncResult> SqliteSessionDatabase::storeSession(Common:
     } else {
         storageContext->mStorageThread = std::thread{&SqliteSessionDatabase::addSession, this, storageContext.get()};
         storageContext->done.connect([&](StorageContext* ctx) {
-            const auto updateResult = ctx->mStorageResult.getResult() ? System::Result::Ok : System::Result::Error;
+            auto const updateResult = ctx->mStorageResult.getResult() ? System::Result::Ok : System::Result::Error;
             ctx->mResult->setDbResult(updateResult);
             if (updateResult == System::Result::Ok) {
                 sessionAdded.emit(getIndexOfSessionId(ctx->mSessionId).value_or(0));

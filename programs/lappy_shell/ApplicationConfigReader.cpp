@@ -12,39 +12,34 @@
 namespace LaptimerCore::LappyShell
 {
 
-std::optional<ApplicationConfig> ApplicationConfigReader::readConfig(const QString &configPath) const noexcept
+std::optional<ApplicationConfig> ApplicationConfigReader::readConfig(QString const& configPath) const noexcept
 {
-    if (not QFile::exists(configPath))
-    {
+    if (not QFile::exists(configPath)) {
         qCritical() << "Failed to load application config. Error: Configuration not found. File:" << configPath;
         return {};
     }
 
     auto configFile = QFile{configPath};
-    if (not configFile.open(QFile::ReadOnly))
-    {
+    if (not configFile.open(QFile::ReadOnly)) {
         qCritical() << "Failed to load application config. Error: Configuration cannot be open. File:" << configPath;
         return {};
     }
 
     auto jsonError = QJsonParseError{};
-    const auto jsonDoc = QJsonDocument::fromJson(configFile.readAll(), &jsonError);
-    if (jsonError.error != QJsonParseError::NoError)
-    {
+    auto const jsonDoc = QJsonDocument::fromJson(configFile.readAll(), &jsonError);
+    if (jsonError.error != QJsonParseError::NoError) {
         qCritical() << "Failed to load JSON document. Error:" << jsonError.error << "File:" << configPath;
         return {};
     }
 
-    if (not jsonDoc.isObject())
-    {
+    if (not jsonDoc.isObject()) {
         qCritical() << "Inavlid JSON document. Error: Json document object not found. File:" << configPath;
         return {};
     }
 
-    const auto jsonObj = jsonDoc.object();
+    auto const jsonObj = jsonDoc.object();
     if (jsonObj.find("name") == jsonObj.end() or jsonObj.find("executable") == jsonObj.end() or
-        jsonObj.find("iconUrl") == jsonObj.end() or jsonObj.find("version") == jsonObj.end())
-    {
+        jsonObj.find("iconUrl") == jsonObj.end() or jsonObj.find("version") == jsonObj.end()) {
         qCritical() << "Inavlid JSON document. Error: Required JSON keys not found. File:" << configPath;
         return {};
     }

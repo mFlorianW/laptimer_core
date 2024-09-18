@@ -12,7 +12,7 @@ namespace LaptimerCore::LappyShell
 class ApplicationConfigReader
 {
 public:
-    std::optional<ApplicationConfig> readConfig(QString const &configPath) const noexcept;
+    std::optional<ApplicationConfig> readConfig(QString const& configPath) const noexcept;
 };
 
 } // namespace LaptimerCore::LappyShell
