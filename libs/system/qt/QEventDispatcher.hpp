@@ -3,8 +3,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "EventLoop.hpp"
-#include <QtCore/private/qeventdispatcher_unix_p.h>
-#include <QtEventDispatcherSupport/private/qeventdispatcher_glib_p.h>
+#include <QtGui/private/qeventdispatcher_glib_p.h>
 
 namespace LaptimerCore::System::Qt
 {

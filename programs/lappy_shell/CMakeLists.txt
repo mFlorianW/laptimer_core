@@ -1,4 +1,4 @@
-find_package(Qt5 REQUIRED COMPONENTS Core Gui Quick Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Quick Widgets)
 
 ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
 
@@ -25,10 +25,10 @@ PUBLIC
 
 target_link_libraries(lappy_shell_obj
 PUBLIC
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Quick
-    Qt5::Widgets
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Quick
+    Qt6::Widgets
 )
 
 target_include_directories(lappy_shell_obj
@@ -38,7 +38,7 @@ PUBLIC
 
 add_executable(lappy_shell)
 
-qt5_add_resources(RESOURCE_FILES
+qt_add_resources(RESOURCE_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/resource.qrc
 )
 

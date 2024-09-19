@@ -7,7 +7,7 @@ import QtQuick.Controls 2.15
 import QtLocation 5.15
 import QtPositioning 5.15
 import QtQuick.Layouts 1.15
-import QtQuick.Dialogs 1.3
+import QtQuick.Dialogs
 
 ApplicationWindow {
     id: applicationWindow
@@ -32,8 +32,7 @@ ApplicationWindow {
                 text: qsTr("Start GPS source")
             }
 
-            MenuSeparator {
-            }
+            MenuSeparator {}
 
             Action {
                 text: qsTr("Quit")
@@ -215,8 +214,7 @@ ApplicationWindow {
     FileDialog {
         id: fileDialog
         title: "Please choose a GPS file"
-        folder: shortcuts.home
-        selectMultiple: false
+        currentFolder: shortcuts.home
 
         onAccepted: {
             g_MainWindowViewModel.loadGpsFile(fileDialog.fileUrl);

@@ -1,4 +1,4 @@
-find_package(Qt5 REQUIRED COMPONENTS Core Quick Gui Network Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Quick Gui Network Widgets)
 
 ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
 
@@ -19,11 +19,11 @@ PUBLIC
 
 target_link_libraries(lappy_sessiondl_obj
 PUBLIC
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Quick
-    Qt5::Network
-    Qt5::Widgets
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Quick
+    Qt6::Network
+    Qt6::Widgets
     LaptimerCore::RestQt
     LaptimerCore::SystemQt
     LaptimerCore::Workflow
@@ -38,7 +38,7 @@ PUBLIC
 
 add_executable(lappy_sessiondl)
 
-qt5_add_resources(RESOURCE_FILES
+qt_add_resources(RESOURCE_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/resource.qrc
 )
 

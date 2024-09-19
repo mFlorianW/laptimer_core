@@ -1,0 +1,18 @@
+name: "linux-install-workaround"
+description: "Install workaround for Clang14"
+inputs:
+  os:
+    description: 'Runner OS'
+    required: false
+    default: 'default'
+runs:
+  using: "composite"
+  steps:
+    - name: "Install temporary fix for GCC13 and Clang14"
+      if: (inputs.os == 'ubuntu-latest') || (inputs.os == 'ubuntu-24.04') || (inputs.os == 'ubuntu-22.04') || (inputs.os == 'default')
+      shell: bash
+      run: |
+        echo "TEMPORARY WORKAROUND FOR GITHUB RUNNER BUG #8659\n\nRemoving GCC 13 as it breaks Clang14"
+        sudo rm -f /etc/apt/sources.list.d/ubuntu-toolchain-r-ubuntu-test-jammy.list
+        sudo apt-get update
+        sudo apt-get install -y --allow-downgrades libc6=2.35-* libc6-dev=2.35-* libstdc++6=12.3.0-* libgcc-s1=12.3.0-*

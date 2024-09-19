@@ -1,8 +1,8 @@
-find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets Quick Location)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Quick Location)
 
 add_executable(restgpssource)
 
-qt5_add_resources(RESOURCE_FILES
+qt_add_resources(RESOURCE_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/resource.qrc
 )
 list(APPEND QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/qml)
@@ -25,11 +25,11 @@ PRIVATE
 
 target_link_libraries(restgpssource
 PRIVATE
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Widgets
-    Qt5::Quick
-    Qt5::Location
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
+    Qt6::Quick
+    Qt6::Location
     LaptimerCore::Common
     LaptimerCore::Positioning
     LaptimerCore::PositioningQt
