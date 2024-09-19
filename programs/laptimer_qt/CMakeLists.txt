@@ -1,4 +1,4 @@
-find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 
 add_executable(laptimer_qt)
 
@@ -15,8 +15,8 @@ PRIVATE
 target_link_libraries(laptimer_qt
 PRIVATE
     LaptimerCore::QtShell
-    LaptimerCore::PositioningQt
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Widgets
+    LaptimerCore::SystemQt
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
 )

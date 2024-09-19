@@ -34,18 +34,14 @@ jobs:
       matrix:
         commits: ${{ fromJson(needs.Generate_Build_Jobs.outputs.commits) }}
     steps:
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v3
-      with:
-        version: '5.15.*'
-        cache: 'true'
-    - name: Install Dependencies
-      run: |
-        sudo apt update && sudo apt install doxygen libsdl2-dev libboost-all-dev
     - name: Checkout
       uses: actions/checkout@v4
       with:
           fetch-depth: 0
+    - name: Install Qt
+      uses: ./.github/actions/linux-install-qt
+    - name: Install Dependencies
+      uses: ./.github/actions/linux-install-dep
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
     - name: Build

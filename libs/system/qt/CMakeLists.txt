@@ -1,6 +1,6 @@
-find_package(Qt5 REQUIRED COMPONENTS Core EventDispatcherSupport)
+find_package(Qt6 REQUIRED COMPONENTS Gui)
 
-add_library(SystemQt SHARED)
+add_library(SystemQt STATIC)
 add_library(LaptimerCore::SystemQt ALIAS SystemQt)
 
 target_sources(SystemQt
@@ -12,10 +12,8 @@ PRIVATE
 target_link_libraries(SystemQt
 PUBLIC
     LaptimerCore::System
-    Qt5::Core
-    Qt5::CorePrivate
-    Qt5::EventDispatcherSupport
-    Qt5::EventDispatcherSupportPrivate
+    Qt6::Gui
+    Qt6::GuiPrivate
 )
 
 target_include_directories(SystemQt

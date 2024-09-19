@@ -22,7 +22,7 @@ QVector<QFileInfo> ApplicationFinder::findApplications() const noexcept
         while (dirIter.hasNext()) {
             dirIter.next();
             if (dirIter.fileInfo().isFile() and dirIter.fileInfo().completeSuffix() == QStringLiteral("json")) {
-                applications.push_back(dirIter.filePath());
+                applications.push_back(dirIter.fileInfo());
             }
         }
     }

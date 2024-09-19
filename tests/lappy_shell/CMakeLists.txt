@@ -1,5 +1,5 @@
 include(Catch)
-find_package(Qt5 REQUIRED COMPONENTS Test)
+find_package(Qt6 REQUIRED COMPONENTS Test)
 
 set(CONFIG_FILE_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 set(CONFIG_APP_PATH ${CMAKE_CURRENT_SOURCE_DIR}/testapps)
@@ -18,7 +18,7 @@ target_link_libraries(test_ApplicationModel PRIVATE Catch2::Catch2 LaptimerCore:
 target_include_directories(test_ApplicationModel PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(test_ApplicationListModel test_ApplicationListModel.cpp)
-target_link_libraries(test_ApplicationListModel PRIVATE Catch2::Catch2 LaptimerCore::LappyShellObj Qt5::Test)
+target_link_libraries(test_ApplicationListModel PRIVATE Catch2::Catch2 LaptimerCore::LappyShellObj Qt6::Test)
 target_include_directories(test_ApplicationListModel PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
 catch_discover_tests(test_ApplicationConfigReader)

@@ -12,16 +12,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v3
-      with:
-        version: '5.15.*'
-        cache: 'true'
-    - name: Install Dependencies
-      run: |
-        sudo apt update && sudo apt install doxygen libsdl2-dev libboost-all-dev
     - name: checkout
       uses: actions/checkout@v4
+    - name: Install Qt
+      uses: ./.github/actions/linux-install-qt
+    - name: Install Dependencies
+      uses: ./.github/actions/linux-install-dep
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
     - name: build and test

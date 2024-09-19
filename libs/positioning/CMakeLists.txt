@@ -27,7 +27,7 @@ PUBLIC
 
 
 #TODO: Add global option to disable all Qtbased Components entirely
-find_package(Qt5 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core)
 
 add_library(PositioningQt SHARED)
 add_library(LaptimerCore::PositioningQt ALIAS PositioningQt)
@@ -48,5 +48,5 @@ PUBLIC
 target_link_libraries(PositioningQt
 PUBLIC
     LaptimerCore::Positioning
-    Qt5::Core
+    Qt6::Core
 )

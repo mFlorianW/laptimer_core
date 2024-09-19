@@ -1,6 +1,6 @@
-find_package(Qt5 REQUIRED COMPONENTS Core Network)
+find_package(Qt6 REQUIRED COMPONENTS Core Network)
 
-add_library(RestQt SHARED)
+add_library(RestQt STATIC)
 add_library(LaptimerCore::RestQt ALIAS RestQt)
 
 target_sources(RestQt
@@ -13,8 +13,8 @@ target_link_libraries(RestQt
 PUBLIC
     LaptimerCore::Rest
 PRIVATE
-    Qt5::Core
-    Qt5::Network
+    Qt6::Core
+    Qt6::Network
 )
 
 target_include_directories(RestQt

@@ -18,8 +18,6 @@ struct QtShellPrivate
 {
     QQmlApplicationEngine engine;
     MainWindowViewModel mMainWindowViewModel;
-    QTimer laptimerCoreTimer;
-    System::EventLoop mEventLoop;
 };
 
 QtShell::QtShell()
@@ -29,13 +27,6 @@ QtShell::QtShell()
     qmlContext->setContextProperty("g_MainWindowViewModel", &d->mMainWindowViewModel);
 
     d->engine.load(QUrl{"qrc:/qml/MainWindow.qml"});
-
-    // TODO: move this in somehow in the mainloop
-    d->laptimerCoreTimer.setInterval(5);
-    QObject::connect(&d->laptimerCoreTimer, &QTimer::timeout, &d->laptimerCoreTimer, [=]() {
-        d->mEventLoop.exec();
-    });
-    d->laptimerCoreTimer.start();
 }
 
 QtShell::~QtShell() = default;

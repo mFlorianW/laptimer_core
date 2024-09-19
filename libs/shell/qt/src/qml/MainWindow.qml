@@ -7,7 +7,8 @@ import QtQuick.Controls 2.15
 import QtLocation 5.15
 import QtPositioning 5.15
 import QtQuick.Layouts 1.15
-import QtQuick.Dialogs 1.3
+import QtQuick.Dialogs
+import QtCore
 
 ApplicationWindow {
     id: applicationWindow
@@ -33,8 +34,7 @@ ApplicationWindow {
                 onTriggered: !g_MainWindowViewModel.gpsSourceActive ? g_MainWindowViewModel.startGpsSource() : g_MainWindowViewModel.stopGpsSource()
             }
 
-            MenuSeparator {
-            }
+            MenuSeparator {}
 
             Action {
                 text: qsTr("Quit")
@@ -189,7 +189,7 @@ ApplicationWindow {
                 id: map
                 plugin: Plugin {
                     id: mapPlugin
-                    name: "esri"
+                    preferred: ["osm"]
                 }
                 center: QtPositioning.coordinate(52.0270889, 11.2803483)
                 zoomLevel: 16
@@ -208,8 +208,7 @@ ApplicationWindow {
     FileDialog {
         id: fileDialog
         title: "Please choose a GPS file"
-        folder: shortcuts.home
-        selectMultiple: false
+        currentFolder: StandardPaths.standardLocations(StandardPaths.HomeLocation)[0]
 
         onAccepted: {
             g_MainWindowViewModel.loadGpsFile(fileDialog.fileUrl);

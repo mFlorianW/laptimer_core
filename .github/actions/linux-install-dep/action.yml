@@ -1,0 +1,15 @@
+name: "linux-install-dep"
+description: "Install dependencies for Linux"
+inputs:
+  os:
+    description: 'Runner OS'
+    required: false
+    default: 'default'
+runs:
+  using: "composite"
+  steps:
+    - name: "Install Qt for Linux"
+      if: (inputs.os == 'ubuntu-latest') || (inputs.os == 'ubuntu-24.04') || (inputs.os == 'ubuntu-22.04') || (inputs.os == 'default')
+      shell: bash
+      run: |
+        sudo apt update && sudo apt install doxygen libsdl2-dev clazy
