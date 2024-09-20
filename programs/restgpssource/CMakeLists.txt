@@ -1,13 +1,9 @@
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Quick Location)
-
 add_executable(restgpssource)
 
 qt_add_resources(RESOURCE_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/resource.qrc
 )
 list(APPEND QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/qml)
-
-ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
 
 target_sources(restgpssource
 PRIVATE

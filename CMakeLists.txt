@@ -24,6 +24,19 @@ if(ENABLE_PRECOMMIT)
     setup_precommit()
 endif()
 
+if(ENABLE_QT)
+    set(CMAKE_AUTOMOC ON)
+    set(CMAKE_AUTORCC ON)
+
+    find_package(Qt6 REQUIRED COMPONENTS Core Qml Gui Quick Widgets Network Location)
+    
+    ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
+
+    if(QT_KNOWN_POLICY_QTP0001)
+        qt_policy(SET QTP0001 NEW)
+    endif()
+endif()
+
 find_package(KDBindings REQUIRED)
 find_path(ARDUINOJSON_INCLUDE_DIRS "ArduinoJson.h")
 include_directories(SYSTEM ${ARDUINOJSON_INCLUDE_DIRS})
@@ -46,6 +59,9 @@ add_subdirectory(db)
 add_subdirectory(programs)
 
 if(ENABLE_TEST)
+    if(ENABLE_QT)
+        find_package(Qt6 REQUIRED Test)
+    endif()
     enable_testing()
     add_subdirectory(tests)
 endif(ENABLE_TEST)

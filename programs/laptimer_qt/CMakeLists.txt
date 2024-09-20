@@ -1,5 +1,3 @@
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
-
 add_executable(laptimer_qt)
 
 target_sources(laptimer_qt

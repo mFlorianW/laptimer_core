@@ -15,7 +15,7 @@ ApplicationListModel::ApplicationListModel(ApplicationModel& appModel) noexcept
 
 qint32 ApplicationListModel::rowCount(QModelIndex const& parent) const noexcept
 {
-    return mAppModel.getApplications().size();
+    return static_cast<qint32>(mAppModel.getApplications().size());
 }
 
 QVariant ApplicationListModel::data(QModelIndex const& index, qint32 displayRole) const noexcept
