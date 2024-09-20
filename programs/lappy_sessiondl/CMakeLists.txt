@@ -1,7 +1,3 @@
-find_package(Qt6 REQUIRED COMPONENTS Core Quick Gui Network Widgets)
-
-ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
-
 add_library(lappy_sessiondl_obj STATIC)
 add_library(LaptimerCore::SessionDlObj ALIAS lappy_sessiondl_obj)
 

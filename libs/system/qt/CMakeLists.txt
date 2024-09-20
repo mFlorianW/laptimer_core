@@ -1,5 +1,3 @@
-find_package(Qt6 REQUIRED COMPONENTS Gui)
-
 add_library(SystemQt STATIC)
 add_library(LaptimerCore::SystemQt ALIAS SystemQt)
 

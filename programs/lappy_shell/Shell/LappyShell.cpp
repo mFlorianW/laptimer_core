@@ -10,6 +10,7 @@
 #include <QQmlContext>
 #include <QQuickWindow>
 #include <QStandardPaths>
+#include <qdiriterator.h>
 
 namespace LaptimerCore::LappyShell
 {
@@ -17,7 +18,7 @@ namespace LaptimerCore::LappyShell
 LappyShell::LappyShell()
 {
     setupDatabase();
-    mEngine.load(QUrl{"qrc:/qml/MainWindow.qml"});
+    mEngine.load(QUrl{"qrc:/qt/qml/Lappy/Shell/qml/MainWindow.qml"});
 }
 
 void LappyShell::show() const noexcept

@@ -22,9 +22,6 @@ catch_discover_tests(test_Event)
 catch_discover_tests(test_EventLoop)
 
 if(ENABLE_QT)
-    ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
-    set(CMAKE_AUTOMOC ON)
-    set(CMAKE_AUTORCC ON)
     find_package(Qt6Test REQUIRED)
 
     add_executable(test_QEventDispatcher test_QEventDispatcher.cpp)
