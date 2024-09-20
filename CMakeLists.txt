@@ -3,20 +3,21 @@ cmake_minimum_required(VERSION 3.19)
 project(LaptimerCore)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/configuration/cmake/")
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
 include(FeatureSummary)
 include(CheckCCompilerFlag)
 include(GNUInstallDirs)
 include(PreCommit)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(SHARED_DATADIR ${CMAKE_INSTALL_DATAROOTDIR}/lappy)
+
 option(ENABLE_TEST "Enable unit tests" OFF)
 option(ENABLE_QT "This option enables QT implementations" ON)
 option(ENABLE_PRECOMMIT "Enables automatic pre-commit install." OFF)
 option(ENABLE_BOOST "Enables the boost support" OFF)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_feature_info(PreCommit ENABLE_PRECOMMIT "Automatic install of the Python pre-commit tool.")
 
 if(ENABLE_PRECOMMIT)

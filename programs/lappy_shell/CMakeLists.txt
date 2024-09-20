@@ -13,6 +13,8 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationModel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationListModel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/LappyShell.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/LoggingCategories.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/LoggingCategories.hpp
 
 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationFinder.hpp
@@ -24,6 +26,8 @@ PUBLIC
 )
 
 target_link_libraries(lappy_shell_obj
+PRIVATE
+    LaptimerCore::DatabaseFile
 PUBLIC
     Qt6::Core
     Qt6::Gui

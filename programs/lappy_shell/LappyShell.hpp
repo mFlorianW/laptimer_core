@@ -17,6 +17,7 @@ public:
     void show() const noexcept;
 
 private:
+    void setupDatabase() noexcept;
     QQmlApplicationEngine mEngine{};
 };
 
