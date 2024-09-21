@@ -28,3 +28,8 @@ catch_discover_tests(test_Date)
 catch_discover_tests(test_JsonSerializer)
 catch_discover_tests(test_JsonDeserializer)
 catch_discover_tests(test_PositionDateTime)
+
+if(ENABLE_QT)
+    add_executable(test_GlobalSettingsReader test_GlobalSettingsReader.cpp)
+    target_link_libraries(test_GlobalSettingsReader PRIVATE Catch2::Catch2 Catch2::Catch2WithMain LaptimerCore::CommonQt LaptimerCore::TestHelper)
+endif()

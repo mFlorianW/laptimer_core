@@ -18,4 +18,9 @@ bool QSettingsBackend::storeValue(QString const& key, QVariant const& value) noe
     return true;
 }
 
+QVariant QSettingsBackend::getValue(QString const& key) const noexcept
+{
+    return mSettings.value(key);
+}
+
 } // namespace LaptimerCore::Common

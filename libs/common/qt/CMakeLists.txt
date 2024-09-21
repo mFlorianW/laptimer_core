@@ -5,6 +5,8 @@ target_sources(CommonObjectQt
 PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettingsBackend.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettingsBackend.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettingsReader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettingsReader.hpp
 )
 
 target_link_libraries(CommonObjectQt

@@ -45,6 +45,8 @@ public:
      */
     [[nodiscard]] virtual bool storeValue(QString const& key, QVariant const& value) noexcept = 0;
 
+    [[nodiscard]] virtual QVariant getValue(QString const& key) const noexcept = 0;
+
 protected:
     GlobalSettingsBackend() = default;
 };
@@ -88,7 +90,9 @@ public:
     /**
      * @copydoc ISettingsBackend::storeValue
      */
-    bool storeValue(QString const& key, QVariant const& value) noexcept override;
+    [[nodiscard]] bool storeValue(QString const& key, QVariant const& value) noexcept override;
+
+    [[nodiscard]] QVariant getValue(QString const& key) const noexcept override;
 
 private:
     QSettings mSettings;

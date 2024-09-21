@@ -14,7 +14,7 @@ class SettingsMemoryBackend : public Common::GlobalSettingsBackend
 public:
     [[nodiscard]] bool storeValue(QString const& key, QVariant const& value) noexcept override;
 
-    [[nodiscard]] QVariant getValue(QString const& key) const noexcept;
+    [[nodiscard]] QVariant getValue(QString const& key) const noexcept override;
 
 private:
     QVariantHash mSingleValues;
