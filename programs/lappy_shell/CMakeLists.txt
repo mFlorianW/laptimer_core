@@ -1,6 +1,7 @@
 add_subdirectory(Common)
 add_subdirectory(Shell)
 add_subdirectory(Applications)
+add_subdirectory(Settings)
 
 add_executable(lappy_shell)
 

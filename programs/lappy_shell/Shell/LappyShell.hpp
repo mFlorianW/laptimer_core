@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <GlobalSettingsWriter.hpp>
 #include <QQmlApplicationEngine>
 
 namespace LaptimerCore::LappyShell
@@ -19,6 +20,8 @@ public:
 private:
     void setupDatabase() noexcept;
     QQmlApplicationEngine mEngine{};
+    QSettingsBackend mSettingsBackend;
+    GlobalSettingsWriter mSettings;
 };
 
 } // namespace LaptimerCore::LappyShell

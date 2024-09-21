@@ -7,8 +7,8 @@ qt_add_qml_module(Shell
     QML_FILES
         qml/MainWindow.qml
     SOURCES
-        LappyShell.cpp 
-        LappyShell.cpp 
+        LappyShell.cpp
+        LappyShell.cpp
 )
 
 add_library(LaptimerCore::LappyShell ALIAS Shell)
@@ -17,12 +17,14 @@ add_library(LaptimerCore::LappyShellPlugin ALIAS Shellplugin)
 target_link_libraries(Shell
     PUBLIC
         Qt6::Quick
+        LaptimerCore::LappyShellSettings
+        LaptimerCore::LappyShellSettingsPlugin
     PRIVATE
         LaptimerCore::DatabaseFile
         LaptimerCore::LappyShellCommon
 )
 
-target_include_directories(Shell 
+target_include_directories(Shell
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )

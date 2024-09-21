@@ -16,6 +16,7 @@ namespace LaptimerCore::LappyShell
 {
 
 LappyShell::LappyShell()
+    : mSettings{&mSettingsBackend}
 {
     setupDatabase();
     mEngine.load(QUrl{"qrc:/qt/qml/Lappy/Shell/qml/MainWindow.qml"});
@@ -53,6 +54,10 @@ void LappyShell::setupDatabase() noexcept
         } else {
             qCInfo(lappy_shell) << "Copied empty database to:" << dbFile;
         }
+    }
+
+    if (not mSettings.storeDatabaseFilePath(dbFile)) {
+        qCCritical(lappy_shell) << "Failed to store database file parameter in global settings.";
     }
 }
 

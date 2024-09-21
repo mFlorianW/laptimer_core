@@ -30,7 +30,7 @@ if(ENABLE_QT)
     set(CMAKE_AUTORCC ON)
 
     find_package(Qt6 REQUIRED COMPONENTS Core Qml Gui Quick Widgets Network Location)
-    
+
     ADD_DEFINITIONS(-DQT_NO_KEYWORDS)
 
     if(QT_KNOWN_POLICY_QTP0001)
@@ -65,6 +65,8 @@ add_subdirectory(db)
 add_subdirectory(programs)
 
 if(ENABLE_TEST)
+    include(CTest)
+    find_package(Catch2 CONFIG REQUIRED)
     if(ENABLE_QT)
         find_package(Qt6 REQUIRED Test)
     endif()
