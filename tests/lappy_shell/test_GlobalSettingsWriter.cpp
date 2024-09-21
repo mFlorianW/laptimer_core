@@ -4,33 +4,12 @@
 
 #include <GlobalSettingsBackend.hpp>
 #include <GlobalSettingsWriter.hpp>
+#include <SettingsMemoryBackend.hpp>
 #include <catch2/catch.hpp>
 
 using namespace LaptimerCore::LappyShell;
 using namespace LaptimerCore::Common;
-
-namespace
-{
-
-class SettingsMemoryBackend : public GlobalSettingsBackend
-{
-public:
-    [[nodiscard]] bool storeValue(QString const& key, QVariant const& value) noexcept override
-    {
-        mSingleValues.insert(key, value);
-        return true;
-    }
-
-    [[nodiscard]] QVariant getValue(QString const& key) const noexcept
-    {
-        return mSingleValues[key];
-    }
-
-private:
-    QVariantHash mSingleValues;
-};
-
-} // namespace
+using namespace LaptimerCore::TestHelper;
 
 SCENARIO("The Settings shall store the settings database file path.")
 {

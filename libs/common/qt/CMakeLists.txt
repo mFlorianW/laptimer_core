@@ -2,7 +2,7 @@ add_library(CommonObjectQt OBJECT)
 add_library(LaptimerCore::CommonObjectQt ALIAS CommonObjectQt)
 
 target_sources(CommonObjectQt
-PUBLIC
+PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettingsBackend.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettingsBackend.hpp
 )

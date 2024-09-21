@@ -21,7 +21,7 @@ target_link_libraries(test_ApplicationListModel PRIVATE Catch2::Catch2 Catch2::C
 target_include_directories(test_ApplicationListModel PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(test_GlobalSettingsWriter test_GlobalSettingsWriter.cpp)
-target_link_libraries(test_GlobalSettingsWriter PRIVATE Catch2::Catch2 Catch2::Catch2WithMain LaptimerCore::LappyShellSettings)
+target_link_libraries(test_GlobalSettingsWriter PRIVATE Catch2::Catch2 Catch2::Catch2WithMain LaptimerCore::LappyShellSettings LaptimerCore::TestHelper)
 
 catch_discover_tests(test_ApplicationConfigReader)
 catch_discover_tests(test_ApplicationVersion)
