@@ -1,3 +1,4 @@
+add_subdirectory(ssd1322)
 add_definitions(-DLV_CONF_INCLUDE_SIMPLE=1 -DLV_LVGL_H_INCLUDE_SIMPLE)
 
 add_executable(laptimer_ssd1322)
