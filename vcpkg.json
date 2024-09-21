@@ -1,6 +1,7 @@
 {
   "dependencies": [
     "arduinojson",
+    "boost-beast",
     {
       "name": "catch2",
       "version>=": "2.13.7"
@@ -8,7 +9,15 @@
     "kdbindings",
     "lvgl-ssd1322",
     "lvgl-ssd1322-drivers",
-    "boost-beast"
+    "sqlite3",
+    {
+      "name": "sdl2",
+      "default-features": false,
+      "features": [
+        "x11",
+        "wayland"
+      ]
+    }
   ],
   "overrides": [
     {
