@@ -1,6 +1,5 @@
 add_subdirectory(lappy_ssd1322)
 add_subdirectory(lappy_headless)
 add_subdirectory(lappy_sessiondl)
-add_subdirectory(laptimer_qt)
 add_subdirectory(restgpssource)
 add_subdirectory(lappy_shell)
