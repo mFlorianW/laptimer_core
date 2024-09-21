@@ -2,14 +2,14 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include "LappySessionDownloader.hpp"
+#include "SessionDownloader.hpp"
 #include <QQmlContext>
 #include <QQuickWindow>
 
 namespace LaptimerCore::SessionDl
 {
 
-LappySessionDownloader::LappySessionDownloader(QHostAddress const& address, quint16 port) noexcept
+SessionDownloader::SessionDownloader(QHostAddress const& address, quint16 port) noexcept
 {
     auto qmlContext = mEngine.rootContext();
     qmlContext->setContextProperty("g_MainWindowModel", &mMainWindowModel);
@@ -22,7 +22,7 @@ LappySessionDownloader::LappySessionDownloader(QHostAddress const& address, quin
     mMainWindowModel.setHostPort(port);
 }
 
-void LappySessionDownloader::show() const noexcept
+void SessionDownloader::show() const noexcept
 {
     auto* topLevel = mEngine.rootObjects().value(0);
     auto* window = qobject_cast<QQuickWindow*>(topLevel);

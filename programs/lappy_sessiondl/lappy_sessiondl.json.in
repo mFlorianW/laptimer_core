@@ -1,6 +1,6 @@
 {
     "name": "Session Downloader",
     "executable": "@TEST@/lappy_sessiondl",
-    "iconUrl": "",
+    "iconUrl": "@ICON_URL@/lappy_sessiondl.svg",
     "version": ""
 }
