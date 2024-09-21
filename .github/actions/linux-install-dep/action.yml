@@ -12,4 +12,5 @@ runs:
       if: (inputs.os == 'ubuntu-latest') || (inputs.os == 'ubuntu-24.04') || (inputs.os == 'ubuntu-22.04') || (inputs.os == 'default')
       shell: bash
       run: |
-        sudo apt update && sudo apt install doxygen libsdl2-dev clazy
+        sudo apt-get update
+        sudo apt-get install doxygen  clazy meson doxygen-latex graphviz xapian-tools python3-jinja2 gperf libx11-dev libxft-dev libxext-dev libwayland-dev libxkbcommon-dev libegl1-mesa-dev
