@@ -20,7 +20,7 @@ public:
 private:
     void setupDatabase() noexcept;
     QQmlApplicationEngine mEngine{};
-    QSettingsBackend mSettingsBackend;
+    Common::QSettingsBackend mSettingsBackend;
     GlobalSettingsWriter mSettings;
 };
 

@@ -2,15 +2,17 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+#include <GlobalSettingsBackend.hpp>
 #include <GlobalSettingsWriter.hpp>
 #include <catch2/catch.hpp>
 
 using namespace LaptimerCore::LappyShell;
+using namespace LaptimerCore::Common;
 
 namespace
 {
 
-class SettingsMemoryBackend : public ISettingsBackend
+class SettingsMemoryBackend : public GlobalSettingsBackend
 {
 public:
     [[nodiscard]] bool storeValue(QString const& key, QVariant const& value) noexcept override

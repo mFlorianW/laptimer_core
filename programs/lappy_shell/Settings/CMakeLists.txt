@@ -15,6 +15,7 @@ add_library(LaptimerCore::LappyShellSettingsPlugin ALIAS Settingsplugin)
 target_link_libraries(Settings
     PUBLIC
         Qt6::Quick
+        LaptimerCore::CommonQt
     PRIVATE
         LaptimerCore::DatabaseFile
         LaptimerCore::LappyShellCommon
