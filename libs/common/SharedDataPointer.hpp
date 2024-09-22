@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#ifndef __SHAREDDATA__H__
-#define __SHAREDDATA__H__
+#pragma once
 
 #include <atomic>
 #include <cstdint>
@@ -22,6 +21,8 @@ public:
     SharedData(SharedData const& ohter)
         : ref{0} {};
 
+    SharedData(SharedData&&) noexcept = delete;
+    SharedData& operator=(SharedData&&) noexcept = delete;
     SharedData& operator=(SharedData&) = delete;
     virtual ~SharedData() = default;
     std::atomic_uint8_t ref;
@@ -95,7 +96,7 @@ public:
      */
     SharedDataPointer& operator=(SharedDataPointer<T> const& other)
     {
-        if (mData == other.mData) {
+        if (mData == other.mData or &other == this) {
             return *this;
         }
 
@@ -108,7 +109,7 @@ public:
         if (oldData != nullptr) {
             oldData->ref--;
             if (oldData->ref == 0) {
-                delete oldData;
+                delete oldData; // NOLINT(cppcoreguidelines-owning-memory)
             }
         }
 
@@ -228,7 +229,7 @@ private:
         }
 
         if (mData->ref > 1) {
-            T* newData = new T(*mData);
+            T* newData = new T(*mData); // NOLINT(cppcoreguidelines-owning-memory)
             newData->ref++;
             mData->ref--;
             if (mData->ref == 0) {
@@ -244,5 +245,3 @@ private:
 };
 
 } // namespace LaptimerCore::Common
-
-#endif //!__SHAREDDATA__H__

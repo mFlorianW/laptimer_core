@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#ifndef DATE_HPP
-#define DATE_HPP
+#pragma once
 
 #include "SharedDataPointer.hpp"
 #include <string>
@@ -125,5 +124,3 @@ private:
 };
 
 } // namespace LaptimerCore::Common
-
-#endif // DATE_HPP

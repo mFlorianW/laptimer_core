@@ -39,22 +39,9 @@ PositionDateTimeData::PositionDateTimeData(PositionData const& posData, Timestam
 
 PositionDateTimeData::~PositionDateTimeData() = default;
 
-PositionDateTimeData::PositionDateTimeData(PositionDateTimeData const& other)
-    : mData(other.mData)
-{
-}
-
-PositionDateTimeData& PositionDateTimeData::operator=(PositionDateTimeData const& other)
-{
-    mData = other.mData;
-    return *this;
-}
-
-PositionDateTimeData::PositionDateTimeData(PositionDateTimeData&& other)
-    : mData{std::move(other.mData)}
-{
-    other.mData = nullptr;
-}
+PositionDateTimeData::PositionDateTimeData(PositionDateTimeData const& other) = default;
+PositionDateTimeData& PositionDateTimeData::operator=(PositionDateTimeData const& other) = default;
+PositionDateTimeData::PositionDateTimeData(PositionDateTimeData&& other) = default;
 
 PositionDateTimeData& PositionDateTimeData::operator=(PositionDateTimeData&& other)
 {

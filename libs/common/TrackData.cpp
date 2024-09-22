@@ -32,23 +32,9 @@ TrackData::TrackData()
 }
 
 TrackData::~TrackData() = default;
-
-TrackData::TrackData(TrackData const& ohter)
-    : mData(ohter.mData)
-{
-}
-
-TrackData& TrackData::operator=(TrackData const& other)
-{
-    mData = other.mData;
-    return *this;
-}
-
-TrackData::TrackData(TrackData&& other)
-    : mData{std::move(other.mData)}
-{
-    other.mData = nullptr;
-}
+TrackData::TrackData(TrackData const& ohter) = default;
+TrackData& TrackData::operator=(TrackData const& other) = default;
+TrackData::TrackData(TrackData&& other) = default;
 
 TrackData& TrackData::operator=(TrackData&& other)
 {

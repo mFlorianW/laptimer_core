@@ -38,29 +38,10 @@ PositionData::PositionData(float latitude, float longitude)
 
 PositionData::~PositionData() = default;
 
-PositionData::PositionData(PositionData const& other)
-    : mData(other.mData)
-{
-}
-
-PositionData& PositionData::operator=(PositionData const& other)
-{
-    mData = other.mData;
-    return *this;
-}
-
-PositionData::PositionData(PositionData&& other)
-    : mData{std::move(other.mData)}
-{
-    other.mData = nullptr;
-}
-
-PositionData& PositionData::operator=(PositionData&& other)
-{
-    PositionData moved{std::move(other)};
-    std::swap(moved.mData, mData);
-    return *this;
-}
+PositionData::PositionData(PositionData const& other) = default;
+PositionData& PositionData::operator=(PositionData const& other) = default;
+PositionData::PositionData(PositionData&& other) = default;
+PositionData& PositionData::operator=(PositionData&& other) = default;
 
 float PositionData::getLatitude() const
 {

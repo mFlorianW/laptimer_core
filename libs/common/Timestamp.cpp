@@ -53,29 +53,10 @@ Timestamp::Timestamp(std::string const& timestampString)
 }
 
 Timestamp::~Timestamp() = default;
-
-Timestamp::Timestamp(Timestamp const& other)
-    : mData{other.mData}
-{
-}
-
-Timestamp& Timestamp::operator=(Timestamp const& other)
-{
-    mData = other.mData;
-    return *this;
-}
-
-Timestamp::Timestamp(Timestamp&& other)
-    : mData{std::move(other.mData)}
-{
-}
-
-Timestamp& Timestamp::operator=(Timestamp&& other)
-{
-    Timestamp moved{std::move(other)};
-    std::swap(moved.mData, mData);
-    return *this;
-}
+Timestamp::Timestamp(Timestamp const& other) = default;
+Timestamp& Timestamp::operator=(Timestamp const& other) = default;
+Timestamp::Timestamp(Timestamp&& other) = default;
+Timestamp& Timestamp::operator=(Timestamp&& other) = default;
 
 std::uint8_t Timestamp::getHour() const
 {
@@ -189,7 +170,8 @@ Timestamp Timestamp::getSystemTimestamp()
 
 int32_t Timestamp::convertToMilliSeconds() const
 {
-    return (getHour() * 3.6e6) + (getMinute() * 6.0e4) + (getSecond() * 1e3) + getFractionalOfSecond();
+    return static_cast<int32_t>((getHour() * 3.6e6) + (getMinute() * 6.0e4) + (getSecond() * 1e3) +
+                                getFractionalOfSecond());
 }
 
 bool operator==(Timestamp const& lhs, Timestamp const& rhs)

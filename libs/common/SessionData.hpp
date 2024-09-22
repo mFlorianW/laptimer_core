@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#ifndef SESSIONDATA_HPP
-#define SESSIONDATA_HPP
+#pragma once
 
 #include "Date.hpp"
 #include "LapData.hpp"
@@ -131,5 +130,3 @@ private:
 };
 
 } // namespace LaptimerCore::Common
-
-#endif // SESSIONDATA_HPP

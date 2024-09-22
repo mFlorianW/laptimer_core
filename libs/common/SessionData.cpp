@@ -41,33 +41,14 @@ SessionData::SessionData(TrackData const& track, Date const& sessionDate, Timest
 }
 
 SessionData::~SessionData() = default;
-
-SessionData::SessionData(SessionData const& other)
-    : mData(other.mData)
-{
-}
-
-SessionData& SessionData::operator=(SessionData const& other)
-{
-    mData = other.mData;
-    return *this;
-}
+SessionData::SessionData(SessionData const& other) = default;
+SessionData& SessionData::operator=(SessionData const& other) = default;
+SessionData::SessionData(SessionData&& other) = default;
+SessionData& SessionData::operator=(SessionData&& other) = default;
 
 Date SessionData::getSessionDate() const noexcept
 {
     return mData->mSessionDate;
-}
-
-SessionData::SessionData(SessionData&& other)
-    : mData{std::move(other.mData)}
-{
-}
-
-SessionData& SessionData::operator=(SessionData&& other)
-{
-    SessionData moved{std::move(other)};
-    std::swap(moved.mData, mData);
-    return *this;
 }
 
 Timestamp SessionData::getSessionTime() const noexcept
