@@ -2,7 +2,6 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#define CATCH_CONFIG_MAIN
 #include "ApplicationListModel.hpp"
 #include "FilePath.hpp"
 #include <QAbstractItemModelTester>

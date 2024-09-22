@@ -10,7 +10,7 @@ using namespace LaptimerCore::Common;
 
 TEST_CASE("The Date shall be convertable to a string in format DD.MM.YYYY")
 {
-    constexpr char expectedResult[] = "01.01.1970";
+    constexpr auto expectedResult = "01.01.1970";
     Date date;
     date.setDay(1);
     date.setMonth(1);

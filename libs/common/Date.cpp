@@ -7,7 +7,6 @@
 #include <chrono>
 #include <ctime>
 #include <iomanip>
-#include <iostream>
 
 namespace LaptimerCore::Common
 {
@@ -39,8 +38,8 @@ Date::Date(std::string const& dateString)
 {
     std::istringstream input(dateString);
     std::array<std::string, 3> splittedStrings;
-    for (std::size_t i = 0; i < splittedStrings.size(); ++i) {
-        getline(input, splittedStrings[i], '.');
+    for (auto& splittedString : splittedStrings) {
+        getline(input, splittedString, '.');
     }
 
     mData->mDay = static_cast<std::uint8_t>(std::stoi(splittedStrings[0]));
@@ -49,30 +48,10 @@ Date::Date(std::string const& dateString)
 }
 
 Date::~Date() = default;
-
-Date::Date(Date const& other)
-    : mData{other.mData}
-{
-}
-
-Date& Date::operator=(Date const& other)
-{
-    mData = other.mData;
-    return *this;
-}
-
-Date::Date(Date&& other)
-    : mData{std::move(other.mData)}
-{
-    other.mData = nullptr;
-}
-
-Date& Date::operator=(Date&& other)
-{
-    Date moved{std::move(other)};
-    std::swap(mData, moved.mData);
-    return *this;
-}
+Date::Date(Date const& other) = default;
+Date& Date::operator=(Date const& other) = default;
+Date::Date(Date&& other) = default;
+Date& Date::operator=(Date&& other) = default;
 
 uint16_t Date::getYear() const noexcept
 {

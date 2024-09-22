@@ -3,34 +3,32 @@ add_library(LaptimerCore::CommonObject ALIAS CommonObject)
 
 target_sources(CommonObject
 PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/TrackData.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/PositionData.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Timestamp.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/LapData.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/SessionData.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Date.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/JsonSerializer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/JsonDeserializer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/PositionDateTimeData.cpp
-PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/TrackData.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/PositionData.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/SharedDataPointer.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/Timestamp.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/LapData.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/SessionData.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/Date.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/JsonSerializer.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/JsonDeserializer.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/PositionDateTimeData.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TrackData.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TrackData.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PositionData.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PositionData.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Timestamp.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Timestamp.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/LapData.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/LapData.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SessionData.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SessionData.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Date.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Date.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/JsonSerializer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/JsonSerializer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/JsonDeserializer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/JsonDeserializer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SharedDataPointer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PositionDateTimeData.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PositionDateTimeData.hpp
 )
 
 target_include_directories(CommonObject
 PUBLIC
-    $<INSTALL_INTERFACE:include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 target_link_libraries(CommonObject
@@ -45,3 +43,7 @@ target_link_libraries(Common
 PUBLIC
     LaptimerCore::CommonObject
 )
+
+if(ENABLE_QT)
+    add_subdirectory(qt)
+endif()

@@ -1,3 +1,4 @@
+add_subdirectory(Common)
 add_subdirectory(SessionDl)
 add_executable(lappy_sessiondl)
 

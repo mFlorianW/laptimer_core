@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#ifndef __TRACKDATA__H__
-#define __TRACKDATA__H__
+#pragma once
 
 #include "PositionData.hpp"
 #include "SharedDataPointer.hpp"
@@ -145,5 +144,3 @@ private:
 };
 
 } // namespace LaptimerCore::Common
-
-#endif //!__TRACKDATA__H__

@@ -10,6 +10,7 @@
 #include <QQmlApplicationEngine>
 #include <RestCall.hpp>
 #include <SqliteSessionDatabase.hpp>
+#include <memory>
 
 namespace LaptimerCore::SessionDl
 {
@@ -28,8 +29,8 @@ private:
     QQmlApplicationEngine mEngine{};
     Rest::QRestClient mClient{};
     Workflow::RestSessionDownloader mSessionDownloader{mClient};
-    Storage::SqliteSessionDatabase mDatabase{"/tmp/laptimer_core.db"};
-    MainWindowModel mMainWindowModel{mSessionDownloader, mDatabase};
+    std::unique_ptr<Storage::SqliteSessionDatabase> mDatabase;
+    std::unique_ptr<MainWindowModel> mMainWindowModel;
 };
 
 } // namespace LaptimerCore::SessionDl
