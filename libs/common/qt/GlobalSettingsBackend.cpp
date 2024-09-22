@@ -12,13 +12,13 @@ QSettingsBackend::QSettingsBackend()
 {
 }
 
-bool QSettingsBackend::storeValue(QString const& key, QVariant const& value) noexcept
+bool QSettingsBackend::storeValue(QAnyStringView const& key, QVariant const& value) noexcept
 {
     mSettings.setValue(key, value);
     return true;
 }
 
-QVariant QSettingsBackend::getValue(QString const& key) const noexcept
+QVariant QSettingsBackend::getValue(QAnyStringView const& key) const noexcept
 {
     return mSettings.value(key);
 }

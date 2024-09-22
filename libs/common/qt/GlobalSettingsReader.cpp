@@ -2,7 +2,8 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include <GlobalSettingsReader.hpp>
+#include "GlobalSettingsReader.hpp"
+#include "GlobalSettingsKeys.hpp"
 
 namespace LaptimerCore::Common
 {
@@ -16,7 +17,7 @@ GlobalSettingsReader::~GlobalSettingsReader() = default;
 
 QString GlobalSettingsReader::getDbFilePath() const noexcept
 {
-    return mSettingsBackend->getValue("dbFilePath").toString();
+    return mSettingsBackend->getValue(Private::DbFilePathKey).toString();
 }
 
 } // namespace LaptimerCore::Common

@@ -43,9 +43,16 @@ public:
      * @return true Successful stored.
      *         false Failed to store.
      */
-    [[nodiscard]] virtual bool storeValue(QString const& key, QVariant const& value) noexcept = 0;
+    [[nodiscard]] virtual bool storeValue(QAnyStringView const& key, QVariant const& value) noexcept = 0;
 
-    [[nodiscard]] virtual QVariant getValue(QString const& key) const noexcept = 0;
+    /**
+     * Gives the stored value for the passed key.
+     * If the key is not found an invalid QVariant is returned.
+     * @param key The key of the settings parameter
+     * @return Success The value in a QVariant
+     *         Failure An invalud QVariant
+     */
+    [[nodiscard]] virtual QVariant getValue(QAnyStringView const& key) const noexcept = 0;
 
 protected:
     GlobalSettingsBackend() = default;
@@ -88,11 +95,14 @@ public:
     QSettingsBackend& operator=(QSettingsBackend&&) noexcept = delete;
 
     /**
-     * @copydoc ISettingsBackend::storeValue
+     * @copydoc GlobalSettingsBackend::storeValue
      */
-    [[nodiscard]] bool storeValue(QString const& key, QVariant const& value) noexcept override;
+    [[nodiscard]] bool storeValue(QAnyStringView const& key, QVariant const& value) noexcept override;
 
-    [[nodiscard]] QVariant getValue(QString const& key) const noexcept override;
+    /**
+     * @copydoc GlobalSettingsBackend::getValue
+     */
+    [[nodiscard]] QVariant getValue(QAnyStringView const& key) const noexcept override;
 
 private:
     QSettings mSettings;

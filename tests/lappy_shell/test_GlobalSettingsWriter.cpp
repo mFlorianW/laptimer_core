@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <GlobalSettingsBackend.hpp>
+#include <GlobalSettingsKeys.hpp>
 #include <GlobalSettingsWriter.hpp>
 #include <SettingsMemoryBackend.hpp>
 #include <catch2/catch.hpp>
@@ -23,7 +24,7 @@ SCENARIO("The Settings shall store the settings database file path.")
             REQUIRE(settings.storeDatabaseFilePath(expDbFilePath));
             THEN("The stored database file path shall be stored correctly in the backend")
             {
-                auto dbFilePath = settingsBackend.getValue("dbFilePath").toString();
+                auto dbFilePath = settingsBackend.getValue(Private::DbFilePathKey).toString();
                 REQUIRE(dbFilePath == expDbFilePath);
             }
         }

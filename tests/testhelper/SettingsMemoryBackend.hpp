@@ -12,9 +12,9 @@ namespace LaptimerCore::TestHelper
 class SettingsMemoryBackend : public Common::GlobalSettingsBackend
 {
 public:
-    [[nodiscard]] bool storeValue(QString const& key, QVariant const& value) noexcept override;
+    [[nodiscard]] bool storeValue(QAnyStringView const& key, QVariant const& value) noexcept override;
 
-    [[nodiscard]] QVariant getValue(QString const& key) const noexcept override;
+    [[nodiscard]] QVariant getValue(QAnyStringView const& key) const noexcept override;
 
 private:
     QVariantHash mSingleValues;

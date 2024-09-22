@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "GlobalSettingsWriter.hpp"
+#include <GlobalSettingsKeys.hpp>
 
 namespace LaptimerCore::LappyShell
 {
@@ -16,7 +17,7 @@ GlobalSettingsWriter::~GlobalSettingsWriter() = default;
 
 bool GlobalSettingsWriter::storeDatabaseFilePath(QString const& dbFilePath) noexcept
 {
-    return mSettingsBackend->storeValue("dbFilePath", dbFilePath);
+    return mSettingsBackend->storeValue(Common::Private::DbFilePathKey, dbFilePath);
 }
 
 } // namespace LaptimerCore::LappyShell

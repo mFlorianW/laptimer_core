@@ -6,15 +6,16 @@
 
 namespace LaptimerCore::TestHelper
 {
-bool SettingsMemoryBackend::storeValue(QString const& key, QVariant const& value) noexcept
+
+bool SettingsMemoryBackend::storeValue(QAnyStringView const& key, QVariant const& value) noexcept
 {
-    mSingleValues.insert(key, value);
+    mSingleValues.insert(key.toString(), value);
     return true;
 }
 
-QVariant SettingsMemoryBackend::getValue(QString const& key) const noexcept
+QVariant SettingsMemoryBackend::getValue(QAnyStringView const& key) const noexcept
 {
-    return mSingleValues[key];
+    return mSingleValues[key.toString()];
 }
 
 } // namespace LaptimerCore::TestHelper
