@@ -14,6 +14,9 @@ qt_add_qml_module(Settings
         GlobalSettingsWriter.hpp
         GlobalSettingsWindow.cpp
         GlobalSettingsWindow.hpp
+    RESOURCES
+        icons/settings.svg
+        icons/device.svg
 )
 
 add_library(LaptimerCore::LappyShellSettings ALIAS Settings)
