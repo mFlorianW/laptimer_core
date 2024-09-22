@@ -1,12 +1,15 @@
+qt_wrap_ui(UI
+    MainWindow.ui
+)
+
 qt_add_qml_module(Shell
     URI "Lappy.Shell"
     OUTPUT_DIRECTORY "Lappy/Shell"
     IMPORT_PATH "Lappy/Shell"
     VERSION 1.0
     STATIC
-    QML_FILES
-        qml/MainWindow.qml
     SOURCES
+        ${UI}
         LappyShell.cpp
         LappyShell.cpp
 )
@@ -16,7 +19,7 @@ add_library(LaptimerCore::LappyShellPlugin ALIAS Shellplugin)
 
 target_link_libraries(Shell
     PUBLIC
-        Qt6::Quick
+        Qt6::Widgets
         LaptimerCore::LappyShellSettings
         LaptimerCore::LappyShellSettingsPlugin
     PRIVATE
@@ -27,4 +30,6 @@ target_link_libraries(Shell
 target_include_directories(Shell
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    PRIVATE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
 )
