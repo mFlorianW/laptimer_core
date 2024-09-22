@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <GlobalSettingsWindow.hpp>
 #include <GlobalSettingsWriter.hpp>
 #include <QMainWindow>
 
@@ -28,7 +29,8 @@ private:
     void setupDatabase() noexcept;
     std::unique_ptr<Ui::MainWindow> mMainWindow;
     Common::QSettingsBackend mSettingsBackend;
-    GlobalSettingsWriter mSettings;
+    Settings::GlobalSettingsWriter mSettings;
+    std::unique_ptr<Settings::GlobalSettingsWindow> mGlobalSettingsWindow;
 };
 
 } // namespace LaptimerCore::LappyShell

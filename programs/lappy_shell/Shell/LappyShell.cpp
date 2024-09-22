@@ -18,12 +18,17 @@ namespace LaptimerCore::LappyShell
 LappyShell::LappyShell()
     : mMainWindow{std::make_unique<Ui::MainWindow>()}
     , mSettings{&mSettingsBackend}
+    , mGlobalSettingsWindow{std::make_unique<Settings::GlobalSettingsWindow>()}
 {
     setupDatabase();
     mMainWindow->setupUi(this);
 
     connect(mMainWindow->actionQuit, &QAction::triggered, this, []() {
         QApplication::exit();
+    });
+
+    connect(mMainWindow->actionPreferences, &QAction::triggered, this, [this]() {
+        mGlobalSettingsWindow->show();
     });
 }
 

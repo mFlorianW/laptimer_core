@@ -8,7 +8,7 @@
 #include <QSettings>
 #include <QVariant>
 
-namespace LaptimerCore::LappyShell
+namespace LaptimerCore::LappyShell::Settings
 {
 
 /**
@@ -62,4 +62,4 @@ private:
     Common::GlobalSettingsBackend* mSettingsBackend;
 };
 
-} // namespace LaptimerCore::LappyShell
+} // namespace LaptimerCore::LappyShell::Settings
