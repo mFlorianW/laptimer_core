@@ -11,9 +11,15 @@ namespace LaptimerCore::LappyShell::Settings
 
 GlobalSettingsWindow::GlobalSettingsWindow()
     : mGlobalSettingsWindow{std::make_unique<Ui::GlobalSettingsWindow>()}
+    , mSettingsPages{std::make_unique<QStackedLayout>()}
+    , mGeneralSettingsPage{std::make_unique<GeneralSettingsPage>()}
+    , mDevicePage{std::make_unique<DevicePage>()}
 {
     mGlobalSettingsWindow->setupUi(this);
     mGlobalSettingsWindow->listWidget->setFixedWidth(150);
+    mGlobalSettingsWindow->ContentGroupBox->setLayout(mSettingsPages.get());
+    mSettingsPages->addWidget(mGeneralSettingsPage.get());
+    mSettingsPages->addWidget(mDevicePage.get());
 
     auto* settingsGeneral = mGlobalSettingsWindow->listWidget->item(0);
     settingsGeneral->setIcon(QIcon{QStringLiteral(":/qt/qml/Lappy/Settings/icons/settings.svg")});
@@ -22,8 +28,14 @@ GlobalSettingsWindow::GlobalSettingsWindow()
 
     auto* settingsListWidget = mGlobalSettingsWindow->listWidget;
     connect(settingsListWidget, &QListWidget::currentRowChanged, this, [this](int currentRow) {
-        auto* item = mGlobalSettingsWindow->listWidget->item(currentRow);
-        mGlobalSettingsWindow->ContentGroupBox->setTitle(item->text());
+        auto* contentGrpBox = mGlobalSettingsWindow->ContentGroupBox;
+        if (currentRow == 0) {
+            contentGrpBox->setTitle(tr("General Settings"));
+            mSettingsPages->setCurrentIndex(0);
+        } else if (currentRow == 1) {
+            contentGrpBox->setTitle(tr("Device Settings"));
+            mSettingsPages->setCurrentIndex(1);
+        }
     });
     settingsListWidget->setCurrentRow(0);
 }

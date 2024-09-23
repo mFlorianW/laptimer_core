@@ -1,5 +1,7 @@
 qt_wrap_ui(UI
     GlobalSettingsWindow.ui
+    GeneralSettingsPage.ui
+    DevicePage.ui
 )
 
 qt_add_qml_module(Settings
@@ -14,6 +16,10 @@ qt_add_qml_module(Settings
         GlobalSettingsWriter.hpp
         GlobalSettingsWindow.cpp
         GlobalSettingsWindow.hpp
+        DevicePage.cpp
+        DevicePage.hpp
+        GeneralSettingsPage.cpp
+        GeneralSettingsPage.hpp
     RESOURCES
         icons/settings.svg
         icons/device.svg
