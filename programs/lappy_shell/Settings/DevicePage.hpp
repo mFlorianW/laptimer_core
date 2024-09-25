@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "DeviceModel.hpp"
+#include <QHeaderView>
 #include <QWidget>
 #include <memory>
 
@@ -38,6 +40,8 @@ public:
     Q_DISABLE_COPY_MOVE(DevicePage)
 
 private:
+    DeviceModel mDeviceModel;
+    QHeaderView mHeaderView{Qt::Horizontal};
     std::unique_ptr<Ui::DevicePage> mDevicePage;
 };
 

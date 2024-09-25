@@ -1,1 +1,2 @@
 add_subdirectory(test_Applications)
+add_subdirectory(test_Settings)

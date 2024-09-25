@@ -20,6 +20,8 @@ qt_add_qml_module(Settings
         DevicePage.hpp
         GeneralSettingsPage.cpp
         GeneralSettingsPage.hpp
+        DeviceModel.cpp
+        DeviceModel.hpp
     RESOURCES
         icons/settings.svg
         icons/device.svg

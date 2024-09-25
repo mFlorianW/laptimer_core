@@ -11,7 +11,16 @@ namespace LaptimerCore::LappyShell::Settings
 DevicePage::DevicePage()
     : mDevicePage{std::make_unique<Ui::DevicePage>()}
 {
+    // Setup device page
     mDevicePage->setupUi(this);
+
+    // Setup header view
+    mHeaderView.setModel(&mDeviceModel);
+    mHeaderView.setStretchLastSection(true);
+
+    // Setup device model
+    mDevicePage->deviceTable->setHorizontalHeader(&mHeaderView);
+    mDevicePage->deviceTable->setModel(&mDeviceModel);
 }
 
 DevicePage::~DevicePage() = default;
