@@ -9,6 +9,7 @@
 
 namespace LaptimerCore::Common
 {
+
 /**
  * Reads the global settings from the provided backend.
  */

@@ -21,6 +21,11 @@ DevicePage::DevicePage()
     // Setup device model
     mDevicePage->deviceTable->setHorizontalHeader(&mHeaderView);
     mDevicePage->deviceTable->setModel(&mDeviceModel);
+
+    // Setup Add Handler
+    connect(mDevicePage->addButton, &QPushButton::clicked, this, [this]() {
+        mDeviceModel.insertRows(mDeviceModel.rowCount({}));
+    });
 }
 
 DevicePage::~DevicePage() = default;

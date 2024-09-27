@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "GlobalSettingsTypes.hpp"
 #include <QAbstractTableModel>
 
 namespace LaptimerCore::LappyShell::Settings
@@ -37,7 +38,7 @@ public:
      * @param parent The model index is unused.
      * @return The amount devices in model.
      */
-    qint32 rowCount(QModelIndex const& parent) const override;
+    int rowCount(QModelIndex const& parent) const noexcept override;
 
     /**
      * Gives the number of column for the view.
@@ -49,7 +50,7 @@ public:
      * @param paran The parent model index is unused.
      * @return The amout of columns. This is static and is always 4.
      */
-    qint32 columnCount(QModelIndex const& parent) const override;
+    int columnCount(QModelIndex const& parent) const noexcept override;
 
     /**
      * Gives the data in side model depending of the index and role.
@@ -57,7 +58,7 @@ public:
      * @param role The role defines which device parameter is returned
      * @return The device data defined by the index and role.
      */
-    QVariant data(QModelIndex const& index, qint32 role) const override;
+    QVariant data(QModelIndex const& index, qint32 role) const noexcept override;
 
     /**
      * Gives the titles for the table header.
@@ -66,9 +67,22 @@ public:
      * @param orientation The of the header only Qt::Horizontal is supported.
      * @return The header data for the column.
      */
-    QVariant headerData(qint32 index, Qt::Orientation orientation, qint32 role) const override;
+    QVariant headerData(qint32 index, Qt::Orientation orientation, qint32 role) const noexcept override;
+
+    /**
+     * Creates a device setting in the model with default parameters.
+     * The function can only append new settings to the model.
+     * That means the @param row must be equal to @ref DeviceModel::rowCount.
+     * @param row At which row shall the new device settings created.
+     * @param count How many device settings shall be created, default 1.
+     * @param parent In this case unused.
+     * @return true The new devices are created.
+     * @return false Failed to create the new devices.
+     */
+    bool insertRows(int row, int count = 1, QModelIndex const& parent = QModelIndex{}) noexcept override;
 
 private:
+    QList<Common::DeviceSettings> mDevices;
 };
 
 } // namespace LaptimerCore::LappyShell::Settings
