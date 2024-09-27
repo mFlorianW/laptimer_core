@@ -81,6 +81,16 @@ public:
      */
     bool insertRows(int row, int count = 1, QModelIndex const& parent = QModelIndex{}) noexcept override;
 
+    /**
+     * Removes device settings in the model.
+     * @param row At which row shall the device settings removed. This value acts as poistion in the Model.
+     * @param count How many device settings shall be removed, default 1.
+     * @param parent In this case unused.
+     * @return true The new devices are removed.
+     * @return false Failed to remove the device.
+     */
+    bool removeRows(int row, int count = 1, QModelIndex const& parent = QModelIndex{}) noexcept override;
+
 private:
     QList<Common::DeviceSettings> mDevices;
 };

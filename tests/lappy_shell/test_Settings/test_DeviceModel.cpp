@@ -64,3 +64,36 @@ SCENARIO("The device model shall add new devices to it's interal list")
         }
     }
 }
+
+SCENARIO("Remove existing device settings in the model")
+{
+    GIVEN("An initialized model")
+    {
+        auto model = DeviceModel{};
+        WHEN("Removing one device settings in the model")
+        {
+            REQUIRE(model.insertRows(0));
+            REQUIRE(model.rowCount(QModelIndex{}) == 1);
+            REQUIRE(model.removeRows(0, 1));
+            THEN("The row count should be changed and the removed row shall not be accessable")
+            {
+                REQUIRE(model.rowCount(QModelIndex{}) == 0);
+                REQUIRE(model.data(model.index(0, 0), Qt::DisplayRole).isNull() == true);
+                REQUIRE(model.data(model.index(0, 1), Qt::DisplayRole).isNull() == true);
+                REQUIRE(model.data(model.index(0, 2), Qt::DisplayRole).isNull() == true);
+                REQUIRE(model.data(model.index(0, 3), Qt::DisplayRole).isNull() == true);
+            }
+        }
+
+        WHEN("Removing Multiple device settings")
+        {
+            REQUIRE(model.insertRows(0, 5));
+            REQUIRE(model.rowCount(QModelIndex{}) == 5);
+            REQUIRE(model.removeRows(0, 5));
+            THEN("The row count should be changed to 0")
+            {
+                REQUIRE(model.rowCount(QModelIndex{}) == 0);
+            }
+        }
+    }
+}

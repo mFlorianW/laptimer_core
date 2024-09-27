@@ -26,6 +26,16 @@ DevicePage::DevicePage()
     connect(mDevicePage->addButton, &QPushButton::clicked, this, [this]() {
         mDeviceModel.insertRows(mDeviceModel.rowCount({}));
     });
+
+    connect(mDevicePage->removeButton, &QPushButton::clicked, this, [this]() {
+        auto const selectionModel = mDevicePage->deviceTable->selectionModel();
+        if (selectionModel->hasSelection()) {
+            auto const selectedIndex = mDevicePage->deviceTable->selectionModel()->selectedIndexes().first();
+            if (selectedIndex.isValid()) {
+                mDeviceModel.removeRows(selectedIndex.row());
+            }
+        }
+    });
 }
 
 DevicePage::~DevicePage() = default;

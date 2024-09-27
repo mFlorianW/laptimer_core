@@ -70,4 +70,16 @@ bool DeviceModel::insertRows(int row, int count, QModelIndex const& parent) noex
     return false;
 }
 
+bool DeviceModel::removeRows(int row, int count, QModelIndex const& parent) noexcept
+{
+    auto lastDevice = mDevices.cbegin() + row + count - 1;
+    if (lastDevice != mDevices.cend()) {
+        beginRemoveRows({}, row, row + count - 1);
+        mDevices.erase(mDevices.begin() + row, mDevices.begin() + row + count);
+        endRemoveRows();
+        return true;
+    }
+    return false;
+}
+
 } // namespace LaptimerCore::LappyShell::Settings
