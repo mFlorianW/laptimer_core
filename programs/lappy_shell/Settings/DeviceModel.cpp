@@ -8,6 +8,11 @@
 namespace LaptimerCore::LappyShell::Settings
 {
 
+namespace
+{
+constexpr auto columns = int{3};
+} // namespace
+
 DeviceModel::DeviceModel() = default;
 DeviceModel::~DeviceModel() = default;
 
@@ -18,15 +23,20 @@ int DeviceModel::rowCount(QModelIndex const& parent) const noexcept
 
 int DeviceModel::columnCount(QModelIndex const& parent) const noexcept
 {
-    constexpr auto colums = int{3};
-    return colums;
+    return columns;
+}
+
+Qt::ItemFlags DeviceModel::flags(QModelIndex const& index) const noexcept
+{
+    return Qt::ItemIsSelectable | Qt::ItemIsEditable | Qt::ItemIsEnabled;
 }
 
 QVariant DeviceModel::data(QModelIndex const& index, qint32 role) const noexcept
 {
-    if (index.row() < 0 or index.row() > mDevices.size()) {
+    if (isInvalidIndex(index)) {
         return {};
     }
+
     auto const deviceSettings = *(mDevices.cbegin() + index.row());
     auto data = QVariant{};
     if (role == Qt::DisplayRole && index.column() == 0) {
@@ -41,6 +51,36 @@ QVariant DeviceModel::data(QModelIndex const& index, qint32 role) const noexcept
         return static_cast<int>(Qt::AlignHCenter | Qt::AlignVCenter);
     }
     return data;
+}
+
+bool DeviceModel::setData(QModelIndex const& index, QVariant const& value, int role) noexcept
+{
+    if (isInvalidIndex(index) or role != Qt::EditRole) {
+        return {};
+    }
+
+    auto device = mDevices.begin() + index.row();
+    if (index.column() == 0) {
+        device->name = value.toString();
+    } else if (index.column() == 1) {
+        auto const ip = QHostAddress{value.toString()};
+        if (ip.isNull()) {
+            return false;
+        }
+        device->ip = ip;
+    } else if (index.column() == 2) {
+        auto ok = false;
+        auto const port = value.toInt(&ok);
+        if (not ok) {
+            return false;
+        }
+        device->port = port;
+    }
+
+    qInfo() << "sdfsdfdsfdsfsdfsdfsdf" << device->name;
+    Q_EMIT dataChanged(index, index, {Qt::DisplayRole});
+
+    return true;
 }
 
 QVariant DeviceModel::headerData(qint32 index, Qt::Orientation orientation, qint32 role) const noexcept
@@ -80,6 +120,11 @@ bool DeviceModel::removeRows(int row, int count, QModelIndex const& parent) noex
         return true;
     }
     return false;
+}
+
+bool DeviceModel::isInvalidIndex(QModelIndex const& index) const noexcept
+{
+    return (index.row() < 0 or index.row() > mDevices.size()) and (index.column() < 0 or index.column() > columns);
 }
 
 } // namespace LaptimerCore::LappyShell::Settings

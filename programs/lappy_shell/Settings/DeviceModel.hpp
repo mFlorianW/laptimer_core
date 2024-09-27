@@ -46,11 +46,20 @@ public:
      * 1. Device Name
      * 2. Device IP-Address
      * 3. Device Port
-     * 4. Default Device Option
+     * 4. Default Device Option (currently deactivated)
      * @param paran The parent model index is unused.
      * @return The amout of columns. This is static and is always 4.
      */
     int columnCount(QModelIndex const& parent) const noexcept override;
+
+    /**
+     * Gives the flags for the index.
+     * The flags define behavior of the item behind the index.
+     * This case it's all selectable, enabled and editable.
+     * @param index The of the item in the model.
+     * @return The flags for the item.
+     */
+    Qt::ItemFlags flags(QModelIndex const& index) const noexcept override;
 
     /**
      * Gives the data in side model depending of the index and role.
@@ -59,6 +68,15 @@ public:
      * @return The device data defined by the index and role.
      */
     QVariant data(QModelIndex const& index, qint32 role) const noexcept override;
+
+    /**
+     * Edits the data in the model depending of the index and role.
+     * @param index The index of the device setting in the model which shall be changed.
+     * @param role The role of the setting that shall be changed the function only accepts @ref Qt::DisplayRole
+     * @return True The device setting is correctly changed.
+     * @return False Failed to change settings. E.g invalid IP address passed.
+     */
+    bool setData(QModelIndex const& index, QVariant const& value, int role = Qt::EditRole) noexcept override;
 
     /**
      * Gives the titles for the table header.
@@ -92,6 +110,8 @@ public:
     bool removeRows(int row, int count = 1, QModelIndex const& parent = QModelIndex{}) noexcept override;
 
 private:
+    bool isInvalidIndex(QModelIndex const& index) const noexcept;
+
     QList<Common::DeviceSettings> mDevices;
 };
 

@@ -97,3 +97,65 @@ SCENARIO("Remove existing device settings in the model")
         }
     }
 }
+
+SCENARIO("Editing Device settings in the model")
+{
+    GIVEN("A device model with some device settings")
+    {
+        auto model = DeviceModel{};
+        REQUIRE(model.insertRows(0, 6));
+
+        WHEN("Editing the device setting name for index 3")
+        {
+            auto const name = QStringLiteral("TestDevice1");
+            auto const index = model.index(3, 0);
+            REQUIRE(model.setData(index, name));
+            THEN("The device setting name for the index should be changed")
+            {
+                REQUIRE(model.data(index, Qt::DisplayRole).toString() == name);
+            }
+        }
+
+        WHEN("Editing the device setting ip for index 2")
+        {
+            auto const ip = QHostAddress{"192.168.1.234"}.toString();
+            auto const index = model.index(2, 1);
+            REQUIRE(model.setData(index, ip));
+            THEN("The device setting ip for the index should be changed.")
+            {
+                REQUIRE(model.data(index, Qt::DisplayRole).toString() == ip);
+            }
+        }
+
+        WHEN("Edit the device setting ip with invalid ip address for index 2")
+        {
+            auto const ip = QString{"aaaaa"};
+            auto const index = model.index(2, 1);
+            THEN("The device setting ip for the index should be changed.")
+            {
+                REQUIRE(model.setData(index, ip) == false);
+            }
+        }
+
+        WHEN("Editing the device port for index 1")
+        {
+            auto const port = QString::number(123);
+            auto const index = model.index(1, 2);
+            REQUIRE(model.setData(index, port));
+            THEN("The device setting port for the index should be changed.")
+            {
+                REQUIRE(model.data(index, Qt::DisplayRole).toString() == port);
+            }
+        }
+
+        WHEN("Editing the device port with invald input for index 1")
+        {
+            auto const port = QString{"aaaaa"};
+            auto const index = model.index(1, 2);
+            THEN("The change of the device settings should fail")
+            {
+                REQUIRE(model.setData(index, port) == false);
+            }
+        }
+    }
+}

@@ -27,6 +27,7 @@ DevicePage::DevicePage()
         mDeviceModel.insertRows(mDeviceModel.rowCount({}));
     });
 
+    // Setup Remove Handler
     connect(mDevicePage->removeButton, &QPushButton::clicked, this, [this]() {
         auto const selectionModel = mDevicePage->deviceTable->selectionModel();
         if (selectionModel->hasSelection()) {
