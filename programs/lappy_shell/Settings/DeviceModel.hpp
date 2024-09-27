@@ -5,6 +5,7 @@
 #pragma once
 
 #include "GlobalSettingsTypes.hpp"
+#include <GlobalSettingsWriter.hpp>
 #include <QAbstractTableModel>
 
 namespace LaptimerCore::LappyShell::Settings
@@ -20,8 +21,13 @@ class DeviceModel : public QAbstractTableModel
 public:
     /**
      * Creates an instance of @ref DeviceModel.
+     * @param globalSettingsWriter Used to store the device settings in the global settings.
+     *
+     * @note
+     * The class doesn't take the ownership of the passed pointers. So the caller must guarantee the classes
+     * live as long as the @ref DeviceModel
      */
-    DeviceModel();
+    DeviceModel(GlobalSettingsWriter* settingsWriter);
 
     /**
      * Default destructor
@@ -109,10 +115,13 @@ public:
      */
     bool removeRows(int row, int count = 1, QModelIndex const& parent = QModelIndex{}) noexcept override;
 
+    bool save() noexcept;
+
 private:
     bool isInvalidIndex(QModelIndex const& index) const noexcept;
 
     QList<Common::DeviceSettings> mDevices;
+    GlobalSettingsWriter* mSettingsWriter = nullptr;
 };
 
 } // namespace LaptimerCore::LappyShell::Settings

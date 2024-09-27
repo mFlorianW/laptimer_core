@@ -13,7 +13,7 @@ GlobalSettingsWindow::GlobalSettingsWindow()
     : mGlobalSettingsWindow{std::make_unique<Ui::GlobalSettingsWindow>()}
     , mSettingsPages{std::make_unique<QStackedLayout>()}
     , mGeneralSettingsPage{std::make_unique<GeneralSettingsPage>()}
-    , mDevicePage{std::make_unique<DevicePage>()}
+    , mDevicePage{std::make_unique<DevicePage>(&mSettingsWriter)}
 {
     mGlobalSettingsWindow->setupUi(this);
     mGlobalSettingsWindow->listWidget->setFixedWidth(150);

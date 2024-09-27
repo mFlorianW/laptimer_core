@@ -13,7 +13,12 @@ namespace
 constexpr auto columns = int{3};
 } // namespace
 
-DeviceModel::DeviceModel() = default;
+DeviceModel::DeviceModel(GlobalSettingsWriter* settingsWriter)
+    : mSettingsWriter{settingsWriter}
+{
+    Q_ASSERT(mSettingsWriter != nullptr);
+}
+
 DeviceModel::~DeviceModel() = default;
 
 int DeviceModel::rowCount(QModelIndex const& parent) const noexcept
@@ -77,7 +82,6 @@ bool DeviceModel::setData(QModelIndex const& index, QVariant const& value, int r
         device->port = port;
     }
 
-    qInfo() << "sdfsdfdsfdsfsdfsdfsdf" << device->name;
     Q_EMIT dataChanged(index, index, {Qt::DisplayRole});
 
     return true;
@@ -125,6 +129,11 @@ bool DeviceModel::removeRows(int row, int count, QModelIndex const& parent) noex
 bool DeviceModel::isInvalidIndex(QModelIndex const& index) const noexcept
 {
     return (index.row() < 0 or index.row() > mDevices.size()) and (index.column() < 0 or index.column() > columns);
+}
+
+bool DeviceModel::save() noexcept
+{
+    return mSettingsWriter->storeDeviceSettings(mDevices);
 }
 
 } // namespace LaptimerCore::LappyShell::Settings
