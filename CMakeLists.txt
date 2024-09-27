@@ -28,6 +28,7 @@ endif()
 if(ENABLE_QT)
     set(CMAKE_AUTOMOC ON)
     set(CMAKE_AUTORCC ON)
+    set(CMAKE_AUTOUIC ON)
 
     find_package(Qt6 REQUIRED COMPONENTS Core Qml Gui Quick Widgets Network Location)
 

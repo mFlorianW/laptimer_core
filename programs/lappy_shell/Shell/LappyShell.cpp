@@ -5,29 +5,34 @@
 #include "LappyShell.hpp"
 #include "DatabaseFile.hpp"
 #include "LoggingCategories.hpp"
+#include "ui_MainWindow.h"
+#include <QApplication>
 #include <QDir>
 #include <QFile>
 #include <QQmlContext>
-#include <QQuickWindow>
 #include <QStandardPaths>
-#include <qdiriterator.h>
 
 namespace LaptimerCore::LappyShell
 {
 
 LappyShell::LappyShell()
-    : mSettings{&mSettingsBackend}
+    : mMainWindow{std::make_unique<Ui::MainWindow>()}
+    , mSettings{&mSettingsBackend}
+    , mGlobalSettingsWindow{std::make_unique<Settings::GlobalSettingsWindow>()}
 {
     setupDatabase();
-    mEngine.load(QUrl{"qrc:/qt/qml/Lappy/Shell/qml/MainWindow.qml"});
+    mMainWindow->setupUi(this);
+
+    connect(mMainWindow->actionQuit, &QAction::triggered, this, []() {
+        QApplication::exit();
+    });
+
+    connect(mMainWindow->actionPreferences, &QAction::triggered, this, [this]() {
+        mGlobalSettingsWindow->show();
+    });
 }
 
-void LappyShell::show() const noexcept
-{
-    auto* topLevel = mEngine.rootObjects().value(0);
-    auto* window = qobject_cast<QQuickWindow*>(topLevel);
-    window->show();
-}
+LappyShell::~LappyShell() = default;
 
 void LappyShell::setupDatabase() noexcept
 {

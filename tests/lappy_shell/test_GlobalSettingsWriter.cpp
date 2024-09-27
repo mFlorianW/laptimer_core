@@ -8,7 +8,7 @@
 #include <SettingsMemoryBackend.hpp>
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::LappyShell;
+using namespace LaptimerCore::LappyShell::Settings;
 using namespace LaptimerCore::Common;
 using namespace LaptimerCore::TestHelper;
 

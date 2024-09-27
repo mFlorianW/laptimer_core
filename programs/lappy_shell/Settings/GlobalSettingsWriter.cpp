@@ -5,7 +5,7 @@
 #include "GlobalSettingsWriter.hpp"
 #include <GlobalSettingsKeys.hpp>
 
-namespace LaptimerCore::LappyShell
+namespace LaptimerCore::LappyShell::Settings
 {
 
 GlobalSettingsWriter::GlobalSettingsWriter(Common::GlobalSettingsBackend* settingsBackend)
@@ -20,4 +20,4 @@ bool GlobalSettingsWriter::storeDatabaseFilePath(QString const& dbFilePath) noex
     return mSettingsBackend->storeValue(Common::Private::DbFilePathKey, dbFilePath);
 }
 
-} // namespace LaptimerCore::LappyShell
+} // namespace LaptimerCore::LappyShell::Settings
