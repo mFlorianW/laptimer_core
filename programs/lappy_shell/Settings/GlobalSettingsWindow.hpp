@@ -7,6 +7,7 @@
 #include "DevicePage.hpp"
 #include "GeneralSettingsPage.hpp"
 #include <GlobalSettingsBackend.hpp>
+#include <GlobalSettingsReader.hpp>
 #include <QDialog>
 #include <QStackedLayout>
 #include <QtGlobal>
@@ -48,6 +49,7 @@ public:
 private:
     Common::QSettingsBackend mSettingsBackend = Common::QSettingsBackend{};
     GlobalSettingsWriter mSettingsWriter = GlobalSettingsWriter{&mSettingsBackend};
+    Common::GlobalSettingsReader mSettingsReader = Common::GlobalSettingsReader{&mSettingsBackend};
     std::unique_ptr<Ui::GlobalSettingsWindow> mGlobalSettingsWindow;
     std::unique_ptr<QStackedLayout> mSettingsPages;
     std::unique_ptr<GeneralSettingsPage> mGeneralSettingsPage;

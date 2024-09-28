@@ -27,7 +27,7 @@ public:
     /**
      * Creates an Instance of the device settings pagage.
      */
-    DevicePage(GlobalSettingsWriter* settingsWriter);
+    DevicePage(GlobalSettingsWriter* settingsWriter, Common::GlobalSettingsReader* settingsReader);
 
     /**
      * default destructor

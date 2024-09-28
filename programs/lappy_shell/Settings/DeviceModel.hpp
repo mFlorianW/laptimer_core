@@ -4,7 +4,8 @@
 
 #pragma once
 
-#include "GlobalSettingsTypes.hpp"
+#include <GlobalSettingsReader.hpp>
+#include <GlobalSettingsTypes.hpp>
 #include <GlobalSettingsWriter.hpp>
 #include <QAbstractTableModel>
 
@@ -22,12 +23,14 @@ public:
     /**
      * Creates an instance of @ref DeviceModel.
      * @param globalSettingsWriter Used to store the device settings in the global settings.
+     * @param GlobalSettingsReader Used to read the device settings on construction. The Reader is not longer needed as
+     * the constructor is executed.
      *
      * @note
      * The class doesn't take the ownership of the passed pointers. So the caller must guarantee the classes
      * live as long as the @ref DeviceModel
      */
-    DeviceModel(GlobalSettingsWriter* settingsWriter);
+    DeviceModel(GlobalSettingsWriter* settingsWriter, Common::GlobalSettingsReader* settingsReader);
 
     /**
      * Default destructor

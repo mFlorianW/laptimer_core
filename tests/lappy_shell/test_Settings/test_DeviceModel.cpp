@@ -4,6 +4,7 @@
 
 #include <DeviceModel.hpp>
 #include <GlobalSettingsKeys.hpp>
+#include <GlobalSettingsReader.hpp>
 #include <GlobalSettingsTypes.hpp>
 #include <GlobalSettingsWriter.hpp>
 #include <SettingsMemoryBackend.hpp>
@@ -19,7 +20,8 @@ SCENARIO("The device list model shall provide the header data for the list view.
     {
         auto backend = SettingsMemoryBackend{};
         auto writer = GlobalSettingsWriter{&backend};
-        auto model = DeviceModel{&writer};
+        auto reader = GlobalSettingsReader{&backend};
+        auto model = DeviceModel{&writer, &reader};
         WHEN("Requesting the header")
         {
             auto const headerDataCol0 = model.headerData(0, Qt::Orientation::Horizontal, Qt::DisplayRole);
@@ -44,7 +46,8 @@ SCENARIO("The device model shall add new devices to it's interal list")
     {
         auto backend = SettingsMemoryBackend{};
         auto writer = GlobalSettingsWriter{&backend};
-        auto model = DeviceModel{&writer};
+        auto reader = GlobalSettingsReader{&backend};
+        auto model = DeviceModel{&writer, &reader};
         WHEN("Adding a device")
         {
             REQUIRE(model.insertRows(0));
@@ -81,7 +84,8 @@ SCENARIO("Remove existing device settings in the model")
     {
         auto backend = SettingsMemoryBackend{};
         auto writer = GlobalSettingsWriter{&backend};
-        auto model = DeviceModel{&writer};
+        auto reader = GlobalSettingsReader{&backend};
+        auto model = DeviceModel{&writer, &reader};
         WHEN("Removing one device settings in the model")
         {
             REQUIRE(model.insertRows(0));
@@ -116,7 +120,8 @@ SCENARIO("Editing Device settings in the model")
     {
         auto backend = SettingsMemoryBackend{};
         auto writer = GlobalSettingsWriter{&backend};
-        auto model = DeviceModel{&writer};
+        auto reader = GlobalSettingsReader{&backend};
+        auto model = DeviceModel{&writer, &reader};
         REQUIRE(model.insertRows(0, 6));
 
         WHEN("Editing the device setting name for index 3")
@@ -180,7 +185,8 @@ SCENARIO("The device model shall store the device settings in the global setting
     {
         auto backend = SettingsMemoryBackend{};
         auto writer = GlobalSettingsWriter{&backend};
-        auto model = DeviceModel{&writer};
+        auto reader = GlobalSettingsReader{&backend};
+        auto model = DeviceModel{&writer, &reader};
         constexpr auto devices = int{2};
         REQUIRE(model.insertRows(0, devices));
 
@@ -211,7 +217,8 @@ SCENARIO("Restore the original device settings")
     {
         auto backend = SettingsMemoryBackend{};
         auto writer = GlobalSettingsWriter{&backend};
-        auto model = DeviceModel{&writer};
+        auto reader = GlobalSettingsReader{&backend};
+        auto model = DeviceModel{&writer, &reader};
         auto const expDeviceName = QStringLiteral("Lappy");
         constexpr auto devices = int{3};
         REQUIRE(model.insertRows(0, devices));
@@ -266,6 +273,33 @@ SCENARIO("Restore the original device settings")
             {
                 REQUIRE(model.data(index, Qt::DisplayRole).toString() == deviceName);
             }
+        }
+    }
+}
+
+SCENARIO("Load stored device settings")
+{
+    auto backend = SettingsMemoryBackend{};
+    auto writer = GlobalSettingsWriter{&backend};
+    auto reader = GlobalSettingsReader{&backend};
+    auto const expDeviceName = QStringLiteral("StoredDevice1");
+    auto const expHostAddress = QHostAddress{QHostAddress::LocalHost}.toString();
+    auto const expPort = quint16{80};
+
+    REQUIRE(backend.storeValue(Private::DeviceSettingsSize, 1));
+    REQUIRE(backend.storeValue(Private::DeviceSettingsName.toString().arg(0), expDeviceName));
+    REQUIRE(backend.storeValue(Private::DeviceSettingsIp.toString().arg(0), expHostAddress));
+    REQUIRE(backend.storeValue(Private::DeviceSettingsPort.toString().arg(0), expPort));
+
+    WHEN("The model is created the last stored device settings shall be loaded")
+    {
+        auto model = DeviceModel{&writer, &reader};
+        THEN("The stored data is correctly loaded")
+        {
+            REQUIRE(model.rowCount({}) == 1);
+            REQUIRE(model.data(model.index(0, 0), Qt::DisplayRole).toString() == expDeviceName);
+            REQUIRE(model.data(model.index(0, 1), Qt::DisplayRole).toString() == expHostAddress);
+            REQUIRE(model.data(model.index(0, 2), Qt::DisplayRole).toUInt() == expPort);
         }
     }
 }

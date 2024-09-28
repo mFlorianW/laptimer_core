@@ -13,10 +13,12 @@ namespace
 constexpr auto columns = int{3};
 } // namespace
 
-DeviceModel::DeviceModel(GlobalSettingsWriter* settingsWriter)
+DeviceModel::DeviceModel(GlobalSettingsWriter* settingsWriter, Common::GlobalSettingsReader* settingsReader)
     : mSettingsWriter{settingsWriter}
 {
     Q_ASSERT(mSettingsWriter != nullptr);
+    Q_ASSERT(settingsReader != nullptr);
+    mDevices = settingsReader->getDeviceSettings();
 }
 
 DeviceModel::~DeviceModel() = default;

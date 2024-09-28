@@ -8,8 +8,8 @@
 namespace LaptimerCore::LappyShell::Settings
 {
 
-DevicePage::DevicePage(GlobalSettingsWriter* settingsWriter)
-    : mDeviceModel{settingsWriter}
+DevicePage::DevicePage(GlobalSettingsWriter* settingsWriter, Common::GlobalSettingsReader* settingsReader)
+    : mDeviceModel{settingsWriter, settingsReader}
     , mDevicePage{std::make_unique<Ui::DevicePage>()}
 {
     // Setup device page
