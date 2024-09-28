@@ -119,7 +119,7 @@ bool DeviceModel::removeRows(int row, int count, QModelIndex const& parent) noex
     if (lastDevice != mDevices.cend()) {
         backup();
         beginRemoveRows({}, row, row + count - 1);
-        mDevices.erase(mDevices.begin() + row, mDevices.begin() + row + count);
+        mDevices.erase(mDevices.cbegin() + row, mDevices.cbegin() + row + count);
         endRemoveRows();
         return true;
     }
