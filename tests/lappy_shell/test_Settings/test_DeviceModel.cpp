@@ -204,3 +204,68 @@ SCENARIO("The device model shall store the device settings in the global setting
         }
     }
 }
+
+SCENARIO("Restore the original device settings")
+{
+    GIVEN("A device model with some device settings")
+    {
+        auto backend = SettingsMemoryBackend{};
+        auto writer = GlobalSettingsWriter{&backend};
+        auto model = DeviceModel{&writer};
+        auto const expDeviceName = QStringLiteral("Lappy");
+        constexpr auto devices = int{3};
+        REQUIRE(model.insertRows(0, devices));
+        model.save();
+
+        WHEN("The device settings in the model are changed and restore of the original data is requested")
+        {
+            auto const index = model.index(1, 0);
+            auto const deviceName = QStringLiteral("TestName");
+            REQUIRE(model.setData(index, deviceName));
+            REQUIRE(model.data(index, Qt::DisplayRole).toString() == deviceName);
+            REQUIRE(model.restore());
+
+            THEN("The original data shall be restored restored")
+            {
+                REQUIRE(model.data(index, Qt::DisplayRole).toString() == expDeviceName);
+            }
+        }
+
+        WHEN("Device settings in the model are removed")
+        {
+            auto const index = model.index(2, 0);
+            REQUIRE(model.removeRows(index.row()));
+            REQUIRE(model.restore());
+            THEN("The original data shall be restored restored")
+            {
+                REQUIRE(model.rowCount({}) == 3);
+                REQUIRE(model.data(index, Qt::DisplayRole).toString() == expDeviceName);
+            }
+        }
+
+        WHEN("Device settings are added to the model")
+        {
+            REQUIRE(model.insertRows(model.rowCount({}), 3));
+            REQUIRE(model.rowCount({}) == 6);
+            REQUIRE(model.restore());
+            THEN("On restore the old model row count should be returned")
+            {
+                REQUIRE(model.rowCount({}) == 3);
+            }
+        }
+
+        WHEN("Device settings are stored don't restore the state for the save")
+        {
+            auto const index = model.index(1, 0);
+            auto const deviceName = QStringLiteral("TestName");
+            REQUIRE(model.setData(index, deviceName));
+            REQUIRE(model.data(index, Qt::DisplayRole).toString() == deviceName);
+            REQUIRE(model.save());
+            REQUIRE(model.restore());
+            THEN("The new data shall be returned")
+            {
+                REQUIRE(model.data(index, Qt::DisplayRole).toString() == deviceName);
+            }
+        }
+    }
+}

@@ -115,13 +115,31 @@ public:
      */
     bool removeRows(int row, int count = 1, QModelIndex const& parent = QModelIndex{}) noexcept override;
 
+    /**
+     * Stores the current device settings in the global settings
+     * @return true The device settings are saved.
+     * @return false Failed to save the device settings.
+     */
     bool save() noexcept;
+
+    /**
+     * Restores the original device settings which was loaded on default or saved.
+     * @return true Successful restored
+     * @return false Failed to restore
+     */
+    bool restore() noexcept;
 
 private:
     bool isInvalidIndex(QModelIndex const& index) const noexcept;
+    bool setIpAddress(Common::DeviceSettings& device, QVariant const& rawIp) noexcept;
+    bool setDevicePort(Common::DeviceSettings& device, QVariant const& rawPort) noexcept;
+
+    void backup() noexcept;
 
     QList<Common::DeviceSettings> mDevices;
+    QList<Common::DeviceSettings> mOriginalDeviceSettings;
     GlobalSettingsWriter* mSettingsWriter = nullptr;
+    bool mBackuped = false;
 };
 
 } // namespace LaptimerCore::LappyShell::Settings

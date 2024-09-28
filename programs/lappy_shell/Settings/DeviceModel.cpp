@@ -38,7 +38,7 @@ Qt::ItemFlags DeviceModel::flags(QModelIndex const& index) const noexcept
 
 QVariant DeviceModel::data(QModelIndex const& index, qint32 role) const noexcept
 {
-    if (isInvalidIndex(index)) {
+    if (isInvalidIndex(index) || mDevices.isEmpty()) {
         return {};
     }
 
@@ -66,20 +66,16 @@ bool DeviceModel::setData(QModelIndex const& index, QVariant const& value, int r
 
     auto device = mDevices.begin() + index.row();
     if (index.column() == 0) {
+        backup();
         device->name = value.toString();
     } else if (index.column() == 1) {
-        auto const ip = QHostAddress{value.toString()};
-        if (ip.isNull()) {
+        if (not setIpAddress(*device, value.toString())) {
             return false;
         }
-        device->ip = ip;
     } else if (index.column() == 2) {
-        auto ok = false;
-        auto const port = value.toInt(&ok);
-        if (not ok) {
+        if (not setDevicePort(*device, value)) {
             return false;
         }
-        device->port = port;
     }
 
     Q_EMIT dataChanged(index, index, {Qt::DisplayRole});
@@ -101,6 +97,7 @@ QVariant DeviceModel::headerData(qint32 index, Qt::Orientation orientation, qint
 bool DeviceModel::insertRows(int row, int count, QModelIndex const& parent) noexcept
 {
     if (row == rowCount({})) {
+        backup();
         beginInsertRows(index(row, 0), row, row + count - 1);
         for (int i = 0; i < count; ++i) {
             mDevices.emplace_back(Common::DeviceSettings{.name = QString{"Lappy"},
@@ -118,6 +115,7 @@ bool DeviceModel::removeRows(int row, int count, QModelIndex const& parent) noex
 {
     auto lastDevice = mDevices.cbegin() + row + count - 1;
     if (lastDevice != mDevices.cend()) {
+        backup();
         beginRemoveRows({}, row, row + count - 1);
         mDevices.erase(mDevices.begin() + row, mDevices.begin() + row + count);
         endRemoveRows();
@@ -133,7 +131,54 @@ bool DeviceModel::isInvalidIndex(QModelIndex const& index) const noexcept
 
 bool DeviceModel::save() noexcept
 {
+    mOriginalDeviceSettings.clear();
+    mBackuped = false;
     return mSettingsWriter->storeDeviceSettings(mDevices);
+}
+
+bool DeviceModel::restore() noexcept
+{
+    if (mBackuped) {
+        beginResetModel();
+        mDevices = mOriginalDeviceSettings;
+        endResetModel();
+    }
+    return true;
+}
+
+bool DeviceModel::setIpAddress(Common::DeviceSettings& device, QVariant const& rawIp) noexcept
+{
+    if (not rawIp.canConvert<QString>()) {
+        return false;
+    }
+    auto const ip = QHostAddress{rawIp.toString()};
+    if (ip.isNull()) {
+        return false;
+    }
+    backup();
+    device.ip = ip;
+    return true;
+}
+
+bool DeviceModel::setDevicePort(Common::DeviceSettings& device, QVariant const& rawPort) noexcept
+{
+    auto ok = false;
+    auto const port = rawPort.toInt(&ok);
+    if (not ok) {
+        return false;
+    }
+    backup();
+    device.port = port;
+    return true;
+}
+
+void DeviceModel::backup() noexcept
+{
+    if (not mBackuped) {
+        mOriginalDeviceSettings = mDevices;
+        mOriginalDeviceSettings.detach();
+        mBackuped = true;
+    }
 }
 
 } // namespace LaptimerCore::LappyShell::Settings
