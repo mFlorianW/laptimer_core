@@ -17,7 +17,7 @@ namespace Ui
 {
 class GlobalSettingsWindow;
 class GeneralSettings;
-class DeviceSettings;
+class DeviceSettings; // NOLINT(bugprone-forward-declaration-namespace)
 } // namespace Ui
 
 namespace LaptimerCore::LappyShell::Settings
