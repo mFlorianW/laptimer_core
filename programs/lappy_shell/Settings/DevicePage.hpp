@@ -39,6 +39,20 @@ public:
      */
     Q_DISABLE_COPY_MOVE(DevicePage)
 
+    /**
+     * Restores all settings on this page
+     * @return true All settings are restored
+     * @return false Failed to restore all settings
+     */
+    bool restore();
+
+    /**
+     * Stores all the changed settings of this page in the global settings
+     * @return true All settings are stored.
+     * @return false Failed to store the settings.
+     */
+    bool save();
+
 private:
     DeviceModel mDeviceModel;
     QHeaderView mHeaderView{Qt::Horizontal};

@@ -38,6 +38,21 @@ GlobalSettingsWindow::GlobalSettingsWindow()
         }
     });
     settingsListWidget->setCurrentRow(0);
+
+    // setup save, cancel close handler
+    connect(mGlobalSettingsWindow->CancelButton, &QPushButton::clicked, this, [this]() {
+        mDevicePage->restore();
+        close();
+    });
+
+    connect(mGlobalSettingsWindow->ApplyButton, &QPushButton::clicked, this, [this]() {
+        mDevicePage->save();
+    });
+
+    connect(mGlobalSettingsWindow->OkButton, &QPushButton::clicked, this, [this]() {
+        mDevicePage->save();
+        close();
+    });
 }
 
 GlobalSettingsWindow::~GlobalSettingsWindow() = default;

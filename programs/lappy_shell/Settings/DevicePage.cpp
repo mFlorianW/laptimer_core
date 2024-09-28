@@ -42,4 +42,14 @@ DevicePage::DevicePage(GlobalSettingsWriter* settingsWriter, Common::GlobalSetti
 
 DevicePage::~DevicePage() = default;
 
+bool DevicePage::restore()
+{
+    return mDeviceModel.restore();
+}
+
+bool DevicePage::save()
+{
+    return mDeviceModel.save();
+}
+
 } // namespace LaptimerCore::LappyShell::Settings
