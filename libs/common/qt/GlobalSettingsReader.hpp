@@ -4,11 +4,13 @@
 
 #pragma once
 
+#include "GlobalSettingsTypes.hpp"
 #include <GlobalSettingsBackend.hpp>
 #include <QString>
 
 namespace LaptimerCore::Common
 {
+
 /**
  * Reads the global settings from the provided backend.
  */
@@ -53,6 +55,14 @@ public:
      *         Error: An emtpy string when not setting is found.
      */
     QString getDbFilePath() const noexcept;
+
+    /**
+     * Gives the stored device settings in the stored backend.
+     * If no settings are stored the device settings will be empty.
+     * @return Success: The stored device settings.
+     *         Error or not found: An empty list is returned.
+     */
+    QList<DeviceSettings> getDeviceSettings() const noexcept;
 
 private:
     GlobalSettingsBackend* mSettingsBackend;

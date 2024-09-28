@@ -7,11 +7,13 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettingsBackend.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettingsReader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettingsReader.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettingsTypes.hpp
 )
 
 target_link_libraries(CommonObjectQt
 PUBLIC
     Qt6::Core
+    Qt6::Network
 )
 
 target_include_directories(CommonObjectQt

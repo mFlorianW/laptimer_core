@@ -5,6 +5,7 @@
 #pragma once
 
 #include <GlobalSettingsBackend.hpp>
+#include <GlobalSettingsTypes.hpp>
 #include <QSettings>
 #include <QVariant>
 
@@ -57,6 +58,14 @@ public:
      *         false Failed to store
      */
     [[nodiscard]] bool storeDatabaseFilePath(QString const& dbFilePath) noexcept;
+
+    /**
+     * Stores the device settings
+     * @param deviceSettings The list of device settings that shall be stored.
+     * @return true the successful stored
+     * @return false Failed to store
+     */
+    [[nodiscard]] bool storeDeviceSettings(QList<Common::DeviceSettings> const& deviceSettings) noexcept;
 
 private:
     Common::GlobalSettingsBackend* mSettingsBackend;
