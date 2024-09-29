@@ -28,7 +28,7 @@ QVariant ApplicationListModel::data(QModelIndex const& index, qint32 displayRole
     if (displayRole == DisplayRole::AppName) {
         return apps.at(index.row()).getName();
     } else if (displayRole == DisplayRole::IconUrl) {
-        return apps.at(index.row()).getIconUrl();
+        return apps.at(index.row()).getIconUrl().prepend("file:");
     }
     return {};
 }

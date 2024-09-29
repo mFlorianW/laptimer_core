@@ -15,7 +15,7 @@ Rectangle {
         anchors.topMargin: 20
         anchors.leftMargin: 20
         anchors.rightMargin: 20
-        model: model
+        model: g_applicationModel
         cellWidth: 150
         cellHeight: 70
 
@@ -25,8 +25,8 @@ Rectangle {
         }
 
         delegate: ApplicationButton {
-            appName: name
-            iconSource: icon
+            appName: model.appName
+            iconSource: iconUrl
 
             onClicked: {
                 applicationsOverview.currentIndex = index;
