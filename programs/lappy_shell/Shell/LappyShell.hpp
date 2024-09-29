@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <ApplicationOverviewWidget.hpp>
 #include <GlobalSettingsWindow.hpp>
 #include <GlobalSettingsWriter.hpp>
 #include <QMainWindow>
@@ -31,6 +32,7 @@ private:
     Common::QSettingsBackend mSettingsBackend;
     Settings::GlobalSettingsWriter mSettings;
     std::unique_ptr<Settings::GlobalSettingsWindow> mGlobalSettingsWindow;
+    std::unique_ptr<ApplicationOverviewWidget> mApplicationOverviewWidget;
 };
 
 } // namespace LaptimerCore::LappyShell
