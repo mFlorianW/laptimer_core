@@ -6,7 +6,7 @@ import QtQuick
 
 Item {
     id: root
-    implicitHeight: 70
+    implicitHeight: applicationIconContainer.implicitHeight + applicationNameContainer.implicitHeight
     implicitWidth: 100
 
     property alias iconSource: applicationIcon.source
@@ -26,8 +26,8 @@ Item {
 
     Item {
         id: applicationIconContainer
-        height: root.implicitHeight / 2
-        width: root.implicitWidth
+        implicitHeight: 35
+        implicitWidth: root.implicitWidth
 
         Image {
             id: applicationIcon
@@ -44,15 +44,16 @@ Item {
         id: applicationNameContainer
         anchors.top: applicationIconContainer.bottom
         anchors.topMargin: 10
-        height: 20
-        width: root.implicitWidth
+        implicitHeight: applicationName.contentHeight + anchors.topMargin
+        implicitWidth: root.implicitWidth
 
         Text {
             id: applicationName
-            anchors.centerIn: parent
-            anchors.left: parent.left
-            anchors.right: parent.right
             width: applicationNameContainer.width
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            maximumLineCount: 2
+            wrapMode: Text.WordWrap
             elide: Text.ElideRight
         }
     }

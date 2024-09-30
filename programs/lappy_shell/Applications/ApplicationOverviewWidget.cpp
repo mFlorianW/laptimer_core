@@ -15,6 +15,7 @@ ApplicationOverviewWidget::ApplicationOverviewWidget()
     mAppModel.loadApplications();
     // Set context properties for the application
     rootContext()->setContextProperty("g_applicationModel", &mListModel);
+    rootContext()->setContextProperty("g_control", this);
 
     setResizeMode(QQuickWidget::SizeRootObjectToView);
 

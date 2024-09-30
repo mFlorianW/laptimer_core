@@ -16,8 +16,6 @@ Rectangle {
         anchors.leftMargin: 20
         anchors.rightMargin: 20
         model: g_applicationModel
-        cellWidth: 150
-        cellHeight: 70
 
         highlight: Rectangle {
             color: palette.highlight
