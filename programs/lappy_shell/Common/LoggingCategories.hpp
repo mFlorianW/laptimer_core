@@ -7,3 +7,4 @@
 #include <QLoggingCategory>
 
 Q_DECLARE_LOGGING_CATEGORY(lappy_shell)
+Q_DECLARE_LOGGING_CATEGORY(lappy_shell_apps)

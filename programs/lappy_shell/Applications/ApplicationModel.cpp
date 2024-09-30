@@ -5,6 +5,7 @@
 #include "ApplicationModel.hpp"
 #include "ApplicationConfigReader.hpp"
 #include "ApplicationFinder.hpp"
+#include <LoggingCategories.hpp>
 #include <QDebug>
 
 namespace LaptimerCore::LappyShell
@@ -22,10 +23,10 @@ void ApplicationModel::loadApplications() noexcept
     for (auto const& configFile : std::as_const(configFiles)) {
         auto app = configReader.readConfig(configFile.absoluteFilePath());
         if (app) {
-            qInfo() << "Found application config in " << configFile.absoluteFilePath();
+            qCInfo(lappy_shell_apps) << "Found application config in " << configFile.absoluteFilePath();
             mApps.append(app.value());
         } else {
-            qInfo() << "Critical failed to load application config:" << configFile.absoluteFilePath();
+            qCCritical(lappy_shell_apps) << "Failed to load application config:" << configFile.absoluteFilePath();
         }
     }
 

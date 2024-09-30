@@ -29,6 +29,10 @@ Rectangle {
             onClicked: {
                 applicationsOverview.currentIndex = index;
             }
+
+            onDoubleClicked: {
+                g_control.startApplication(exePath);
+            }
         }
     }
 }
