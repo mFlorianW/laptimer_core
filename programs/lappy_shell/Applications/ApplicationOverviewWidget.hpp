@@ -5,6 +5,7 @@
 #pragma once
 
 #include "ApplicationListModel.hpp"
+#include "ProcessManager.hpp"
 #include <QProcess>
 #include <QQuickWidget>
 
@@ -14,7 +15,7 @@ class ApplicationOverviewWidget : public QQuickWidget
 {
     Q_OBJECT
 public:
-    ApplicationOverviewWidget();
+    explicit ApplicationOverviewWidget(ProcessManager* proccessMgr);
     ~ApplicationOverviewWidget() override;
     Q_DISABLE_COPY_MOVE(ApplicationOverviewWidget)
 
@@ -27,5 +28,6 @@ private:
     ApplicationModel mAppModel = ApplicationModel{{"/home/florian/Coding/laptimer_core/build/debug-install/share/"}};
     ApplicationListModel mListModel = ApplicationListModel{mAppModel};
     QHash<QProcess*, std::shared_ptr<QProcess>> mProcesses;
+    ProcessManager* mProcessManager;
 };
 } // namespace LaptimerCore::LappyShell

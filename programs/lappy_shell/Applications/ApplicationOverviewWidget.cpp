@@ -10,8 +10,11 @@
 namespace LaptimerCore::LappyShell
 {
 
-ApplicationOverviewWidget::ApplicationOverviewWidget()
+ApplicationOverviewWidget::ApplicationOverviewWidget(ProcessManager* proccessMgr)
+    : mProcessManager{proccessMgr}
 {
+    Q_ASSERT(proccessMgr != nullptr);
+
     // Load initial applications
     mAppModel.loadApplications();
     // Set context properties for the application
@@ -43,42 +46,9 @@ ApplicationOverviewWidget::~ApplicationOverviewWidget()
 
 Q_INVOKABLE void ApplicationOverviewWidget::startApplication(QString const& exe) noexcept
 {
-    auto processRunning =
-        std::find_if(mProcesses.cbegin(), mProcesses.cend(), [&exe](std::shared_ptr<QProcess> const& process) -> bool {
-            if (process->program() == exe) {
-                return true;
-            }
-            return false;
-        }) != mProcesses.cend();
-
-    if (processRunning) {
-        return;
+    if (not mProcessManager->isProcessRunning(exe)) {
+        mProcessManager->startProcess(exe);
     }
-
-    auto process = std::make_shared<QProcess>();
-    mProcesses.insert(process.get(), process);
-    process->setProgram(exe);
-    process->start();
-    connect(process.get(), &QProcess::finished, this, [this](int exitCode) {
-        auto* process = qobject_cast<QProcess*>(sender());
-        if (process == nullptr) {
-            return;
-        }
-        qCInfo(lappy_shell_apps) << process->program() << "finished";
-        if (mProcesses.contains(process)) {
-            mProcesses.remove(process);
-        }
-    });
-
-    connect(process.get(), &QProcess::errorOccurred, this, [this](QProcess::ProcessError error) {
-        auto* process = qobject_cast<QProcess*>(sender());
-        if (process == nullptr) {
-            return;
-        }
-        qCInfo(lappy_shell_apps) << process->program() << "error occured.";
-    });
-
-    qCInfo(lappy_shell_apps) << "Process" << process->program() << "started";
 }
 
 void ApplicationOverviewWidget::onQmlError(QQuickWindow::SceneGraphError const& error, QString const& message)

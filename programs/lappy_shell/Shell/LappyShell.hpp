@@ -31,6 +31,7 @@ private:
     std::unique_ptr<Ui::MainWindow> mMainWindow;
     Common::QSettingsBackend mSettingsBackend;
     Settings::GlobalSettingsWriter mSettings;
+    std::unique_ptr<ProcessManager> mProcessManager;
     std::unique_ptr<Settings::GlobalSettingsWindow> mGlobalSettingsWindow;
     std::unique_ptr<ApplicationOverviewWidget> mApplicationOverviewWidget;
 };
