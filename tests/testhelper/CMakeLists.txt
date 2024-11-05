@@ -1,3 +1,8 @@
+if(UNIX)
+    # Make sure that we can start inside test a pgrep process
+    find_program(PGREP pgrep REQUIRED)
+endif()
+
 add_library(TestHelper OBJECT)
 add_library(LaptimerCore::TestHelper ALIAS TestHelper)
 
@@ -43,6 +48,8 @@ if(ENABLE_QT)
         PRIVATE
             ${CMAKE_CURRENT_SOURCE_DIR}/SettingsMemoryBackend.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/SettingsMemoryBackend.hpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/ProcessStatusChecker.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/ProcessStatusChecker.hpp
 
     )
     target_link_libraries(TestHelper
