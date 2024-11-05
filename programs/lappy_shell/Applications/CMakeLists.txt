@@ -20,6 +20,8 @@ qt_add_qml_module(Applications
         ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationModel.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationOverviewWidget.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ApplicationOverviewWidget.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ProcessManager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ProcessManager.hpp
 )
 
 add_library(LaptimerCore::LappyShellApplications ALIAS Applications)
