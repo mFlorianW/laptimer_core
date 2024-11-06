@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include "LappyHeadless.hpp"
+#include "RapidHeadless.hpp"
 #include <ConstantVelocityPositionDateTimeProvider.hpp>
 #include <EventLoop.hpp>
 #include <LibraryPath.hpp>

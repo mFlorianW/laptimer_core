@@ -2,9 +2,9 @@ add_executable(rapid_headless)
 
 target_sources(rapid_headless
 PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/lappy_headless.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/LappyHeadless.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/LappyHeadless.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/rapid_headless.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/RapidHeadless.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/RapidHeadless.hpp
 )
 
 target_include_directories(rapid_headless
