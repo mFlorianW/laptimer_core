@@ -5,17 +5,17 @@
 #pragma once
 #include <cstdint>
 
-namespace LaptimerCore::System
+namespace Rapid::System
 {
 
 /**
- * The base class for every event which can occur in the LaptimerCore sytstem.
+ * The base class for every event which can occur in the Rapid sytstem.
  */
 class Event
 {
 public:
     /**
-     * Defines the events in the LaptimerCore system
+     * Defines the events in the Rapid system
      */
     enum class Type : std::uint16_t
     {
@@ -64,4 +64,4 @@ private:
     Type mEventType;
 };
 
-} // namespace LaptimerCore::System
+} // namespace Rapid::System

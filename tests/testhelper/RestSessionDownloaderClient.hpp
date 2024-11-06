@@ -6,7 +6,7 @@
 #include "IRestClient.hpp"
 #include "RestRequest.hpp"
 
-namespace LaptimerCore::TestHelper
+namespace Rapid::TestHelper
 {
 class RestSessionDownloaderClient : public Rest::IRestClient
 {
@@ -18,4 +18,4 @@ class RestSessionDownloaderClient : public Rest::IRestClient
 
     Rest::RestRequest mLastRequest;
 };
-} // namespace LaptimerCore::TestHelper
+} // namespace Rapid::TestHelper

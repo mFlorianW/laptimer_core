@@ -6,7 +6,7 @@
 #include "ui_GlobalSettingsWindow.h"
 #include <QIcon>
 
-namespace LaptimerCore::LappyShell::Settings
+namespace Rapid::LappyShell::Settings
 {
 
 GlobalSettingsWindow::GlobalSettingsWindow()
@@ -57,4 +57,4 @@ GlobalSettingsWindow::GlobalSettingsWindow()
 
 GlobalSettingsWindow::~GlobalSettingsWindow() = default;
 
-}; // namespace LaptimerCore::LappyShell::Settings
+}; // namespace Rapid::LappyShell::Settings

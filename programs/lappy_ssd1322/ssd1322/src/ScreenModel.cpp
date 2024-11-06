@@ -12,10 +12,10 @@
 struct ScreenModelPrivate
 {
     explicit ScreenModelPrivate(ScreenModel& screenModel,
-                                LaptimerCore::Positioning::IGpsInformationProvider& gpsInfoProvider,
-                                LaptimerCore::Positioning::IPositionDateTimeProvider& posDateTimeProvider,
-                                LaptimerCore::Storage::ISessionDatabase& sessionDatabase,
-                                LaptimerCore::Storage::ITrackDatabase& trackDatabase)
+                                Rapid::Positioning::IGpsInformationProvider& gpsInfoProvider,
+                                Rapid::Positioning::IPositionDateTimeProvider& posDateTimeProvider,
+                                Rapid::Storage::ISessionDatabase& sessionDatabase,
+                                Rapid::Storage::ITrackDatabase& trackDatabase)
         : mMainScreen{gpsInfoProvider}
         , mMenuModel{screenModel, sessionDatabase}
         , mMainScreenModel{screenModel, posDateTimeProvider, sessionDatabase, trackDatabase}
@@ -31,10 +31,10 @@ struct ScreenModelPrivate
     MainScreenModel mMainScreenModel;
 };
 
-ScreenModel::ScreenModel(LaptimerCore::Positioning::IGpsInformationProvider& gpsInfoProvider,
-                         LaptimerCore::Positioning::IPositionDateTimeProvider& posDateTimeProvider,
-                         LaptimerCore::Storage::ISessionDatabase& sessionDatabase,
-                         LaptimerCore::Storage::ITrackDatabase& trackDatabase)
+ScreenModel::ScreenModel(Rapid::Positioning::IGpsInformationProvider& gpsInfoProvider,
+                         Rapid::Positioning::IPositionDateTimeProvider& posDateTimeProvider,
+                         Rapid::Storage::ISessionDatabase& sessionDatabase,
+                         Rapid::Storage::ITrackDatabase& trackDatabase)
     : mD{std::make_unique<ScreenModelPrivate>(*this,
                                               gpsInfoProvider,
                                               posDateTimeProvider,

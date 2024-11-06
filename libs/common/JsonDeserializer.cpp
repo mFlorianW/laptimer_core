@@ -4,7 +4,7 @@
 
 #include "JsonDeserializer.hpp"
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 namespace
@@ -92,4 +92,4 @@ std::optional<SessionData> JsonDeserializer::deserializeSessionData(std::string 
     return {session};
 }
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

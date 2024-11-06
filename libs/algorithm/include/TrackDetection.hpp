@@ -8,7 +8,7 @@
 #include "ITrackDetection.hpp"
 #include <cstdint>
 
-namespace LaptimerCore::Algorithm
+namespace Rapid::Algorithm
 {
 
 class TrackDetection : public ITrackDetection
@@ -29,6 +29,6 @@ private:
     std::uint16_t mDetectionRadius;
 };
 
-} // namespace LaptimerCore::Algorithm
+} // namespace Rapid::Algorithm
 
 #endif //!__CIRCLETRACKDETECTION__H__

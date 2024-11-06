@@ -6,7 +6,7 @@
 
 #include <QHostAddress>
 
-namespace LaptimerCore::SessionDl
+namespace Rapid::SessionDl
 {
 
 class CliOptions
@@ -26,4 +26,4 @@ private:
     bool mDeleteSessions{false};
 };
 
-} // namespace LaptimerCore::SessionDl
+} // namespace Rapid::SessionDl

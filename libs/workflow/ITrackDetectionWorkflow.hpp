@@ -8,7 +8,7 @@
 #include "TrackData.hpp"
 #include "kdbindings/signal.h"
 
-namespace LaptimerCore::Workflow
+namespace Rapid::Workflow
 {
 
 /**
@@ -55,6 +55,6 @@ protected:
     ITrackDetectionWorkflow() = default;
 };
 
-} // namespace LaptimerCore::Workflow
+} // namespace Rapid::Workflow
 
 #endif //!__ITRACKDETECTIONWORKFLOW__H__

@@ -9,7 +9,7 @@
 #include <QString>
 #include <vector>
 
-namespace LaptimerCore::Positioning::Qt
+namespace Rapid::Positioning::Qt
 {
 
 /**
@@ -42,6 +42,6 @@ private:
     std::vector<Common::PositionData> mPositions;
 };
 
-} // namespace LaptimerCore::Positioning::Qt
+} // namespace Rapid::Positioning::Qt
 
 #endif // CSVGPSFILEREADER_HPP

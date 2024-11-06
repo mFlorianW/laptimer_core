@@ -8,7 +8,7 @@
 #include <PositionData.hpp>
 #include <TrackData.hpp>
 
-namespace LaptimerCore::Algorithm
+namespace Rapid::Algorithm
 {
 
 class ITrackDetection
@@ -26,6 +26,6 @@ public:
     virtual bool isOnTrack(Common::TrackData const& track, Common::PositionData const& position) const = 0;
 };
 
-} // namespace LaptimerCore::Algorithm
+} // namespace Rapid::Algorithm
 
 #endif //!__ITRACKDETECTION__H__

@@ -6,7 +6,7 @@
 #include <cmath>
 #include <limits>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 class SharedPositionData : public SharedData
@@ -73,4 +73,4 @@ bool operator!=(PositionData const& lhs, PositionData const& rhs)
     return !(lhs == rhs);
 }
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

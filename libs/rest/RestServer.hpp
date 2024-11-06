@@ -7,7 +7,7 @@
 #include "IRestServer.hpp"
 #include <memory>
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 
 namespace Private
@@ -71,4 +71,4 @@ private:
     std::unique_ptr<Private::RestServerImpl> mRestServerImpl;
 };
 
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

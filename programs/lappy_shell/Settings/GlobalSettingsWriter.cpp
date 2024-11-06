@@ -5,7 +5,7 @@
 #include "GlobalSettingsWriter.hpp"
 #include <GlobalSettingsKeys.hpp>
 
-namespace LaptimerCore::LappyShell::Settings
+namespace Rapid::LappyShell::Settings
 {
 
 GlobalSettingsWriter::GlobalSettingsWriter(Common::GlobalSettingsBackend* settingsBackend)
@@ -43,4 +43,4 @@ bool GlobalSettingsWriter::storeDeviceSettings(QList<Common::DeviceSettings> con
     return true;
 }
 
-} // namespace LaptimerCore::LappyShell::Settings
+} // namespace Rapid::LappyShell::Settings

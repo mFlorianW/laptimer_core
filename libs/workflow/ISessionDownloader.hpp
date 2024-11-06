@@ -6,7 +6,7 @@
 #include "SessionData.hpp"
 #include <kdbindings/signal.h>
 
-namespace LaptimerCore::Workflow
+namespace Rapid::Workflow
 {
 
 enum class DownloadResult
@@ -87,4 +87,4 @@ public:
 protected:
     ISessionDownloader() noexcept = default;
 };
-} // namespace LaptimerCore::Workflow
+} // namespace Rapid::Workflow

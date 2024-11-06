@@ -8,9 +8,9 @@
 #include <string>
 #include <unordered_map>
 
-using namespace LaptimerCore::Storage::Private;
+using namespace Rapid::Storage::Private;
 
-namespace LaptimerCore::Storage
+namespace Rapid::Storage
 {
 
 SqliteTrackDatabase::SqliteTrackDatabase(std::string const& pathToDatabase)
@@ -44,7 +44,7 @@ std::vector<Common::TrackData> SqliteTrackDatabase::getTracks()
     Statement stm{mDbConnection};
     if (stm.prepare(trackQuery) == PrepareResult::Ok) {
         while (stm.execute() == ExecuteResult::Row && stm.getColumnCount() == 6) {
-            auto track = LaptimerCore::Common::TrackData{};
+            auto track = Rapid::Common::TrackData{};
             auto trackId = stm.getIntColumn(0).value_or(0);
             track.setTrackName(stm.getStringColumn(1).value_or(""));
             track.setFinishline({stm.getFloatColumn(2).value_or(0), stm.getFloatColumn(3).value_or(0)});
@@ -64,7 +64,7 @@ std::vector<Common::TrackData> SqliteTrackDatabase::getTracks()
                 break;
             }
 
-            auto sections = std::vector<LaptimerCore::Common::PositionData>{};
+            auto sections = std::vector<Rapid::Common::PositionData>{};
             while (sektorStm.execute() == ExecuteResult::Row && sektorStm.getColumnCount() == 2) {
                 sections.emplace_back(Common::PositionData{sektorStm.getFloatColumn(0).value_or(0),
                                                            sektorStm.getFloatColumn(1).value_or(0)});
@@ -149,4 +149,4 @@ std::optional<std::size_t> SqliteTrackDatabase::getTrackIdOfIndex(std::size_t tr
     return trackIds[trackIndex];
 }
 
-} // namespace LaptimerCore::Storage
+} // namespace Rapid::Storage

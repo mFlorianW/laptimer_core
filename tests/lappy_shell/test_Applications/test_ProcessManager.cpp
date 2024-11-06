@@ -10,7 +10,7 @@
 #include <QTest>
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::LappyShell;
+using namespace Rapid::LappyShell;
 
 SCENARIO("The ProcessManager shall start an process.")
 {
@@ -23,7 +23,7 @@ SCENARIO("The ProcessManager shall start an process.")
             processMgr.startProcess(DUMMY_PROCESS_BINARY_PATH);
             THEN("The process shall run")
             {
-                REQUIRE(LaptimerCore::TestHelper::ProcessStatusChecker{}.isProcessRunning(DUMMY_PROCESS_BINARY_NAME));
+                REQUIRE(Rapid::TestHelper::ProcessStatusChecker{}.isProcessRunning(DUMMY_PROCESS_BINARY_NAME));
             }
         }
 

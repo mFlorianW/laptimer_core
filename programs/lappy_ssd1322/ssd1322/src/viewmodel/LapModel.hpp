@@ -20,7 +20,7 @@ public:
     LapModel(LapModel&& model) = delete;
     LapModel& operator=(LapModel&& model) = delete;
 
-    void setSessionData(LaptimerCore::Common::SessionData const session) noexcept;
+    void setSessionData(Rapid::Common::SessionData const session) noexcept;
 
     std::string data(std::size_t row, std::size_t column) const noexcept override;
 
@@ -29,5 +29,5 @@ public:
 private:
     std::size_t mLapColumnIndex{0};
     std::size_t mLaptimeColumnIndex{1};
-    LaptimerCore::Common::SessionData mSession;
+    Rapid::Common::SessionData mSession;
 };

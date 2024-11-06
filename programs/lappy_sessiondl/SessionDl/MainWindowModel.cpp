@@ -9,7 +9,7 @@
 #include <QDebug>
 #include <iostream>
 
-namespace LaptimerCore::SessionDl
+namespace Rapid::SessionDl
 {
 
 MainWindowModel::MainWindowModel(Workflow::ISessionDownloader& downloader, Storage::ISessionDatabase& database) noexcept
@@ -131,4 +131,4 @@ void MainWindowModel::appendToLog(QString const& message) noexcept
     Q_EMIT logMessageChanged();
 }
 
-} // namespace LaptimerCore::SessionDl
+} // namespace Rapid::SessionDl

@@ -8,7 +8,7 @@
 #include <QAbstractListModel>
 #include <memory>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 class PositionDateTimeData;
 }
@@ -35,7 +35,7 @@ public:
 
     QHash<qint32, QByteArray> roleNames() const override;
 
-    void addPosition(LaptimerCore::Common::PositionDateTimeData const& position);
+    void addPosition(Rapid::Common::PositionDateTimeData const& position);
 
     void clear();
 

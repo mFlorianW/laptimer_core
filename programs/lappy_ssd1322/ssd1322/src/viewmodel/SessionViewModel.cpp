@@ -5,7 +5,7 @@
 #include "SessionViewModel.hpp"
 #include <sstream>
 
-SessionViewModel::SessionViewModel(LaptimerCore::Storage::ISessionDatabase& sessionDb)
+SessionViewModel::SessionViewModel(Rapid::Storage::ISessionDatabase& sessionDb)
     : MenuEntry()
     , NavigatableModel{0}
     , mSessionDb{sessionDb}

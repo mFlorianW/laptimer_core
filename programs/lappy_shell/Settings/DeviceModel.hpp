@@ -9,7 +9,7 @@
 #include <GlobalSettingsWriter.hpp>
 #include <QAbstractTableModel>
 
-namespace LaptimerCore::LappyShell::Settings
+namespace Rapid::LappyShell::Settings
 {
 
 /**
@@ -145,4 +145,4 @@ private:
     bool mBackuped = false;
 };
 
-} // namespace LaptimerCore::LappyShell::Settings
+} // namespace Rapid::LappyShell::Settings

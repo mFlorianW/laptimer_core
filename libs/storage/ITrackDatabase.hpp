@@ -7,7 +7,7 @@
 
 #include <TrackData.hpp>
 
-namespace LaptimerCore::Storage
+namespace Rapid::Storage
 {
 
 class ITrackDatabase
@@ -81,6 +81,6 @@ protected:
     ITrackDatabase() = default;
 };
 
-} // namespace LaptimerCore::Storage
+} // namespace Rapid::Storage
 
 #endif //! ITRACKDATABASEBACKEND_HPP

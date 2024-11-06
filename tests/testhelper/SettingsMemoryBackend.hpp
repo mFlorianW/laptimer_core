@@ -6,7 +6,7 @@
 
 #include <GlobalSettingsBackend.hpp>
 
-namespace LaptimerCore::TestHelper
+namespace Rapid::TestHelper
 {
 
 class SettingsMemoryBackend : public Common::GlobalSettingsBackend
@@ -20,4 +20,4 @@ private:
     QVariantHash mSingleValues;
 };
 
-} // namespace LaptimerCore::TestHelper
+} // namespace Rapid::TestHelper

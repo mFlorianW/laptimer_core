@@ -8,11 +8,11 @@
 int main(int argc, char* argv[])
 {
     QApplication app{argc, argv};
-    app.setApplicationName("lappy");
-    app.setOrganizationName("Lappy");
-    app.setOrganizationDomain("de.lappy");
+    app.setApplicationName("rapid");
+    app.setOrganizationName("Rapid");
+    app.setOrganizationDomain("de.rapid");
 
-    auto lappyShell = LaptimerCore::LappyShell::LappyShell{};
+    auto lappyShell = Rapid::LappyShell::LappyShell{};
     lappyShell.show();
 
     app.exec();

@@ -11,10 +11,10 @@
 #include "SessionDatabase.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Workflow;
-using namespace LaptimerCore::TestHelper;
-using namespace LaptimerCore::Storage;
-using namespace LaptimerCore::Common;
+using namespace Rapid::Workflow;
+using namespace Rapid::TestHelper;
+using namespace Rapid::Storage;
+using namespace Rapid::Common;
 
 TEST_CASE("The ActiveSessionWorkflow shall not do return a session when start isn't called")
 {

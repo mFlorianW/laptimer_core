@@ -11,7 +11,7 @@
  * This file contains the keys for the global settings
  */
 
-namespace LaptimerCore::Common::Private
+namespace Rapid::Common::Private
 {
 
 /**
@@ -49,4 +49,4 @@ constexpr auto DeviceSettingsPort = QStringView(u"deviceSettings%1Port");
  */
 constexpr auto DeviceSettingsDef = QStringView(u"deviceSettings%1Default");
 
-} // namespace LaptimerCore::Common::Private
+} // namespace Rapid::Common::Private

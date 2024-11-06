@@ -6,7 +6,7 @@
 #include "RestCall.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Rest;
+using namespace Rapid::Rest;
 
 class TestableRestCall : public RestCall
 {

@@ -12,7 +12,7 @@
 #include <SqliteSessionDatabase.hpp>
 #include <memory>
 
-namespace LaptimerCore::SessionDl
+namespace Rapid::SessionDl
 {
 
 class SessionDownloader final
@@ -33,4 +33,4 @@ private:
     std::unique_ptr<MainWindowModel> mMainWindowModel;
 };
 
-} // namespace LaptimerCore::SessionDl
+} // namespace Rapid::SessionDl

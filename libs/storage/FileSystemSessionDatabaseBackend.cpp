@@ -9,7 +9,7 @@
 #include <iostream>
 #include <regex>
 
-namespace LaptimerCore::Storage
+namespace Rapid::Storage
 {
 
 FileSystemSessionDatabaseBackend::FileSystemSessionDatabaseBackend(std::string const& databaseFolder)
@@ -102,4 +102,4 @@ bool FileSystemSessionDatabaseBackend::deleteSession(std::size_t index)
     return false;
 }
 
-} // namespace LaptimerCore::Storage
+} // namespace Rapid::Storage

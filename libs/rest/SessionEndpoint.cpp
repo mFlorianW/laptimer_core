@@ -7,7 +7,7 @@
 #include <JsonSerializer.hpp>
 #include <charconv>
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 constexpr auto endpointIdentifier = "sessions";
 
@@ -91,4 +91,4 @@ std::optional<std::size_t> getSessionIndex(std::string_view index) noexcept
     return sessionIndex;
 }
 } // namespace
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

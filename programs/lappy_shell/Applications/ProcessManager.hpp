@@ -9,7 +9,7 @@
 #include <memory>
 #include <unordered_map>
 
-namespace LaptimerCore::LappyShell
+namespace Rapid::LappyShell
 {
 /**
  * The @ref ProcessManager tracks all started processes by the shell.
@@ -60,4 +60,4 @@ private:
     std::unordered_map<QString, std::unique_ptr<QProcess>> mProcesses;
 };
 
-} // namespace LaptimerCore::LappyShell
+} // namespace Rapid::LappyShell

@@ -8,10 +8,10 @@
 #include "Sessions.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::System;
-using namespace LaptimerCore::Storage;
-using namespace LaptimerCore::Common;
-using namespace LaptimerCore::TestHelper;
+using namespace Rapid::System;
+using namespace Rapid::Storage;
+using namespace Rapid::Common;
+using namespace Rapid::TestHelper;
 
 TEST_CASE("The SessionDatabase shall serialize the SessionData to JSON, store them and emit the signal new session is "
           "stored.")

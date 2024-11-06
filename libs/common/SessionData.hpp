@@ -9,7 +9,7 @@
 #include "SharedDataPointer.hpp"
 #include "TrackData.hpp"
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 class SharedSessionData;
@@ -129,4 +129,4 @@ private:
     SharedDataPointer<SharedSessionData> mData;
 };
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

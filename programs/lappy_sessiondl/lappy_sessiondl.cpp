@@ -11,17 +11,17 @@
 
 int main(int argc, char** argv)
 {
-    auto* eventDispatcher = new LaptimerCore::System::Qt::QEventDispatcher{}; // NOLINT(cppcoreguidelines-owning-memory)
+    auto* eventDispatcher = new Rapid::System::Qt::QEventDispatcher{}; // NOLINT(cppcoreguidelines-owning-memory)
     QApplication::setEventDispatcher(eventDispatcher);
     QApplication app{argc, argv};
     app.setApplicationName("lappy");
     app.setOrganizationName("Lappy");
     app.setOrganizationDomain("de.lappy");
 
-    auto const options = LaptimerCore::SessionDl::CliOptions{argc, argv};
+    auto const options = Rapid::SessionDl::CliOptions{argc, argv};
 
-    // LaptimerCore::SessionDl::CliOptions opts{argc, argv};
-    auto const sDl = LaptimerCore::SessionDl::SessionDownloader{options.getHostAddress(), options.getPort()};
+    // Rapid::SessionDl::CliOptions opts{argc, argv};
+    auto const sDl = Rapid::SessionDl::SessionDownloader{options.getHostAddress(), options.getPort()};
     sDl.show();
 
     return app.exec();

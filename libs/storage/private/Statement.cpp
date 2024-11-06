@@ -5,7 +5,7 @@
 #include "Statement.hpp"
 #include "cstring"
 
-namespace LaptimerCore::Storage::Private
+namespace Rapid::Storage::Private
 {
 
 Statement::Statement(Connection const& dbConnection)
@@ -170,4 +170,4 @@ std::optional<std::string> Statement::getStringColumn(std::size_t index) const n
     // NOLINTEND
 }
 
-} // namespace LaptimerCore::Storage::Private
+} // namespace Rapid::Storage::Private

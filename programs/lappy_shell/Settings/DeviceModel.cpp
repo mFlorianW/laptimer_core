@@ -5,7 +5,7 @@
 #include "DeviceModel.hpp"
 #include <QSize>
 
-namespace LaptimerCore::LappyShell::Settings
+namespace Rapid::LappyShell::Settings
 {
 
 namespace
@@ -183,4 +183,4 @@ void DeviceModel::backup() noexcept
     }
 }
 
-} // namespace LaptimerCore::LappyShell::Settings
+} // namespace Rapid::LappyShell::Settings

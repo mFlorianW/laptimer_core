@@ -6,7 +6,7 @@
 #include "ApplicationConfig.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::LappyShell;
+using namespace Rapid::LappyShell;
 
 SCENARIO("The application version shall be constructable from a string")
 {

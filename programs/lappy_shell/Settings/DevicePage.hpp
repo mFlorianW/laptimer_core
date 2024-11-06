@@ -14,7 +14,7 @@ namespace Ui
 class DevicePage;
 }
 
-namespace LaptimerCore::LappyShell::Settings
+namespace Rapid::LappyShell::Settings
 {
 
 /**
@@ -59,4 +59,4 @@ private:
     std::unique_ptr<Ui::DevicePage> mDevicePage;
 };
 
-} // namespace LaptimerCore::LappyShell::Settings
+} // namespace Rapid::LappyShell::Settings

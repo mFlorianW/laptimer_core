@@ -6,7 +6,7 @@
 #include "Event.hpp"
 #include <thread>
 
-namespace LaptimerCore::System
+namespace Rapid::System
 {
 
 /**
@@ -64,4 +64,4 @@ private:
     std::thread::id mThreadId = std::thread::id{0};
 };
 
-} // namespace LaptimerCore::System
+} // namespace Rapid::System

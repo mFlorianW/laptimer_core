@@ -6,9 +6,9 @@
 #include "RestRequest.hpp"
 #include <ArduinoJson.hpp>
 
-using namespace LaptimerCore::Common;
+using namespace Rapid::Common;
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 GpsEndpoint::GpsEndpoint() = default;
 GpsEndpoint::~GpsEndpoint() = default;
@@ -31,4 +31,4 @@ RequestHandleResult GpsEndpoint::handleRestRequest(RestRequest& request) noexcep
 
     return RequestHandleResult::Ok;
 }
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

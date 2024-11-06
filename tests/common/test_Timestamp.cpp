@@ -6,7 +6,7 @@
 #include "Timestamp.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Common;
+using namespace Rapid::Common;
 
 TEST_CASE("A Timestamp shall be able to convert the time into a string.")
 {

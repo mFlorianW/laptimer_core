@@ -75,9 +75,9 @@ static void hal_init()
     lv_task_create(memory_monitor, 5000, LV_TASK_PRIO_MID, nullptr);
 }
 
-std::vector<LaptimerCore::Common::PositionData> loadPositions(std::string const filePath)
+std::vector<Rapid::Common::PositionData> loadPositions(std::string const filePath)
 {
-    auto positions = std::vector<LaptimerCore::Common::PositionData>{};
+    auto positions = std::vector<Rapid::Common::PositionData>{};
     auto file = std::fstream(filePath);
     auto line = std::string{};
 
@@ -121,11 +121,11 @@ int main(int argc, char* argv[])
     // Load GPS position file
     auto positions = loadPositions("/home/florian/Coding/laptimer_core/laps/Oschersleben.csv");
 
-    auto eventLoop = LaptimerCore::System::EventLoop{};
-    auto gpsInfoProvider = LaptimerCore::Positioning::StaticGpsInformationProvider{};
-    auto posDateTimeProvider = LaptimerCore::Positioning::ConstantVelocityPositionDateTimeProvider{positions};
-    auto sessionDatabase = LaptimerCore::Storage::SqliteSessionDatabase{LIBRARY_FILE};
-    auto trackDatabase = LaptimerCore::Storage::SqliteTrackDatabase{LIBRARY_FILE};
+    auto eventLoop = Rapid::System::EventLoop{};
+    auto gpsInfoProvider = Rapid::Positioning::StaticGpsInformationProvider{};
+    auto posDateTimeProvider = Rapid::Positioning::ConstantVelocityPositionDateTimeProvider{positions};
+    auto sessionDatabase = Rapid::Storage::SqliteSessionDatabase{LIBRARY_FILE};
+    auto trackDatabase = Rapid::Storage::SqliteTrackDatabase{LIBRARY_FILE};
     auto screenModel = ScreenModel{gpsInfoProvider, posDateTimeProvider, sessionDatabase, trackDatabase};
     screenModel.activateMainScreen();
     posDateTimeProvider.setVelocityInMeterPerSecond(80.6667);

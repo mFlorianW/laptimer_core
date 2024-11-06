@@ -4,7 +4,7 @@
 
 #include "SqliteDatabaseTestHelper.hpp"
 
-namespace LaptimerCore::TestHelper::SqliteDatabaseTestHelper
+namespace Rapid::TestHelper::SqliteDatabaseTestHelper
 {
 
 std::string getWorkingDir()
@@ -28,4 +28,4 @@ std::string getTestDatabseFile(std::string const& dbFile)
     return getTestDatabseFolder() + "/" + dbFile;
 }
 
-} // namespace LaptimerCore::TestHelper::SqliteDatabaseTestHelper
+} // namespace Rapid::TestHelper::SqliteDatabaseTestHelper

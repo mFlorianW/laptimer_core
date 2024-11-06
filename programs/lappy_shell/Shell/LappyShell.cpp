@@ -12,7 +12,7 @@
 #include <QQmlContext>
 #include <QStandardPaths>
 
-namespace LaptimerCore::LappyShell
+namespace Rapid::LappyShell
 {
 
 LappyShell::LappyShell()
@@ -71,4 +71,4 @@ void LappyShell::setupDatabase() noexcept
     }
 }
 
-} // namespace LaptimerCore::LappyShell
+} // namespace Rapid::LappyShell

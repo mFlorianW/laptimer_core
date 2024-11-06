@@ -9,7 +9,7 @@
 #include <QQmlContext>
 #include <QQuickWindow>
 
-namespace LaptimerCore::SessionDl
+namespace Rapid::SessionDl
 {
 
 SessionDownloader::SessionDownloader(QHostAddress const& address, quint16 port) noexcept
@@ -44,4 +44,4 @@ void SessionDownloader::show() const noexcept
     window->show();
 }
 
-} // namespace LaptimerCore::SessionDl
+} // namespace Rapid::SessionDl

@@ -7,7 +7,7 @@
 #include <QObject>
 #include <QStringList>
 
-namespace LaptimerCore::LappyShell
+namespace Rapid::LappyShell
 {
 ApplicationVersion::ApplicationVersion(qint32 major, qint32 minor, qint32 patch)
     : mMajor{major}
@@ -101,4 +101,4 @@ bool ApplicationConfig::operator!=(ApplicationConfig const& other) const noexcep
 {
     return !(*this == other);
 }
-} // namespace LaptimerCore::LappyShell
+} // namespace Rapid::LappyShell

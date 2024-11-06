@@ -7,7 +7,7 @@
 #include <QAbstractItemModelTester>
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::LappyShell;
+using namespace Rapid::LappyShell;
 
 SCENARIO("The ApplicationListModel shall return the correct values for the UI")
 {

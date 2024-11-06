@@ -5,7 +5,7 @@
 #include "EventHandler.hpp"
 #include "EventLoop.hpp"
 
-namespace LaptimerCore::System
+namespace Rapid::System
 {
 
 EventHandler::EventHandler()
@@ -23,4 +23,4 @@ std::thread::id EventHandler::getThreadId() const noexcept
     return mThreadId;
 }
 
-} // namespace LaptimerCore::System
+} // namespace Rapid::System

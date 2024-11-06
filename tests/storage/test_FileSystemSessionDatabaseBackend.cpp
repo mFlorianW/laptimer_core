@@ -9,8 +9,8 @@
 #include <filesystem>
 #include <unistd.h>
 
-using namespace LaptimerCore::Storage;
-using namespace LaptimerCore::TestHelper;
+using namespace Rapid::Storage;
+using namespace Rapid::TestHelper;
 
 namespace
 {

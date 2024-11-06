@@ -14,28 +14,28 @@
 #include <TrackDetection.hpp>
 #include <TrackDetectionWorkflow.hpp>
 
-namespace LaptimerCore::LappyHeadless
+namespace Rapid::LappyHeadless
 {
 
 class LappyHeadless
 {
 public:
-    LappyHeadless(LaptimerCore::Positioning::IPositionDateTimeProvider& posProvider,
-                  LaptimerCore::Storage::ISessionDatabase& sessionDatabase,
-                  LaptimerCore::Storage::ITrackDatabase& trackDatabase);
+    LappyHeadless(Rapid::Positioning::IPositionDateTimeProvider& posProvider,
+                  Rapid::Storage::ISessionDatabase& sessionDatabase,
+                  Rapid::Storage::ITrackDatabase& trackDatabase);
 
 private:
-    LaptimerCore::Positioning::IPositionDateTimeProvider& mPositionProvider;
-    LaptimerCore::Storage::ISessionDatabase& mSessionDatabase;
-    LaptimerCore::Storage::ITrackDatabase& mTrackDatabase;
-    LaptimerCore::Algorithm::TrackDetection mTrackDetection{500};
-    LaptimerCore::Workflow::TrackDetectionWorkflow mTrackDetectionWorkflow{mTrackDetection, mPositionProvider};
-    LaptimerCore::Algorithm::SimpleLaptimer mSimpleLaptimer{};
-    LaptimerCore::Workflow::ActiveSessionWorkflow mActiveSessionWorkflow{mPositionProvider,
+    Rapid::Positioning::IPositionDateTimeProvider& mPositionProvider;
+    Rapid::Storage::ISessionDatabase& mSessionDatabase;
+    Rapid::Storage::ITrackDatabase& mTrackDatabase;
+    Rapid::Algorithm::TrackDetection mTrackDetection{500};
+    Rapid::Workflow::TrackDetectionWorkflow mTrackDetectionWorkflow{mTrackDetection, mPositionProvider};
+    Rapid::Algorithm::SimpleLaptimer mSimpleLaptimer{};
+    Rapid::Workflow::ActiveSessionWorkflow mActiveSessionWorkflow{mPositionProvider,
                                                                          mSimpleLaptimer,
                                                                          mSessionDatabase};
-    LaptimerCore::Rest::SessionEndpoint mSessionEndpoint{mSessionDatabase};
-    LaptimerCore::Rest::RestServer mRestServer;
+    Rapid::Rest::SessionEndpoint mSessionEndpoint{mSessionDatabase};
+    Rapid::Rest::RestServer mRestServer;
 };
 
-} // namespace LaptimerCore::LappyHeadless
+} // namespace Rapid::LappyHeadless

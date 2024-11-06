@@ -4,7 +4,7 @@
 
 #include "StatusBarModel.hpp"
 
-StatusBarModel::StatusBarModel(LaptimerCore::Positioning::IGpsInformationProvider& gpsInfoProvider)
+StatusBarModel::StatusBarModel(Rapid::Positioning::IGpsInformationProvider& gpsInfoProvider)
     : mGpsInfoProvider{gpsInfoProvider}
 
 {

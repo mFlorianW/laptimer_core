@@ -9,7 +9,7 @@
 #include <QSettings>
 #include <QVariant>
 
-namespace LaptimerCore::LappyShell::Settings
+namespace Rapid::LappyShell::Settings
 {
 
 /**
@@ -19,7 +19,7 @@ class GlobalSettingsWriter
 {
 public:
     /**
-     * Constructs a @ref LaptimerCore::LappyShell::Settings instance
+     * Constructs a @ref Rapid::LappyShell::Settings instance
      * @param settingsBackend The settings that execute the concret store operations
      *                        The Settings doesn't take the ownership of the pointer so the caller must
      *                        guarantee that the object is valid as long the Settings class exists.
@@ -71,4 +71,4 @@ private:
     Common::GlobalSettingsBackend* mSettingsBackend;
 };
 
-} // namespace LaptimerCore::LappyShell::Settings
+} // namespace Rapid::LappyShell::Settings

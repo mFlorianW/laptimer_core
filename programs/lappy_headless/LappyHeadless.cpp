@@ -4,12 +4,12 @@
 
 #include "LappyHeadless.hpp"
 
-namespace LaptimerCore::LappyHeadless
+namespace Rapid::LappyHeadless
 {
 
-LappyHeadless::LappyHeadless(LaptimerCore::Positioning::IPositionDateTimeProvider& posProvider,
-                             LaptimerCore::Storage::ISessionDatabase& sessionDatabase,
-                             LaptimerCore::Storage::ITrackDatabase& trackDatabase)
+LappyHeadless::LappyHeadless(Rapid::Positioning::IPositionDateTimeProvider& posProvider,
+                             Rapid::Storage::ISessionDatabase& sessionDatabase,
+                             Rapid::Storage::ITrackDatabase& trackDatabase)
     : mPositionProvider{posProvider}
     , mSessionDatabase{sessionDatabase}
     , mTrackDatabase{trackDatabase}
@@ -34,4 +34,4 @@ LappyHeadless::LappyHeadless(LaptimerCore::Positioning::IPositionDateTimeProvide
     (void)mRestServer.start();
 }
 
-} // namespace LaptimerCore::LappyHeadless
+} // namespace Rapid::LappyHeadless

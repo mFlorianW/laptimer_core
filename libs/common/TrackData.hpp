@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 class SharedTrackData;
@@ -143,4 +143,4 @@ private:
     SharedDataPointer<SharedTrackData> mData;
 };
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

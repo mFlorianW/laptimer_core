@@ -4,7 +4,7 @@
 
 #include "AsyncResultDb.hpp"
 
-namespace LaptimerCore::Storage
+namespace Rapid::Storage
 {
 
 AsyncResultDb::~AsyncResultDb() = default;
@@ -16,4 +16,4 @@ void AsyncResultDb::setDbResult(System::Result result, std::string const& errMsg
     System::AsyncResult::setResult(result, errMsg);
 }
 
-} // namespace LaptimerCore::Storage
+} // namespace Rapid::Storage

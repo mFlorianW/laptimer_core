@@ -7,7 +7,7 @@
 #include <iostream>
 #include <memory>
 
-namespace LaptimerCore::System::Private
+namespace Rapid::System::Private
 {
 
 TimerImpl::TimerImpl(Timer& timer)
@@ -67,4 +67,4 @@ void TimerImpl::setupTimer()
     });
 }
 
-} // namespace LaptimerCore::System::Private
+} // namespace Rapid::System::Private

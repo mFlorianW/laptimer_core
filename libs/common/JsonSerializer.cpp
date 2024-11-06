@@ -5,7 +5,7 @@
 #include "JsonSerializer.hpp"
 #include <utility>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 bool JsonSerializer::serializeTrackData(TrackData const& trackData, JsonObject& jsonObject)
@@ -66,4 +66,4 @@ bool JsonSerializer::serializeSessionData(SessionData const& sessionData, JsonOb
     return true;
 }
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

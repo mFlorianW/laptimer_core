@@ -8,7 +8,7 @@
 #include "IPositionDateTimeProvider.hpp"
 #include <Timestamp.hpp>
 
-namespace LaptimerCore::Positioning
+namespace Rapid::Positioning
 {
 
 class StaticPositionDateTimeProvider final : public IPositionDateTimeProvider
@@ -25,6 +25,6 @@ public:
     }
 };
 
-} // namespace LaptimerCore::Positioning
+} // namespace Rapid::Positioning
 
 #endif // STATICPOSITIONDATETIMEPROVIDER_HPP

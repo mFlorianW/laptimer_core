@@ -7,7 +7,7 @@
 #include "JsonSerializer.hpp"
 #include "private/AsyncResultDb.hpp"
 
-namespace LaptimerCore::Storage
+namespace Rapid::Storage
 {
 
 SessionDatabase::SessionDatabase(ISessionDatabaseBackend& backend)
@@ -22,7 +22,7 @@ std::size_t SessionDatabase::getSessionCount()
     return mBackend.getNumberOfStoredSessions();
 }
 
-std::optional<LaptimerCore::Common::SessionData> SessionDatabase::getSessionByIndex(std::size_t index) const noexcept
+std::optional<Rapid::Common::SessionData> SessionDatabase::getSessionByIndex(std::size_t index) const noexcept
 {
     auto const rawSession = mBackend.loadSessionByIndex(index);
     if (rawSession.empty()) {
@@ -87,4 +87,4 @@ void SessionDatabase::deleteSession(std::size_t index)
     }
 }
 
-} // namespace LaptimerCore::Storage
+} // namespace Rapid::Storage

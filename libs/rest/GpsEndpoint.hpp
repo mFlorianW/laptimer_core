@@ -7,7 +7,7 @@
 #include "IPositionDateTimeProvider.hpp"
 #include "IRestRequestHandler.hpp"
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 
 class GpsEndpoint final : public IRestRequestHandler, public Positioning::IPositionDateTimeProvider
@@ -48,4 +48,4 @@ public:
      */
     RequestHandleResult handleRestRequest(RestRequest& request) noexcept override;
 };
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

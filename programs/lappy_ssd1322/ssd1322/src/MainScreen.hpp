@@ -11,7 +11,7 @@
 class MainScreen : public Screen
 {
 public:
-    explicit MainScreen(LaptimerCore::Positioning::IGpsInformationProvider& gpsInfoProvider);
+    explicit MainScreen(Rapid::Positioning::IGpsInformationProvider& gpsInfoProvider);
     ~MainScreen() override;
 
     // Delete copy constructor

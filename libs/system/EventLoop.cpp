@@ -9,7 +9,7 @@
 #include <mutex>
 #include <unordered_map>
 
-namespace LaptimerCore::System
+namespace Rapid::System
 {
 
 class EventQueue
@@ -161,4 +161,4 @@ void EventLoop::clearEvents(EventHandler* eventHandler) noexcept
     EventQueue::getInstance(eventHandler->getThreadId()).clearEvents(eventHandler);
 }
 
-} // namespace LaptimerCore::System
+} // namespace Rapid::System

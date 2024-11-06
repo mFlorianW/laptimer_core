@@ -5,7 +5,7 @@
 #pragma once
 
 #include "RestRequest.hpp"
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 
 enum class RequestHandleResult
@@ -55,4 +55,4 @@ protected:
     IRestRequestHandler() = default;
 };
 
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

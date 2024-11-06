@@ -8,7 +8,7 @@
 #include "PositionDateTimeData.hpp"
 #include <kdbindings/property.h>
 
-namespace LaptimerCore::Positioning
+namespace Rapid::Positioning
 {
 
 class IPositionDateTimeProvider
@@ -31,6 +31,6 @@ protected:
     IPositionDateTimeProvider() = default;
 };
 
-} // namespace LaptimerCore::Positioning
+} // namespace Rapid::Positioning
 
 #endif // IPOSITIONDATETIMEPROVIDER_HPP

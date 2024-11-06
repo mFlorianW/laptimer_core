@@ -10,7 +10,7 @@
 #include "SharedDataPointer.hpp"
 #include "Timestamp.hpp"
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 class SharedPositionTimeData;
@@ -112,6 +112,6 @@ private:
     SharedDataPointer<SharedPositionTimeData> mData;
 };
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common
 
 #endif // POSITIONDATETIMEDATA_HPP

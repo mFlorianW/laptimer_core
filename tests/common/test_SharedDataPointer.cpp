@@ -7,7 +7,7 @@
 #include <catch2/catch.hpp>
 #include <cstdint>
 
-using namespace LaptimerCore::Common;
+using namespace Rapid::Common;
 
 namespace
 {

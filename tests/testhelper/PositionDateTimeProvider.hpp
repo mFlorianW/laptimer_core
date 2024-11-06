@@ -7,13 +7,13 @@
 
 #include "IPositionDateTimeProvider.hpp"
 
-namespace LaptimerCore::TestHelper
+namespace Rapid::TestHelper
 {
 
-class PositionDateTimeProvider : public LaptimerCore::Positioning::IPositionDateTimeProvider
+class PositionDateTimeProvider : public Rapid::Positioning::IPositionDateTimeProvider
 {
 };
 
-} // namespace LaptimerCore::TestHelper
+} // namespace Rapid::TestHelper
 
 #endif // POSITIONDATETIMEPROVIDER_HPP

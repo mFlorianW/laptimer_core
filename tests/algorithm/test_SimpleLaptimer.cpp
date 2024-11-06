@@ -7,9 +7,9 @@
 #include "SimpleLaptimer.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Algorithm;
-using namespace LaptimerCore::Common;
-using namespace LaptimerCore::TestHelper;
+using namespace Rapid::Algorithm;
+using namespace Rapid::Common;
+using namespace Rapid::TestHelper;
 
 TEST_CASE("The laptimer shall emit lapStarted Signal when crossing the start line for the first time. Case1")
 {

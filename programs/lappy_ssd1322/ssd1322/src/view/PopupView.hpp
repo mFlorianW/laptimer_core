@@ -92,7 +92,7 @@ private:
 
     lv_obj_t* mMainText{nullptr};
     lv_obj_t* mSecondaryText{nullptr};
-    LaptimerCore::System::Timer mAutoClosingTimer;
+    Rapid::System::Timer mAutoClosingTimer;
 };
 
 #endif //! POPUPVIEW_HPP

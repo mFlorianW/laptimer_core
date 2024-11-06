@@ -7,7 +7,7 @@
 #include "FilePath.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::LappyShell;
+using namespace Rapid::LappyShell;
 
 SCENARIO("The application config reader shall read in a valid configuration")
 {

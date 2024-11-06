@@ -7,9 +7,9 @@
 // Setup ActiveSessionView
 
 MainScreenModel::MainScreenModel(ScreenModel& screenModel,
-                                 LaptimerCore::Positioning::IPositionDateTimeProvider& posDateTimeProvider,
-                                 LaptimerCore::Storage::ISessionDatabase& sessionDatabase,
-                                 LaptimerCore::Storage::ITrackDatabase& trackDatabase)
+                                 Rapid::Positioning::IPositionDateTimeProvider& posDateTimeProvider,
+                                 Rapid::Storage::ISessionDatabase& sessionDatabase,
+                                 Rapid::Storage::ITrackDatabase& trackDatabase)
     : mActiveSessionWorkflow{posDateTimeProvider, mLapTimer, sessionDatabase}
     , mScreenModel{screenModel}
     , mTrackDetectionWorkflow{mTrackDetector, posDateTimeProvider}

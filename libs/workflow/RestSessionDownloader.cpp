@@ -8,7 +8,7 @@
 #include <iostream>
 #include <sstream>
 
-namespace LaptimerCore::Workflow
+namespace Rapid::Workflow
 {
 
 RestSessionDownloader::RestSessionDownloader(Rest::IRestClient& restClient) noexcept
@@ -93,4 +93,4 @@ void RestSessionDownloader::onSessionDownloadFinished(Rest::RestCall* call) noex
     }
 }
 
-} // namespace LaptimerCore::Workflow
+} // namespace Rapid::Workflow

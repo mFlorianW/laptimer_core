@@ -6,7 +6,7 @@
 #include "ApplicationModel.hpp"
 #include <QAbstractListModel>
 
-namespace LaptimerCore::LappyShell
+namespace Rapid::LappyShell
 {
 
 class ApplicationListModel final : public QAbstractListModel
@@ -32,4 +32,4 @@ public:
 private:
     ApplicationModel& mAppModel;
 };
-} // namespace LaptimerCore::LappyShell
+} // namespace Rapid::LappyShell

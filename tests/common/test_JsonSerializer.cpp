@@ -9,8 +9,8 @@
 #include "Tracks.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Common;
-using namespace LaptimerCore::TestHelper;
+using namespace Rapid::Common;
+using namespace Rapid::TestHelper;
 
 TEST_CASE("JSONSerializer shall serialize PositionData to JSON.")
 {

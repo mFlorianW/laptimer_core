@@ -14,7 +14,7 @@ namespace Ui
 class MainWindow;
 } // namespace Ui
 
-namespace LaptimerCore::LappyShell
+namespace Rapid::LappyShell
 {
 
 class LappyShell : public QMainWindow
@@ -36,4 +36,4 @@ private:
     std::unique_ptr<ApplicationOverviewWidget> mApplicationOverviewWidget;
 };
 
-} // namespace LaptimerCore::LappyShell
+} // namespace Rapid::LappyShell

@@ -6,9 +6,9 @@
 #include "Tracks.hpp"
 #include <array>
 
-using namespace LaptimerCore::Common;
+using namespace Rapid::Common;
 
-namespace LaptimerCore::TestHelper::Sessions
+namespace Rapid::TestHelper::Sessions
 {
 
 SessionData createSession()
@@ -177,4 +177,4 @@ SessionData getTestSession4()
     return createSession4();
 }
 
-} // namespace LaptimerCore::TestHelper::Sessions
+} // namespace Rapid::TestHelper::Sessions

@@ -8,7 +8,7 @@
 LapModel::LapModel() = default;
 LapModel::~LapModel() = default;
 
-void LapModel::setSessionData(LaptimerCore::Common::SessionData const session) noexcept
+void LapModel::setSessionData(Rapid::Common::SessionData const session) noexcept
 {
     mSession = session;
     mLaptimeColumnIndex = 2 + mSession.getTrack().getNumberOfSections();

@@ -8,7 +8,7 @@
 #include "ILaptimer.hpp"
 #include <deque>
 
-namespace LaptimerCore::Algorithm
+namespace Rapid::Algorithm
 {
 
 class SimpleLaptimer final : public ILaptimer
@@ -74,6 +74,6 @@ private:
     Common::Timestamp mLastSectorTime;
 };
 
-} // namespace LaptimerCore::Algorithm
+} // namespace Rapid::Algorithm
 
 #endif // SIMPLELAPTIMER_HPP

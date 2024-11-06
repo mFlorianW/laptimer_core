@@ -4,7 +4,7 @@
 
 #pragma once
 
-namespace LaptimerCore::System
+namespace Rapid::System
 {
 
 /**
@@ -17,4 +17,4 @@ enum class Result
     NotFinished, //< The operation is not finished
 };
 
-} // namespace LaptimerCore::System
+} // namespace Rapid::System

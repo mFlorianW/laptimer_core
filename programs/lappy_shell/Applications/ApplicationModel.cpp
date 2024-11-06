@@ -8,7 +8,7 @@
 #include <LoggingCategories.hpp>
 #include <QDebug>
 
-namespace LaptimerCore::LappyShell
+namespace Rapid::LappyShell
 {
 ApplicationModel::ApplicationModel(QStringList applicationFolders) noexcept
     : mAppFolders{std::move(applicationFolders)}
@@ -40,4 +40,4 @@ QVector<ApplicationConfig> ApplicationModel::getApplications() const noexcept
     return mApps;
 }
 
-} // namespace LaptimerCore::LappyShell
+} // namespace Rapid::LappyShell

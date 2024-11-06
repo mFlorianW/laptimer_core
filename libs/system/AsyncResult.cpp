@@ -5,7 +5,7 @@
 #include "AsyncResult.hpp"
 #include "EventLoop.hpp"
 
-namespace LaptimerCore::System
+namespace Rapid::System
 {
 
 AsyncResult::AsyncResult() = default;
@@ -41,4 +41,4 @@ void AsyncResult::setResult(Result result, std::string const& errorMessage) noex
     done.emit(this);
 }
 
-} // namespace LaptimerCore::System
+} // namespace Rapid::System

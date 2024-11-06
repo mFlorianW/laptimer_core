@@ -20,7 +20,7 @@ class GeneralSettings;
 class DeviceSettings; // NOLINT(bugprone-forward-declaration-namespace)
 } // namespace Ui
 
-namespace LaptimerCore::LappyShell::Settings
+namespace Rapid::LappyShell::Settings
 {
 
 /**
@@ -56,4 +56,4 @@ private:
     std::unique_ptr<DevicePage> mDevicePage;
 };
 
-} // namespace LaptimerCore::LappyShell::Settings
+} // namespace Rapid::LappyShell::Settings

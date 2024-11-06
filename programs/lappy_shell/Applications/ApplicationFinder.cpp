@@ -6,7 +6,7 @@
 #include <QDirIterator>
 #include <QFileInfo>
 
-namespace LaptimerCore::LappyShell
+namespace Rapid::LappyShell
 {
 
 ApplicationFinder::ApplicationFinder(QStringList appDirs)
@@ -30,4 +30,4 @@ QVector<QFileInfo> ApplicationFinder::findApplications() const noexcept
     return applications;
 }
 
-} // namespace LaptimerCore::LappyShell
+} // namespace Rapid::LappyShell

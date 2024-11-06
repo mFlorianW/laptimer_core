@@ -6,7 +6,7 @@
 
 #include <QHostAddress>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 /**
@@ -20,4 +20,4 @@ struct DeviceSettings
     bool defaultDevice = false;
 };
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

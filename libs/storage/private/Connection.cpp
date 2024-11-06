@@ -5,7 +5,7 @@
 #include "Connection.hpp"
 #include <iostream>
 
-namespace LaptimerCore::Storage::Private
+namespace Rapid::Storage::Private
 {
 
 Connection& Connection::connection(std::string const& database)
@@ -57,4 +57,4 @@ sqlite3* Connection::getRawHandle() const noexcept
     return mHandle;
 }
 
-} // namespace LaptimerCore::Storage::Private
+} // namespace Rapid::Storage::Private

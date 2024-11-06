@@ -6,7 +6,7 @@
 #include <ArduinoJson.hpp>
 #include <utility>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 class SharedLap : public SharedData
@@ -105,4 +105,4 @@ bool operator!=(LapData const& lhs, LapData const& rhs)
     return !(lhs == rhs);
 }
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

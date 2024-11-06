@@ -7,9 +7,9 @@
 #include <fstream>
 #include <sys/time.h>
 
-using namespace LaptimerCore::Common;
+using namespace Rapid::Common;
 
-namespace LaptimerCore::Positioning
+namespace Rapid::Positioning
 {
 
 ConstantVelocityPositionDateTimeProvider::ConstantVelocityPositionDateTimeProvider(
@@ -122,4 +122,4 @@ void ConstantVelocityPositionDateTimeProvider::handleGPSPositionTick()
     positionTimeData.set(position);
 }
 
-} // namespace LaptimerCore::Positioning
+} // namespace Rapid::Positioning

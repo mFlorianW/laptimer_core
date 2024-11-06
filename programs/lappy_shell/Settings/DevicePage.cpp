@@ -5,7 +5,7 @@
 #include "DevicePage.hpp"
 #include "ui_DevicePage.h"
 
-namespace LaptimerCore::LappyShell::Settings
+namespace Rapid::LappyShell::Settings
 {
 
 DevicePage::DevicePage(GlobalSettingsWriter* settingsWriter, Common::GlobalSettingsReader* settingsReader)
@@ -52,4 +52,4 @@ bool DevicePage::save()
     return mDeviceModel.save();
 }
 
-} // namespace LaptimerCore::LappyShell::Settings
+} // namespace Rapid::LappyShell::Settings

@@ -6,7 +6,7 @@
 #include <QFileInfo>
 #include <QStringList>
 
-namespace LaptimerCore::LappyShell
+namespace Rapid::LappyShell
 {
 class ApplicationFinder
 {
@@ -18,4 +18,4 @@ public:
 private:
     QStringList mAppDirs;
 };
-} // namespace LaptimerCore::LappyShell
+} // namespace Rapid::LappyShell

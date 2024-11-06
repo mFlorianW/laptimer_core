@@ -4,7 +4,7 @@
 
 #include "ApplicationListModel.hpp"
 
-namespace LaptimerCore::LappyShell
+namespace Rapid::LappyShell
 {
 
 ApplicationListModel::ApplicationListModel(ApplicationModel& appModel) noexcept
@@ -43,4 +43,4 @@ QHash<qint32, QByteArray> ApplicationListModel::roleNames() const noexcept
     return roles;
 }
 
-} // namespace LaptimerCore::LappyShell
+} // namespace Rapid::LappyShell

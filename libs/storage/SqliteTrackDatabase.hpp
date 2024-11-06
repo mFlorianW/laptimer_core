@@ -9,7 +9,7 @@
 #include "private/Connection.hpp"
 #include <optional>
 
-namespace LaptimerCore::Storage
+namespace Rapid::Storage
 {
 class SqliteTrackDatabase : public ITrackDatabase
 {
@@ -77,6 +77,6 @@ private:
     Private::Connection& mDbConnection;
 };
 
-} // namespace LaptimerCore::Storage
+} // namespace Rapid::Storage
 
 #endif // SQLLITETRACKDATABASE_HPP

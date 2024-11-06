@@ -4,7 +4,7 @@
 
 #include "RestCall.hpp"
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 
 bool RestCall::isFinished() const noexcept
@@ -27,4 +27,4 @@ void RestCall::setData(std::string const& data) noexcept
     mRawData = data;
 }
 
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

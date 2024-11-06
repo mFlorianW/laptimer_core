@@ -10,7 +10,7 @@
 #include <optional>
 #include <string>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 class JsonDeserializer
 {
@@ -18,6 +18,6 @@ public:
     static std::optional<SessionData> deserializeSessionData(std::string const& rawData);
 };
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common
 
 #endif // JSONDESERIALIZER_HPP

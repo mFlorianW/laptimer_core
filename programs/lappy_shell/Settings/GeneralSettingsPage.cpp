@@ -5,7 +5,7 @@
 #include "GeneralSettingsPage.hpp"
 #include "ui_GeneralSettingsPage.h"
 
-namespace LaptimerCore::LappyShell::Settings
+namespace Rapid::LappyShell::Settings
 {
 
 GeneralSettingsPage::GeneralSettingsPage()
@@ -16,4 +16,4 @@ GeneralSettingsPage::GeneralSettingsPage()
 
 GeneralSettingsPage::~GeneralSettingsPage() = default;
 
-} // namespace LaptimerCore::LappyShell::Settings
+} // namespace Rapid::LappyShell::Settings

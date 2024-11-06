@@ -7,7 +7,7 @@
 #include <iomanip>
 #include <sstream>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 class SharedTimestamp : public SharedData
 {
@@ -184,4 +184,4 @@ bool operator!=(Timestamp const& lhs, Timestamp const& rhs)
     return !(lhs == rhs);
 }
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

@@ -12,7 +12,7 @@ namespace Ui
 class GeneralSettingsPage;
 }
 
-namespace LaptimerCore::LappyShell::Settings
+namespace Rapid::LappyShell::Settings
 {
 
 /**
@@ -41,4 +41,4 @@ public:
 private:
     std::unique_ptr<Ui::GeneralSettingsPage> mGeneralSettings;
 };
-} // namespace LaptimerCore::LappyShell::Settings
+} // namespace Rapid::LappyShell::Settings

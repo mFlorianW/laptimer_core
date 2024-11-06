@@ -13,7 +13,7 @@
 struct MainWindowViewModelPrivate
 {
     PositionListModel mPositionListModel;
-    LaptimerCore::Positioning::ConstantVelocityPositionDateTimeProvider mGpsProvider;
+    Rapid::Positioning::ConstantVelocityPositionDateTimeProvider mGpsProvider;
     QGeoCoordinate mCurrentPosition;
     bool mGpsSourceActive{false};
     QString mHostAddress{"localhost"};
@@ -54,7 +54,7 @@ void MainWindowViewModel::stopGpsSource()
 
 void MainWindowViewModel::loadGpsFile(QUrl const& fileName)
 {
-    auto csvReader = LaptimerCore::Positioning::Qt::CsvGpsFileReader{};
+    auto csvReader = Rapid::Positioning::Qt::CsvGpsFileReader{};
     csvReader.setFileName(fileName.toLocalFile());
     if (!csvReader.read()) {
         qCritical() << "Failed to read GpsFile:" << fileName;

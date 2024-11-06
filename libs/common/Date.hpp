@@ -7,7 +7,7 @@
 #include "SharedDataPointer.hpp"
 #include <string>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 class SharedDate;
@@ -123,4 +123,4 @@ private:
     SharedDataPointer<SharedDate> mData;
 };
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

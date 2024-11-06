@@ -9,7 +9,7 @@
 #include <cstdint>
 #include <vector>
 
-namespace LaptimerCore::Storage
+namespace Rapid::Storage
 {
 
 class ISessionDatabaseBackend
@@ -33,6 +33,6 @@ protected:
     ISessionDatabaseBackend() = default;
 };
 
-} // namespace LaptimerCore::Storage
+} // namespace Rapid::Storage
 
 #endif // ISESIONDATABASEBACKEND_HPP

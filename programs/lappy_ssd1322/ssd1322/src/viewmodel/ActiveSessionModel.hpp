@@ -13,9 +13,9 @@
 class ActiveSessionModel
 {
 public:
-    ActiveSessionModel(LaptimerCore::Workflow::ITrackDetectionWorkflow& trackDetector,
-                       LaptimerCore::Workflow::IActiveSessionWorkflow& activeWorkSessionFlow,
-                       LaptimerCore::Storage::ITrackDatabase& trackDatabase);
+    ActiveSessionModel(Rapid::Workflow::ITrackDetectionWorkflow& trackDetector,
+                       Rapid::Workflow::IActiveSessionWorkflow& activeWorkSessionFlow,
+                       Rapid::Storage::ITrackDatabase& trackDatabase);
 
     /**
      * Gives the last completed lap time. If none is present 00:00:00.000 as string is returned
@@ -40,7 +40,7 @@ public:
      * Gives the last detected track data.
      * @return The last detected track data.
      */
-    LaptimerCore::Common::TrackData getDetectedTrack() const noexcept;
+    Rapid::Common::TrackData getDetectedTrack() const noexcept;
 
     /**
      * This property holds the track data when a track is detected.
@@ -65,18 +65,18 @@ public:
     /**
      * Holds the current laptime as string
      */
-    KDBindings::Property<LaptimerCore::Common::Timestamp> currentLaptime;
+    KDBindings::Property<Rapid::Common::Timestamp> currentLaptime;
 
     /**
      * Holds the current sector time as string.
      */
-    KDBindings::Property<LaptimerCore::Common::Timestamp> currentSectorTime;
+    KDBindings::Property<Rapid::Common::Timestamp> currentSectorTime;
 
 private:
-    LaptimerCore::Workflow::ITrackDetectionWorkflow& mTrackDetector;
-    LaptimerCore::Workflow::IActiveSessionWorkflow& mActiveSessionWorkFlow;
-    LaptimerCore::Storage::ITrackDatabase& mTrackDatabase;
-    LaptimerCore::Common::TrackData mTrackData;
+    Rapid::Workflow::ITrackDetectionWorkflow& mTrackDetector;
+    Rapid::Workflow::IActiveSessionWorkflow& mActiveSessionWorkFlow;
+    Rapid::Storage::ITrackDatabase& mTrackDatabase;
+    Rapid::Common::TrackData mTrackData;
 };
 
 #endif //! ACTIVESESSIONMODEL_HPP

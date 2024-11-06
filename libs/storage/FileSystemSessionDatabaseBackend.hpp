@@ -7,7 +7,7 @@
 
 #include "ISessionDatabaseBackend.hpp"
 
-namespace LaptimerCore::Storage
+namespace Rapid::Storage
 {
 
 /**
@@ -77,6 +77,6 @@ private:
     std::size_t mLastStoredIndex{0};
 };
 
-} // namespace LaptimerCore::Storage
+} // namespace Rapid::Storage
 
 #endif // LAPTIMERCORE_FILESYSTEMSESSIONDATABASEBACKEND_HPP

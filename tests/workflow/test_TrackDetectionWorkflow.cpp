@@ -10,9 +10,9 @@
 #include "Tracks.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Workflow;
-using namespace LaptimerCore::Algorithm;
-using namespace LaptimerCore::TestHelper;
+using namespace Rapid::Workflow;
+using namespace Rapid::Algorithm;
+using namespace Rapid::TestHelper;
 
 TEST_CASE("TrackDetectionWorkflow shall emit 'trackDetected' when successful detected a track.")
 {

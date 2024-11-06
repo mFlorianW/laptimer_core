@@ -8,7 +8,7 @@
 #include <GlobalSettingsBackend.hpp>
 #include <QString>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 /**
@@ -68,4 +68,4 @@ private:
     GlobalSettingsBackend* mSettingsBackend;
 };
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

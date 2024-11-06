@@ -9,9 +9,9 @@
 #include <SettingsMemoryBackend.hpp>
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::LappyShell::Settings;
-using namespace LaptimerCore::Common;
-using namespace LaptimerCore::TestHelper;
+using namespace Rapid::LappyShell::Settings;
+using namespace Rapid::Common;
+using namespace Rapid::TestHelper;
 
 SCENARIO("The Settings shall store the settings database file path.")
 {

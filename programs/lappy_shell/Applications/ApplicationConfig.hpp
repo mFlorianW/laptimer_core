@@ -5,7 +5,7 @@
 #pragma once
 #include <QString>
 
-namespace LaptimerCore::LappyShell
+namespace Rapid::LappyShell
 {
 class ApplicationVersion final
 {
@@ -53,4 +53,4 @@ private:
     ApplicationVersion mVersion;
 };
 
-} // namespace LaptimerCore::LappyShell
+} // namespace Rapid::LappyShell

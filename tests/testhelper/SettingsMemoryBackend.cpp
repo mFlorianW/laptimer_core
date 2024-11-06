@@ -4,7 +4,7 @@
 
 #include "SettingsMemoryBackend.hpp"
 
-namespace LaptimerCore::TestHelper
+namespace Rapid::TestHelper
 {
 
 bool SettingsMemoryBackend::storeValue(QAnyStringView const& key, QVariant const& value) noexcept
@@ -18,4 +18,4 @@ QVariant SettingsMemoryBackend::getValue(QAnyStringView const& key) const noexce
     return mSingleValues[key.toString()];
 }
 
-} // namespace LaptimerCore::TestHelper
+} // namespace Rapid::TestHelper

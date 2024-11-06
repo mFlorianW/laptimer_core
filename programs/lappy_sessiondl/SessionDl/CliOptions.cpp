@@ -7,7 +7,7 @@
 #include <QCommandLineParser>
 #include <QCoreApplication>
 
-namespace LaptimerCore::SessionDl
+namespace Rapid::SessionDl
 {
 
 CliOptions::CliOptions(int argc, char** argv) noexcept
@@ -74,4 +74,4 @@ bool CliOptions::deleteSessions() const noexcept
     return mDeleteSessions;
 }
 
-} // namespace LaptimerCore::SessionDl
+} // namespace Rapid::SessionDl

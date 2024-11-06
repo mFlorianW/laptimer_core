@@ -7,7 +7,7 @@
 #include <QStringList>
 #include <QVector>
 
-namespace LaptimerCore::LappyShell
+namespace Rapid::LappyShell
 {
 class ApplicationModel
 {
@@ -21,4 +21,4 @@ private:
     QStringList mAppFolders;
 };
 
-} // namespace LaptimerCore::LappyShell
+} // namespace Rapid::LappyShell

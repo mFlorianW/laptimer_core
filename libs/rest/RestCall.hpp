@@ -6,7 +6,7 @@
 
 #include <kdbindings/signal.h>
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 
 enum class RestCallResult
@@ -97,4 +97,4 @@ private:
     std::string mRawData;
 };
 
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

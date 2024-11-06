@@ -7,7 +7,7 @@
 #include "SharedDataPointer.hpp"
 #include <ArduinoJson.hpp>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 class SharedPositionData;
@@ -99,4 +99,4 @@ private:
     SharedDataPointer<SharedPositionData> mData;
 };
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

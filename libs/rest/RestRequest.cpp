@@ -5,7 +5,7 @@
 #include "RestRequest.hpp"
 #include <string>
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 struct SharedRestRequest : public Common::SharedData
 {
@@ -86,4 +86,4 @@ bool operator!=(RestRequest const& lhs, RestRequest const& rhs) noexcept
     return !(lhs == rhs);
 }
 
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

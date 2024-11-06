@@ -4,9 +4,9 @@
 
 #include "ActiveSessionWorkflow.hpp"
 
-using namespace LaptimerCore::Common;
+using namespace Rapid::Common;
 
-namespace LaptimerCore::Workflow
+namespace Rapid::Workflow
 {
 
 ActiveSessionWorkflow::ActiveSessionWorkflow(Positioning::IPositionDateTimeProvider& positionDateTimeProvider,
@@ -52,7 +52,7 @@ std::optional<Common::SessionData> ActiveSessionWorkflow::getSession() const noe
     return mSession;
 }
 
-void LaptimerCore::Workflow::ActiveSessionWorkflow::addSectorTime()
+void Rapid::Workflow::ActiveSessionWorkflow::addSectorTime()
 {
     auto const sectorTime = mLaptimer.getLastSectorTime();
     lastSectorTime.set(sectorTime);
@@ -94,4 +94,4 @@ void ActiveSessionWorkflow::onCurrentSectorTimeChanged()
     currentSectorTime.set(mLaptimer.currentSectorTime.get());
 }
 
-} // namespace LaptimerCore::Workflow
+} // namespace Rapid::Workflow

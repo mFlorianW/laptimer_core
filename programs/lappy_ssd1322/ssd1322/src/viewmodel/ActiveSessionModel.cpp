@@ -6,11 +6,11 @@
 
 #include "TrackData.hpp"
 
-using namespace LaptimerCore::Common;
+using namespace Rapid::Common;
 
-ActiveSessionModel::ActiveSessionModel(LaptimerCore::Workflow::ITrackDetectionWorkflow& trackDetector,
-                                       LaptimerCore::Workflow::IActiveSessionWorkflow& activeWorkSessionFlow,
-                                       LaptimerCore::Storage::ITrackDatabase& trackDatabase)
+ActiveSessionModel::ActiveSessionModel(Rapid::Workflow::ITrackDetectionWorkflow& trackDetector,
+                                       Rapid::Workflow::IActiveSessionWorkflow& activeWorkSessionFlow,
+                                       Rapid::Storage::ITrackDatabase& trackDatabase)
     : mTrackDetector{trackDetector}
     , mActiveSessionWorkFlow{activeWorkSessionFlow}
     , mTrackDatabase{trackDatabase}

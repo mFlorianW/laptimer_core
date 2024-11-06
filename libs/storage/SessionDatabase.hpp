@@ -8,7 +8,7 @@
 #include "ISessionDatabase.hpp"
 #include "ISessionDatabaseBackend.hpp"
 
-namespace LaptimerCore::Storage
+namespace Rapid::Storage
 {
 
 class SessionDatabase : public ISessionDatabase
@@ -52,6 +52,6 @@ private:
     ISessionDatabaseBackend& mBackend;
 };
 
-} // namespace LaptimerCore::Storage
+} // namespace Rapid::Storage
 
 #endif // SESSIONDATABASE_HPP

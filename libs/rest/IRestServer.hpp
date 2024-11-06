@@ -6,7 +6,7 @@
 
 #include "IRestRequestHandler.hpp"
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 enum ServerStartResult
 {
@@ -95,4 +95,4 @@ public:
 protected:
     IRestServer() = default;
 };
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

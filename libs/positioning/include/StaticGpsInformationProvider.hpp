@@ -6,7 +6,7 @@
 #define LAPTIMERCORE_STATICGPSINFORMATIONPROVIDER_HPP
 
 #include "IGPSInformationProvider.hpp"
-namespace LaptimerCore::Positioning
+namespace Rapid::Positioning
 {
 
 class StaticGpsInformationProvider : public IGpsInformationProvider
@@ -18,5 +18,5 @@ public:
     }
 };
 
-} // namespace LaptimerCore::Positioning
+} // namespace Rapid::Positioning
 #endif // LAPTIMERCORE_STATICGPSINFORMATIONPROVIDER_HPP

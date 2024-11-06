@@ -7,7 +7,7 @@
 #include <QQmlContext>
 #include <QQmlEngine>
 
-namespace LaptimerCore::LappyShell
+namespace Rapid::LappyShell
 {
 
 ApplicationOverviewWidget::ApplicationOverviewWidget(ProcessManager* proccessMgr)
@@ -56,4 +56,4 @@ void ApplicationOverviewWidget::onQmlError(QQuickWindow::SceneGraphError const& 
     qCritical() << error << ":" << message;
 }
 
-} // namespace LaptimerCore::LappyShell
+} // namespace Rapid::LappyShell

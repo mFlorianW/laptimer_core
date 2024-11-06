@@ -5,7 +5,7 @@
 #include "GlobalSettingsReader.hpp"
 #include "GlobalSettingsKeys.hpp"
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 GlobalSettingsReader::GlobalSettingsReader(GlobalSettingsBackend* settingsBackend)
@@ -57,4 +57,4 @@ QList<DeviceSettings> GlobalSettingsReader::getDeviceSettings() const noexcept
     return devices;
 }
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

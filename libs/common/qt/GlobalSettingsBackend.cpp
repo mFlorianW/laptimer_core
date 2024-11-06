@@ -4,7 +4,7 @@
 
 #include "GlobalSettingsBackend.hpp"
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 QSettingsBackend::QSettingsBackend()
@@ -23,4 +23,4 @@ QVariant QSettingsBackend::getValue(QAnyStringView const& key) const noexcept
     return mSettings.value(key);
 }
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

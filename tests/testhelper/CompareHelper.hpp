@@ -8,9 +8,9 @@
 #include <chrono>
 #include <sstream>
 
-using namespace LaptimerCore::System;
+using namespace Rapid::System;
 
-namespace LaptimerCore::Testhelper
+namespace Rapid::Testhelper
 {
 
 template <typename T>
@@ -76,4 +76,4 @@ IsBetweenMatcher<T> IsBetween(T begin, T end)
 
 //clang-fomrat on
 
-} // namespace LaptimerCore::Testhelper
+} // namespace Rapid::Testhelper

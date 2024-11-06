@@ -5,7 +5,7 @@
 #include "ProcessManager.hpp"
 #include <QFileInfo>
 
-namespace LaptimerCore::LappyShell
+namespace Rapid::LappyShell
 {
 
 ProcessManager::ProcessManager() = default;
@@ -43,4 +43,4 @@ bool ProcessManager::isProcessRunning(QString const& process) const noexcept
     return mProcesses.find(processName) != mProcesses.cend();
 }
 
-} // namespace LaptimerCore::LappyShell
+} // namespace Rapid::LappyShell

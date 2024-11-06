@@ -7,7 +7,7 @@
 
 #include <PositionData.hpp>
 
-namespace LaptimerCore::Algorithm::DistanceCalculator
+namespace Rapid::Algorithm::DistanceCalculator
 {
 /**
  * Calculates the between tow positions. The position is only accurate
@@ -17,6 +17,6 @@ namespace LaptimerCore::Algorithm::DistanceCalculator
  * @return float  The distance between the to points.
  */
 float calculateDistance(Common::PositionData const& pos1, Common::PositionData const& pos2);
-}; // namespace LaptimerCore::Algorithm::DistanceCalculator
+}; // namespace Rapid::Algorithm::DistanceCalculator
 
 #endif //!__DISTANCECALCULATOR__H__

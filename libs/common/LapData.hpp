@@ -11,7 +11,7 @@
 #include <optional>
 #include <vector>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 class SharedLap;
 
@@ -135,5 +135,5 @@ private:
     SharedDataPointer<SharedLap> mData;
 };
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common
 #endif // LAP_HPP

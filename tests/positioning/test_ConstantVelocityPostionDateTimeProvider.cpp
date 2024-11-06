@@ -8,10 +8,10 @@
 #include <PositionData.hpp>
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Positioning;
-using namespace LaptimerCore::Common;
-using namespace LaptimerCore::System;
-using namespace LaptimerCore::Testhelper;
+using namespace Rapid::Positioning;
+using namespace Rapid::Common;
+using namespace Rapid::System;
+using namespace Rapid::Testhelper;
 
 constexpr auto timeout = std::chrono::seconds{1};
 

@@ -5,7 +5,7 @@
 #include "ProcessStatusChecker.hpp"
 #include <QProcess>
 
-namespace LaptimerCore::TestHelper
+namespace Rapid::TestHelper
 {
 
 struct ProcessCheckStrategy
@@ -58,4 +58,4 @@ bool ProcessStatusChecker::isProcessRunning(QString const& processName)
 {
     return mChecker->isProcessRunning(processName);
 }
-} // namespace LaptimerCore::TestHelper
+} // namespace Rapid::TestHelper

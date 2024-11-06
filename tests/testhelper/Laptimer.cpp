@@ -5,7 +5,7 @@
 #include "Laptimer.hpp"
 #include <numeric>
 
-namespace LaptimerCore::TestHelper
+namespace Rapid::TestHelper
 {
 Laptimer::Laptimer()
 {
@@ -33,4 +33,4 @@ Common::Timestamp Laptimer::getLastSectorTime() const
     return sectorTimes.back();
 }
 
-} // namespace LaptimerCore::TestHelper
+} // namespace Rapid::TestHelper

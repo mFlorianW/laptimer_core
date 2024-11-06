@@ -5,7 +5,7 @@
 #include "DistanceCalculator.hpp"
 #include <cmath>
 
-namespace LaptimerCore::Algorithm::DistanceCalculator
+namespace Rapid::Algorithm::DistanceCalculator
 {
 
 float calculateDistance(Common::PositionData const& pos1, Common::PositionData const& pos2)
@@ -18,4 +18,4 @@ float calculateDistance(Common::PositionData const& pos1, Common::PositionData c
     return distance;
 }
 
-}; // namespace LaptimerCore::Algorithm::DistanceCalculator
+}; // namespace Rapid::Algorithm::DistanceCalculator

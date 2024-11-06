@@ -6,9 +6,9 @@
 #include "DistanceCalculator.hpp"
 #include <cmath>
 
-using namespace LaptimerCore::Common;
+using namespace Rapid::Common;
 
-namespace LaptimerCore::Algorithm
+namespace Rapid::Algorithm
 {
 
 TrackDetection::TrackDetection(std::uint16_t detectRadiusInMeter)
@@ -22,4 +22,4 @@ bool TrackDetection::isOnTrack(TrackData const& track, PositionData const& posit
     return distance <= mDetectionRadius;
 }
 
-} // namespace LaptimerCore::Algorithm
+} // namespace Rapid::Algorithm

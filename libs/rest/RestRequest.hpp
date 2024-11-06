@@ -8,7 +8,7 @@
 #include "SharedDataPointer.hpp"
 #include <string_view>
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 
 enum class RequestType
@@ -137,4 +137,4 @@ private:
     Common::SharedDataPointer<SharedRestRequest> mData;
 };
 
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

@@ -7,7 +7,7 @@
 
 #include <kdbindings/signal.h>
 
-namespace LaptimerCore::Positioning
+namespace Rapid::Positioning
 {
 
 /**
@@ -37,6 +37,6 @@ protected:
     IGpsInformationProvider() = default;
 };
 
-} // namespace LaptimerCore::Positioning
+} // namespace Rapid::Positioning
 
 #endif //!__IGPSINFORMATIONPROVIDER__H__

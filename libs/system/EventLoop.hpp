@@ -9,7 +9,7 @@
 #include <memory>
 #include <thread>
 
-namespace LaptimerCore::System
+namespace Rapid::System
 {
 
 /**
@@ -76,7 +76,7 @@ public:
     void quit() noexcept;
 
 private:
-    friend class LaptimerCore::System::EventHandler;
+    friend class Rapid::System::EventHandler;
     /**
      * Clear all events for a specific event handler
      */
@@ -85,4 +85,4 @@ private:
     std::thread::id mOwningThread;
 };
 
-} // namespace LaptimerCore::System
+} // namespace Rapid::System

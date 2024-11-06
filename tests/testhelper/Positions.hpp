@@ -7,7 +7,7 @@
 
 #include "PositionData.hpp"
 
-namespace LaptimerCore::TestHelper::Positions
+namespace Rapid::TestHelper::Positions
 {
 Common::PositionData getOscherslebenPositionCamp();
 Common::PositionData getOscherslebenPositionStartFinishLine();
@@ -28,6 +28,6 @@ Common::PositionData getOscherslebenSector2Point1();
 Common::PositionData getOscherslebenSector2Point2();
 Common::PositionData getOscherslebenSector2Point3();
 Common::PositionData getOscherslebenSector2Point4();
-} // namespace LaptimerCore::TestHelper::Positions
+} // namespace Rapid::TestHelper::Positions
 
 #endif //! POSITIONS_HPP

@@ -14,7 +14,7 @@ namespace Ip = boost::asio::ip;
 namespace Beast = boost::beast;
 namespace Http = boost::beast::http;
 
-namespace LaptimerCore::Rest::Private
+namespace Rapid::Rest::Private
 {
 
 namespace
@@ -104,7 +104,7 @@ private:
 
 } // namespace
 
-using Request = std::tuple<ClientConnection*, LaptimerCore::Rest::RestRequest>;
+using Request = std::tuple<ClientConnection*, Rapid::Rest::RestRequest>;
 
 class BoostServer
 {
@@ -255,4 +255,4 @@ RequestHandleResult RestServerImpl::handleGetRequest(RestRequest& request) noexc
     return RequestHandleResult::Error;
 }
 
-} // namespace LaptimerCore::Rest::Private
+} // namespace Rapid::Rest::Private

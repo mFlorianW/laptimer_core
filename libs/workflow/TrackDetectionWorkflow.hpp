@@ -9,7 +9,7 @@
 #include <IPositionDateTimeProvider.hpp>
 #include <ITrackDetection.hpp>
 
-namespace LaptimerCore::Workflow
+namespace Rapid::Workflow
 {
 
 class TrackDetectionWorkflow : public ITrackDetectionWorkflow
@@ -58,5 +58,5 @@ private:
     Positioning::IPositionDateTimeProvider& mPositionInfoProvider;
 };
 
-} // namespace LaptimerCore::Workflow
+} // namespace Rapid::Workflow
 #endif //!__TRACKDETECTIONWORKFLOW__H__

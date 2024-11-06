@@ -12,7 +12,7 @@
 #include <RestSessionDownloader.hpp>
 #endif
 
-namespace LaptimerCore::SessionDl
+namespace Rapid::SessionDl
 {
 class MainWindowModel : public QObject
 {
@@ -57,4 +57,4 @@ private:
     Storage::ISessionDatabase& mSessionDatabase;
     std::unordered_map<System::AsyncResult*, std::shared_ptr<System::AsyncResult>> mStorageCalls;
 };
-} // namespace LaptimerCore::SessionDl
+} // namespace Rapid::SessionDl

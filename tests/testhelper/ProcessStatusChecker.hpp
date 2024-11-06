@@ -6,7 +6,7 @@
 
 #include <QString>
 
-namespace LaptimerCore::TestHelper
+namespace Rapid::TestHelper
 {
 struct ProcessCheckStrategy;
 class ProcessStatusChecker
@@ -23,4 +23,4 @@ private:
     std::unique_ptr<ProcessCheckStrategy> mChecker;
 };
 
-} // namespace LaptimerCore::TestHelper
+} // namespace Rapid::TestHelper

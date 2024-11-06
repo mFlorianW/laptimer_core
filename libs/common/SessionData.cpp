@@ -5,7 +5,7 @@
 #include "SessionData.hpp"
 #include <ArduinoJson.h>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 class SharedSessionData : public SharedData
@@ -102,4 +102,4 @@ bool operator!=(SessionData const& lhs, SessionData const& rhs)
     return !(lhs == rhs);
 }
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

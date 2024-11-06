@@ -10,9 +10,9 @@
 #include <SettingsMemoryBackend.hpp>
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::LappyShell::Settings;
-using namespace LaptimerCore::TestHelper;
-using namespace LaptimerCore::Common;
+using namespace Rapid::LappyShell::Settings;
+using namespace Rapid::TestHelper;
+using namespace Rapid::Common;
 
 SCENARIO("The device list model shall provide the header data for the list view.")
 {

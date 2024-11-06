@@ -9,7 +9,7 @@
 #include <QJsonObject>
 #include <QJsonParseError>
 
-namespace LaptimerCore::LappyShell
+namespace Rapid::LappyShell
 {
 
 std::optional<ApplicationConfig> ApplicationConfigReader::readConfig(QString const& configPath) const noexcept
@@ -50,4 +50,4 @@ std::optional<ApplicationConfig> ApplicationConfigReader::readConfig(QString con
                              ApplicationVersion::fromString(jsonObj.value("version").toString()));
 }
 
-} // namespace LaptimerCore::LappyShell
+} // namespace Rapid::LappyShell

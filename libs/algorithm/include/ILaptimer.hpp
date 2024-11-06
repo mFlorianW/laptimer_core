@@ -11,7 +11,7 @@
 #include <functional>
 #include <kdbindings/property.h>
 
-namespace LaptimerCore::Algorithm
+namespace Rapid::Algorithm
 {
 
 class ILaptimer
@@ -78,6 +78,6 @@ protected:
     ILaptimer() = default;
 };
 
-} // namespace LaptimerCore::Algorithm
+} // namespace Rapid::Algorithm
 
 #endif //!__ILAPTIMER__H__

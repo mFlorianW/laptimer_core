@@ -6,7 +6,7 @@
 #include "Timer.hpp"
 #include <boost/asio.hpp>
 
-namespace LaptimerCore::System::Private
+namespace Rapid::System::Private
 {
 
 class TimerImpl
@@ -35,4 +35,4 @@ private:
     bool mTimerActive = false;
 };
 
-} // namespace LaptimerCore::System::Private
+} // namespace Rapid::System::Private

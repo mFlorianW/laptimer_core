@@ -18,10 +18,10 @@
 #include <unistd.h>
 #include <vector>
 
-using namespace LaptimerCore::System;
-using namespace LaptimerCore::Positioning;
-using namespace LaptimerCore::Storage;
-using namespace LaptimerCore::LappyHeadless;
+using namespace Rapid::System;
+using namespace Rapid::Positioning;
+using namespace Rapid::Storage;
+using namespace Rapid::LappyHeadless;
 
 namespace
 {
@@ -31,9 +31,9 @@ void signalHandler(int)
     EventLoop{}.quit();
 }
 
-std::vector<LaptimerCore::Common::PositionData> loadCsvPositions(std::string const filePath)
+std::vector<Rapid::Common::PositionData> loadCsvPositions(std::string const filePath)
 {
-    auto positions = std::vector<LaptimerCore::Common::PositionData>{};
+    auto positions = std::vector<Rapid::Common::PositionData>{};
     auto file = std::fstream(filePath);
     auto line = std::string{};
 

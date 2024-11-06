@@ -4,7 +4,7 @@
 
 #include "TrackData.hpp"
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 class SharedTrackData : public SharedData
@@ -103,4 +103,4 @@ bool operator!=(TrackData const& lhs, TrackData const& rhs)
     return !(lhs == rhs);
 }
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

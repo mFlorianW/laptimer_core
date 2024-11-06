@@ -4,7 +4,7 @@
 
 #include "MemorySessionDatabaseBackend.hpp"
 
-namespace LaptimerCore::TestHelper
+namespace Rapid::TestHelper
 {
 
 MemorySessionDatabaseBackend::MemorySessionDatabaseBackend()
@@ -59,4 +59,4 @@ bool MemorySessionDatabaseBackend::deleteSession(std::size_t index)
     return false;
 }
 
-} // namespace LaptimerCore::TestHelper
+} // namespace Rapid::TestHelper

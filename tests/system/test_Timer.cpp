@@ -8,8 +8,8 @@
 #include "Timer.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::System;
-using namespace LaptimerCore::Testhelper;
+using namespace Rapid::System;
+using namespace Rapid::Testhelper;
 using namespace std::chrono;
 
 TEST_CASE("The timer shall emit the timeout event after the elapsed time set by the interval.")

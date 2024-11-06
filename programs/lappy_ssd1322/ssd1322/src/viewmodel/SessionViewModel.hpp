@@ -16,7 +16,7 @@
 class SessionViewModel final : public MenuEntry, public NavigatableModel
 {
 public:
-    SessionViewModel(LaptimerCore::Storage::ISessionDatabase& sessionDb);
+    SessionViewModel(Rapid::Storage::ISessionDatabase& sessionDb);
     ~SessionViewModel() override;
 
     // Delete copy constructor
@@ -88,7 +88,7 @@ private:
     void onSessionUpdated(std::size_t index);
 
 private:
-    LaptimerCore::Storage::ISessionDatabase& mSessionDb;
+    Rapid::Storage::ISessionDatabase& mSessionDb;
     LapModel mLapModel;
     TableView mLapView;
     CloseCommand mLapViewCloseCommand;

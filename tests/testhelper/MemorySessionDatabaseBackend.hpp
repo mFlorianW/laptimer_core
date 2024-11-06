@@ -8,10 +8,10 @@
 #include "ISessionDatabaseBackend.hpp"
 #include <unordered_map>
 
-namespace LaptimerCore::TestHelper
+namespace Rapid::TestHelper
 {
 
-class MemorySessionDatabaseBackend : public LaptimerCore::Storage::ISessionDatabaseBackend
+class MemorySessionDatabaseBackend : public Rapid::Storage::ISessionDatabaseBackend
 {
 public:
     MemorySessionDatabaseBackend();
@@ -28,6 +28,6 @@ private:
     std::pair<std::unordered_map<std::size_t, std::string>::const_iterator, bool> mLastStoredSession;
 };
 
-} // namespace LaptimerCore::TestHelper
+} // namespace Rapid::TestHelper
 
 #endif // MEMORYSESSIONDATABASE_HPP

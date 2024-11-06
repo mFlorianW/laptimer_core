@@ -8,7 +8,7 @@
 #include "SessionData.hpp"
 #include <kdbindings/property.h>
 
-namespace LaptimerCore::Workflow
+namespace Rapid::Workflow
 {
 class IActiveSessionWorkflow
 {
@@ -84,6 +84,6 @@ protected:
     IActiveSessionWorkflow() = default;
 };
 
-} // namespace LaptimerCore::Workflow
+} // namespace Rapid::Workflow
 
 #endif // IACTIVESESSIONWORKFLOW_HPP

@@ -18,22 +18,22 @@ class MainScreenModel
 {
 public:
     MainScreenModel(ScreenModel& screenModel,
-                    LaptimerCore::Positioning::IPositionDateTimeProvider& posDateTimeProvider,
-                    LaptimerCore::Storage::ISessionDatabase& sessionDatabase,
-                    LaptimerCore::Storage::ITrackDatabase& trackDatabase);
+                    Rapid::Positioning::IPositionDateTimeProvider& posDateTimeProvider,
+                    Rapid::Storage::ISessionDatabase& sessionDatabase,
+                    Rapid::Storage::ITrackDatabase& trackDatabase);
     View& getActiveView();
 
 private:
     // Backends
-    LaptimerCore::Algorithm::TrackDetection mTrackDetector{500};
-    LaptimerCore::Algorithm::SimpleLaptimer mLapTimer;
+    Rapid::Algorithm::TrackDetection mTrackDetector{500};
+    Rapid::Algorithm::SimpleLaptimer mLapTimer;
 
     // ActiveSessionBackend
-    LaptimerCore::Workflow::ActiveSessionWorkflow mActiveSessionWorkflow;
+    Rapid::Workflow::ActiveSessionWorkflow mActiveSessionWorkflow;
 
     // Models
     ScreenModel& mScreenModel;
-    LaptimerCore::Workflow::TrackDetectionWorkflow mTrackDetectionWorkflow;
+    Rapid::Workflow::TrackDetectionWorkflow mTrackDetectionWorkflow;
     ActiveSessionModel mActiveSessionModel;
 
     // Commands

@@ -9,7 +9,7 @@
 #include <QProcess>
 #include <QQuickWidget>
 
-namespace LaptimerCore::LappyShell
+namespace Rapid::LappyShell
 {
 class ApplicationOverviewWidget : public QQuickWidget
 {
@@ -30,4 +30,4 @@ private:
     QHash<QProcess*, std::shared_ptr<QProcess>> mProcesses;
     ProcessManager* mProcessManager;
 };
-} // namespace LaptimerCore::LappyShell
+} // namespace Rapid::LappyShell

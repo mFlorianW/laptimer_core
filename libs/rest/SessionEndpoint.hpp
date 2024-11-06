@@ -7,7 +7,7 @@
 #include "IRestRequestHandler.hpp"
 #include "ISessionDatabase.hpp"
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 
 class SessionEndpoint : public IRestRequestHandler
@@ -25,4 +25,4 @@ private:
     Storage::ISessionDatabase& mDb;
 };
 
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

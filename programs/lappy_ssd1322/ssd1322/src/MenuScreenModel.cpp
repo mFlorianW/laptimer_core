@@ -5,7 +5,7 @@
 #include "MenuScreenModel.hpp"
 #include "../include/ScreenModel.hpp"
 
-MenuScreenModel::MenuScreenModel(ScreenModel& screenModel, LaptimerCore::Storage::ISessionDatabase& sessionDb)
+MenuScreenModel::MenuScreenModel(ScreenModel& screenModel, Rapid::Storage::ISessionDatabase& sessionDb)
     : mSessionViewModelEntry{sessionDb}
     , mSessionView{mSessionViewModelEntry}
 {

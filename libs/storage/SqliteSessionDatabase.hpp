@@ -12,7 +12,7 @@
 #include <sqlite3.h>
 #include <thread>
 
-namespace LaptimerCore::Storage
+namespace Rapid::Storage
 {
 class AsyncResultDb;
 class SqliteSessionDatabase : public ISessionDatabase
@@ -112,5 +112,5 @@ private:
     std::mutex mutable mMutex;
 };
 
-} // namespace LaptimerCore::Storage
+} // namespace Rapid::Storage
 #endif // SQLITESESSIONDATABASE_HPP

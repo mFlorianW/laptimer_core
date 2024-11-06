@@ -4,7 +4,7 @@
 
 #include "TrackDetectionWorkflow.hpp"
 
-namespace LaptimerCore::Workflow
+namespace Rapid::Workflow
 {
 TrackDetectionWorkflow::TrackDetectionWorkflow(Algorithm::ITrackDetection& trackDetector,
                                                Positioning::IPositionDateTimeProvider& positionInfomationProvider)
@@ -54,4 +54,4 @@ void TrackDetectionWorkflow::onPositionInformationReceived()
     }
 }
 
-} // namespace LaptimerCore::Workflow
+} // namespace Rapid::Workflow

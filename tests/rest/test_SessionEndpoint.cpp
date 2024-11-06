@@ -9,9 +9,9 @@
 #include "Sessions.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Rest;
-using namespace LaptimerCore::TestHelper;
-using namespace LaptimerCore::Storage;
+using namespace Rapid::Rest;
+using namespace Rapid::TestHelper;
+using namespace Rapid::Storage;
 
 SCENARIO("Calling the Session endpoint /sessions with GET shall return the session count")
 {

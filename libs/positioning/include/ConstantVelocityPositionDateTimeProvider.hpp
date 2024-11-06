@@ -8,7 +8,7 @@
 #include "IPositionDateTimeProvider.hpp"
 #include <Timer.hpp>
 
-namespace LaptimerCore::Positioning
+namespace Rapid::Positioning
 {
 
 /**
@@ -72,6 +72,6 @@ private:
     Point mCurrentPosition;
 };
 
-} // namespace LaptimerCore::Positioning
+} // namespace Rapid::Positioning
 
 #endif // FILEBASEDPOSITIONDATETIMEPROVIDER_HPP

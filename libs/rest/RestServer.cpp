@@ -5,7 +5,7 @@
 #include "RestServer.hpp"
 #include "private/RestServerImpl.hpp"
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 
 RestServer::RestServer()
@@ -34,4 +34,4 @@ void RestServer::registerGetHandler(std::string const& root, IRestRequestHandler
     mRestServerImpl->registerGetHandler(root, handler);
 }
 
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

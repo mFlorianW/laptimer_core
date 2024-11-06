@@ -6,8 +6,8 @@
 #include "GpsEndpoint.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Rest;
-using namespace LaptimerCore::Common;
+using namespace Rapid::Rest;
+using namespace Rapid::Common;
 
 namespace
 {

@@ -6,9 +6,9 @@
 #include "DistanceCalculator.hpp"
 #include <algorithm>
 
-using namespace LaptimerCore::Common;
+using namespace Rapid::Common;
 
-namespace LaptimerCore::Algorithm
+namespace Rapid::Algorithm
 {
 
 void SimpleLaptimer::setTrack(Common::TrackData const& track)
@@ -118,4 +118,4 @@ bool SimpleLaptimer::passedPoint(Common::PositionData const& point) const
     return false;
 }
 
-} // namespace LaptimerCore::Algorithm
+} // namespace Rapid::Algorithm
