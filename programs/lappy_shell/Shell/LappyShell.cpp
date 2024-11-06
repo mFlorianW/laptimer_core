@@ -18,10 +18,15 @@ namespace LaptimerCore::LappyShell
 LappyShell::LappyShell()
     : mMainWindow{std::make_unique<Ui::MainWindow>()}
     , mSettings{&mSettingsBackend}
+    , mProcessManager{std::make_unique<ProcessManager>()}
     , mGlobalSettingsWindow{std::make_unique<Settings::GlobalSettingsWindow>()}
+    , mApplicationOverviewWidget{std::make_unique<ApplicationOverviewWidget>(mProcessManager.get())}
 {
     setupDatabase();
     mMainWindow->setupUi(this);
+
+    // Set Application Overview
+    mMainWindow->centralwidget->layout()->addWidget(mApplicationOverviewWidget.get());
 
     connect(mMainWindow->actionQuit, &QAction::triggered, this, []() {
         QApplication::exit();

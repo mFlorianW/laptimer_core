@@ -28,14 +28,18 @@ QVariant ApplicationListModel::data(QModelIndex const& index, qint32 displayRole
     if (displayRole == DisplayRole::AppName) {
         return apps.at(index.row()).getName();
     } else if (displayRole == DisplayRole::IconUrl) {
-        return apps.at(index.row()).getIconUrl();
+        return apps.at(index.row()).getIconUrl().prepend("file:");
+    } else if (displayRole == DisplayRole::ExePath) {
+        return apps.at(index.row()).getExecutable();
     }
     return {};
 }
 
 QHash<qint32, QByteArray> ApplicationListModel::roleNames() const noexcept
 {
-    static auto roles = QHash<qint32, QByteArray>{{DisplayRole::AppName, "appName"}, {DisplayRole::IconUrl, "iconUrl"}};
+    static auto roles = QHash<qint32, QByteArray>{{DisplayRole::AppName, "appName"},
+                                                  {DisplayRole::IconUrl, "iconUrl"},
+                                                  {DisplayRole::ExePath, "exePath"}};
     return roles;
 }
 

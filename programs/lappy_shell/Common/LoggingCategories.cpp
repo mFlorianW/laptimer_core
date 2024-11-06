@@ -4,4 +4,5 @@
 
 #include "LoggingCategories.hpp"
 
-Q_LOGGING_CATEGORY(lappy_shell, "lappy.shell")
+Q_LOGGING_CATEGORY(lappy_shell, "Lappy.Shell")
+Q_LOGGING_CATEGORY(lappy_shell_apps, "Lappy.Shell.Applications")

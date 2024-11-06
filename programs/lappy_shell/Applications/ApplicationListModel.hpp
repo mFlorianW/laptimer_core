@@ -18,6 +18,7 @@ public:
     {
         AppName = Qt::DisplayRole + 1,
         IconUrl,
+        ExePath,
     };
     Q_ENUM(DisplayRole)
 

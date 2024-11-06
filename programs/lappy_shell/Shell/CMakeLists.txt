@@ -25,6 +25,8 @@ target_link_libraries(Shell
     PRIVATE
         LaptimerCore::DatabaseFile
         LaptimerCore::LappyShellCommon
+        LaptimerCore::LappyShellApplications
+        LaptimerCore::LappyShellApplicationsPlugin
 )
 
 target_include_directories(Shell
