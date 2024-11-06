@@ -1,7 +1,7 @@
 qt_add_qml_module(SessionDl
-    URI "Lappy.SessionDownloader"
-    OUTPUT_DIRECTORY "Lappy/SessionDownloader"
-    IMPORT_PATH "Lappy/SessionDownloader"
+    URI "Rapid.SessionDownloader"
+    OUTPUT_DIRECTORY "Rapid/SessionDownloader"
+    IMPORT_PATH "Rapid/SessionDownloader"
     VERSION 1.0
     STATIC
     QML_FILES
@@ -15,8 +15,8 @@ qt_add_qml_module(SessionDl
         SessionDownloader.hpp
 )
 
-add_library(LaptimerCore::LappySessionDl ALIAS SessionDl)
-add_library(LaptimerCore::LappySessionDlPlugin ALIAS SessionDlplugin)
+add_library(Rapid::LappySessionDl ALIAS SessionDl)
+add_library(Rapid::LappySessionDlPlugin ALIAS SessionDlplugin)
 
 target_link_libraries(SessionDl
     PUBLIC
@@ -32,7 +32,7 @@ target_link_libraries(SessionDl
         Rapid::LibraryPath
     PRIVATE
         LaptimerCore::CommonQt
-        LaptimerCore::SessionDlCommon
+        Rapid::SessionDlCommon
 )
 
 target_include_directories(SessionDl

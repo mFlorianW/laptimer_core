@@ -1,5 +1,5 @@
 add_library(SessionDlCommonObject OBJECT)
-add_library(LaptimerCore::SessionDlCommonObject ALIAS SessionDlCommonObject)
+add_library(Rapid::SessionDlCommonObject ALIAS SessionDlCommonObject)
 
 target_sources(SessionDlCommonObject
 PUBLIC
@@ -18,9 +18,9 @@ target_include_directories(SessionDlCommonObject
 )
 
 add_library(SessionDlCommon STATIC)
-add_library(LaptimerCore::SessionDlCommon ALIAS SessionDlCommon)
+add_library(Rapid::SessionDlCommon ALIAS SessionDlCommon)
 
 target_link_libraries(SessionDlCommon
 PUBLIC
-    LaptimerCore::SessionDlCommonObject
+    Rapid::SessionDlCommonObject
 )

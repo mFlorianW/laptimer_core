@@ -28,7 +28,7 @@ SessionDownloader::SessionDownloader(QHostAddress const& address, quint16 port) 
 
     auto qmlContext = mEngine.rootContext();
     qmlContext->setContextProperty("g_MainWindowModel", mMainWindowModel.get());
-    mEngine.load(QUrl{"qrc:/qt/qml/Lappy/SessionDownloader/qml/MainWindow.qml"});
+    mEngine.load(QUrl{"qrc:/qt/qml/Rapid/SessionDownloader/qml/MainWindow.qml"});
 
     mClient.setServerAddress(address.toString().toStdString());
     mClient.setServerPort(port);
