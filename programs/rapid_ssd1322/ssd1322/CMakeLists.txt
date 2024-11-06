@@ -1,5 +1,5 @@
 add_library(ssd1322Sehll STATIC)
-add_library(LaptimerCore::Ssd1322Shell ALIAS ssd1322Sehll)
+add_library(Rapid::Ssd1322Shell ALIAS ssd1322Sehll)
 
 target_sources(ssd1322Sehll
     PRIVATE

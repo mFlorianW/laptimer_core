@@ -1,4 +1,4 @@
-add_subdirectory(lappy_ssd1322)
+add_subdirectory(rapid_ssd1322)
 add_subdirectory(rapid_headless)
 add_subdirectory(lappy_sessiondl)
 add_subdirectory(restgpssource)
