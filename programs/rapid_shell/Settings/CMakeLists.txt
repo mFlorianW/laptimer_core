@@ -35,7 +35,7 @@ target_link_libraries(Settings
         Qt6::Widgets
         LaptimerCore::CommonQt
     PRIVATE
-        LaptimerCore::DatabaseFile
+        Rapid::DatabaseFile
         Rapid::ShellCommon
 )
 

@@ -23,7 +23,7 @@ target_link_libraries(Rapid
         Rapid::ShellSettings
         Rapid::ShellSettingsPlugin
     PRIVATE
-        LaptimerCore::DatabaseFile
+        Rapid::DatabaseFile
         Rapid::ShellCommon
         Rapid::ShellApplications
         Rapid::ShellApplicationsPlugin

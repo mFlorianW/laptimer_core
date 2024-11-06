@@ -29,7 +29,7 @@ target_link_libraries(SessionDl
         LaptimerCore::SystemQt
         LaptimerCore::Workflow
         LaptimerCore::Storage
-        LaptimerCore::LibraryPath
+        Rapid::LibraryPath
     PRIVATE
         LaptimerCore::CommonQt
         LaptimerCore::SessionDlCommon
