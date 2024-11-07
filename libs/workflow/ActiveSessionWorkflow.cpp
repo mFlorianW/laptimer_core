@@ -20,26 +20,32 @@ ActiveSessionWorkflow::ActiveSessionWorkflow(Positioning::IPositionDateTimeProvi
 
 void ActiveSessionWorkflow::startActiveSession() noexcept
 {
-    mLaptimer.lapFinished.connect(&ActiveSessionWorkflow::onLapFinished, this);
-    mLaptimer.sectorFinished.connect(&ActiveSessionWorkflow::onSectorFinished, this);
-    mLaptimer.currentLaptime.valueChanged().connect(&ActiveSessionWorkflow::onCurrentLaptimeChanged, this);
-    mLaptimer.currentSectorTime.valueChanged().connect(&ActiveSessionWorkflow::onCurrentSectorTimeChanged, this);
-    mLaptimer.setTrack(mTrack);
+    try {
+        mLaptimer.lapFinished.connect(&ActiveSessionWorkflow::onLapFinished, this);
+        mLaptimer.sectorFinished.connect(&ActiveSessionWorkflow::onSectorFinished, this);
+        mLaptimer.currentLaptime.valueChanged().connect(&ActiveSessionWorkflow::onCurrentLaptimeChanged, this);
+        mLaptimer.currentSectorTime.valueChanged().connect(&ActiveSessionWorkflow::onCurrentSectorTimeChanged, this);
+        mLaptimer.setTrack(mTrack);
 
-    mPositionDateTimeUpdateHandle = mDateTimeProvider.positionTimeData.valueChanged().connect([=]() {
-        mLaptimer.updatePositionAndTime(mDateTimeProvider.positionTimeData.get());
-    });
-
-    auto dateTime = mDateTimeProvider.positionTimeData.get();
-    mSession = Common::SessionData{mTrack, dateTime.getDate(), dateTime.getTime()};
-    lapCount.set(0);
+        mPositionDateTimeUpdateHandle = mDateTimeProvider.positionTimeData.valueChanged().connect([=]() {
+            mLaptimer.updatePositionAndTime(mDateTimeProvider.positionTimeData.get());
+        });
+        auto dateTime = mDateTimeProvider.positionTimeData.get();
+        mSession = Common::SessionData{mTrack, dateTime.getDate(), dateTime.getTime()};
+        lapCount.set(0);
+    } catch (std::exception const& e) {
+        std::cerr << "Unknow Error on starting active session. Error:" << e.what() << "\n";
+    }
 }
 
 void ActiveSessionWorkflow::stopActiveSession() noexcept
 {
-    mDateTimeProvider.positionTimeData.valueChanged().disconnect(mPositionDateTimeUpdateHandle);
-
-    mSession = std::nullopt;
+    try {
+        mDateTimeProvider.positionTimeData.valueChanged().disconnect(mPositionDateTimeUpdateHandle);
+        mSession = std::nullopt;
+    } catch (std::exception const& e) {
+        std::cerr << "Unknow Error on stoping active session. Error:" << e.what() << "\n";
+    }
 }
 
 void ActiveSessionWorkflow::setTrack(Common::TrackData const& track) noexcept

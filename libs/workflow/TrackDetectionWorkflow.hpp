@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#ifndef __TRACKDETECTIONWORKFLOW__H__
-#define __TRACKDETECTIONWORKFLOW__H__
+#pragma once
 
 #include "ITrackDetectionWorkflow.hpp"
 #include <IPositionDateTimeProvider.hpp>
@@ -20,12 +19,33 @@ public:
      * The class doesn't take the ownership of the passed arguments.
      * So the caller must guarantee that all objects live as long as this class.
      * @param trackDetector The algorithm that shall be used for the track detection.
-     * @param positionInfomationProvider The position information provider that shall be used for the track detection.
+     * @param positionInfomationProvider The position information provider that shall be used for the track
+     * detection.
      */
     TrackDetectionWorkflow(Algorithm::ITrackDetection& trackDetector,
                            Positioning::IPositionDateTimeProvider& positionInfomationProvider);
 
-    ~TrackDetectionWorkflow();
+    ~TrackDetectionWorkflow() override;
+
+    /**
+     * Disabled copy operator
+     */
+    TrackDetectionWorkflow(TrackDetectionWorkflow const&) = delete;
+
+    /**
+     * Disabled copy operator
+     */
+    TrackDetectionWorkflow& operator=(TrackDetectionWorkflow const&) = delete;
+
+    /**
+     * Default move operator
+     */
+    TrackDetectionWorkflow(TrackDetectionWorkflow&&) noexcept = default;
+
+    /**
+     * Disabled move operator
+     */
+    TrackDetectionWorkflow& operator=(TrackDetectionWorkflow&&) noexcept = delete;
 
     /**
      * @copydoc ITrackDetectionWorkflow::startDetection()
@@ -59,4 +79,3 @@ private:
 };
 
 } // namespace Rapid::Workflow
-#endif //!__TRACKDETECTIONWORKFLOW__H__

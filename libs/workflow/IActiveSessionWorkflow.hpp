@@ -19,6 +19,26 @@ public:
     virtual ~IActiveSessionWorkflow() = default;
 
     /**
+     * Disabled copy operator
+     */
+    IActiveSessionWorkflow(IActiveSessionWorkflow const&) = delete;
+
+    /**
+     * Disabled copy operator
+     */
+    IActiveSessionWorkflow& operator=(IActiveSessionWorkflow const&) = delete;
+
+    /**
+     * Default move operator
+     */
+    IActiveSessionWorkflow(IActiveSessionWorkflow&&) noexcept = default;
+
+    /**
+     * Default move operator
+     */
+    IActiveSessionWorkflow& operator=(IActiveSessionWorkflow&&) noexcept = default;
+
+    /**
      * Starts the ActiveSessionWorkflow.
      * Without calling start the active workflow session does nothing.
      */
