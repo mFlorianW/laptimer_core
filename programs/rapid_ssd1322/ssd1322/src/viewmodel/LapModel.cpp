@@ -30,8 +30,7 @@ std::string LapModel::data(std::size_t row, std::size_t column) const noexcept
     } else if (column == mLaptimeColumnIndex) {
         return lap.getLaptime().asString().erase(0, 3);
     } else {
-
-        return lap.getSectorTime(column - 1)->asString().erase(0, 3);
+        return lap.getSectorTime(column - 1).value_or(Rapid::Common::Timestamp{}).asString().erase(0, 3);
     }
 }
 

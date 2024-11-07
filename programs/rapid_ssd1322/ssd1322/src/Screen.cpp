@@ -133,6 +133,7 @@ void Screen::restoreParent()
         try {
             mActiveView->requestPopup.disconnect(mPopupRequestConnectionHandle);
         } catch (std::out_of_range const& e) {
+            std::cerr << "Error on connection disconnect. Error:" << e.what() << "\n";
         }
     }
 }
