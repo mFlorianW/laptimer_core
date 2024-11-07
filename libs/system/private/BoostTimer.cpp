@@ -42,6 +42,9 @@ void TimerImpl::setTimerInterval(std::chrono::nanoseconds interval) noexcept
         } catch (boost::system::system_error const& e) {
             std::cerr << "Failed to setup timer for timer: " << std::addressof(mTimer) << " Error:" << e.what() << "\n";
             return;
+        } catch (std::exception const& e) {
+            std::cerr << "Unknown error:" << e.what() << "\n";
+            return;
         }
     } else {
         mTimerActive = false;
