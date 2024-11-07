@@ -25,7 +25,7 @@ target_link_libraries(SessionDl
         Qt6::Quick
         Qt6::Network
         Qt6::Widgets
-        LaptimerCore::RestQt
+        Rapid::RestQt
         LaptimerCore::SystemQt
         LaptimerCore::Workflow
         LaptimerCore::Storage

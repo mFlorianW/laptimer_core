@@ -27,5 +27,5 @@ PUBLIC
     Rapid::Positioning
     Rapid::Algorithm
     LaptimerCore::Storage
-    LaptimerCore::Rest
+    Rapid::Rest
 )

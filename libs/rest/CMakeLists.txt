@@ -1,5 +1,5 @@
 add_library(Rest STATIC)
-add_library(LaptimerCore::Rest ALIAS Rest)
+add_library(Rapid::Rest ALIAS Rest)
 
 target_sources(Rest
 PRIVATE

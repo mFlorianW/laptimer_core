@@ -1,5 +1,5 @@
 add_library(RestQt STATIC)
-add_library(LaptimerCore::RestQt ALIAS RestQt)
+add_library(Rapid::RestQt ALIAS RestQt)
 
 target_sources(RestQt
 PRIVATE
@@ -9,7 +9,7 @@ PRIVATE
 
 target_link_libraries(RestQt
 PUBLIC
-    LaptimerCore::Rest
+    Rapid::Rest
 PRIVATE
     Qt6::Core
     Qt6::Network
