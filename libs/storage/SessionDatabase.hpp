@@ -26,6 +26,26 @@ public:
     ~SessionDatabase() override;
 
     /**
+     * Disabled copy operator
+     */
+    SessionDatabase(SessionDatabase const&) = delete;
+
+    /**
+     * Disabled copy operator
+     */
+    SessionDatabase& operator=(SessionDatabase const&) = delete;
+
+    /**
+     * Disabled move operator
+     */
+    SessionDatabase(SessionDatabase&&) noexcept = delete;
+
+    /**
+     * Disabled move operator
+     */
+    SessionDatabase& operator=(SessionDatabase&&) noexcept = delete;
+
+    /**
      * Gives the number of stored session.
      * @return The number of the stored session.
      */

@@ -66,8 +66,8 @@ std::vector<Common::TrackData> SqliteTrackDatabase::getTracks()
 
             auto sections = std::vector<Rapid::Common::PositionData>{};
             while (sektorStm.execute() == ExecuteResult::Row && sektorStm.getColumnCount() == 2) {
-                sections.emplace_back(Common::PositionData{sektorStm.getFloatColumn(0).value_or(0),
-                                                           sektorStm.getFloatColumn(1).value_or(0)});
+                sections.emplace_back(sektorStm.getFloatColumn(0).value_or(0),
+                                                           sektorStm.getFloatColumn(1).value_or(0));
             }
             track.setSections(sections);
             tracksResult.emplace_back(track);

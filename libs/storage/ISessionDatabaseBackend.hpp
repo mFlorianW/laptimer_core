@@ -6,7 +6,6 @@
 #define ISESIONDATABASEBACKEND_HPP
 
 #include <ArduinoJson.hpp>
-#include <cstdint>
 #include <vector>
 
 namespace Rapid::Storage
@@ -16,6 +15,26 @@ class ISessionDatabaseBackend
 {
 public:
     virtual ~ISessionDatabaseBackend() = default;
+
+    /**
+     * Disabled copy operator
+     */
+    ISessionDatabaseBackend(ISessionDatabaseBackend const&) = delete;
+
+    /**
+     * Disabled copy operator
+     */
+    ISessionDatabaseBackend& operator=(ISessionDatabaseBackend const&) = delete;
+
+    /**
+     * Disabled move operator
+     */
+    ISessionDatabaseBackend(ISessionDatabaseBackend&&) noexcept = delete;
+
+    /**
+     * Disabled move operator
+     */
+    ISessionDatabaseBackend& operator=(ISessionDatabaseBackend&&) noexcept = delete;
 
     virtual std::size_t getLastStoredIndex() const noexcept = 0;
 

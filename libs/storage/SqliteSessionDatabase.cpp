@@ -278,7 +278,7 @@ std::optional<std::size_t> SqliteSessionDatabase::getSessionId(Common::SessionDa
     }
 
     if ((sessionIdStm.execute() == ExecuteResult::Row) && (sessionIdStm.getIntColumn(0).has_value())) {
-        return static_cast<std::size_t>(sessionIdStm.getIntColumn(0).value());
+        return static_cast<std::size_t>(sessionIdStm.getIntColumn(0).value_or(0));
     }
     return std::nullopt;
 }
@@ -463,13 +463,14 @@ bool SqliteSessionDatabase::storeLapOfSession(std::size_t sessionId,
         std::cout << "Error failed to query lap id:" << mDbConnection.getErrorMessage() << std::endl;
         return false;
     }
-    auto const lapId = *lapIdStm.getIntColumn(0);
+    auto const lapId = lapIdStm.getIntColumn(0).value_or(0);
     auto insertSektorStm = Statement{mDbConnection};
     for (std::size_t sektorTimeIndex = 0; sektorTimeIndex < lapData.getSectorTimeCount(); ++sektorTimeIndex) {
         if ((insertSektorStm.prepare(insetSektorQuery) != PrepareResult::Ok) ||
             (insertSektorStm.bindIntValue(1, lapId) != BindResult::Ok) ||
-            (insertSektorStm.bindStringValue(2, lapData.getSectorTime(sektorTimeIndex)->asString()) !=
-             BindResult::Ok) ||
+            (insertSektorStm.bindStringValue(
+                 2,
+                 lapData.getSectorTime(sektorTimeIndex).value_or(Common::Timestamp{}).asString()) != BindResult::Ok) ||
             (insertSektorStm.bindIntValue(3, static_cast<int>(sektorTimeIndex)) != BindResult::Ok) ||
             (insertSektorStm.execute() != ExecuteResult::Ok)) {
             std::cout << "Error failed to insert sektor:" << mDbConnection.getErrorMessage() << std::endl;
