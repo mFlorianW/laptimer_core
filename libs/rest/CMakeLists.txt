@@ -31,7 +31,7 @@ endif()
 target_link_libraries(Rest
 PUBLIC
     KDAB::KDBindings
-    LaptimerCore::Positioning
+    Rapid::Positioning
     LaptimerCore::Storage
 )
 

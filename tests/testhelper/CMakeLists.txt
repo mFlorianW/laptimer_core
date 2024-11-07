@@ -36,7 +36,7 @@ PUBLIC
 target_link_libraries(TestHelper
 PRIVATE
     Rapid::CommonObject
-    LaptimerCore::Positioning
+    Rapid::Positioning
     Rapid::AlgorithmObject
     LaptimerCore::Storage
     LaptimerCore::Rest

@@ -24,7 +24,7 @@ PRIVATE
 target_link_libraries(Workflow
 PUBLIC
     Rapid::Common
-    LaptimerCore::Positioning
+    Rapid::Positioning
     Rapid::Algorithm
     LaptimerCore::Storage
     LaptimerCore::Rest
