@@ -20,9 +20,30 @@ public:
             Common::PositionDateTimeData{{52.0270889, 11.2803483}, Common::Timestamp{"15:05:10.234"}, {}});
     }
 
-    ~StaticPositionDateTimeProvider()
-    {
-    }
+    /**
+     * Default Destructor
+     */
+    ~StaticPositionDateTimeProvider() override = default;
+
+    /**
+     * Disabled copy operator
+     */
+    StaticPositionDateTimeProvider(StaticPositionDateTimeProvider const&) = delete;
+
+    /**
+     * Disabled copy operator
+     */
+    StaticPositionDateTimeProvider& operator=(StaticPositionDateTimeProvider const&) = delete;
+
+    /**
+     * Default move operator
+     */
+    StaticPositionDateTimeProvider(StaticPositionDateTimeProvider&&) noexcept = default;
+
+    /**
+     * Default move operator
+     */
+    StaticPositionDateTimeProvider& operator=(StaticPositionDateTimeProvider&&) noexcept = default;
 };
 
 } // namespace Rapid::Positioning

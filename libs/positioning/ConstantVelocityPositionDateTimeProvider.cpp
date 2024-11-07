@@ -3,8 +3,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "ConstantVelocityPositionDateTimeProvider.hpp"
-#include "UTM.hpp"
-#include <fstream>
+#include <UTM.hpp>
 #include <sys/time.h>
 
 using namespace Rapid::Common;
@@ -53,7 +52,7 @@ void ConstantVelocityPositionDateTimeProvider::convertTrackPoints(std::vector<Co
     // convert positions to UTM for easier calculations
     Point point;
     for (auto const& posData : gpsPositions) {
-        UTM::LLtoUTM(posData.getLatitude(), posData.getLongitude(), point.x, point.y, point.zone);
+        UTM::LLtoUTM(posData.getLatitude(), posData.getLongitude(), point.x, point.y, point.zone.data());
         mTrackData.push_back(point);
     }
 
@@ -74,13 +73,13 @@ void ConstantVelocityPositionDateTimeProvider::handleGPSPositionTick()
         Point direction{p0.x - mCurrentPosition.x, p0.y - mCurrentPosition.y};
 
         // Calculate the length of our direction vector
-        float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+        auto length = static_cast<float>(std::sqrt(direction.x * direction.x + direction.y * direction.y));
 
         // Normalize direction
         Point normalizedDirection{direction.x / length, direction.y / length};
 
         // Calculate distance we moved based on speed (meters per second) and elapsed time (seconds)
-        auto time = static_cast<float>(mTickTimer.getInterval().count() / 1000.0f);
+        auto time = static_cast<float>(mTickTimer.getInterval().count()) / 1000.0f;
         Point distanceTraveled{normalizedDirection.x * time * mSpeed, normalizedDirection.y * time * mSpeed};
 
         // Calculate our new position
@@ -90,7 +89,7 @@ void ConstantVelocityPositionDateTimeProvider::handleGPSPositionTick()
         // If we overran our target point just move on to the next one :)
         direction.x = p0.x - mCurrentPosition.x;
         direction.y = p0.y - mCurrentPosition.y;
-        float newLength = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+        auto newLength = static_cast<float>(std::sqrt(direction.x * direction.x + direction.y * direction.y));
         if (newLength > length) {
             mTrackDataIt = mTrackDataIt + 2;
             if (mTrackDataIt == mTrackData.cend()) {
@@ -109,7 +108,7 @@ void ConstantVelocityPositionDateTimeProvider::handleGPSPositionTick()
     // Sett the position
     double lat = 0.0f;
     double longi = 0.0f;
-    UTM::UTMtoLL(mCurrentPosition.x, mCurrentPosition.y, mCurrentPosition.zone, lat, longi);
+    UTM::UTMtoLL(mCurrentPosition.x, mCurrentPosition.y, mCurrentPosition.zone.data(), lat, longi);
     position.setPosition(PositionData{static_cast<float>(lat), static_cast<float>(longi)});
 
     // Set the time

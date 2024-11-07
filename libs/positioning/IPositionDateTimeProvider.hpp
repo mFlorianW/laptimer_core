@@ -20,6 +20,26 @@ public:
     virtual ~IPositionDateTimeProvider() = default;
 
     /**
+     * Disabled copy constructor
+     */
+    IPositionDateTimeProvider(IPositionDateTimeProvider const&) = delete;
+
+    /**
+     * Disabled copy operator
+     */
+    IPositionDateTimeProvider& operator=(IPositionDateTimeProvider const&) = delete;
+
+    /**
+     * Default move operator
+     */
+    IPositionDateTimeProvider(IPositionDateTimeProvider&&) noexcept = default;
+
+    /**
+     * Default move operator
+     */
+    IPositionDateTimeProvider& operator=(IPositionDateTimeProvider&&) noexcept = default;
+
+    /**
      * This property holds current PostionDateTimeData
      */
     KDBindings::Property<Common::PositionDateTimeData> positionTimeData;

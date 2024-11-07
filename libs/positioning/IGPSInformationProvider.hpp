@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#ifndef __IGPSINFORMATIONPROVIDER__H__
-#define __IGPSINFORMATIONPROVIDER__H__
+#pragma once
 
 #include <kdbindings/signal.h>
 
@@ -16,7 +15,30 @@ namespace Rapid::Positioning
 class IGpsInformationProvider
 {
 public:
+    /**
+     * Default destructor
+     */
     virtual ~IGpsInformationProvider() = default;
+
+    /**
+     * Disabled copy constructor
+     */
+    IGpsInformationProvider(IGpsInformationProvider const&) = delete;
+
+    /**
+     * Disable copy operator
+     */
+    IGpsInformationProvider& operator=(IGpsInformationProvider const&) = delete;
+
+    /**
+     * Default move operator
+     */
+    IGpsInformationProvider(IGpsInformationProvider&&) noexcept = default;
+
+    /**
+     * Default move operator
+     */
+    IGpsInformationProvider& operator=(IGpsInformationProvider&&) noexcept = default;
 
     /**
      * Gives the number of the connted satellites.
@@ -38,5 +60,3 @@ protected:
 };
 
 } // namespace Rapid::Positioning
-
-#endif //!__IGPSINFORMATIONPROVIDER__H__

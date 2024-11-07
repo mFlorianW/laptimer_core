@@ -31,6 +31,26 @@ public:
     ~ConstantVelocityPositionDateTimeProvider() override;
 
     /**
+     * Disabled copy operator
+     */
+    ConstantVelocityPositionDateTimeProvider(ConstantVelocityPositionDateTimeProvider const&) = delete;
+
+    /**
+     * Disabled copy operator
+     */
+    ConstantVelocityPositionDateTimeProvider& operator=(ConstantVelocityPositionDateTimeProvider const&) = delete;
+
+    /**
+     * Disabled move operator
+     */
+    ConstantVelocityPositionDateTimeProvider(ConstantVelocityPositionDateTimeProvider&&) noexcept = delete;
+
+    /**
+     * Disabled move operator
+     */
+    ConstantVelocityPositionDateTimeProvider& operator=(ConstantVelocityPositionDateTimeProvider&&) noexcept = delete;
+
+    /**
      * Overwrites the GPS positions for playback.
      * @param gpsPositions The GPS position list that is used for the replay.
      */
@@ -62,7 +82,7 @@ private:
     {
         double x = 0.0f;
         double y = 0.0f;
-        char zone[3] = {0};
+        std::array<char, 3> zone = {0};
     };
 
     float mSpeed{0};
