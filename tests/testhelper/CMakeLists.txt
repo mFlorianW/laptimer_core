@@ -37,7 +37,7 @@ target_link_libraries(TestHelper
 PRIVATE
     LaptimerCore::CommonObject
     LaptimerCore::Positioning
-    LaptimerCore::AlgorithmObject
+    Rapid::AlgorithmObject
     LaptimerCore::Storage
     LaptimerCore::Rest
     Catch2::Catch2

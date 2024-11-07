@@ -25,7 +25,7 @@ target_link_libraries(Workflow
 PUBLIC
     LaptimerCore::Common
     LaptimerCore::Positioning
-    LaptimerCore::Algorithm
+    Rapid::Algorithm
     LaptimerCore::Storage
     LaptimerCore::Rest
 )
