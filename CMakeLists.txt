@@ -64,6 +64,7 @@ endif()
 add_subdirectory(libs)
 add_subdirectory(db)
 add_subdirectory(programs)
+add_subdirectory(thirdparty)
 
 if(ENABLE_TEST)
     include(CTest)

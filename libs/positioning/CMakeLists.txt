@@ -3,7 +3,6 @@ add_library(Rapid::Positioning ALIAS Positioning)
 
 target_sources(Positioning
 PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/UTM.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ConstantVelocityPositionDateTimeProvider.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/IGPSInformationProvider.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/StaticGpsInformationProvider.hpp
@@ -20,6 +19,7 @@ target_link_libraries(Positioning
 PUBLIC
     Rapid::Common
     Rapid::System
+    Rapid::ThirdParty::UTM
     KDAB::KDBindings
 )
 
