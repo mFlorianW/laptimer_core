@@ -94,7 +94,7 @@ TARGET_LINK_LIBRARIES(ssd1322Sehll
         Rapid::Common
         Rapid::Positioning
         Rapid::Algorithm
-        LaptimerCore::Storage
+        Rapid::Storage
         LaptimerCore::Workflow
         LaptimerCore::System
         lvgl-ssd1322::lvgl-ssd1322

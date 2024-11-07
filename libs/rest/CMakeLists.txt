@@ -32,7 +32,7 @@ target_link_libraries(Rest
 PUBLIC
     KDAB::KDBindings
     Rapid::Positioning
-    LaptimerCore::Storage
+    Rapid::Storage
 )
 
 target_include_directories(Rest

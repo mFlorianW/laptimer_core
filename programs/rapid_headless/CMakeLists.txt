@@ -17,6 +17,6 @@ PRIVATE
     Rapid::LibraryPath
     LaptimerCore::System
     Rapid::Positioning
-    LaptimerCore::Storage
+    Rapid::Storage
     LaptimerCore::Workflow
 )

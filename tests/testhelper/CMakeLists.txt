@@ -38,7 +38,7 @@ PRIVATE
     Rapid::CommonObject
     Rapid::Positioning
     Rapid::AlgorithmObject
-    LaptimerCore::Storage
+    Rapid::Storage
     Rapid::Rest
     Catch2::Catch2
 )

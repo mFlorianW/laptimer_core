@@ -1,5 +1,5 @@
 add_library(Storage STATIC)
-add_library(LaptimerCore::Storage ALIAS Storage)
+add_library(Rapid::Storage ALIAS Storage)
 
 target_sources(Storage
 PRIVATE
@@ -24,7 +24,7 @@ PRIVATE
 
 target_link_libraries(Storage
 PUBLIC
-    SQLite::SQLite3 
+    SQLite::SQLite3
     KDAB::KDBindings
     LaptimerCore::System
     Rapid::Common
