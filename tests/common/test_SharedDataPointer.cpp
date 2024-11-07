@@ -50,6 +50,7 @@ TEST_CASE("SharedDataPointer shall read only access to the object with operator 
     auto const pointer = SharedDataPointer<TestData>{testData};
 
     auto const value = pointer->dummyInt;
+    (void)value;
 
     REQUIRE(testData->ref == 1);
 }
