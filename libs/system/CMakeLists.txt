@@ -1,5 +1,5 @@
 add_library(System STATIC)
-add_library(LaptimerCore::System ALIAS System)
+add_library(Rapid::System ALIAS System)
 
 target_sources(System
 PRIVATE

@@ -15,7 +15,7 @@ PRIVATE
 target_link_libraries(rapid_headless
 PRIVATE
     Rapid::LibraryPath
-    LaptimerCore::System
+    Rapid::System
     Rapid::Positioning
     Rapid::Storage
     LaptimerCore::Workflow

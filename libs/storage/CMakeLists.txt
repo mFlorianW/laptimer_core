@@ -26,7 +26,7 @@ target_link_libraries(Storage
 PUBLIC
     SQLite::SQLite3
     KDAB::KDBindings
-    LaptimerCore::System
+    Rapid::System
     Rapid::Common
 )
 
