@@ -15,7 +15,7 @@ PRIVATE
 
 target_link_libraries(AlgorithmObject
 PUBLIC
-    LaptimerCore::Common
+    Rapid::Common
     KDAB::KDBindings
 )
 

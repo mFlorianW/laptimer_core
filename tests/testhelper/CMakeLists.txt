@@ -35,7 +35,7 @@ PUBLIC
 
 target_link_libraries(TestHelper
 PRIVATE
-    LaptimerCore::CommonObject
+    Rapid::CommonObject
     LaptimerCore::Positioning
     Rapid::AlgorithmObject
     LaptimerCore::Storage
@@ -54,6 +54,6 @@ if(ENABLE_QT)
     )
     target_link_libraries(TestHelper
         PRIVATE
-            LaptimerCore::CommonQt
+            Rapid::CommonQt
     )
 endif()

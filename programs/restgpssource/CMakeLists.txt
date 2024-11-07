@@ -26,7 +26,7 @@ PRIVATE
     Qt6::Widgets
     Qt6::Quick
     Qt6::Location
-    LaptimerCore::Common
+    Rapid::Common
     LaptimerCore::Positioning
     LaptimerCore::PositioningQt
 )

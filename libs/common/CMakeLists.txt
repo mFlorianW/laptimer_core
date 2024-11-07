@@ -1,5 +1,5 @@
 add_library(CommonObject OBJECT)
-add_library(LaptimerCore::CommonObject ALIAS CommonObject)
+add_library(Rapid::CommonObject ALIAS CommonObject)
 
 target_sources(CommonObject
 PRIVATE
@@ -37,11 +37,11 @@ PUBLIC
 )
 
 add_library(Common STATIC)
-add_library(LaptimerCore::Common ALIAS Common)
+add_library(Rapid::Common ALIAS Common)
 
 target_link_libraries(Common
 PUBLIC
-    LaptimerCore::CommonObject
+    Rapid::CommonObject
 )
 
 if(ENABLE_QT)

@@ -91,7 +91,7 @@ TARGET_INCLUDE_DIRECTORIES(ssd1322Sehll
 
 TARGET_LINK_LIBRARIES(ssd1322Sehll
     PUBLIC
-        LaptimerCore::Common
+        Rapid::Common
         LaptimerCore::Positioning
         Rapid::Algorithm
         LaptimerCore::Storage

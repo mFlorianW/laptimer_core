@@ -31,7 +31,7 @@ target_link_libraries(SessionDl
         LaptimerCore::Storage
         Rapid::LibraryPath
     PRIVATE
-        LaptimerCore::CommonQt
+        Rapid::CommonQt
         Rapid::SessionDlCommon
 )
 

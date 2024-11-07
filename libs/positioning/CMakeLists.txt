@@ -20,7 +20,7 @@ PUBLIC
 
 target_link_libraries(Positioning
 PUBLIC
-    LaptimerCore::Common
+    Rapid::Common
     LaptimerCore::System
     KDAB::KDBindings
 )

@@ -27,7 +27,7 @@ PUBLIC
     SQLite::SQLite3 
     KDAB::KDBindings
     LaptimerCore::System
-    LaptimerCore::Common
+    Rapid::Common
 )
 
 target_include_directories(Storage

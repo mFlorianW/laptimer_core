@@ -8,7 +8,7 @@ namespace Rapid::Common
 {
 
 QSettingsBackend::QSettingsBackend()
-    : mSettings{QStringLiteral("lappy"), QStringLiteral("lappy")}
+    : mSettings{QStringLiteral("rapid"), QStringLiteral("rapid")}
 {
 }
 

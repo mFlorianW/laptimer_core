@@ -1,5 +1,5 @@
 add_library(CommonObjectQt OBJECT)
-add_library(LaptimerCore::CommonObjectQt ALIAS CommonObjectQt)
+add_library(Rapid::CommonObjectQt ALIAS CommonObjectQt)
 
 target_sources(CommonObjectQt
 PRIVATE
@@ -23,9 +23,9 @@ target_include_directories(CommonObjectQt
 )
 
 add_library(CommonQt STATIC)
-add_library(LaptimerCore::CommonQt ALIAS CommonQt)
+add_library(Rapid::CommonQt ALIAS CommonQt)
 
 target_link_libraries(CommonQt
 PUBLIC
-    LaptimerCore::CommonObjectQt
+    Rapid::CommonObjectQt
 )
