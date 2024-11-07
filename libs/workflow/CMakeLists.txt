@@ -1,5 +1,5 @@
 add_library(Workflow OBJECT)
-add_library(LaptimerCore::Workflow ALIAS Workflow)
+add_library(Rapid::Workflow ALIAS Workflow)
 
 target_sources(Workflow
 PRIVATE

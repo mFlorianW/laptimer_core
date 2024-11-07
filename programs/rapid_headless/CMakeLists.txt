@@ -18,5 +18,5 @@ PRIVATE
     Rapid::System
     Rapid::Positioning
     Rapid::Storage
-    LaptimerCore::Workflow
+    Rapid::Workflow
 )
