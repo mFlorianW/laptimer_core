@@ -11,6 +11,8 @@ using namespace Rapid::Common;
 namespace Rapid::Algorithm
 {
 
+SimpleLaptimer::SimpleLaptimer() = default;
+
 void SimpleLaptimer::setTrack(Common::TrackData const& track)
 {
     mTrackData = track;

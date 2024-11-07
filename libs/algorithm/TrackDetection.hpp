@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#ifndef __CIRCLETRACKDETECTION__H__
-#define __CIRCLETRACKDETECTION__H__
+#pragma once
 
 #include "ITrackDetection.hpp"
 #include <cstdint>
@@ -30,5 +29,3 @@ private:
 };
 
 } // namespace Rapid::Algorithm
-
-#endif //!__CIRCLETRACKDETECTION__H__

@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#ifndef __DISTANCECALCULATOR__H__
-#define __DISTANCECALCULATOR__H__
+#pragma once
 
 #include <PositionData.hpp>
 
@@ -18,5 +17,3 @@ namespace Rapid::Algorithm::DistanceCalculator
  */
 float calculateDistance(Common::PositionData const& pos1, Common::PositionData const& pos2);
 }; // namespace Rapid::Algorithm::DistanceCalculator
-
-#endif //!__DISTANCECALCULATOR__H__

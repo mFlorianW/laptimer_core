@@ -2,8 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#ifndef __ITRACKDETECTION__H__
-#define __ITRACKDETECTION__H__
+#pragma once
 
 #include <PositionData.hpp>
 #include <TrackData.hpp>
@@ -14,7 +13,30 @@ namespace Rapid::Algorithm
 class ITrackDetection
 {
 public:
+    /**
+     * Default virtual destructor
+     */
     virtual ~ITrackDetection() = default;
+
+    /**
+     * Default copy operator
+     */
+    ITrackDetection(ITrackDetection const&) = default;
+
+    /**
+     * Default copy operator
+     */
+    ITrackDetection& operator=(ITrackDetection const&) = default;
+
+    /**
+     * Default move operator
+     */
+    ITrackDetection(ITrackDetection&&) noexcept = default;
+
+    /**
+     * Default move operator
+     */
+    ITrackDetection& operator=(ITrackDetection&&) noexcept = default;
 
     /**
      * Checks if the given position is on the given track.
@@ -24,8 +46,12 @@ public:
      * @return false The position is not on the track.
      */
     virtual bool isOnTrack(Common::TrackData const& track, Common::PositionData const& position) const = 0;
+
+protected:
+    /**
+     * Default constructor
+     */
+    ITrackDetection() = default;
 };
 
 } // namespace Rapid::Algorithm
-
-#endif //!__ITRACKDETECTION__H__

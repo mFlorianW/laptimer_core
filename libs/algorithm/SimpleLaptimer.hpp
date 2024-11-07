@@ -17,15 +17,35 @@ public:
     /**
      * Default constructor
      */
-    SimpleLaptimer() = default;
+    SimpleLaptimer();
+
+    /**
+     * Disabled copy operator
+     */
+    SimpleLaptimer(SimpleLaptimer const&) = delete;
+
+    /**
+     * Disabled copy operator
+     */
+    SimpleLaptimer& operator=(SimpleLaptimer const&) = delete;
+
+    /**
+     * Default move operator
+     */
+    SimpleLaptimer(SimpleLaptimer&&) noexcept = default;
+
+    /**
+     * Default move operator
+     */
+    SimpleLaptimer& operator=(SimpleLaptimer&&) noexcept = default;
 
     /**
      * Default destructor
      */
-    ~SimpleLaptimer() = default;
+    ~SimpleLaptimer() override = default;
 
     /**
-     * @copydoc ILaptimer::setTrack(const Common::TrackData &track)
+     * @copydoc SimpleLaptimer::setTrack(const Common::TrackData &track)
      */
     void setTrack(Common::TrackData const& track) override;
 
@@ -35,12 +55,12 @@ public:
     void updatePositionAndTime(Common::PositionDateTimeData const& data) override;
 
     /**
-     * @copydoc ILaptimer::getLastLaptime()
+     * @copydoc SimpleLaptimer::getLastLaptime()
      */
     Common::Timestamp getLastLaptime() const override;
 
     /**
-     * @copydoc ILaptimer::getLastLaptime()
+     * @copydoc SimpleLaptimer::getLastLaptime()
      */
     Common::Timestamp getLastSectorTime() const override;
 

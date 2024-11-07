@@ -2,13 +2,11 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#ifndef __ILAPTIMER__H__
-#define __ILAPTIMER__H__
+#pragma once
 
 #include <PositionDateTimeData.hpp>
 #include <Timestamp.hpp>
 #include <TrackData.hpp>
-#include <functional>
 #include <kdbindings/property.h>
 
 namespace Rapid::Algorithm
@@ -21,6 +19,26 @@ public:
      * Default desctructor.
      */
     virtual ~ILaptimer() = default;
+
+    /**
+     * Disabled copy operator
+     */
+    ILaptimer(ILaptimer const&) = delete;
+
+    /**
+     * Disabled copy operator
+     */
+    ILaptimer& operator=(ILaptimer const&) = delete;
+
+    /**
+     * Default move operator
+     */
+    ILaptimer(ILaptimer&&) noexcept = default;
+
+    /**
+     * Default move operator
+     */
+    ILaptimer& operator=(ILaptimer&&) noexcept = default;
 
     /**
      * Sets the Track in the laptimer.
@@ -79,5 +97,3 @@ protected:
 };
 
 } // namespace Rapid::Algorithm
-
-#endif //!__ILAPTIMER__H__
