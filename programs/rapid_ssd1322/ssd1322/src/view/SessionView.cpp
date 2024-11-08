@@ -30,7 +30,7 @@ SessionView::SessionView(SessionViewModel& sessionViewModel)
     lv_obj_set_size(mSessionIndicatorLabel, lv_obj_get_width(mScreenContent), 12);
     lv_obj_set_x(mSessionIndicatorLabel, 128);
     lv_obj_set_y(mSessionIndicatorLabel, 0);
-    mSessionViewModel.sessionIndicator.valueChanged().connect([=]() {
+    mSessionViewModel.sessionIndicator.valueChanged().connect([this]() {
         setSessionIndicator();
     });
 
@@ -40,7 +40,7 @@ SessionView::SessionView(SessionViewModel& sessionViewModel)
     lv_obj_set_size(mTrackNameLabel, lv_obj_get_width(mScreenContent), 16);
     lv_obj_set_x(mTrackNameLabel, 0);
     lv_obj_set_y(mTrackNameLabel, 14);
-    mSessionViewModel.trackName.valueChanged().connect([=]() {
+    mSessionViewModel.trackName.valueChanged().connect([this]() {
         setTrackName();
     });
 
@@ -50,7 +50,7 @@ SessionView::SessionView(SessionViewModel& sessionViewModel)
     lv_obj_set_size(mDateLabel, lv_obj_get_width(mScreenContent), 16);
     lv_obj_set_x(mDateLabel, 0);
     lv_obj_set_y(mDateLabel, 28);
-    mSessionViewModel.date.valueChanged().connect([=]() {
+    mSessionViewModel.date.valueChanged().connect([this]() {
         setDate();
     });
 
@@ -60,7 +60,7 @@ SessionView::SessionView(SessionViewModel& sessionViewModel)
     lv_obj_set_size(mTimeLabel, lv_obj_get_width(mScreenContent), 12);
     lv_obj_set_x(mTimeLabel, 128);
     lv_obj_set_y(mTimeLabel, 28);
-    mSessionViewModel.time.valueChanged().connect([=]() {
+    mSessionViewModel.time.valueChanged().connect([this]() {
         setTime();
     });
 
@@ -70,7 +70,7 @@ SessionView::SessionView(SessionViewModel& sessionViewModel)
     lv_obj_set_size(mLapLabel, lv_obj_get_width(mScreenContent), 12);
     lv_obj_set_x(mLapLabel, 0);
     lv_obj_set_y(mLapLabel, 42);
-    mSessionViewModel.laps.valueChanged().connect([=]() {
+    mSessionViewModel.laps.valueChanged().connect([this]() {
         setLaps();
     });
 
@@ -80,7 +80,7 @@ SessionView::SessionView(SessionViewModel& sessionViewModel)
     lv_obj_set_size(mBestLapLabel, lv_obj_get_width(mScreenContent), 12);
     lv_obj_set_x(mBestLapLabel, 128);
     lv_obj_set_y(mBestLapLabel, 42);
-    mSessionViewModel.bestlap.valueChanged().connect([=]() {
+    mSessionViewModel.bestlap.valueChanged().connect([this]() {
         setBestLap();
     });
 
