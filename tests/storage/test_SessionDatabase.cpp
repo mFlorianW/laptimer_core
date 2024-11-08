@@ -19,7 +19,7 @@ TEST_CASE("The SessionDatabase shall serialize the SessionData to JSON, store th
     auto backend = MemorySessionDatabaseBackend{};
     auto sessionDb = SessionDatabase{backend};
     auto sessionStoredSpy = false;
-    auto sessionStoredIndex = 99;
+    auto sessionStoredIndex = std::size_t{99};
     sessionDb.sessionAdded.connect([&](std::size_t index) {
         sessionStoredSpy = true;
         sessionStoredIndex = index;
@@ -64,7 +64,7 @@ TEST_CASE("The SessionDatabase shall be able to delete a single session and emit
     auto backend = MemorySessionDatabaseBackend{};
     auto sessionDb = SessionDatabase{backend};
     auto sessionDeletedSpy = false;
-    auto sessionDeletedIndex = 99;
+    auto sessionDeletedIndex = std::size_t{99};
 
     auto result = sessionDb.storeSession(Sessions::getTestSession());
     sessionDb.sessionDeleted.connect([&](std::size_t index) {
@@ -99,7 +99,7 @@ TEST_CASE("The SessionDatabase shall store an already stored session under the s
     auto backend = MemorySessionDatabaseBackend{};
     auto sessionDb = SessionDatabase{backend};
     auto sessionUpdatedSpy = false;
-    auto sessionUpdatedIndex = 99;
+    auto sessionUpdatedIndex = std::size_t{99};
     sessionDb.sessionUpdated.connect([&](std::size_t index) {
         sessionUpdatedSpy = true;
         sessionUpdatedIndex = index;
