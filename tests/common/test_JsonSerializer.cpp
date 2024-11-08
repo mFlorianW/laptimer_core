@@ -14,7 +14,7 @@ using namespace Rapid::TestHelper;
 
 TEST_CASE("JSONSerializer shall serialize PositionData to JSON.")
 {
-    constexpr char expectedJsonObject[] = "{\"latitude\":\"52.025833\",\"longitude\":\"11.279166\"}";
+    constexpr auto expectedJsonObject = R"({"latitude":"52.025833","longitude":"11.279166"})";
     ArduinoJson::StaticJsonDocument<1024> jsonDoc;
     auto jsonRoot = jsonDoc.to<JsonObject>();
 
@@ -28,7 +28,7 @@ TEST_CASE("JSONSerializer shall serialize PositionData to JSON.")
 TEST_CASE("JSONSerializer shall serialize the TrackData without sector to JSON")
 {
     // clang-format off
-    constexpr char expectedJson[] = "{"
+    constexpr auto expectedJson = "{"
         "\"name\":\"TrackWithoutSector\","
         "\"startline\":{"
             "\"latitude\":\"52.025833\","
@@ -54,7 +54,7 @@ TEST_CASE("JSONSerializer shall serialize the TrackData without sector to JSON")
 TEST_CASE("JSONSerializer shall serialize the TrackData to JSON")
 {
     // clang-format off
-    constexpr char expectedJson[] = "{"
+    constexpr auto expectedJson = "{"
         "\"name\":\"Oschersleben\","
         "\"startline\":{"
             "\"latitude\":\"52.025833\","
@@ -89,7 +89,7 @@ TEST_CASE("JSONSerializer shall serialize the TrackData to JSON")
 TEST_CASE("JSONSerializer shall serialize the LapData to JSON")
 {
     // clang-format off
-    constexpr char expectedResult[] =
+    constexpr auto expectedResult =
     "{"
     "\"sectors\":["
         "\"00:00:25.134\","
