@@ -10,7 +10,7 @@
 #include "TrackData.hpp"
 #include <ArduinoJson.h>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 class JsonSerializer
@@ -49,6 +49,6 @@ public:
     static bool serializeSessionData(SessionData const& sessionData, ArduinoJson::JsonObject& jsonObject);
 };
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common
 
 #endif // JSONSERIALIZER_HPP

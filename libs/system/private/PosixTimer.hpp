@@ -5,7 +5,7 @@
 #pragma once
 #include "Timer.hpp"
 
-namespace LaptimerCore::System::Private
+namespace Rapid::System::Private
 {
 
 class TimerImpl
@@ -28,4 +28,4 @@ private:
     timer_t mTimerId{nullptr};
 };
 
-} // namespace LaptimerCore::System::Private
+} // namespace Rapid::System::Private

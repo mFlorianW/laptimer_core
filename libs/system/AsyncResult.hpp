@@ -7,7 +7,7 @@
 #include "SystemTypes.hpp"
 #include <kdbindings/signal.h>
 
-namespace LaptimerCore::System
+namespace Rapid::System
 {
 
 /**
@@ -87,4 +87,4 @@ private:
     Result mResult{Result::NotFinished};
     std::string mErrorMsg{};
 };
-} // namespace LaptimerCore::System
+} // namespace Rapid::System

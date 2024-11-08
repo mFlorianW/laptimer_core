@@ -7,7 +7,7 @@
 #include <catch2/catch.hpp>
 #include <cstdint>
 
-using namespace LaptimerCore::Common;
+using namespace Rapid::Common;
 
 namespace
 {
@@ -21,22 +21,42 @@ public:
     {
     }
 
-    ~TestData()
+    ~TestData() override
     {
         if (dtorCalledFlag != nullptr) {
             *dtorCalledFlag = true;
         }
     }
 
+    /**
+     * Default copy constructor
+     */
+    TestData(TestData const&) = default;
+
+    /**
+     * Disabled copy operator
+     */
+    TestData& operator=(TestData const&) = delete;
+
+    /**
+     * Disabled move operator
+     */
+    TestData(TestData&&) noexcept = delete;
+
+    /**
+     * Disabled move operator
+     */
+    TestData& operator=(TestData&&) noexcept = delete;
+
     bool* dtorCalledFlag{nullptr};
-    std::uint8_t dummyInt;
+    std::uint8_t dummyInt{0};
 };
 } // namespace
 
 TEST_CASE("SharedDataPointer shall free stored data on destruction when reference count is 0")
 {
     auto dtorFlag = false;
-    auto* testData = new TestData{&dtorFlag};
+    auto* testData = new TestData{&dtorFlag}; // NOLINT(cppcoreguidelines-owning-memory)
     {
         auto const pointer = SharedDataPointer{testData};
     }
@@ -46,17 +66,18 @@ TEST_CASE("SharedDataPointer shall free stored data on destruction when referenc
 
 TEST_CASE("SharedDataPointer shall read only access to the object with operator ->.")
 {
-    auto testData = new TestData{};
+    auto testData = new TestData{}; // NOLINT(cppcoreguidelines-owning-memory)
     auto const pointer = SharedDataPointer<TestData>{testData};
 
     auto const value = pointer->dummyInt;
+    (void)value;
 
     REQUIRE(testData->ref == 1);
 }
 
 TEST_CASE("SharedDataPointer shall return an immutable reference to the shared data object.")
 {
-    auto testData = new TestData{};
+    auto testData = new TestData{}; // NOLINT(cppcoreguidelines-owning-memory)
     auto const pointer = SharedDataPointer<TestData>{testData};
 
     auto const& immutableRef = *pointer;
@@ -67,7 +88,7 @@ TEST_CASE("SharedDataPointer shall return an immutable reference to the shared d
 
 TEST_CASE("SharedDataPointer shall return an immutable pointer to the shared data object.")
 {
-    auto testData = new TestData{};
+    auto testData = new TestData{}; // NOLINT(cppcoreguidelines-owning-memory)
     auto const pointer = SharedDataPointer<TestData>{testData};
 
     TestData const* immutablePtr = pointer;
@@ -78,7 +99,7 @@ TEST_CASE("SharedDataPointer shall return an immutable pointer to the shared dat
 
 TEST_CASE("SharedDataPointer shall increment the reference counter in the shared object when copying.")
 {
-    auto testData = new TestData{};
+    auto testData = new TestData{}; // NOLINT(cppcoreguidelines-owning-memory)
     auto pointer = SharedDataPointer<TestData>{testData};
 
     auto pointer2 = SharedDataPointer<TestData>{pointer};
@@ -88,8 +109,8 @@ TEST_CASE("SharedDataPointer shall increment the reference counter in the shared
 
 TEST_CASE("SharedDataPointer shall increment the reference counter with copy assignment.")
 {
-    auto testData = new TestData{};
-    auto testData2 = new TestData{};
+    auto testData = new TestData{}; // NOLINT(cppcoreguidelines-owning-memory)
+    auto testData2 = new TestData{}; // NOLINT(cppcoreguidelines-owning-memory)
     auto pointer = SharedDataPointer<TestData>{testData};
     auto pointer2 = SharedDataPointer<TestData>{testData2};
 
@@ -100,7 +121,7 @@ TEST_CASE("SharedDataPointer shall increment the reference counter with copy ass
 
 TEST_CASE("SharedDataPointer shall create a copy on the shared data when writing to it with ref count > 1.")
 {
-    auto testData = new TestData{};
+    auto testData = new TestData{}; // NOLINT(cppcoreguidelines-owning-memory)
     auto pointer = SharedDataPointer<TestData>{testData};
     auto pointer2 = SharedDataPointer<TestData>{testData};
 
@@ -117,7 +138,7 @@ TEST_CASE("SharedDataPointer shall create a copy on the shared data when writing
 TEST_CASE(
     "SharedDataPointer shall create a copy on the shared data when converting to mutable reference with ref count > 1.")
 {
-    auto testData = new TestData{};
+    auto testData = new TestData{}; // NOLINT(cppcoreguidelines-owning-memory)
     auto pointer = SharedDataPointer<TestData>{testData};
     auto pointer2 = SharedDataPointer<TestData>{testData};
 
@@ -131,7 +152,7 @@ TEST_CASE(
 TEST_CASE(
     "SharedDataPointer shall create a copy on the shared data when converting to mutable pointer with ref count > 1.")
 {
-    auto testData = new TestData{};
+    auto testData = new TestData{}; // NOLINT(cppcoreguidelines-owning-memory)
     auto pointer = SharedDataPointer<TestData>{testData};
     auto pointer2 = SharedDataPointer<TestData>{testData};
 
@@ -144,7 +165,7 @@ TEST_CASE(
 
 TEST_CASE("SharedDataPointer shall be able to compare with a different SharedDataPointer.")
 {
-    auto testData = new TestData{};
+    auto testData = new TestData{}; // NOLINT(cppcoreguidelines-owning-memory)
     auto pointer = SharedDataPointer<TestData>{testData};
     auto pointer2 = SharedDataPointer<TestData>{testData};
 
@@ -153,8 +174,8 @@ TEST_CASE("SharedDataPointer shall be able to compare with a different SharedDat
 
 TEST_CASE("SharedDataPointer shall be able to check of unequal a different SharedDataPointer.")
 {
-    auto testData = new TestData{};
-    auto testData2 = new TestData{};
+    auto testData = new TestData{}; // NOLINT(cppcoreguidelines-owning-memory)
+    auto testData2 = new TestData{}; // NOLINT(cppcoreguidelines-owning-memory)
     auto pointer = SharedDataPointer<TestData>{testData};
     auto pointer2 = SharedDataPointer<TestData>{testData2};
 

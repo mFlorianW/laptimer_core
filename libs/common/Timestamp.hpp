@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <string>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 class SharedTimestamp;
 class Timestamp
@@ -155,4 +155,4 @@ private:
     SharedDataPointer<SharedTimestamp> mData;
 };
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

@@ -6,8 +6,8 @@
 #include "TrackDetection.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Common;
-using namespace LaptimerCore::Algorithm;
+using namespace Rapid::Common;
+using namespace Rapid::Algorithm;
 
 TEST_CASE("Return true when position is on the track.")
 {

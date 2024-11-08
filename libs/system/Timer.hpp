@@ -9,7 +9,7 @@
 #include <chrono>
 #include <kdbindings/signal.h>
 
-namespace LaptimerCore::System
+namespace Rapid::System
 {
 
 namespace Private
@@ -94,6 +94,6 @@ private:
     std::unique_ptr<Private::TimerImpl> mTimer;
 };
 
-} // namespace LaptimerCore::System
+} // namespace Rapid::System
 
 #endif // TIMER_HPP

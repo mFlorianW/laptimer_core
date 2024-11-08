@@ -6,7 +6,7 @@
 #include "Date.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Common;
+using namespace Rapid::Common;
 
 TEST_CASE("The Date shall be convertable to a string in format DD.MM.YYYY")
 {

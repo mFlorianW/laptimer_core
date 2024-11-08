@@ -10,11 +10,11 @@
 #include <catch2/catch.hpp>
 #include <sqlite3.h>
 
-using namespace LaptimerCore::System;
-using namespace LaptimerCore::Storage;
-using namespace LaptimerCore::TestHelper;
-using namespace LaptimerCore::TestHelper::SqliteDatabaseTestHelper;
-using namespace LaptimerCore::Storage::Private;
+using namespace Rapid::System;
+using namespace Rapid::Storage;
+using namespace Rapid::TestHelper;
+using namespace Rapid::TestHelper::SqliteDatabaseTestHelper;
+using namespace Rapid::Storage::Private;
 
 namespace
 {
@@ -110,7 +110,7 @@ TEST_CASE("The SqliteSessionDatabase shall store a already stored session under 
     insertResult->waitForFinished();
     REQUIRE(insertResult->getResult() == Result::Ok);
 
-    auto lapData = LaptimerCore::Common::LapData{};
+    auto lapData = Rapid::Common::LapData{};
     lapData.addSectorTimes({{"00:23:32.003"}, {"00:23:32.004"}, {"00:23:32.005"}});
     auto session1 = Sessions::getTestSession3();
     session1.addLap(lapData);

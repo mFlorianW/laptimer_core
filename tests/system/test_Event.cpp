@@ -6,7 +6,7 @@
 #include "Event.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::System;
+using namespace Rapid::System;
 
 SCENARIO("The Event shall give the type")
 {

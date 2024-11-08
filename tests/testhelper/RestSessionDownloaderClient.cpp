@@ -5,7 +5,7 @@
 #include "RestSessionDownloaderClient.hpp"
 #include "Sessions.hpp"
 
-namespace LaptimerCore::TestHelper
+namespace Rapid::TestHelper
 {
 
 class TestRestCall : public Rest::RestCall
@@ -39,4 +39,4 @@ std::shared_ptr<Rest::RestCall> RestSessionDownloaderClient::execute(Rest::RestR
     return call;
 }
 
-} // namespace LaptimerCore::TestHelper
+} // namespace Rapid::TestHelper

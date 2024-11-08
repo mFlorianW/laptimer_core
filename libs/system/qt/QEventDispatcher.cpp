@@ -5,7 +5,7 @@
 #include "QEventDispatcher.hpp"
 #include <QDebug>
 
-namespace LaptimerCore::System::Qt
+namespace Rapid::System::Qt
 {
 
 bool QEventDispatcher::processEvents(QEventLoop::ProcessEventsFlags flags)
@@ -14,4 +14,4 @@ bool QEventDispatcher::processEvents(QEventLoop::ProcessEventsFlags flags)
     return QPAEventDispatcherGlib::processEvents(flags);
 }
 
-} // namespace LaptimerCore::System::Qt
+} // namespace Rapid::System::Qt

@@ -6,7 +6,7 @@
 
 #include "AsyncResult.hpp"
 
-namespace LaptimerCore::Storage
+namespace Rapid::Storage
 {
 
 class AsyncResultDb final : public System::AsyncResult
@@ -42,4 +42,4 @@ public:
     void setDbResult(System::Result result, std::string const& errMsg = "") noexcept;
 };
 
-} // namespace LaptimerCore::Storage
+} // namespace Rapid::Storage

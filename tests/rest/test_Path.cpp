@@ -6,7 +6,7 @@
 #include "Path.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Rest;
+using namespace Rapid::Rest;
 
 SCENARIO("A path shall give the number of level in the path")
 {

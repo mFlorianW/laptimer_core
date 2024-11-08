@@ -8,9 +8,9 @@
 #include "Sessions.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Workflow;
-using namespace LaptimerCore::TestHelper;
-using namespace LaptimerCore::Common;
+using namespace Rapid::Workflow;
+using namespace Rapid::TestHelper;
+using namespace Rapid::Common;
 
 SCENARIO("The RestSessionDownload shall fetch the stored session count on the laptimer")
 {

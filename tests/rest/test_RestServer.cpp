@@ -8,7 +8,7 @@
 #include <boost/beast.hpp>
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Rest;
+using namespace Rapid::Rest;
 namespace Http = boost::beast::http;
 namespace Asio = boost::asio;
 namespace Ip = boost::asio::ip;

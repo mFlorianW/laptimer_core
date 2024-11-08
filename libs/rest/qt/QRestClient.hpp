@@ -7,7 +7,7 @@
 #include "IRestClient.hpp"
 #include <QtGlobal>
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 
 struct QRestClientPrivate;
@@ -29,4 +29,4 @@ private:
     std::unique_ptr<QRestClientPrivate> d;
 };
 
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

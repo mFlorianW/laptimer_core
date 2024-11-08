@@ -12,7 +12,7 @@ constexpr auto POSITION_BUFFER_SIZE = 300;
 class PositionListModelPrivate
 {
 public:
-    std::array<LaptimerCore::Common::PositionDateTimeData, POSITION_BUFFER_SIZE> mPositions{};
+    std::array<Rapid::Common::PositionDateTimeData, POSITION_BUFFER_SIZE> mPositions{};
     qint32 mWriteIndex{0};
     bool mBufferFull{false};
 };
@@ -54,7 +54,7 @@ QHash<qint32, QByteArray> PositionListModel::roleNames() const
     return roles;
 }
 
-void PositionListModel::addPosition(LaptimerCore::Common::PositionDateTimeData const& position)
+void PositionListModel::addPosition(Rapid::Common::PositionDateTimeData const& position)
 {
     auto const writeIndex = d->mWriteIndex;
     d->mWriteIndex = d->mWriteIndex + 1;

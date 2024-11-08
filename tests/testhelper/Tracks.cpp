@@ -6,9 +6,9 @@
 #include "PositionData.hpp"
 #include "Positions.hpp"
 
-using namespace LaptimerCore::Common;
+using namespace Rapid::Common;
 
-namespace LaptimerCore::TestHelper::Tracks
+namespace Rapid::TestHelper::Tracks
 {
 namespace
 {
@@ -61,4 +61,4 @@ TrackData getTrackWithoutSector()
     return createTrackWithoutSector();
 }
 
-} // namespace LaptimerCore::TestHelper::Tracks
+} // namespace Rapid::TestHelper::Tracks

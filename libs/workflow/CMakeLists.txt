@@ -1,5 +1,5 @@
 add_library(Workflow OBJECT)
-add_library(LaptimerCore::Workflow ALIAS Workflow)
+add_library(Rapid::Workflow ALIAS Workflow)
 
 target_sources(Workflow
 PRIVATE
@@ -23,9 +23,9 @@ PRIVATE
 
 target_link_libraries(Workflow
 PUBLIC
-    LaptimerCore::Common
-    LaptimerCore::Positioning
-    LaptimerCore::Algorithm
-    LaptimerCore::Storage
-    LaptimerCore::Rest
+    Rapid::Common
+    Rapid::Positioning
+    Rapid::Algorithm
+    Rapid::Storage
+    Rapid::Rest
 )

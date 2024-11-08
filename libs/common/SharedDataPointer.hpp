@@ -7,7 +7,7 @@
 #include <atomic>
 #include <cstdint>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 /**
@@ -244,4 +244,4 @@ private:
     T* mData{nullptr};
 };
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

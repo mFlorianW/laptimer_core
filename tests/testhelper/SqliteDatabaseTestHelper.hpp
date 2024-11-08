@@ -9,7 +9,7 @@
 #include <filesystem>
 #include <unistd.h>
 
-namespace LaptimerCore::TestHelper::SqliteDatabaseTestHelper
+namespace Rapid::TestHelper::SqliteDatabaseTestHelper
 {
 std::string getWorkingDir();
 
@@ -17,6 +17,6 @@ std::string getTestDatabseFolder();
 
 std::string getTestDatabseFile(std::string const& dbFile = "trackmanagement_test.db");
 
-} // namespace LaptimerCore::TestHelper::SqliteDatabaseTestHelper
+} // namespace Rapid::TestHelper::SqliteDatabaseTestHelper
 
 #endif // LAPTIMERCORE_TEST_DUMMY_SQLITEDATABASETESTEVENTLISTENER_HPP

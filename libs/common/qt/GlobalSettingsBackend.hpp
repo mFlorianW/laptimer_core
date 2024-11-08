@@ -5,7 +5,7 @@
 #pragma once
 #include <QSettings>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 class GlobalSettingsBackend
@@ -108,4 +108,4 @@ private:
     QSettings mSettings;
 };
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

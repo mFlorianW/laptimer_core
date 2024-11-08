@@ -4,7 +4,7 @@
 
 #include "Event.hpp"
 
-namespace LaptimerCore::System
+namespace Rapid::System
 {
 
 Event::Event(Type type)
@@ -19,4 +19,4 @@ Event::Type Event::getEventType() const noexcept
     return mEventType;
 }
 
-} // namespace LaptimerCore::System
+} // namespace Rapid::System

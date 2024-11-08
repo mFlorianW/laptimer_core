@@ -7,7 +7,7 @@
 
 #include "ILaptimer.hpp"
 
-namespace LaptimerCore::TestHelper
+namespace Rapid::TestHelper
 {
 
 class Laptimer final : public Algorithm::ILaptimer
@@ -28,6 +28,6 @@ public:
     Common::PositionDateTimeData lastPostionDateTime;
 };
 
-} // namespace LaptimerCore::TestHelper
+} // namespace Rapid::TestHelper
 
 #endif // LAPTIMER_HPP

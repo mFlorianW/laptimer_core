@@ -19,7 +19,7 @@ private Q_SLOTS:
     void timerEventsAreWorking()
     {
         auto timedout = false;
-        auto timer = LaptimerCore::System::Timer{};
+        auto timer = Rapid::System::Timer{};
         timer.setInterval(std::chrono::milliseconds{1});
         timer.timeout.connect([&timedout] {
             timedout = true;
@@ -31,7 +31,7 @@ private Q_SLOTS:
 
 int main(int argc, char** argv)
 {
-    auto disp = new LaptimerCore::System::Qt::QEventDispatcher{}; // NOLINT(cppcoreguidelines-owning-memory)
+    auto disp = new Rapid::System::Qt::QEventDispatcher{}; // NOLINT(cppcoreguidelines-owning-memory)
     QCoreApplication::setEventDispatcher(disp);
     QCoreApplication app(argc, argv);
 

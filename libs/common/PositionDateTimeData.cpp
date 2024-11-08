@@ -4,7 +4,7 @@
 
 #include "PositionDateTimeData.hpp"
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 class SharedPositionTimeData : public SharedData
@@ -90,4 +90,4 @@ bool operator!=(PositionDateTimeData const& lhs, PositionDateTimeData const& rhs
     return !(lhs == rhs);
 }
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

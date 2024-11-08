@@ -3,8 +3,9 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "JsonDeserializer.hpp"
+#include <iostream>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 namespace
@@ -49,7 +50,9 @@ std::optional<TrackData> deserializeTrackData(ArduinoJson::JsonObject const& obj
         }
         trackData.setSections(sectors);
     } catch (std::invalid_argument& e) {
+        std::cerr << "Failed deserilize lap data invalid argument" << e.what() << "\n";
     } catch (std::out_of_range& e) {
+        std::cerr << "Failed deserilize lap data invalid argument" << e.what() << "\n";
     }
 
     return trackData;
@@ -81,7 +84,7 @@ std::optional<SessionData> JsonDeserializer::deserializeSessionData(std::string 
     ArduinoJson::deserializeJson(jsonDoc, rawData);
     auto sessionDate = Date(jsonDoc["date"].as<std::string>());
     auto sessionTime = Timestamp(jsonDoc["time"].as<std::string>());
-    auto trackData = deserializeTrackData(jsonDoc["track"]).value();
+    auto trackData = deserializeTrackData(jsonDoc["track"]).value_or(TrackData{});
     auto laps = deserializeLapData(jsonDoc["laps"]);
 
     auto session = SessionData{trackData, sessionDate, sessionTime};
@@ -92,4 +95,4 @@ std::optional<SessionData> JsonDeserializer::deserializeSessionData(std::string 
     return {session};
 }
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

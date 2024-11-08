@@ -10,7 +10,7 @@
 #include <IPositionDateTimeProvider.hpp>
 #include <ISessionDatabase.hpp>
 
-namespace LaptimerCore::Workflow
+namespace Rapid::Workflow
 {
 class ActiveSessionWorkflow : public IActiveSessionWorkflow
 {
@@ -79,6 +79,6 @@ private:
     KDBindings::ConnectionHandle mPositionDateTimeUpdateHandle;
 };
 
-} // namespace LaptimerCore::Workflow
+} // namespace Rapid::Workflow
 
 #endif // ACTIVESESSIONWORKFLOW_HPP

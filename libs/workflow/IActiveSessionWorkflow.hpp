@@ -8,7 +8,7 @@
 #include "SessionData.hpp"
 #include <kdbindings/property.h>
 
-namespace LaptimerCore::Workflow
+namespace Rapid::Workflow
 {
 class IActiveSessionWorkflow
 {
@@ -17,6 +17,26 @@ public:
      * Default virtual destructor.
      */
     virtual ~IActiveSessionWorkflow() = default;
+
+    /**
+     * Disabled copy operator
+     */
+    IActiveSessionWorkflow(IActiveSessionWorkflow const&) = delete;
+
+    /**
+     * Disabled copy operator
+     */
+    IActiveSessionWorkflow& operator=(IActiveSessionWorkflow const&) = delete;
+
+    /**
+     * Default move operator
+     */
+    IActiveSessionWorkflow(IActiveSessionWorkflow&&) noexcept = default;
+
+    /**
+     * Default move operator
+     */
+    IActiveSessionWorkflow& operator=(IActiveSessionWorkflow&&) noexcept = default;
 
     /**
      * Starts the ActiveSessionWorkflow.
@@ -84,6 +104,6 @@ protected:
     IActiveSessionWorkflow() = default;
 };
 
-} // namespace LaptimerCore::Workflow
+} // namespace Rapid::Workflow
 
 #endif // IACTIVESESSIONWORKFLOW_HPP

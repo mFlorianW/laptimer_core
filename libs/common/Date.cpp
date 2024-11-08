@@ -8,7 +8,7 @@
 #include <ctime>
 #include <iomanip>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 class SharedDate : public SharedData
@@ -119,4 +119,4 @@ bool operator!=(Date const& lhs, Date const& rhs)
     return !(lhs == rhs);
 }
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

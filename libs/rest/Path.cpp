@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 class SharedPath : public Common::SharedData
 {
@@ -94,4 +94,4 @@ bool operator!=(Path const& lhs, Path const& rhs)
     return !(lhs == rhs);
 }
 
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

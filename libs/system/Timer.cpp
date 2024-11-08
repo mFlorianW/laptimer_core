@@ -9,7 +9,7 @@
 #include "private/PosixTimer.hpp"
 #endif
 
-namespace LaptimerCore::System
+namespace Rapid::System
 {
 
 Timer::Timer()
@@ -60,4 +60,4 @@ bool Timer::handleEvent(Event* event)
     return false;
 }
 
-} // namespace LaptimerCore::System
+} // namespace Rapid::System

@@ -8,7 +8,7 @@
 #include "RestRequest.hpp"
 #include <string>
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 
 /**
@@ -68,4 +68,4 @@ protected:
     IRestClient() noexcept = default;
 };
 
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

@@ -6,11 +6,11 @@
 #include "Timestamp.hpp"
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Common;
+using namespace Rapid::Common;
 
 TEST_CASE("A Timestamp shall be able to convert the time into a string.")
 {
-    constexpr char expectedResult[] = "00:01:35.123";
+    constexpr auto expectedResult = "00:01:35.123";
     Timestamp timestamp;
     timestamp.setHour(0);
     timestamp.setMinute(1);

@@ -9,7 +9,7 @@
 #include <QtGlobal>
 #include <memory>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 class PositionDateTimeData;
 }
@@ -24,7 +24,7 @@ public:
     ~RestHttpClient() override;
 
     void setUrl(QString const& url);
-    void sendPosition(LaptimerCore::Common::PositionDateTimeData const& position);
+    void sendPosition(Rapid::Common::PositionDateTimeData const& position);
 
 private:
     std::unique_ptr<RestHttpClientPrivate> d;

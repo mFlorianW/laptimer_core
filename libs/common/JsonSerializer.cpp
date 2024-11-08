@@ -5,7 +5,7 @@
 #include "JsonSerializer.hpp"
 #include <utility>
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 bool JsonSerializer::serializeTrackData(TrackData const& trackData, JsonObject& jsonObject)
@@ -34,7 +34,7 @@ bool JsonSerializer::serializeLapData(LapData const& lapData, JsonObject& jsonOb
     if (lapData.getSectorTimeCount() > 0) {
         auto jsonSectorTimes = jsonObject.createNestedArray("sectors");
         for (std::size_t i = 0; i < lapData.getSectorTimeCount(); ++i) {
-            jsonSectorTimes.add(lapData.getSectorTime(i).value().asString());
+            jsonSectorTimes.add(lapData.getSectorTime(i).value_or(Timestamp{}).asString());
         }
     }
 
@@ -66,4 +66,4 @@ bool JsonSerializer::serializeSessionData(SessionData const& sessionData, JsonOb
     return true;
 }
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

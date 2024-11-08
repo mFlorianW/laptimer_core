@@ -1,5 +1,5 @@
 add_library(SystemQt STATIC)
-add_library(LaptimerCore::SystemQt ALIAS SystemQt)
+add_library(Rapid::SystemQt ALIAS SystemQt)
 
 target_sources(SystemQt
 PRIVATE
@@ -9,7 +9,7 @@ PRIVATE
 
 target_link_libraries(SystemQt
 PUBLIC
-    LaptimerCore::System
+    Rapid::System
     Qt6::Gui
     Qt6::GuiPrivate
 )

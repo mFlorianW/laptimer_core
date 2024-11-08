@@ -5,11 +5,10 @@
 #include "Laptimer.hpp"
 #include <numeric>
 
-namespace LaptimerCore::TestHelper
+namespace Rapid::TestHelper
 {
-Laptimer::Laptimer()
-{
-}
+
+Laptimer::Laptimer() = default;
 
 void Laptimer::setTrack(Common::TrackData const& track)
 {
@@ -33,4 +32,4 @@ Common::Timestamp Laptimer::getLastSectorTime() const
     return sectorTimes.back();
 }
 
-} // namespace LaptimerCore::TestHelper
+} // namespace Rapid::TestHelper

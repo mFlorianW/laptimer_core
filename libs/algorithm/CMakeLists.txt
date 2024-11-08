@@ -1,37 +1,33 @@
 add_library(AlgorithmObject OBJECT)
-add_library(LaptimerCore::AlgorithmObject ALIAS AlgorithmObject)
+add_library(Rapid::AlgorithmObject ALIAS AlgorithmObject)
 
 target_sources(AlgorithmObject
 PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/TrackDetection.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/DistanceCalculator.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/DistanceCalculator.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/SimpleLaptimer.cpp
-PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/ITrackDetection.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/TrackDetection.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/ILaptimer.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/SimpleLaptimer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TrackDetection.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/DistanceCalculator.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/DistanceCalculator.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SimpleLaptimer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ITrackDetection.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TrackDetection.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ILaptimer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SimpleLaptimer.hpp
 )
 
 target_link_libraries(AlgorithmObject
 PUBLIC
-    LaptimerCore::Common
+    Rapid::Common
     KDAB::KDBindings
 )
 
 target_include_directories(AlgorithmObject
     PUBLIC
-        $<INSTALL_INTERFACE:include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 add_library(Algorithm STATIC)
-add_library(LaptimerCore::Algorithm ALIAS Algorithm)
+add_library(Rapid::Algorithm ALIAS Algorithm)
 
 target_link_libraries(Algorithm
 PUBLIC
-    LaptimerCore::AlgorithmObject
+    Rapid::AlgorithmObject
 )

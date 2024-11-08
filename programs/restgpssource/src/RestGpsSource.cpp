@@ -14,8 +14,8 @@ struct RestGpsSourcePrivate
 {
     QQmlApplicationEngine mEngine;
     MainWindowViewModel mMainWindowViewModel;
-    QTimer mLaptimerCoreTimer;
-    LaptimerCore::System::EventLoop mEventLoop;
+    QTimer mRapidTimer;
+    Rapid::System::EventLoop mEventLoop;
 };
 
 RestGpsSource::RestGpsSource()
@@ -27,11 +27,11 @@ RestGpsSource::RestGpsSource()
     d->mEngine.load(QUrl{"qrc:/qml/MainWindow.qml"});
 
     // TODO: move this in somehow in the mainloop
-    d->mLaptimerCoreTimer.setInterval(std::chrono::milliseconds(1));
-    QObject::connect(&d->mLaptimerCoreTimer, &QTimer::timeout, &d->mLaptimerCoreTimer, [=]() {
+    d->mRapidTimer.setInterval(std::chrono::milliseconds(1));
+    QObject::connect(&d->mRapidTimer, &QTimer::timeout, &d->mRapidTimer, [=]() {
         d->mEventLoop.processEvents();
     });
-    d->mLaptimerCoreTimer.start();
+    d->mRapidTimer.start();
 }
 
 RestGpsSource::~RestGpsSource() = default;

@@ -8,7 +8,7 @@
 #include <cstring>
 #include <iostream>
 
-namespace LaptimerCore::System::Private
+namespace Rapid::System::Private
 {
 
 namespace
@@ -64,4 +64,4 @@ void TimerImpl::setTimerInterval(std::chrono::nanoseconds interval) noexcept
     }
 }
 
-} // namespace LaptimerCore::System::Private
+} // namespace Rapid::System::Private

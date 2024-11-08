@@ -8,7 +8,7 @@
 #include <ArduinoJson.hpp>
 #include <catch2/catch.hpp>
 
-using namespace LaptimerCore::Common;
+using namespace Rapid::Common;
 
 TEST_CASE("The LapData shall calculate the laptime by the sector times.")
 {

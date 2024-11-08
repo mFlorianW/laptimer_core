@@ -9,9 +9,9 @@
 #include <cstring>
 #include <iostream>
 
-using namespace LaptimerCore::Storage::Private;
+using namespace Rapid::Storage::Private;
 
-namespace LaptimerCore::Storage
+namespace Rapid::Storage
 {
 
 SqliteSessionDatabase::StorageContext::StorageContext()
@@ -278,7 +278,7 @@ std::optional<std::size_t> SqliteSessionDatabase::getSessionId(Common::SessionDa
     }
 
     if ((sessionIdStm.execute() == ExecuteResult::Row) && (sessionIdStm.getIntColumn(0).has_value())) {
-        return static_cast<std::size_t>(sessionIdStm.getIntColumn(0).value());
+        return static_cast<std::size_t>(sessionIdStm.getIntColumn(0).value_or(0));
     }
     return std::nullopt;
 }
@@ -411,7 +411,7 @@ std::optional<Common::TrackData> SqliteSessionDatabase::getTrack(std::size_t tra
         std::cout << "Error prepare track statement for id:" << trackId << "Error:" << mDbConnection.getErrorMessage();
         return std::nullopt;
     }
-    auto track = LaptimerCore::Common::TrackData{};
+    auto track = Rapid::Common::TrackData{};
     track.setTrackName(stm.getStringColumn(1).value_or(""));
     track.setFinishline({stm.getFloatColumn(2).value_or(0), stm.getFloatColumn(3).value_or(0)});
     if (stm.hasColumnValue(4) == HasColumnValueResult::Ok && stm.hasColumnValue(5) == HasColumnValueResult::Ok) {
@@ -425,7 +425,7 @@ std::optional<Common::TrackData> SqliteSessionDatabase::getTrack(std::size_t tra
         return std::nullopt;
     }
 
-    auto sections = std::vector<LaptimerCore::Common::PositionData>{};
+    auto sections = std::vector<Rapid::Common::PositionData>{};
     while (sektorStm.execute() == ExecuteResult::Row && sektorStm.getColumnCount() == 2) {
         sections.emplace_back(sektorStm.getFloatColumn(0).value_or(0), sektorStm.getFloatColumn(1).value_or(0));
     }
@@ -463,13 +463,14 @@ bool SqliteSessionDatabase::storeLapOfSession(std::size_t sessionId,
         std::cout << "Error failed to query lap id:" << mDbConnection.getErrorMessage() << std::endl;
         return false;
     }
-    auto const lapId = *lapIdStm.getIntColumn(0);
+    auto const lapId = lapIdStm.getIntColumn(0).value_or(0);
     auto insertSektorStm = Statement{mDbConnection};
     for (std::size_t sektorTimeIndex = 0; sektorTimeIndex < lapData.getSectorTimeCount(); ++sektorTimeIndex) {
         if ((insertSektorStm.prepare(insetSektorQuery) != PrepareResult::Ok) ||
             (insertSektorStm.bindIntValue(1, lapId) != BindResult::Ok) ||
-            (insertSektorStm.bindStringValue(2, lapData.getSectorTime(sektorTimeIndex)->asString()) !=
-             BindResult::Ok) ||
+            (insertSektorStm.bindStringValue(
+                 2,
+                 lapData.getSectorTime(sektorTimeIndex).value_or(Common::Timestamp{}).asString()) != BindResult::Ok) ||
             (insertSektorStm.bindIntValue(3, static_cast<int>(sektorTimeIndex)) != BindResult::Ok) ||
             (insertSektorStm.execute() != ExecuteResult::Ok)) {
             std::cout << "Error failed to insert sektor:" << mDbConnection.getErrorMessage() << std::endl;
@@ -532,4 +533,4 @@ void SqliteSessionDatabase::updateIndexMapper()
     }
 }
 
-} // namespace LaptimerCore::Storage
+} // namespace Rapid::Storage

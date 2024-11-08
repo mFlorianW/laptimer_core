@@ -10,7 +10,7 @@
 #include <kdbindings/signal.h>
 #include <memory>
 
-namespace LaptimerCore::Storage
+namespace Rapid::Storage
 {
 /**
  * The SessionDatabase provides an index based access to the stored session data.
@@ -93,6 +93,6 @@ protected:
     ISessionDatabase() = default;
 };
 
-} // namespace LaptimerCore::Storage
+} // namespace Rapid::Storage
 
 #endif // ISESSION_HPP

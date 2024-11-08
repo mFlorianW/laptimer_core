@@ -10,7 +10,7 @@
 #include <iostream>
 #include <kdbindings/signal.h>
 
-namespace LaptimerCore::System
+namespace Rapid::System
 {
 
 template <class T>
@@ -124,4 +124,4 @@ private:
     std::future<T> mFuture{};
 };
 
-} // namespace LaptimerCore::System
+} // namespace Rapid::System

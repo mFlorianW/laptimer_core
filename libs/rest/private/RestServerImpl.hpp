@@ -10,7 +10,7 @@
 #include <thread>
 #include <unordered_map>
 
-namespace LaptimerCore::Rest::Private
+namespace Rapid::Rest::Private
 {
 class BoostServer;
 class RestServerImpl : public Rest::IRestServer, public System::EventHandler
@@ -63,7 +63,7 @@ public:
     void registerGetHandler(std::string const& root, IRestRequestHandler* handler) noexcept override;
 
     /**
-     * @copydoc LaptimerCore::System::EventHandler
+     * @copydoc Rapid::System::EventHandler
      */
     bool handleEvent(System::Event* event) noexcept override;
 
@@ -75,4 +75,4 @@ private:
     std::unordered_map<std::string, IRestRequestHandler*> mGetHandlers;
 };
 
-} // namespace LaptimerCore::Rest::Private
+} // namespace Rapid::Rest::Private

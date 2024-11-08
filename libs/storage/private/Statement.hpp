@@ -10,7 +10,7 @@
 #include <optional>
 #include <sqlite3.h>
 
-namespace LaptimerCore::Storage::Private
+namespace Rapid::Storage::Private
 {
 
 enum class PrepareResult
@@ -176,6 +176,6 @@ private:
     Connection const& mDbConnection;
 };
 
-} // namespace LaptimerCore::Storage::Private
+} // namespace Rapid::Storage::Private
 
 #endif // STATEMENT_HPP

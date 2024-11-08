@@ -6,7 +6,7 @@
 #include "IRestClient.hpp"
 #include "ISessionDownloader.hpp"
 
-namespace LaptimerCore::Workflow
+namespace Rapid::Workflow
 {
 class RestSessionDownloader final : public ISessionDownloader
 {
@@ -76,4 +76,4 @@ private:
     std::unordered_map<std::size_t, Common::SessionData> mDownloadedSessions;
 };
 
-} // namespace LaptimerCore::Workflow
+} // namespace Rapid::Workflow

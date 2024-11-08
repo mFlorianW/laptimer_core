@@ -4,12 +4,10 @@
 
 #include "MemorySessionDatabaseBackend.hpp"
 
-namespace LaptimerCore::TestHelper
+namespace Rapid::TestHelper
 {
 
-MemorySessionDatabaseBackend::MemorySessionDatabaseBackend()
-{
-}
+MemorySessionDatabaseBackend::MemorySessionDatabaseBackend() = default;
 
 std::size_t MemorySessionDatabaseBackend::getLastStoredIndex() const noexcept
 {
@@ -59,4 +57,4 @@ bool MemorySessionDatabaseBackend::deleteSession(std::size_t index)
     return false;
 }
 
-} // namespace LaptimerCore::TestHelper
+} // namespace Rapid::TestHelper

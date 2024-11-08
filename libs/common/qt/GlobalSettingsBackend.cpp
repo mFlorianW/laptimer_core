@@ -4,11 +4,11 @@
 
 #include "GlobalSettingsBackend.hpp"
 
-namespace LaptimerCore::Common
+namespace Rapid::Common
 {
 
 QSettingsBackend::QSettingsBackend()
-    : mSettings{QStringLiteral("lappy"), QStringLiteral("lappy")}
+    : mSettings{QStringLiteral("rapid"), QStringLiteral("rapid")}
 {
 }
 
@@ -23,4 +23,4 @@ QVariant QSettingsBackend::getValue(QAnyStringView const& key) const noexcept
     return mSettings.value(key);
 }
 
-} // namespace LaptimerCore::Common
+} // namespace Rapid::Common

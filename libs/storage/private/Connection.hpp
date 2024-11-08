@@ -8,7 +8,7 @@
 #include <sqlite3.h>
 #include <string>
 
-namespace LaptimerCore::Storage::Private
+namespace Rapid::Storage::Private
 {
 
 /**
@@ -73,6 +73,6 @@ private:
     sqlite3* mHandle{nullptr};
 };
 
-} // namespace LaptimerCore::Storage::Private
+} // namespace Rapid::Storage::Private
 
 #endif // CONNECTION_HPP

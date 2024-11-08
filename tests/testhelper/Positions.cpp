@@ -4,9 +4,9 @@
 
 #include "Positions.hpp"
 
-using namespace LaptimerCore::Common;
+using namespace Rapid::Common;
 
-namespace LaptimerCore::TestHelper
+namespace Rapid::TestHelper
 {
 PositionData Positions::getOscherslebenPositionCamp()
 {
@@ -88,4 +88,4 @@ PositionData Positions::getOscherslebenSector2Point4()
     return Common::PositionData{52.029966, 11.277218};
 }
 
-} // namespace LaptimerCore::TestHelper
+} // namespace Rapid::TestHelper

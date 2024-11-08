@@ -1,5 +1,5 @@
 add_library(Rest STATIC)
-add_library(LaptimerCore::Rest ALIAS Rest)
+add_library(Rapid::Rest ALIAS Rest)
 
 target_sources(Rest
 PRIVATE
@@ -31,8 +31,8 @@ endif()
 target_link_libraries(Rest
 PUBLIC
     KDAB::KDBindings
-    LaptimerCore::Positioning
-    LaptimerCore::Storage
+    Rapid::Positioning
+    Rapid::Storage
 )
 
 target_include_directories(Rest

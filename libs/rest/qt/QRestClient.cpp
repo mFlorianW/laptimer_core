@@ -7,7 +7,7 @@
 #include <QNetworkReply>
 #include <QObject>
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 
 class QRestCall final : public QObject, public RestCall
@@ -102,7 +102,7 @@ std::shared_ptr<RestCall> QRestClient::execute(RestRequest const& request) noexc
     return nullptr;
 }
 
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest
 
 // NOLINTNEXTLINE
 #include "QRestClient.moc"

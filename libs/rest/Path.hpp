@@ -7,7 +7,7 @@
 #include <optional>
 #include <string>
 
-namespace LaptimerCore::Rest
+namespace Rapid::Rest
 {
 class SharedPath;
 
@@ -96,4 +96,4 @@ public:
 private:
     Common::SharedDataPointer<SharedPath> mData;
 };
-} // namespace LaptimerCore::Rest
+} // namespace Rapid::Rest

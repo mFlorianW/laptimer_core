@@ -2,13 +2,12 @@
 //
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#ifndef __ITRACKDETECTIONWORKFLOW__H__
-#define __ITRACKDETECTIONWORKFLOW__H__
+#pragma once
 
 #include "TrackData.hpp"
 #include "kdbindings/signal.h"
 
-namespace LaptimerCore::Workflow
+namespace Rapid::Workflow
 {
 
 /**
@@ -22,6 +21,26 @@ public:
      * Default destructor
      */
     virtual ~ITrackDetectionWorkflow() = default;
+
+    /**
+     * Disabled copy constructor
+     */
+    ITrackDetectionWorkflow(ITrackDetectionWorkflow const&) = delete;
+
+    /**
+     * Disabled copy operator
+     */
+    ITrackDetectionWorkflow& operator=(ITrackDetectionWorkflow const&) = delete;
+
+    /**
+     * Default move operator
+     */
+    ITrackDetectionWorkflow(ITrackDetectionWorkflow&&) noexcept = default;
+
+    /**
+     * Default move operator
+     */
+    ITrackDetectionWorkflow& operator=(ITrackDetectionWorkflow&&) noexcept = default;
 
     /**
      * Starts the track detection.
@@ -55,6 +74,4 @@ protected:
     ITrackDetectionWorkflow() = default;
 };
 
-} // namespace LaptimerCore::Workflow
-
-#endif //!__ITRACKDETECTIONWORKFLOW__H__
+} // namespace Rapid::Workflow

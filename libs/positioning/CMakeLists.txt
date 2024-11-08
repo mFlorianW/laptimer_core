@@ -1,50 +1,46 @@
 add_library(Positioning STATIC)
-add_library(LaptimerCore::Positioning ALIAS Positioning)
+add_library(Rapid::Positioning ALIAS Positioning)
 
 target_sources(Positioning
 PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/UTM.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/ConstantVelocityPositionDateTimeProvider.cpp
-PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/IGPSInformationProvider.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/StaticGpsInformationProvider.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/StaticPositionDateTimeProvider.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/ConstantVelocityPositionDateTimeProvider.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ConstantVelocityPositionDateTimeProvider.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/IGPSInformationProvider.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/StaticGpsInformationProvider.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/StaticPositionDateTimeProvider.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ConstantVelocityPositionDateTimeProvider.hpp
 )
 
 target_include_directories(Positioning
 PUBLIC
-    $<INSTALL_INTERFACE:include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
 
 target_link_libraries(Positioning
 PUBLIC
-    LaptimerCore::Common
-    LaptimerCore::System
+    Rapid::Common
+    Rapid::System
+    Rapid::ThirdParty::UTM
     KDAB::KDBindings
 )
 
 if(ENABLE_QT)
     add_library(PositioningQt STATIC)
-    add_library(LaptimerCore::PositioningQt ALIAS PositioningQt)
+    add_library(Rapid::PositioningQt ALIAS PositioningQt)
 
     target_sources(PositioningQt
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/qt/CsvGpsFileReader.cpp
-    PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/qt/CsvGpsFileReader.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/qt/CsvGpsFileReader.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/qt/CsvGpsFileReader.hpp
     )
 
     target_include_directories(PositioningQt
     PUBLIC
-        $<INSTALL_INTERFACE:include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/qt>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/qt>
     )
 
     target_link_libraries(PositioningQt
     PUBLIC
-        LaptimerCore::Positioning
+        Rapid::Positioning
         Qt6::Core
     )
 endif()
