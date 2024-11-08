@@ -16,7 +16,7 @@ MainWindowModel::MainWindowModel(Workflow::ISessionDownloader& downloader, Stora
     : mSessionDownloader(downloader)
     , mSessionDatabase(database)
 {
-    mSessionDownloader.sessionCountFetched.connect([=] {
+    mSessionDownloader.sessionCountFetched.connect([this] {
         appendToLog(QString("Found %1 session on the device").arg(mSessionDownloader.getSessionCount()));
         appendToLog(QStringLiteral("Fetched session count from device"));
 
@@ -28,7 +28,7 @@ MainWindowModel::MainWindowModel(Workflow::ISessionDownloader& downloader, Stora
         }
     });
 
-    mSessionDownloader.sessionDownloadFinshed.connect([=](std::size_t index, Workflow::DownloadResult result) {
+    mSessionDownloader.sessionDownloadFinshed.connect([this](std::size_t index, Workflow::DownloadResult result) {
         appendToLog(QString{"Downloaded session %1 of %2 from Device"}
                         .arg(QString::number(index + 1))
                         .arg(static_cast<qint32>(mSessionDownloader.getSessionCount())));
@@ -40,7 +40,7 @@ MainWindowModel::MainWindowModel(Workflow::ISessionDownloader& downloader, Stora
             auto session = mSessionDownloader.getSession(index);
             if (session) {
                 auto asyncResult = mSessionDatabase.storeSession(session.value());
-                auto resultHandler = [=](System::AsyncResult* result) {
+                auto resultHandler = [this, &index](System::AsyncResult* result) {
                     auto logString = result->getResult() == System::Result::Ok
                                          ? QString{"Session stored %1 of %2 in database"}
                                                .arg(QString::number(index + 1))

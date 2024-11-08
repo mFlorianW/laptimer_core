@@ -25,10 +25,10 @@ void MenuEntryList::addMenuEntry(IMenuEntry* menuEntry) noexcept
     menuEntry->getMenuEntryView()->setCloseCommand(&mEscapeCommand);
 
     // Connect to the signals of the menu entry. This handles the sub menu entries.
-    menuEntry->viewChanged.connect([=]() {
+    menuEntry->viewChanged.connect([this]() {
         handleSubMenuUpdate();
     });
-    menuEntry->closeEntry.connect([=]() {
+    menuEntry->closeEntry.connect([this]() {
         handleSubMenuUpdate();
     });
 

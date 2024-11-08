@@ -26,23 +26,23 @@ ActiveSessionModel::ActiveSessionModel(Rapid::Workflow::ITrackDetectionWorkflow&
     });
 
     // TODO: provide these as string so we the UI doesn't to do any formatting
-    mActiveSessionWorkFlow.currentLaptime.valueChanged().connect([=]() {
+    mActiveSessionWorkFlow.currentLaptime.valueChanged().connect([this]() {
         currentLaptime.set(mActiveSessionWorkFlow.currentLaptime.get());
     });
 
     // TODO: provide these as string so we the UI doesn't to do any formatting
-    mActiveSessionWorkFlow.currentSectorTime.valueChanged().connect([=]() {
+    mActiveSessionWorkFlow.currentSectorTime.valueChanged().connect([this]() {
         currentSectorTime.set(mActiveSessionWorkFlow.currentSectorTime.get());
     });
 
-    mActiveSessionWorkFlow.lapCount.valueChanged().connect([=]() {
+    mActiveSessionWorkFlow.lapCount.valueChanged().connect([this]() {
         lapCount.set(mActiveSessionWorkFlow.lapCount.get());
     });
 
-    mActiveSessionWorkFlow.lapFinished.connect([=]() {
+    mActiveSessionWorkFlow.lapFinished.connect([this]() {
         lapFinished.emit();
     });
-    mActiveSessionWorkFlow.sectorFinshed.connect([=]() {
+    mActiveSessionWorkFlow.sectorFinshed.connect([this]() {
         sectorFinished.emit();
     });
 }

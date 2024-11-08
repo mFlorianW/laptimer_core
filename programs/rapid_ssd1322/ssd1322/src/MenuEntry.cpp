@@ -37,7 +37,7 @@ void MenuEntry::addMenuEntry(IMenuEntry* entry) noexcept
     }
 
     mMenuEntry = entry;
-    mMenuEntry->viewChanged.connect([=]() {
+    mMenuEntry->viewChanged.connect([this]() {
         mActiveView = mMenuEntry->getMenuEntryView();
         viewChanged.emit();
     });
