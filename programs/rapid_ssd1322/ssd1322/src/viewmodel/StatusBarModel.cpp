@@ -8,7 +8,7 @@ StatusBarModel::StatusBarModel(Rapid::Positioning::IGpsInformationProvider& gpsI
     : mGpsInfoProvider{gpsInfoProvider}
 
 {
-    mGpsInfoProvider.numberOfSatellitesChanged.connect([=] {
+    mGpsInfoProvider.numberOfSatellitesChanged.connect([this] {
         numberOfSatellitesChanged.emit();
     });
 }
