@@ -27,7 +27,7 @@ void ActiveSessionWorkflow::startActiveSession() noexcept
         mLaptimer.currentSectorTime.valueChanged().connect(&ActiveSessionWorkflow::onCurrentSectorTimeChanged, this);
         mLaptimer.setTrack(mTrack);
 
-        mPositionDateTimeUpdateHandle = mDateTimeProvider.positionTimeData.valueChanged().connect([=]() {
+        mPositionDateTimeUpdateHandle = mDateTimeProvider.positionTimeData.valueChanged().connect([this]() {
             mLaptimer.updatePositionAndTime(mDateTimeProvider.positionTimeData.get());
         });
         auto dateTime = mDateTimeProvider.positionTimeData.get();
