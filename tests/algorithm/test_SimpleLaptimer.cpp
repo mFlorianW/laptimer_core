@@ -20,7 +20,7 @@ TEST_CASE("The laptimer shall emit lapStarted Signal when crossing the start lin
     track.setStartline(Positions::getOscherslebenPositionStartFinishLine());
 
     lapTimer.setTrack(track);
-    lapTimer.lapStarted.connect([&lapStartedEmitted](void) {
+    lapTimer.lapStarted.connect([&lapStartedEmitted]() {
         lapStartedEmitted = true;
     });
 
@@ -47,7 +47,7 @@ TEST_CASE("The laptimer shall call the lap started callback when crossing the st
     track.setStartline(Positions::getOscherslebenPositionStartFinishLine());
 
     lapTimer.setTrack(track);
-    lapTimer.lapStarted.connect([&lapStartedEmitted](void) {
+    lapTimer.lapStarted.connect([&lapStartedEmitted]() {
         lapStartedEmitted = true;
     });
 
@@ -75,10 +75,10 @@ TEST_CASE("The laptimer shall emit the lap finished signal and lap started signa
     track.setFinishline(Positions::getOscherslebenPositionStartFinishLine());
 
     lapTimer.setTrack(track);
-    lapTimer.lapStarted.connect([&lapStartedEmitted](void) {
+    lapTimer.lapStarted.connect([&lapStartedEmitted]() {
         lapStartedEmitted = true;
     });
-    lapTimer.lapFinished.connect([&lapFinishedEmitted](void) {
+    lapTimer.lapFinished.connect([&lapFinishedEmitted]() {
         lapFinishedEmitted = true;
     });
 
@@ -119,10 +119,10 @@ TEST_CASE("The laptimer shall call the sector finished signal when a sector is f
     track.setSections({Positions::getOscherslebenPositionSector1Line()});
 
     lapTimer.setTrack(track);
-    lapTimer.lapStarted.connect([&lapStartedEmitted](void) {
+    lapTimer.lapStarted.connect([&lapStartedEmitted]() {
         lapStartedEmitted = true;
     });
-    lapTimer.sectorFinished.connect([&sectorFinishedEmitted](void) {
+    lapTimer.sectorFinished.connect([&sectorFinishedEmitted]() {
         sectorFinishedEmitted = true;
     });
 
@@ -167,13 +167,13 @@ TEST_CASE("The laptimer shall send all signals for a whole map.")
     track.setFinishline(Positions::getOscherslebenPositionStartFinishLine());
 
     lapTimer.setTrack(track);
-    lapTimer.lapStarted.connect([&lapStartedEmitted](void) {
+    lapTimer.lapStarted.connect([&lapStartedEmitted]() {
         lapStartedEmitted = true;
     });
-    lapTimer.sectorFinished.connect([&sectorFinishedEmitted](void) {
+    lapTimer.sectorFinished.connect([&sectorFinishedEmitted]() {
         sectorFinishedEmitted = true;
     });
-    lapTimer.lapFinished.connect([&lapFinishedEmitted](void) {
+    lapTimer.lapFinished.connect([&lapFinishedEmitted]() {
         lapFinishedEmitted = true;
     });
 
@@ -466,13 +466,13 @@ TEST_CASE("The laptimer shall emit the signals sector and lap started finished e
     track.setSections({Positions::getOscherslebenPositionSector1Line()});
 
     lapTimer.setTrack(track);
-    lapTimer.lapStarted.connect([&lapStartedEmitted](void) {
+    lapTimer.lapStarted.connect([&lapStartedEmitted]() {
         lapStartedEmitted = true;
     });
-    lapTimer.lapFinished.connect([&lapFinishedEmitted](void) {
+    lapTimer.lapFinished.connect([&lapFinishedEmitted]() {
         lapFinishedEmitted = true;
     });
-    lapTimer.sectorFinished.connect([&sectorFinishedEmitted](void) {
+    lapTimer.sectorFinished.connect([&sectorFinishedEmitted]() {
         sectorFinishedEmitted = true;
     });
 
