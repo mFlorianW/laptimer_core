@@ -65,7 +65,7 @@ ActiveSessionView::ActiveSessionView(ActiveSessionModel& model)
     mLaptimePopupRequest.setAutoClosing(true);
     mLaptimePopupRequest.setAutoClosingTimeout(std::chrono::seconds(5));
 
-    mActiveSessionModel.currentLaptime.valueChanged().connect([=]() {
+    mActiveSessionModel.currentLaptime.valueChanged().connect([this] {
         auto const timeStamp = mActiveSessionModel.currentLaptime.get();
         lv_label_set_text_fmt(mLaptimeLabel,
                               "%02d:%02d.%03d",
@@ -74,7 +74,7 @@ ActiveSessionView::ActiveSessionView(ActiveSessionModel& model)
                               timeStamp.getFractionalOfSecond());
     });
 
-    mActiveSessionModel.currentSectorTime.valueChanged().connect([=]() {
+    mActiveSessionModel.currentSectorTime.valueChanged().connect([this]() {
         auto timeStamp = mActiveSessionModel.currentSectorTime.get();
         lv_label_set_text_fmt(mSectorTimeLabel,
                               "%02d:%02d.%03d",
@@ -83,7 +83,7 @@ ActiveSessionView::ActiveSessionView(ActiveSessionModel& model)
                               timeStamp.getFractionalOfSecond());
     });
 
-    mActiveSessionModel.lapCount.valueChanged().connect([=]() {
+    mActiveSessionModel.lapCount.valueChanged().connect([this]() {
         lv_label_set_text_fmt(mLapCountLabel, "Lap: %03d", mActiveSessionModel.lapCount.get());
     });
 
