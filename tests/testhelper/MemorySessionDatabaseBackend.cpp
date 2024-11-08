@@ -7,9 +7,7 @@
 namespace Rapid::TestHelper
 {
 
-MemorySessionDatabaseBackend::MemorySessionDatabaseBackend()
-{
-}
+MemorySessionDatabaseBackend::MemorySessionDatabaseBackend() = default;
 
 std::size_t MemorySessionDatabaseBackend::getLastStoredIndex() const noexcept
 {

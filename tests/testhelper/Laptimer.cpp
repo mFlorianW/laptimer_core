@@ -7,9 +7,8 @@
 
 namespace Rapid::TestHelper
 {
-Laptimer::Laptimer()
-{
-}
+
+Laptimer::Laptimer() = default;
 
 void Laptimer::setTrack(Common::TrackData const& track)
 {
