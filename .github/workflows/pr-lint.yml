@@ -8,7 +8,7 @@ on:
 
 jobs:
   Clang-Tidy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -16,8 +16,6 @@ jobs:
           fetch-depth: 0
     - name: Install Qt
       uses: ./.github/actions/linux-install-qt
-    - name: WORKAROUND FOR https://github.com/actions/runner-images/issues/8659
-      uses: ./.github/actions/linux-gcc-workaround
     - name: Install Dependencies
       uses: ./.github/actions/linux-install-dep
     - name: Setup vcpkg
