@@ -8,7 +8,7 @@ on:
 
 jobs:
   Generate_Build_Jobs:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       commits: ${{ steps.commits.outputs.commits_json }}
     steps:
