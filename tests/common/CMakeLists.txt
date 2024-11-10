@@ -21,6 +21,9 @@ target_link_libraries(test_JsonDeserializer PRIVATE Catch2::Catch2 Rapid::Common
 add_executable(test_GpsPositionData test_GpsPositionData.cpp)
 target_link_libraries(test_GpsPositionData PRIVATE Catch2::Catch2 Rapid::Common LaptimerCore::TestHelper)
 
+add_executable(test_VelocityData test_VelocityData.cpp)
+target_link_libraries(test_VelocityData PRIVATE Catch2::Catch2 Rapid::Common LaptimerCore::TestHelper)
+
 catch_discover_tests(test_SharedDataPointer)
 catch_discover_tests(test_LapData)
 catch_discover_tests(test_Timestamp)
@@ -28,8 +31,11 @@ catch_discover_tests(test_Date)
 catch_discover_tests(test_JsonSerializer)
 catch_discover_tests(test_JsonDeserializer)
 catch_discover_tests(test_GpsPositionData)
+catch_discover_tests(test_VelocityData)
 
 if(ENABLE_QT)
     add_executable(test_GlobalSettingsReader test_GlobalSettingsReader.cpp)
     target_link_libraries(test_GlobalSettingsReader PRIVATE Catch2::Catch2 Catch2::Catch2WithMain Rapid::CommonQt LaptimerCore::TestHelper)
+
+    catch_discover_tests(test_GlobalSettingsReader)
 endif()
