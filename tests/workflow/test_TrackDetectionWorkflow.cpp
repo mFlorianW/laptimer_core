@@ -27,7 +27,7 @@ TEST_CASE("TrackDetectionWorkflow shall emit 'trackDetected' when successful det
     tdw.setTracks({Tracks::getOscherslebenTrack()});
     tdw.startDetection();
 
-    posInfoProvider.positionTimeData.set({{Positions::getOscherslebenPositionCamp()}, {}, {}});
+    posInfoProvider.gpsPosition.set({{Positions::getOscherslebenPositionCamp()}, {}, {}});
 
     REQUIRE(trackDetectedEmitted == true);
 }
@@ -41,7 +41,7 @@ TEST_CASE("TrackDetectionWorkflow shall return the TrackData when successful det
     tdw.setTracks({Tracks::getOscherslebenTrack()});
     tdw.startDetection();
 
-    posInfoProvider.positionTimeData.set({{Positions::getOscherslebenPositionCamp()}, {}, {}});
+    posInfoProvider.gpsPosition.set({{Positions::getOscherslebenPositionCamp()}, {}, {}});
 
     REQUIRE(tdw.getDetectedTrack() == Tracks::getOscherslebenTrack());
 }
@@ -59,13 +59,13 @@ TEST_CASE("TrackDetectionWorkflow shall not emit 'trackDetected' when stopped.")
     tdw.setTracks({Tracks::getOscherslebenTrack()});
 
     tdw.startDetection();
-    posInfoProvider.positionTimeData.set({{Positions::getOscherslebenPositionCamp()}, {}, {}});
+    posInfoProvider.gpsPosition.set({{Positions::getOscherslebenPositionCamp()}, {}, {}});
 
     REQUIRE(trackDetectedEmitted == true);
 
     trackDetectedEmitted = false;
     tdw.stopDetection();
-    posInfoProvider.positionTimeData.set({{Positions::getOscherslebenPositionCamp()}, {}, {}});
+    posInfoProvider.gpsPosition.set({{Positions::getOscherslebenPositionCamp()}, {}, {}});
 
     REQUIRE(trackDetectedEmitted == false);
 }
