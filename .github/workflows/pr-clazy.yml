@@ -48,8 +48,9 @@ jobs:
       id: clazy-check
       shell: bash
       run: |
+        ls -lA .
         error=$(cat clazy.log | grep -c -E "Error:|Warning:")
-        echo "::set-output name=errors-count::$errors"
+        echo "errors-count=$errors" >> "$GITHUB_OUTPUT"
     - name: Exit if error
       if: ${{steps.clazy-check.outputs.errors-count > 0 }}
       shell: bash
